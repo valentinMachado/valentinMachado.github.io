@@ -1,5 +1,3 @@
- import * as THREE from 'three';
-
  var scene = new THREE.Scene();
  var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -9,7 +7,7 @@
 
  var geometry = new THREE.BoxGeometry(1, 1, 1);
  var material = new THREE.MeshBasicMaterial({
- 	color: 0x00ff00
+ 	color: "red"
  });
  var cube = new THREE.Mesh(geometry, material);
  scene.add(cube);
@@ -19,8 +17,8 @@
  var animate = function() {
  	requestAnimationFrame(animate);
 
- 	cube.rotation.x += 0.1;
- 	cube.rotation.y += 0.1;
+ 	cube.rotation.x += 0.001;
+ 	cube.rotation.y += 0.001;
 
  	renderer.render(scene, camera);
  };
