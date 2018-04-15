@@ -52,6 +52,7 @@ var views = [{
 }];
 
 init();
+console.log(document.getElementById("input"));
 animate();
 
 function init() {
@@ -196,14 +197,12 @@ function init() {
 	container.appendChild(renderer.domElement);
 
 	document.addEventListener('mousemove', onDocumentMouseMove, false);
-
 }
 
 function onDocumentMouseMove(event) {
 
 	mouseX = (event.clientX - windowWidth / 2);
 	mouseY = (event.clientY - windowHeight / 2);
-
 }
 
 function updateSize() {
@@ -216,7 +215,6 @@ function updateSize() {
 		renderer.setSize(windowWidth, windowHeight);
 
 	}
-
 }
 
 function animate() {
