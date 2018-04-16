@@ -59,6 +59,11 @@ WebExplorer3D.prototype.onResize = function() {
 
 WebExplorer3D.prototype.tick = function() {
 
+	this.render();
+};
+
+WebExplorer3D.prototype.render = function() {
+
 	const views = [
 		this.ui.viewLeft,
 		this.ui.viewRight
@@ -98,7 +103,6 @@ WebExplorer3D.prototype.tick = function() {
 		renderer.render(vScene.scene, vScene.camera);
 
 	});
-
 };
 
 WebExplorer3D.prototype.initializeAnimationFrame = function() {

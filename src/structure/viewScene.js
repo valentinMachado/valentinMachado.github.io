@@ -10,6 +10,14 @@ function ViewScene() {
 
 	//ui
 	this.view = null;
+
+	//control
+	this.controls = new THREE.OrbitControls(this.camera);
+	this.controls.minDistance = 2;
+	this.controls.maxDistance = 50;
+	// this.controls.enablePan = false;
+	// this.controls.enableZoom = false;
+	// this.controls.enabled = false;
 };
 
 ViewScene.prototype.onResize = function(h, w) {
