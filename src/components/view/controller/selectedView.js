@@ -9,4 +9,4 @@ function SelectedView() {
 	this.viewScene = new ViewScene();
 };
 
-WebExplorerUtility.JsUtility.makeHerit(SelectedView, AbstractComponent);
+WebExplorerUtility.JsUtility.makeHerit(SelectedView, AbstractView);

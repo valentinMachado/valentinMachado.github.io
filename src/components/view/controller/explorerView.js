@@ -10,7 +10,7 @@ function ExplorerView() {
 
 };
 //just after constructor
-WebExplorerUtility.JsUtility.makeHerit(ExplorerView, AbstractComponent);
+WebExplorerUtility.JsUtility.makeHerit(ExplorerView, AbstractView);
 
 ExplorerView.prototype.initialize = function() {
 
