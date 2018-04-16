@@ -1,29 +1,29 @@
 "use strict";
 
-function View() {
+function View(id, rect) {
 
-	//create canvas associate
-	this.canvas = document.createElement("canvas");
+	this.id = id;
 
-	//ratio that cover on the x dim
-	this.xRatio = 0.5; //half at the begining
+	this.rect = {
+		bottom: 0,
+		right: 0,
+		top: 0,
+		left: 0
+	};
+
+	this.viewScene = null;
 };
 
-View.prototype.initialize = function() {
 
+View.prototype.onResize = function(top, bottom, left, right) {
+	this.rect.top = top;
+	this.rect.bottom = bottom;
+	this.rect.left = left;
+	this.rect.right = right;
+
+	this.viewScene.onResize(bottom - top, right - left);
 };
 
-View.prototype.onResize = function() {
-
-	this.canvas.width = window.innerWidth * this.xRatio;
-	this.canvas.height = window.innerHeight;
-};
-
-View.prototype.clear = function(color) {
-
-	if (!color) color = "white";
-
-	var context = this.canvas.getContext('2d');
-	context.fillStyle = color;
-	context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+View.prototype.setViewScene = function(v) {
+	this.viewScene = v;
 };
