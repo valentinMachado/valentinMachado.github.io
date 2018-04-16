@@ -10,8 +10,8 @@ function WebExplorer3D() {
 
 	//components
 	this.components = {
+		explorerView: new ExplorerView(),
 		selectedView: new SelectedView(),
-		explorerView: new ExplorerView()
 	};
 
 	//renderer
@@ -19,9 +19,17 @@ function WebExplorer3D() {
 		antialias: true
 	});
 	this.renderer.setPixelRatio(window.devicePixelRatio);
+
+	//tree of 3d div
+	this.divs3d = null;
 };
 
 WebExplorer3D.prototype.initialize = function() {
+
+	//create 3d ui
+	let inputHtml = document.getElementById("input");
+	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml);
+	console.info("%cHTML converted", "color:#00FF00;");
 
 	//init components
 	for (var c in this.components) {
@@ -33,12 +41,6 @@ WebExplorer3D.prototype.initialize = function() {
 	this.ui.initialize(this.renderer.domElement);
 	console.info("%cUI initialized", "color:#00FF00;");
 
-	//attach a vScene to a view
-	this.ui.viewLeft.setViewScene(this.components.selectedView.viewScene);
-	this.ui.viewRight.setViewScene(this.components.explorerView.viewScene);
-
-	//DEBUG
-	this.components.selectedView.viewScene.scene.background = new THREE.Color(1, 0, 0);
 
 	//window event
 	window.onresize = this.onResize.bind(this);

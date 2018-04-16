@@ -1,6 +1,6 @@
 "use strict";
 
-var wE3D = new WebExplorer3D();
+window.wE3D = new WebExplorer3D();
 
 try {
 	console.info("%cInitialize app ...", "color:#0000FF;");

@@ -2,6 +2,8 @@
 
 function AbstractView() {};
 
+WebExplorerUtility.JsUtility.makeHerit(AbstractView, AbstractController);
+
 AbstractView.prototype.initialize = function() {
 
 	//DEBUG
