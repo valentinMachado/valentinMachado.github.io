@@ -1,8 +1,8 @@
 "use strict";
 
-function AbstractComponent() {};
+function AbstractView() {};
 
-AbstractComponent.prototype.initialize = function() {
+AbstractView.prototype.initialize = function() {
 
 	//DEBUG
 	var geometry = new THREE.BoxGeometry(1, 1, 1);

@@ -2,7 +2,7 @@
 
 function WebExplorer3D() {
 
-	this.ui = new MainUI();
+	this.ui = new MainView();
 
 	//dt of the app
 	this.dt = 0;

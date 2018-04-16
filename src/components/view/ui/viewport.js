@@ -1,6 +1,6 @@
 "use strict";
 
-function View(id, rect) {
+function Viewport(id, rect) {
 
 	this.id = id;
 
@@ -15,7 +15,7 @@ function View(id, rect) {
 };
 
 
-View.prototype.onResize = function(top, bottom, left, right) {
+Viewport.prototype.onResize = function(top, bottom, left, right) {
 	this.rect.top = top;
 	this.rect.bottom = bottom;
 	this.rect.left = left;
@@ -24,6 +24,6 @@ View.prototype.onResize = function(top, bottom, left, right) {
 	this.viewScene.onResize(bottom - top, right - left);
 };
 
-View.prototype.setViewScene = function(v) {
+Viewport.prototype.setViewScene = function(v) {
 	this.viewScene = v;
 };
