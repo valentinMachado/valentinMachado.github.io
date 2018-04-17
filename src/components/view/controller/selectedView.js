@@ -24,7 +24,7 @@ SelectedView.prototype.display = function(parent) {
 	//put the parent a the center and child around
 	let scene = this.viewScene.scene;
 	this.displayDiv3D[parent.id] = [];
-	parent.iconMeshes.forEach(function(m) {
+	parent.selectedMeshes.forEach(function(m) {
 
 		m = m.clone(); //multiple scene force to clone
 		m.position.x = 0;

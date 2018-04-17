@@ -46,16 +46,6 @@ AbstractView.prototype.initialize = function() {
 	this.viewScene.camera.position.z = 5;
 };
 
-AbstractView.prototype.onPointerDown = function(mousePos, event) {
-	console.log("abstract down")
-};
-AbstractView.prototype.onPointerMove = function(mousePos, event) {
-	console.log("abstract move", mousePos);
-};
-AbstractView.prototype.onPointerUp = function(mousePos, event) {
-	console.log("abstract up")
-};
-
 //static
 const raycaster = new THREE.Raycaster();
 AbstractView.prototype.intersect = function(mousePos, mesh) {

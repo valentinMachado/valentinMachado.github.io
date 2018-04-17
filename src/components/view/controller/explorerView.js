@@ -19,8 +19,8 @@ ExplorerView.prototype.initialize = function() {
 };
 
 ExplorerView.prototype.tick = function() {
-	if (this.d) {
-		this.displayDiv3D[this.d.id].forEach(function(m) {
+	if (this.divHovered) {
+		this.displayDiv3D[this.divHovered.id].forEach(function(m) {
 			m.rotation.y += wE3D.dt;
 		});
 	}
@@ -44,6 +44,7 @@ ExplorerView.prototype.display = function(parent) {
 	parent.iconMeshes.forEach(function(m) {
 
 		m = m.clone();
+		m.scale.set(1.5, 1.5, 1.5);
 		m.position.x = 0;
 		m.position.y = 0;
 		m.position.z = 0;
@@ -97,25 +98,25 @@ ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
 		}
 	}
 
-
-
 	return divHovered;
 };
 
 
 //x,y are in ratio into this view
 ExplorerView.prototype.onPointerMove = function(mousePos, event) {
-	this.d = this.fetchDivUnderMouse(mousePos);
+	this.divHovered = this.fetchDivUnderMouse(mousePos);
 };
 
 ExplorerView.prototype.onPointerDown = function(mousePos, event) {
-	this.d = this.fetchDivUnderMouse(mousePos);
-	if (this.d) this.setCurrentDiv3D(this.d);
+	this.divHovered = this.fetchDivUnderMouse(mousePos);
 };
 
 ExplorerView.prototype.onPointerUp = function(mousePos, event) {
-	//previous
-	if (event.which === 3 && this.currentDiv3D.parent) {
-		this.setCurrentDiv3D(this.currentDiv3D.parent);
+	if (event.which === 3) {
+		//previous
+		if (this.currentDiv3D.parent) this.setCurrentDiv3D(this.currentDiv3D.parent);
+	} else {
+		this.divHovered = this.fetchDivUnderMouse(mousePos);
+		if (this.divHovered) this.setCurrentDiv3D(this.divHovered);
 	}
 }
