@@ -1,6 +1,6 @@
 "use strict";
 
-function ViewScene() {
+function ViewScene(canvas) {
 
 	//THREE scene
 	this.scene = new THREE.Scene();
@@ -8,13 +8,11 @@ function ViewScene() {
 	//THREE camera
 	this.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 
-	//ui
-	this.view = null;
-
 	//control
-	this.controls = new THREE.OrbitControls(this.camera);
+	this.controls = new THREE.OrbitControls(this.camera, canvas);
 	this.controls.minDistance = 2;
 	this.controls.maxDistance = 50;
+	this.controls.update();
 	// this.controls.enablePan = false;
 	// this.controls.enableZoom = false;
 	// this.controls.enabled = false;

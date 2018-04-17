@@ -8,17 +8,20 @@ function WebExplorer3D() {
 	this.dt = 0;
 	this.currentFps = 60; //60 frame per second
 
-	//components
-	this.components = {
-		explorerView: new ExplorerView(),
-		selectedView: new SelectedView(),
-	};
-
 	//renderer
 	this.renderer = new THREE.WebGLRenderer({
 		antialias: true
 	});
 	this.renderer.setPixelRatio(window.devicePixelRatio);
+	// this.renderer.shadowMap.enabled = true;
+	// this.renderer.shadowMap.type = THREE.PCFShadowMap;
+	var canvas = this.renderer.domElement;
+
+	//controllers
+	this.controllers = {
+		explorerView: new ExplorerView(canvas),
+		selectedView: new SelectedView(canvas),
+	};
 
 	//tree of 3d div
 	this.divs3d = null;
@@ -31,16 +34,18 @@ WebExplorer3D.prototype.initialize = function() {
 	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml);
 	console.info("%cHTML converted", "color:#00FF00;");
 
-	//init components
-	for (var c in this.components) {
-		this.components[c].initialize();
+	//init controllers
+	for (var c in this.controllers) {
+		this.controllers[c].initialize();
 	}
-	console.info("%cComponents initialized", "color:#00FF00;");
+	console.info("%cControllers initialized", "color:#00FF00;");
 
 	//init ui
 	this.ui.initialize(this.renderer.domElement);
 	console.info("%cUI initialized", "color:#00FF00;");
 
+	//select root
+	this.controllers.explorerView.setCurrentDiv3D(this.divs3d);
 
 	//window event
 	window.onresize = this.onResize.bind(this);
@@ -60,6 +65,13 @@ WebExplorer3D.prototype.onResize = function() {
 };
 
 WebExplorer3D.prototype.tick = function() {
+
+	//update controller
+	for (var c in this.controllers) {
+		if (this.controllers[c].tick) {
+			this.controllers[c].tick();
+		}
+	}
 
 	this.render();
 };
