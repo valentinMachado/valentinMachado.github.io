@@ -15,6 +15,8 @@ function MainView() {
 	this.dragging = false;
 
 	this.controllerHovered = null;
+
+	this.centralBar = null;
 };
 
 MainView.prototype.initialize = function(canvas) {
@@ -24,6 +26,9 @@ MainView.prototype.initialize = function(canvas) {
 
 	//append canvas to DOM
 	this.root.appendChild(canvas);
+
+	//create central button
+	this.initCentralButton();
 
 	//attach a vScene to a view
 	this.viewLeft.setViewScene(wE3D.controllers.selectedView.viewScene);
@@ -52,6 +57,36 @@ MainView.prototype.initialize = function(canvas) {
 
 };
 
+MainView.prototype.initCentralButton = function(event) {
+
+	this.centralBar = document.createElement("div");
+	this.centralBar.id = "centralBar";
+	this.root.appendChild(this.centralBar);
+
+	var draggingCentralBar = false;
+	this.centralBar.addEventListener("pointerdown", function(event) {
+		draggingCentralBar = true;
+	});
+	this.canvas.addEventListener("pointermove", function(event) {
+		if (draggingCentralBar) {
+			var x = event.clientX / this.canvas.clientWidth;
+			this.ratioBetweenViews = x;
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			this.onResize(w, h);
+		}
+	}.bind(this));
+	window.addEventListener("pointerup", function(event) {
+		draggingCentralBar = false;
+	});
+
+	this.updateHtmlStyle();
+};
+MainView.prototype.updateHtmlStyle = function(event) {
+	var w = this.canvas.clientWidth;
+	this.centralBar.style.left = -this.centralBar.clientWidth / 2 + this.ratioBetweenViews * w + "px";
+};
+
 MainView.prototype.fetchMousePosRatio = function(event) {
 	var x = event.offsetX / this.canvas.clientWidth;
 	var y = event.offsetY / this.canvas.clientHeight;
@@ -74,6 +109,7 @@ MainView.prototype.fetchMousePosRatio = function(event) {
 MainView.prototype.onResize = function(w, h) {
 	this.viewLeft.onResize(0, h, 0, this.ratioBetweenViews * w);
 	this.viewRight.onResize(0, h, this.ratioBetweenViews * w, w);
+	this.updateHtmlStyle();
 };
 
 //x is ratio 0->1
