@@ -36,6 +36,14 @@ window.WebExplorerUtility.Div3dUtility = {
 		for (var i = div3D.children.length - 1; i >= 0; i--) {
 			this.traverse(div3D.children[i], cb);
 		}
+	},
+
+	addToVertices: function(object, vector) {
+
+		object.geometry.vertices.forEach(function(v) {
+			v.add(vector);
+		});
+		object.geometry.verticesNeedUpdate = true;
 	}
 
 }

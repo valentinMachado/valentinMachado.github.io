@@ -39,15 +39,3 @@ AbstractView.prototype.intersect = function(mousePos, mesh) {
 	raycaster.setFromCamera(mousePos, this.viewScene.camera);
 	return raycaster.intersectObject(mesh);//not recursive
 };
-
-AbstractView.prototype.clearDisplayDiv3D = function() {
-	let scene = this.viewScene.scene;
-
-	for (let id in this.displayDiv3D) {
-		var meshes = this.displayDiv3D[id];
-		meshes.forEach(function(m) {
-			scene.remove(m);
-		});
-		delete this.displayDiv3D[id];
-	}
-};

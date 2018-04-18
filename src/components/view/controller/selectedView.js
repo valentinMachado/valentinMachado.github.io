@@ -5,35 +5,28 @@
 function SelectedView(canvas) {
 
 	this._super(canvas);
+
+	this.currentObject = null;
 };
 
 WebExplorerUtility.JsUtility.makeHerit(SelectedView, AbstractView);
 
 SelectedView.prototype.initialize = function() {
 
-	this.viewScene.scene.background = new THREE.Color(0.65, 0.65, 0.65);
+	var scene = this.viewScene.scene;
 
-	//init listeners
-
+	scene.background = new THREE.Color(0.65, 0.65, 0.65);
 };
 
 SelectedView.prototype.display = function(parent) {
 
-	this.clearDisplayDiv3D();
+	var scene = this.viewScene.scene;
 
-	//put the parent a the center and child around
-	let scene = this.viewScene.scene;
-	this.displayDiv3D[parent.id] = [];
+	//remove
+	if (this.currentObject) {
+		scene.remove(this.currentObject);
+	}
 
-
-	var m = parent.selectedObject.clone(); //multiple scene force to clone
-	m.position.x = 0;
-	m.position.y = 0;
-	m.position.z = 0;
-
-	this.displayDiv3D[parent.id].push(m);
-
-	scene.add(m);
-
-
+	this.currentObject = parent.selectedObject;
+	scene.add(this.currentObject);
 };
