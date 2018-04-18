@@ -38,6 +38,12 @@ Div3D.prototype.appendChild = function(d3D) {
 	this.children.push(d3D);
 };
 
+Div3D.prototype.showIcon = function(show) {
+	[this].concat(this.children).forEach(function(div) {
+		div.iconObject.visible = show;
+	});
+};
+
 Div3D.prototype.countDegree = function(d3D) {
 	//count degree into tree
 	var currentDiv = this;
@@ -101,9 +107,11 @@ Div3D.prototype._createIconObject = function() {
 	});
 
 	//default meshes
-	var size = Div3D.maxDegree / this.degree;
+	var size = 0.5 * Div3D.maxDegree / this.degree;
 	var geometry = new THREE.BoxGeometry(size, size, size);
 	var cube = new THREE.Mesh(geometry, material);
+
+	// WebExplorerUtility.Div3dUtility.addToVertices(cube, new THREE.Vector3(0, 2, 0));
 
 	this.iconObject = cube;
 };
