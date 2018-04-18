@@ -66,7 +66,6 @@ Div3D.prototype.addToVertices = function(object, vector) {
 	object.geometry.verticesNeedUpdate = true;
 };
 
-
 Div3D.prototype.buildMeshes = function() {
 
 	//compute scale
@@ -119,9 +118,6 @@ Div3D.prototype._createSelectedObject = function() {
 
 	this.selectedObject = cube;
 };
-
-
-
 Div3D.prototype._createIconObject = function() {
 
 	var material = new THREE.MeshStandardMaterial({
