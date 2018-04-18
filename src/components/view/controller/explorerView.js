@@ -2,9 +2,16 @@
 
 //component use to handle the exploration view (going throught the 3D DOM)
 
+const pathLineMaterial = new THREE.LineBasicMaterial({
+	color: "#0000FF",
+	linewidth: 2
+});
+
 function ExplorerView(canvas) {
 
 	this._super(canvas);
+
+	this.pathLine = null;
 };
 //just after constructor
 WebExplorerUtility.JsUtility.makeHerit(ExplorerView, AbstractView);
@@ -12,6 +19,9 @@ WebExplorerUtility.JsUtility.makeHerit(ExplorerView, AbstractView);
 ExplorerView.prototype.initialize = function() {
 
 	var scene = this.viewScene.scene;
+
+	//disable pan
+	this.viewScene.controls.enablePan = false; //cant modify target
 
 	var textureLoader = new THREE.TextureLoader();
 	scene.background = textureLoader.load("./src/assets/space-bg.jpg");
@@ -31,11 +41,42 @@ ExplorerView.prototype.tick = function() {
 
 };
 
+ExplorerView.prototype.updatePathLine = function() {
+
+	var scene = this.viewScene.scene;
+
+	//clear
+	if (this.pathLine) scene.remove(this.pathLine);
+
+	var geometry = new THREE.Geometry();
+
+	//update geometrie of line path
+	var worldPos = new THREE.Vector3();
+
+	//all parent are visible
+	var current = this.currentDiv3D;
+	while (current.parent) {
+
+		worldPos.setFromMatrixPosition(current.iconObject.matrixWorld);
+		//TODO
+		worldPos.y += current.fetchDistToChildPlane() * 0.5;
+		geometry.vertices.push(worldPos.clone());
+
+		current = current.parent;
+	}
+
+	worldPos.setFromMatrixPosition(current.iconObject.matrixWorld);
+	worldPos.y += current.fetchDistToChildPlane() * 0.5;
+	geometry.vertices.push(worldPos.clone());
+
+	this.pathLine = new THREE.Line(geometry, pathLineMaterial);
+	scene.add(this.pathLine);
+};
+
 ExplorerView.prototype.setCurrentDiv3D = function(div) {
 
 	this.currentDiv3D = div;
 	wE3D.controllers.selectedView.display(div);
-	this.makeCameraFocus(div);
 
 	//reset visibility
 	WebExplorerUtility.Div3dUtility.traverse(wE3D.divs3d, function(d) {
@@ -43,12 +84,17 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	});
 	//make current + child visible
 	this.currentDiv3D.showIcon(true);
+
 	//all parent are visible
 	var current = this.currentDiv3D;
 	while (current.parent) {
 		current = current.parent;
-		current.showIcon(true);
+		current.iconObject.visible = true;
 	}
+
+	this.updatePathLine();
+
+	this.makeCameraFocus(div);
 };
 
 ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
