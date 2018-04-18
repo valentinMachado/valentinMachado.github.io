@@ -38,7 +38,6 @@ ExplorerView.prototype.tick = function() {
 			d.iconObject.rotation.y += 0.1 * wE3D.dt;
 		});
 	}
-
 };
 
 ExplorerView.prototype.updatePathLine = function() {
@@ -136,11 +135,8 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	finalPos.z = worldPos.z;
 
 	//right zoom
-	var dist = 5 * Div3D.maxDegree / d.degree;
-	var dir = worldPos.clone().sub(finalPos);
-	var l = dir.length();
-	dir.normalize();
-	finalPos.add(dir.multiplyScalar(l - dist));
+	var dist = 5 * d.scale;
+	finalPos = this.fetchPosAtDistance(worldPos, finalPos, dist);
 
 	TWEEN.removeAll(); // remove previous tweens if needed
 
@@ -148,7 +144,7 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	// Tween
 	controls.enabled = false;
 	var zoomTween = new TWEEN.Tween(camera.position)
-		.to(finalPos, 300).onComplete(
+		.to(finalPos, 400).onComplete(
 			function() {
 
 				// backup original rotation
@@ -162,7 +158,7 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 				camera.quaternion.copy(startRotation);
 
 				var lookAtTween = new TWEEN.Tween(camera.quaternion)
-					.to(endRotation, 300)
+					.to(endRotation, 200)
 					.onComplete(function() {
 
 						controls.target = worldPos;
@@ -172,7 +168,6 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 					.start();
 			})
 		.start();
-
 };
 
 //x,y are in ratio into this view

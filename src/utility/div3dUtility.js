@@ -7,7 +7,7 @@ window.WebExplorerUtility.Div3dUtility = {
 	//take two class as argument and make them herit
 	createFromHtml: function(html, firstCall) {
 
-		var result = new Div3D(html);
+		var result = this.createFromElement(html);
 
 		for (let i = 0; i < result.html.children.length; i++) {
 			var child = result.html.children[i];
@@ -38,12 +38,14 @@ window.WebExplorerUtility.Div3dUtility = {
 		}
 	},
 
-	addToVertices: function(object, vector) {
+	createFromElement: function(el) {
 
-		object.geometry.vertices.forEach(function(v) {
-			v.add(vector);
-		});
-		object.geometry.verticesNeedUpdate = true;
+		switch (el.localName) {
+			case "img3d":
+				return new Img3D(el);
+			default:
+				return new Div3D(el);
+		}
 	}
 
 }

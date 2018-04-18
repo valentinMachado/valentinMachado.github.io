@@ -37,5 +37,12 @@ AbstractView.prototype.initScene = function() {
 const raycaster = new THREE.Raycaster();
 AbstractView.prototype.intersect = function(mousePos, mesh) {
 	raycaster.setFromCamera(mousePos, this.viewScene.camera);
-	return raycaster.intersectObject(mesh);//not recursive
+	return raycaster.intersectObject(mesh); //not recursive
+};
+
+AbstractView.prototype.fetchPosAtDistance = function(target, currentPos, dist) {
+	var dir = target.clone().sub(currentPos);
+	var l = dir.length();
+	dir.normalize();
+	return currentPos.add(dir.multiplyScalar(l - dist));
 };

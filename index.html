@@ -2,7 +2,7 @@
 <html>
   <head>
 	<meta charset=utf-8 />
-    <title>HTML 3D</title>
+    <title>Valentin Machado</title>
     <link rel="stylesheet" href="./src/css/index.css">
   </head>
   <body oncontextmenu="return false;">
@@ -11,61 +11,39 @@
   	<div id ="webExplorer3D"></div>
 
   	<!-- Do not display this html it's just to describe the ui to generate -->
+    <!-- when a img tag has children in html, in javascript they appear in parent img children list -->
+    <!-- so only custom tag just 3d at the end of the native name -->
   	<div id = "input">
-  		<!-- Add Html here -->
-      <div> Hello world </div>
-      <div> test 1
-        <div></div>
-        <div>
-          <div></div>
-          <div></div>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div></div>
-        </div>
-        <div></div>
-        <div></div>
-      </div>
-      <div> test 1
-        <div></div>
-        <div>
-          <div></div>
-          <div></div>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div></div>
-        </div>
-        <div></div>
-        <div></div>
-      </div>
-      <div> test 1
-        <div></div>
-        <div>
-          <div></div>
-          <div></div>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div></div>
-        </div>
-        <div></div>
-        <div></div>
-      </div>
-      <div> test 2 </div>
+
+      <div3d data-label="test">
+        <div3d></div3d>
+        <div3d>
+          <div3d></div3d>
+          <div3d></div3d>
+          <div3d>
+            <div3d></div3d>
+            <div3d></div3d>
+            <div3d></div3d>
+          </div3d>
+          <div3d></div3d>
+        </div3d>
+        <img3d data-src="./src/assets/space-bg.jpg" ></img3d>
+        <img3d data-src="./src/assets/space-bg.jpg" ></img3d>
+        <div3d></div3d>
+      </div3d>
+
+      <img3d data-src="./src/assets/space-bg.jpg" >
+        <div3d id="c1"></div3d>
+        <div3d id="c2"></div3d>
+      </img3d>
+
   	</div>
 
   	<!-- IMPORT VENDORS -->
     <script src="./src/vendors/Tween.js"></script>
     <script src="./src/vendors/three.js"></script>
     <script src="./src/vendors/THREE.OrbitControls.js"></script>
+    <script src="./src/vendors/THREE.CSS3DRenderer.js"></script>
 
   	<!-- IMPORT APP JAVASCRIPT -->
 
@@ -75,7 +53,8 @@
 
   	<!-- MODEL -->
     <script src="./src/components/view/model/viewScene.js"></script>
-    <script src="./src/components/view/model/div3d.js"></script>
+    <script src="./src/components/view/model/div3d/div3d.js"></script>
+    <script src="./src/components/view/model/div3d/img3d.js"></script>
 
     <!-- CONTROLLER -->
     <script src="./src/components/abstractController.js"></script>
