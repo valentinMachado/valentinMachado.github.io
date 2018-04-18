@@ -24,16 +24,16 @@ SelectedView.prototype.display = function(parent) {
 	//put the parent a the center and child around
 	let scene = this.viewScene.scene;
 	this.displayDiv3D[parent.id] = [];
-	parent.selectedMeshes.forEach(function(m) {
 
-		m = m.clone(); //multiple scene force to clone
-		m.position.x = 0;
-		m.position.y = 0;
-		m.position.z = 0;
 
-		this.displayDiv3D[parent.id].push(m);
+	var m = parent.selectedObject.clone(); //multiple scene force to clone
+	m.position.x = 0;
+	m.position.y = 0;
+	m.position.z = 0;
 
-		scene.add(m);
-	}.bind(this));
+	this.displayDiv3D[parent.id].push(m);
+
+	scene.add(m);
+
 
 };

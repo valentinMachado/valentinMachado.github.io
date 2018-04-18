@@ -22,35 +22,22 @@ AbstractView.prototype.initScene = function() {
 	light.position.set(0, 1500, 1000);
 	light.target.position.set(0, 0, 0);
 
-	light.castShadow = true;
+	// light.castShadow = true;
 
-	light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 1200, 2500));
-	light.shadow.bias = 0.0001;
+	// light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 1200, 2500));
+	// light.shadow.bias = 0.0001;
 
-	light.shadow.mapSize.width = 4096;
-	light.shadow.mapSize.height = 4096;
+	// light.shadow.mapSize.width = 4096;
+	// light.shadow.mapSize.height = 4096;
 
 	scene.add(light);
-};
-
-AbstractView.prototype.initialize = function() {
-
-	//DEBUG
-	console.log("debug");
-	var geometry = new THREE.BoxGeometry(1, 1, 1);
-	var material = new THREE.MeshBasicMaterial({
-		color: 0x00ff00
-	});
-	var cube = new THREE.Mesh(geometry, material);
-	this.viewScene.scene.add(cube);
-	this.viewScene.camera.position.z = 5;
 };
 
 //static
 const raycaster = new THREE.Raycaster();
 AbstractView.prototype.intersect = function(mousePos, mesh) {
 	raycaster.setFromCamera(mousePos, this.viewScene.camera);
-	return raycaster.intersectObject(mesh, true);
+	return raycaster.intersectObject(mesh);//not recursive
 };
 
 AbstractView.prototype.clearDisplayDiv3D = function() {
