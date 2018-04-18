@@ -11,7 +11,8 @@ function ViewScene(canvas) {
 	//control
 	this.controls = new THREE.OrbitControls(this.camera, canvas);
 	this.controls.minDistance = 2;
-	this.controls.maxDistance = 50;
+	this.controls.maxDistance = 100;
+	this.controls.zoomSpeed = 2;
 	this.controls.update();
 	// this.controls.enablePan = false;
 	// this.controls.enableZoom = false;

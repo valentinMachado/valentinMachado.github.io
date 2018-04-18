@@ -39,17 +39,26 @@ WebExplorer3D.prototype.initialize = function() {
 	//create 3d ui
 	let inputHtml = document.getElementById("input");
 	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml, true);
-	console.info("%cHTML converted", "color:#00FF00;");
+	console.info("%cHTML converted", "color:#27AE60;");
+	WebExplorerUtility.Div3dUtility.traverse(this.divs3d, function(d) {
+		//display
+		var text = "";
+		for (let i = 1; i < d.degree; i++) {
+			text += "______";
+		}
+		text += d.type + "_" + d.id;
+		console.info("%c" + text, "color:#27AE60;");
+	});
 
 	//init controllers
 	for (var c in this.controllers) {
 		this.controllers[c].initialize();
 	}
-	console.info("%cControllers initialized", "color:#00FF00;");
+	console.info("%cControllers initialized", "color:#27AE60;");
 
 	//init ui
 	this.ui.initialize(this.renderer.domElement);
-	console.info("%cUI initialized", "color:#00FF00;");
+	console.info("%cUI initialized", "color:#27AE60;");
 
 	//window event
 	window.onresize = this.onResize.bind(this);
