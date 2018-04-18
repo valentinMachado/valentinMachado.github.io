@@ -60,11 +60,11 @@ Div3D.prototype.buildMeshes = function() {
 
 	//register into parent
 	if (this.parent) {
-		this.iconObject.position.y = -2 * Div3D.maxDegree;
+		this.iconObject.position.y = -this.fetchDistToChildPlane();
 		var index = this.parent.children.indexOf(this);
 		var angle = index * 2 * Math.PI / this.parent.children.length;
 
-		var radius = 5;
+		var radius = 2;
 
 		this.iconObject.position.x = radius * Div3D.maxDegree / this.degree * Math.cos(angle);
 		this.iconObject.position.z = radius * Div3D.maxDegree / this.degree * Math.sin(angle);
@@ -74,6 +74,11 @@ Div3D.prototype.buildMeshes = function() {
 
 	this._createSelectedObject();
 };
+
+Div3D.prototype.fetchDistToChildPlane = function() {
+	return 5 * Div3D.maxDegree / this.degree;
+};
+
 
 // //abstract method
 // const loader = new THREE.FontLoader();
@@ -111,7 +116,7 @@ Div3D.prototype._createIconObject = function() {
 	var geometry = new THREE.BoxGeometry(size, size, size);
 	var cube = new THREE.Mesh(geometry, material);
 
-	// WebExplorerUtility.Div3dUtility.addToVertices(cube, new THREE.Vector3(0, 2, 0));
+	WebExplorerUtility.Div3dUtility.addToVertices(cube, new THREE.Vector3(0, this.fetchDistToChildPlane() * 0.5, 0));
 
 	this.iconObject = cube;
 };
