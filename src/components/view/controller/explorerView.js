@@ -88,7 +88,8 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	var current = this.currentDiv3D;
 	while (current.parent) {
 		current = current.parent;
-		current.iconObject.visible = true;
+		// current.iconObject.visible = true;
+		current.showIcon(true);
 	}
 
 	this.updatePathLine();
@@ -128,11 +129,21 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	var worldPos = new THREE.Vector3();
 	worldPos.setFromMatrixPosition(object.matrixWorld);
 
+	var ratioView = 0.8;
+	var dir = new THREE.Vector3(1, ratioView, 0); //default
+	if (d.parent) {
+		// var parentWorldPos = new THREE.Vector3().setFromMatrixPosition(d.parent.iconObject.matrixWorld);
+		var parentWorldPos = camera.position.clone();
+		dir = parentWorldPos.sub(worldPos);
+		// dir.negate();
+		dir.y = ratioView * Math.sqrt(dir.x * dir.x + dir.z * dir.z);
+	}
+
 	//right angle
 	var finalPos = new THREE.Vector3();
-	finalPos.x = worldPos.x + 10;
-	finalPos.y = worldPos.y + 10;
-	finalPos.z = worldPos.z;
+	finalPos.x = worldPos.x + dir.x;
+	finalPos.y = worldPos.y + dir.y;
+	finalPos.z = worldPos.z + dir.z;
 
 	//right zoom
 	var dist = 5 * d.scale;
@@ -144,29 +155,37 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	// Tween
 	controls.enabled = false;
 	var zoomTween = new TWEEN.Tween(camera.position)
-		.to(finalPos, 400).onComplete(
+		.to(finalPos, 300).onComplete(
 			function() {
 
-				// backup original rotation
-				var startRotation = camera.quaternion.clone();
-
-				// final rotation (with lookAt)
-				camera.lookAt(worldPos);
-				var endRotation = camera.quaternion.clone();
-
-				// revert to original rotation
-				camera.quaternion.copy(startRotation);
-
-				var lookAtTween = new TWEEN.Tween(camera.quaternion)
-					.to(endRotation, 200)
-					.onComplete(function() {
-
-						controls.target = worldPos;
-						controls.enabled = true;
-						controls.update();
-					})
-					.start();
 			})
+		.start();
+
+	// backup original rotation
+	var startRotation = camera.quaternion.clone();
+
+	// final rotation (with lookAt)
+	var oldPos = camera.position.clone();
+	camera.position.x = finalPos.x;
+	camera.position.y = finalPos.y;
+	camera.position.z = finalPos.z;
+	camera.lookAt(worldPos);
+	var endRotation = camera.quaternion.clone();
+
+	// revert to original rotation
+	camera.quaternion.copy(startRotation);
+	camera.position.x = oldPos.x;
+	camera.position.y = oldPos.y;
+	camera.position.z = oldPos.z;
+
+	var lookAtTween = new TWEEN.Tween(camera.quaternion)
+		.to(endRotation, 600)
+		.onComplete(function() {
+
+			controls.target = worldPos;
+			controls.enabled = true;
+			controls.update();
+		})
 		.start();
 };
 
