@@ -25,13 +25,20 @@ function WebExplorer3D() {
 
 	//tree of 3d div
 	this.divs3d = null;
+
+	//DEBUG
+	// var material = new THREE.MeshStandardMaterial();
+	// var geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+	// var cicle = new THREE.Mesh(geometry, material);
+	// this.debug = cicle;
+	// this.controllers.explorerView.viewScene.scene.add(cicle);
 };
 
 WebExplorer3D.prototype.initialize = function() {
 
 	//create 3d ui
 	let inputHtml = document.getElementById("input");
-	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml);
+	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml, true);
 	console.info("%cHTML converted", "color:#00FF00;");
 
 	//init controllers
@@ -43,9 +50,6 @@ WebExplorer3D.prototype.initialize = function() {
 	//init ui
 	this.ui.initialize(this.renderer.domElement);
 	console.info("%cUI initialized", "color:#00FF00;");
-
-	//select root
-	this.controllers.explorerView.setCurrentDiv3D(this.divs3d);
 
 	//window event
 	window.onresize = this.onResize.bind(this);
@@ -73,6 +77,10 @@ WebExplorer3D.prototype.tick = function() {
 		}
 	}
 
+	//animation update
+	TWEEN.update();
+
+	//render viewport frames
 	this.render();
 };
 

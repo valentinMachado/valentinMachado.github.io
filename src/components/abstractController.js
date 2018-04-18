@@ -2,6 +2,10 @@
 
 function AbstractController() {};
 
+AbstractController.prototype.initialize = function() {
+	console.log("abstract init");
+};
+
 AbstractController.prototype.onPointerDown = function(mousePos, event) {
 	console.log("abstract down")
 };

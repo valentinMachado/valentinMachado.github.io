@@ -1,7 +1,10 @@
 "use strict";
 
+
 var idCount = 0;
 var idMap = {};
+
+Div3D.maxDegree = 1;
 
 function Div3D(html) {
 
@@ -9,14 +12,21 @@ function Div3D(html) {
 	idMap[this.id] = this;
 	idCount++;
 
+	//html
 	this.html = html;
 
-	this._createIconMeshes();
-	this._createSelectedMeshes();
-
+	//div3d parent
 	this.parent = null;
 
+	//div3d child
 	this.children = [];
+
+	//meshes
+	this.iconObject = null;
+	this.selectedObject = null;
+
+	//what degree into the tree
+	this.degree = 1;
 }
 
 Div3D.getDiv3dFromId = function(id) {
@@ -28,11 +38,41 @@ Div3D.prototype.appendChild = function(d3D) {
 	this.children.push(d3D);
 };
 
-//abstract method
-const loader = new THREE.FontLoader();
+Div3D.prototype.countDegree = function(d3D) {
+	//count degree into tree
+	var currentDiv = this;
+	while (currentDiv.parent) {
+		currentDiv = currentDiv.parent;
+		this.degree++;
+	}
+	Div3D.maxDegree = Math.max(Div3D.maxDegree, this.degree);
+};
 
-Div3D.prototype._createSelectedMeshes = function() {
-	this.selectedMeshes = [];
+Div3D.prototype.buildMeshes = function() {
+
+	this._createIconObject();
+
+	//register into parent
+	if (this.parent) {
+		this.iconObject.position.y = -2 * Div3D.maxDegree;
+		var index = this.parent.children.indexOf(this);
+		var angle = index * 2 * Math.PI / this.parent.children.length;
+
+		var radius = 5;
+
+		this.iconObject.position.x = radius * Div3D.maxDegree / this.degree * Math.cos(angle);
+		this.iconObject.position.z = radius * Div3D.maxDegree / this.degree * Math.sin(angle);
+
+		this.parent.iconObject.add(this.iconObject);
+	}
+
+	this._createSelectedObject();
+};
+
+// //abstract method
+// const loader = new THREE.FontLoader();
+
+Div3D.prototype._createSelectedObject = function() {
 
 	var material = new THREE.MeshStandardMaterial({
 
@@ -46,13 +86,10 @@ Div3D.prototype._createSelectedMeshes = function() {
 	//default meshes
 	var geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 	var cicle = new THREE.Mesh(geometry, material);
-	this.selectedMeshes.push(cicle);
+	this.selectedObject = cicle;
 };
 
-Div3D.prototype._createIconMeshes = function() {
-
-	this.iconMeshes = [];
-	var iconMeshes = this.iconMeshes;
+Div3D.prototype._createIconObject = function() {
 
 	var material = new THREE.MeshStandardMaterial({
 
@@ -63,32 +100,10 @@ Div3D.prototype._createIconMeshes = function() {
 
 	});
 
-	var html = this.html;
-
-	// loader.load('./src/assets/fonts/helvetiker_regular.typeface.json', function(font) {
-
-
-
-	// 	var textGeo = new THREE.TextGeometry("test", {
-	// 		font: font,
-	// 		size: 1,
-	// 		height: 1,
-	// 		curveSegments: 12,
-	// 		bevelEnabled: true,
-	// 		bevelThickness: 10,
-	// 		bevelSize: 8,
-	// 		bevelSegments: 5
-	// 	});
-
-	// 	// textGeo.computeBoundingBox();
-	// 	// textGeo.computeVertexNormals();
-
-	// 	var text = new THREE.Mesh(textGeo, material);
-	// 	// iconMeshes.push(text);
-	// });
-
 	//default meshes
-	var geometry = new THREE.BoxGeometry(1, 1, 1);
+	var size = Div3D.maxDegree / this.degree;
+	var geometry = new THREE.BoxGeometry(size, size, size);
 	var cube = new THREE.Mesh(geometry, material);
-	this.iconMeshes.push(cube);
+
+	this.iconObject = cube;
 };
