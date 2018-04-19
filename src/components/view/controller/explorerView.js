@@ -155,7 +155,7 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	// Tween
 	controls.enabled = false;
 	var zoomTween = new TWEEN.Tween(camera.position)
-		.to(finalPos, 300).onComplete(
+		.to(finalPos, 599).onComplete(
 			function() {
 
 			})
