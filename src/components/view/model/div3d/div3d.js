@@ -42,6 +42,10 @@ Div3D.prototype.appendChild = function(d3D) {
 	this.children.push(d3D);
 };
 
+Div3D.prototype.isFolder = function() {
+	return this.children.length;
+};
+
 Div3D.prototype.showIcon = function(show) {
 	[this].concat(this.children).forEach(function(div) {
 		div.iconObject.visible = show;
@@ -72,35 +76,69 @@ Div3D.prototype.buildMeshes = function() {
 	this.scale = Div3D.maxDegree / this.degree;
 
 	this._createIconObject();
-	var offset = new THREE.Vector3(0, this.fetchDistToChildPlane() * 0.5, 0);
-	this.addToVertices(this.iconObject, offset);
-
 
 	//register into parent
 	if (this.parent) {
+
+		//add iconobject to its iconobj
 		this.iconObject.position.y = -this.fetchDistToChildPlane();
 		var index = this.parent.children.indexOf(this);
 		var angle = index * 2 * Math.PI / this.parent.children.length;
-
-		var radius = 2;
-
+		var radius = 3;
 		this.iconObject.position.x = radius * this.scale * Math.cos(angle);
 		this.iconObject.position.z = radius * this.scale * Math.sin(angle);
-
 		this.parent.iconObject.add(this.iconObject);
+
+		//add its iconobj to its selected obj
+		var clone = this.iconObject.clone();
+		this.parent.selectedObject.add(clone);
+		//random position on a sphere
+		var random1 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+		WebExplorerUtility.MathUtility.fetchPosAtDistance(
+			this.parent.selectedObject.position,
+			random1,
+			9 * this.scale);
+		clone.position.copy(random1);
+		//register its plane
+		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+		clone.userData.planeNormal = random2.cross(random1);
+		clone.userData.speed = Math.random() * 0.3 + 0.7;
+		//create a line
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push(clone.position);
+		geometry.vertices.push(this.parent.selectedObject.position);
+		const pathLineMaterial = new THREE.LineBasicMaterial({
+			color: "#0000FF",
+			linewidth: 1
+		});
+		this.parent.selectedObject.add(new THREE.Line(geometry, pathLineMaterial));
 	}
 
-	this._createSelectedObject();
+
+	if (this.isFolder()) {
+		//folder
+		this._createSelectedObjectFolder();
+	} else {
+		//file
+		this._createSelectedObjectFile();
+	}
 };
 
 Div3D.prototype.fetchDistToChildPlane = function() {
-	return 5 * this.scale;
+	return 7 * this.scale;
 };
 
 // //abstract method
 // const loader = new THREE.FontLoader();
+Div3D.prototype._createSelectedObjectFolder = function() {
 
-Div3D.prototype._createSelectedObject = function() {
+	this.selectedObject = this.iconObject.clone();
+	this.selectedObject.position.x = 0;
+	this.selectedObject.position.y = 0;
+	this.selectedObject.position.z = 0;
+};
+
+Div3D.prototype._createSelectedObjectFile = function() {
 
 	var material = new THREE.MeshStandardMaterial({
 

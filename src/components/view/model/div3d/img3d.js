@@ -19,7 +19,7 @@ Img3D.prototype._createIconObject = function() {
 
 	});
 
-	var size = 0.5 * this.scale;
+	var size = 0.25 * this.scale;
 	var geometry = new THREE.SphereGeometry(size, 32, 32);
 	var cube = new THREE.Mesh(geometry, material);
 
@@ -27,7 +27,7 @@ Img3D.prototype._createIconObject = function() {
 	this.iconObject = cube;
 };
 
-Img3D.prototype._createSelectedObject = function() {
+Img3D.prototype._createSelectedObjectFile = function() {
 
 	//put img on a plane
 	var textureLoader = new THREE.TextureLoader();
