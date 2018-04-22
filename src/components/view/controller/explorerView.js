@@ -12,6 +12,12 @@ function ExplorerView(canvas) {
 	this._super(canvas);
 
 	this.pathLine = null;
+
+	//DEBUG
+	// var material = new THREE.MeshStandardMaterial();
+	// var geometry = new THREE.SphereGeometry(1, 32, 32);
+	// this.cube = new THREE.Mesh(geometry, material);
+	// this.viewScene.scene.add(this.cube);
 };
 //just after constructor
 WebExplorerUtility.JsUtility.makeHerit(ExplorerView, AbstractView);
@@ -57,15 +63,11 @@ ExplorerView.prototype.updatePathLine = function() {
 	while (current.parent) {
 
 		worldPos.setFromMatrixPosition(current.iconObject.matrixWorld);
-		//TODO
-		worldPos.y += current.fetchDistToChildPlane() * 0.5;
 		geometry.vertices.push(worldPos.clone());
-
 		current = current.parent;
 	}
 
 	worldPos.setFromMatrixPosition(current.iconObject.matrixWorld);
-	worldPos.y += current.fetchDistToChildPlane() * 0.5;
 	geometry.vertices.push(worldPos.clone());
 
 	this.pathLine = new THREE.Line(geometry, pathLineMaterial);
@@ -126,31 +128,29 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	var camera = this.viewScene.camera;
 	var controls = this.viewScene.controls;
 
-	var worldPos = new THREE.Vector3();
-	worldPos.setFromMatrixPosition(object.matrixWorld);
+	var finalTarget = new THREE.Vector3();
+	finalTarget.setFromMatrixPosition(object.matrixWorld);
+	finalTarget.y -= 0.35 * d.fetchDistToChildPlane(); //target at the center
 
 	var ratioView = 0.8;
 	var dir = new THREE.Vector3(1, ratioView, 0); //default
 	if (d.parent) {
 		// var parentWorldPos = new THREE.Vector3().setFromMatrixPosition(d.parent.iconObject.matrixWorld);
 		var parentWorldPos = camera.position.clone();
-		dir = parentWorldPos.sub(worldPos);
+		dir = parentWorldPos.sub(finalTarget);
 		// dir.negate();
 		dir.y = ratioView * Math.sqrt(dir.x * dir.x + dir.z * dir.z);
 	}
 
 	//right angle
 	var finalPos = new THREE.Vector3();
-	finalPos.x = worldPos.x + dir.x;
-	finalPos.y = worldPos.y + dir.y;
-	finalPos.z = worldPos.z + dir.z;
+	finalPos.x = finalTarget.x + dir.x;
+	finalPos.y = finalTarget.y + dir.y;
+	finalPos.z = finalTarget.z + dir.z;
 
 	//right zoom
-	var dist = 5 * d.scale;
-	finalPos = this.fetchPosAtDistance(worldPos, finalPos, dist);
-
-	TWEEN.removeAll(); // remove previous tweens if needed
-
+	var dist = 6 * d.scale;
+	finalPos = WebExplorerUtility.MathUtility.fetchPosAtDistance(finalTarget, finalPos, dist);
 
 	// Tween
 	controls.enabled = false;
@@ -166,23 +166,19 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 
 	// final rotation (with lookAt)
 	var oldPos = camera.position.clone();
-	camera.position.x = finalPos.x;
-	camera.position.y = finalPos.y;
-	camera.position.z = finalPos.z;
-	camera.lookAt(worldPos);
+	camera.position.copy(finalPos);
+	camera.lookAt(finalTarget);
 	var endRotation = camera.quaternion.clone();
 
 	// revert to original rotation
 	camera.quaternion.copy(startRotation);
-	camera.position.x = oldPos.x;
-	camera.position.y = oldPos.y;
-	camera.position.z = oldPos.z;
+	camera.position.copy(oldPos);
 
 	var lookAtTween = new TWEEN.Tween(camera.quaternion)
 		.to(endRotation, 600)
 		.onComplete(function() {
 
-			controls.target = worldPos;
+			controls.target = finalTarget;
 			controls.enabled = true;
 			controls.update();
 		})
@@ -190,9 +186,13 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 };
 
 //x,y are in ratio into this view
-// ExplorerView.prototype.onPointerMove = function(mousePos, event) {
-// 	this.divHovered = this.fetchDivUnderMouse(mousePos);
-// };
+ExplorerView.prototype.onPointerMove = function(mousePos, event) {
+	if (this.fetchDivUnderMouse(mousePos)) {
+		document.body.style.cursor = "pointer";
+	} else {
+		document.body.style.cursor = "auto";
+	}
+};
 
 ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 

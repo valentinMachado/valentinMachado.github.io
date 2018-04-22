@@ -41,7 +41,7 @@ window.WebExplorerUtility.Div3dUtility = {
 	createFromElement: function(el) {
 
 		switch (el.localName) {
-			case "img3d":
+			case "img":
 				return new Img3D(el);
 			default:
 				return new Div3D(el);
