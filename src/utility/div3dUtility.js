@@ -4,6 +4,9 @@ window.WebExplorerUtility = window.WebExplorerUtility || {};
 
 window.WebExplorerUtility.Div3dUtility = {
 
+	//font load async
+	font: null,
+
 	//take two class as argument and make them herit
 	createFromHtml: function(html, firstCall) {
 
@@ -46,6 +49,17 @@ window.WebExplorerUtility.Div3dUtility = {
 			default:
 				return new Div3D(el);
 		}
+	},
+
+	//common mesh building
+	buildLabelMesh: function(string) {
+		var geometry = new THREE.TextGeometry(string, {
+			font: this.font,
+			size: 0.5,
+			height: 0.25
+		});
+
+		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.textMat);
 	}
 
 }

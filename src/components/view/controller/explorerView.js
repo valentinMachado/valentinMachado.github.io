@@ -2,11 +2,6 @@
 
 //component use to handle the exploration view (going throught the 3D DOM)
 
-const pathLineMaterial = new THREE.LineBasicMaterial({
-	color: "#0000FF",
-	linewidth: 2
-});
-
 function ExplorerView(canvas) {
 
 	this._super(canvas);
@@ -46,7 +41,8 @@ ExplorerView.prototype.initSkyBox = function() {
 	];
 
 	// var reflectionCube = THREE.CubeTextureLoader(urls);
-	var reflectionCube = THREE.ImageUtils.loadTextureCube(urls);
+	var loader = new THREE.CubeTextureLoader();
+	var reflectionCube = loader.load(urls);
 
 	reflectionCube.format = THREE.RGBFormat;
 	var shader = THREE.ShaderLib["cube"];
@@ -100,7 +96,7 @@ ExplorerView.prototype.updatePathLine = function() {
 	worldPos.setFromMatrixPosition(current.iconObject.matrixWorld);
 	geometry.vertices.push(worldPos.clone());
 
-	this.pathLine = new THREE.Line(geometry, pathLineMaterial);
+	this.pathLine = new THREE.Line(geometry, WebExplorerUtility.MaterialUtility.lineMat);
 	scene.add(this.pathLine);
 };
 
@@ -162,7 +158,9 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 
 	var finalTarget = new THREE.Vector3();
 	finalTarget.setFromMatrixPosition(object.matrixWorld);
-	finalTarget.y -= 0.35 * d.fetchDistToChildPlane(); //target at the center
+	if (d.isFolder()) {
+		finalTarget.y -= 0.35 * d.fetchDistToChildPlane(); //target at the center
+	}
 
 	var ratioView = 0.8;
 	var dir = new THREE.Vector3(1, ratioView, 0); //default
@@ -243,7 +241,6 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 			this.setCurrentDiv3D(this.divHovered);
 		}
 	}
-
 };
 
 // ExplorerView.prototype.onPointerUp = function(mousePos, event) {

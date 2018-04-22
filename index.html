@@ -13,12 +13,12 @@
   	<!-- Do not display this html it's just to describe the ui to generate -->
     <!-- when a img tag has children in html, in javascript they appear in parent img children list -->
     <!-- so only custom tag just 3d at the end of the native name -->
-  	<div id = "input">
+  	<div id = "input" data-label="Valentin MACHADO">
 
-      <div data-label="test">
-        <div></div>
+      <div data-label="projet 1">
+        <div data-label="projet 2"></div>
         <div>
-          <div></div>
+          <div data-label="hello" ></div>
           <div></div>
           <div>
             <div></div>
@@ -27,8 +27,8 @@
           </div>
           <div></div>
         </div>
-        <img data-src="./src/assets/space-bg.jpg" ></img>
-        <img data-src="./src/assets/space-bg.jpg" ></img>
+        <img data-src="./src/assets/img/un.jpg" ></img>
+        <img data-src="./src/assets/img/deux.jpg" ></img>
         <div></div>
       </div>
 
@@ -41,7 +41,7 @@
         <div ></div>
 
         <div id="c2"></div>
-      <img data-src="./src/assets/space-bg.jpg" >
+      <img data-src="./src/assets/img/bg.jpg" data-label="une belle photo">
       </img>
 
   	</div>
@@ -56,6 +56,7 @@
 
   	<!-- UTILITY -->
     <script src="./src/utility/jsUtility.js"></script>
+    <script src="./src/utility/materialUtility.js"></script>
     <script src="./src/utility/div3dUtility.js"></script>
     <script src="./src/utility/mathUtility.js"></script>
 

@@ -14,4 +14,3 @@ AbstractView.prototype.intersect = function(mousePos, mesh) {
 	raycaster.setFromCamera(mousePos, this.viewScene.camera);
 	return raycaster.intersectObject(mesh); //not recursive
 };
-

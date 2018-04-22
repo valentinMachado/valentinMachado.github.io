@@ -34,8 +34,23 @@ function WebExplorer3D() {
 	// this.controllers.explorerView.viewScene.scene.add(cicle);
 };
 
-WebExplorer3D.prototype.initialize = function() {
+WebExplorer3D.prototype.load = function() {
 
+	return new Promise((resolve, reject) => {
+
+		var loader = new THREE.FontLoader();
+
+		loader.load('./src/assets/fonts/helvetiker_regular.typeface.json', function(font) {
+			WebExplorerUtility.Div3dUtility.font = font;
+			console.info("%cFont Loaded", "color:#27AE60;");
+
+			//end promise
+			resolve();
+		});
+	});
+};
+
+WebExplorer3D.prototype.initialize = function() {
 	//create 3d ui
 	let inputHtml = document.getElementById("input");
 	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml, true);
