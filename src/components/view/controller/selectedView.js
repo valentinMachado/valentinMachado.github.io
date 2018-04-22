@@ -15,25 +15,33 @@ SelectedView.prototype.initialize = function() {
 
 	var scene = this.viewScene.scene;
 
-	scene.background = new THREE.Color(0.65, 0.65, 0.65);
+	var textureLoader = new THREE.TextureLoader();
+	scene.background = textureLoader.load("./src/assets/img/bg.jpg");
 };
 
 SelectedView.prototype.tick = function() {
 
-	if (this.currentDiv3D && this.currentDiv3D.isFolder()) {
+	if (this.currentDiv3D) {
 
-		this.currentDiv3D.selectedObject.children.forEach(function(child) {
+		if (this.currentDiv3D.isFolder()) {
 
-			if (child.userData.planeNormal) {
-				var forwardVector = child.position.clone().cross(child.userData.planeNormal);
-				forwardVector.setLength(child.userData.speed * wE3D.dt);
-				child.position.add(forwardVector);
-			} else {
-				//line
-				child.geometry.verticesNeedUpdate = true;
-			}
+			this.currentDiv3D.selectedObject.children.forEach(function(child) {
 
-		});
+				if (child.userData.planeNormal) {
+					var forwardVector = child.position.clone().cross(child.userData.planeNormal);
+					forwardVector.setLength(child.userData.speed * wE3D.dt);
+					child.position.add(forwardVector);
+				} else {
+					//line
+					child.geometry.verticesNeedUpdate = true;
+				}
+
+			});
+		} else {
+
+			this.currentDiv3D.tick();
+		}
+
 	}
 };
 
@@ -74,5 +82,52 @@ SelectedView.prototype.adjustCameraZoom = function() {
 };
 
 SelectedView.prototype.onPointerMove = function(mousePos, event) {
+	// if (this.fetchDivUnderMouse(mousePos)) {
+	// 	document.body.style.cursor = "pointer";
+	// } else {
+	// }
 	document.body.style.cursor = "auto";
 };
+
+// SelectedView.prototype.onPointerDown = function(mousePos, event) {
+
+// 	var explorerController = wE3D.controllers.explorerView;
+
+// 	if (event.which === 3) {
+// 		//right click
+// 		if (this.currentDiv3D.parent) {
+// 			explorerController.setCurrentDiv3D(this.currentDiv3D.parent);
+// 		}
+
+// 	} else {
+
+// 		this.divHovered = this.fetchDivUnderMouse(mousePos);
+
+// 		//camera focus
+// 		if (this.divHovered) {
+// 			explorerController.setCurrentDiv3D(this.divHovered);
+// 		}
+// 	}
+// };
+
+// SelectedView.prototype.fetchDivUnderMouse = function(mousePos) {
+
+// 	var minDist = Infinity;
+// 	var divHovered = null;
+
+// 	this.currentDiv3D.children.concat([this.currentDiv3D]).forEach((d) => {
+// 		var intersect = this.intersect(mousePos, d.selectedObject);
+// 		if (intersect.length) {
+// 			for (var j = intersect.length - 1; j >= 0; j--) {
+// 				var info = intersect[j];
+// 				if (info.distance < minDist) {
+// 					//intersect
+// 					divHovered = d;
+// 					minDist = info.distance;
+// 				}
+// 			}
+// 		}
+// 	});
+
+// 	return divHovered;
+// };

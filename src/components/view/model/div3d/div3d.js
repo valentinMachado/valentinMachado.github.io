@@ -76,6 +76,19 @@ Div3D.prototype.buildMeshes = function() {
 	this.scale = Div3D.maxDegree / this.degree;
 
 	this._createIconObject();
+	//common mesh decoration
+	if (this.html.dataset.label) {
+		var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.html.dataset.label);
+		//position
+		label.scale.set(this.scale, this.scale, this.scale);
+		var bb = new THREE.Box3();
+		bb.setFromObject(label);
+
+		label.position.x -= bb.max.x * 0.5;
+		label.position.y += bb.max.y;
+
+		this.iconObject.add(label);
+	}
 
 	//register into parent
 	if (this.parent) {
@@ -107,11 +120,7 @@ Div3D.prototype.buildMeshes = function() {
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push(clone.position);
 		geometry.vertices.push(this.parent.selectedObject.position);
-		const pathLineMaterial = new THREE.LineBasicMaterial({
-			color: "#0000FF",
-			linewidth: 1
-		});
-		this.parent.selectedObject.add(new THREE.Line(geometry, pathLineMaterial));
+		this.parent.selectedObject.add(new THREE.Line(geometry, WebExplorerUtility.MaterialUtility.lineMat));
 	}
 
 
@@ -122,6 +131,7 @@ Div3D.prototype.buildMeshes = function() {
 		//file
 		this._createSelectedObjectFile();
 	}
+
 };
 
 Div3D.prototype.fetchDistToChildPlane = function() {
@@ -131,11 +141,20 @@ Div3D.prototype.fetchDistToChildPlane = function() {
 Div3D.prototype.initViewScene = function(viewScene) {
 	var scene = viewScene.scene;
 	viewScene.initSceneDefault();
+
+	var camera = viewScene.camera;
+	var controls = viewScene.controls;
+
+	camera.position.x = 0;
+	camera.position.y = 0;
+	camera.position.z = 1;
+
+	controls.update();
+
 	scene.add(this.selectedObject);
 };
 
-// //abstract method
-// const loader = new THREE.FontLoader();
+//abstract method
 Div3D.prototype._createSelectedObjectFolder = function() {
 
 	this.selectedObject = this.iconObject.clone();
@@ -162,6 +181,7 @@ Div3D.prototype._createSelectedObjectFile = function() {
 
 	this.selectedObject = cube;
 };
+
 Div3D.prototype._createIconObject = function() {
 
 	var material = new THREE.MeshStandardMaterial({
@@ -181,3 +201,5 @@ Div3D.prototype._createIconObject = function() {
 
 	this.iconObject = cube;
 };
+
+Div3D.prototype.tick = function() {};
