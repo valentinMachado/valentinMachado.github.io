@@ -8,6 +8,21 @@ function Img3D(html) {
 }
 WebExplorerUtility.JsUtility.makeHerit(Img3D, Div3D);
 
+Img3D.prototype.initViewScene = function(viewScene) {
+	var scene = viewScene.scene;
+	var camera = viewScene.camera;
+	var controls = viewScene.controls;
+
+	camera.position.x = 0;
+	camera.position.y = 1;
+	camera.position.z = 0;
+
+	controls.update();
+
+	scene.add(this.selectedObject);
+};
+
+
 Img3D.prototype._createIconObject = function() {
 
 	var material = new THREE.MeshStandardMaterial({
@@ -36,7 +51,8 @@ Img3D.prototype._createSelectedObjectFile = function() {
 		map: texture,
 		side: THREE.DoubleSide
 	});
-	var geometry = new THREE.PlaneGeometry(5, 5, 5, 5);
+	var size = this.scale * 15;
+	var geometry = new THREE.PlaneGeometry(size, size, size, 5);
 	var field = new THREE.Mesh(geometry, material);
 	field.rotation.x = -Math.PI / 2;
 

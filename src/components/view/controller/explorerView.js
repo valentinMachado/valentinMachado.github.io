@@ -29,12 +29,42 @@ ExplorerView.prototype.initialize = function() {
 	//disable pan
 	this.viewScene.controls.enablePan = false; //cant modify target
 
-	var textureLoader = new THREE.TextureLoader();
-	scene.background = textureLoader.load("./src/assets/space-bg.jpg");
+	// var textureLoader = new THREE.TextureLoader();
+	// scene.background = textureLoader.load("./src/assets/space-bg.jpg");
+	this.initSkyBox();
 
 	//add tree meshes to scene
 	scene.add(wE3D.divs3d.iconObject);
 	this.setCurrentDiv3D(wE3D.divs3d);
+};
+
+ExplorerView.prototype.initSkyBox = function() {
+	var urlPrefix = "./src/assets/skybox/lightblue/";
+	var urls = [urlPrefix + "right.png", urlPrefix + "left.png",
+		urlPrefix + "top.png", urlPrefix + "bot.png",
+		urlPrefix + "front.png", urlPrefix + "back.png"
+	];
+
+	// var reflectionCube = THREE.CubeTextureLoader(urls);
+	var reflectionCube = THREE.ImageUtils.loadTextureCube(urls);
+
+	reflectionCube.format = THREE.RGBFormat;
+	var shader = THREE.ShaderLib["cube"];
+	shader.uniforms["tCube"].value = reflectionCube;
+	var material = new THREE.ShaderMaterial({
+		fragmentShader: shader.fragmentShader,
+		vertexShader: shader.vertexShader,
+		uniforms: shader.uniforms,
+		depthWrite: false,
+		side: THREE.BackSide
+	});
+
+	// build the skybox Mesh
+	var skyboxMesh = new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), material);
+	// add it to the scene
+	var scene = this.viewScene.scene;
+
+	scene.add(skyboxMesh);
 };
 
 ExplorerView.prototype.tick = function() {
@@ -77,7 +107,6 @@ ExplorerView.prototype.updatePathLine = function() {
 ExplorerView.prototype.setCurrentDiv3D = function(div) {
 
 	this.currentDiv3D = div;
-	wE3D.controllers.selectedView.display(div);
 
 	//reset visibility
 	WebExplorerUtility.Div3dUtility.traverse(wE3D.divs3d, function(d) {
@@ -97,6 +126,9 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	this.updatePathLine();
 
 	this.makeCameraFocus(div);
+
+	//update other view
+	wE3D.controllers.selectedView.setCurrentDiv3D(div);
 };
 
 ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {

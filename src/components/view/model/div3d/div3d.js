@@ -102,7 +102,7 @@ Div3D.prototype.buildMeshes = function() {
 		//register its plane
 		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
 		clone.userData.planeNormal = random2.cross(random1);
-		clone.userData.speed = Math.random() * 0.3 + 0.7;
+		clone.userData.speed = Math.random() * 0.5 + 1.5;
 		//create a line
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push(clone.position);
@@ -126,6 +126,12 @@ Div3D.prototype.buildMeshes = function() {
 
 Div3D.prototype.fetchDistToChildPlane = function() {
 	return 7 * this.scale;
+};
+
+Div3D.prototype.initViewScene = function(viewScene) {
+	var scene = viewScene.scene;
+	viewScene.initSceneDefault();
+	scene.add(this.selectedObject);
 };
 
 // //abstract method
