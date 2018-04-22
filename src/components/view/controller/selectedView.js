@@ -37,17 +37,16 @@ SelectedView.prototype.tick = function() {
 	}
 };
 
-SelectedView.prototype.display = function(parent) {
+SelectedView.prototype.setCurrentDiv3D = function(div) {
 
+	//reset
 	var scene = this.viewScene.scene;
+	scene.children.length = 0;
 
-	//remove
-	if (this.currentDiv3D) {
-		scene.remove(this.currentDiv3D.selectedObject);
-	}
+	this.currentDiv3D = div;
 
-	this.currentDiv3D = parent;
-	scene.add(this.currentDiv3D.selectedObject);
+	//div init scene
+	div.initViewScene(this.viewScene);
 
 	//adjust zoom camera
 	this.adjustCameraZoom();
