@@ -1,7 +1,7 @@
 "use strict";
 
 
-var idCount = 0;
+var idCount = 1;
 var idMap = {};
 
 Div3D.maxDegree = 1;
@@ -62,13 +62,13 @@ Div3D.prototype.countDegree = function(d3D) {
 	Div3D.maxDegree = Math.max(Div3D.maxDegree, this.degree);
 };
 
-Div3D.prototype.addToVertices = function(object, vector) {
+/*Div3D.prototype.addToVertices = function(object, vector) {
 
 	object.geometry.vertices.forEach(function(v) {
 		v.add(vector);
 	});
 	object.geometry.verticesNeedUpdate = true;
-};
+};*/
 
 Div3D.prototype.buildMeshes = function() {
 
@@ -89,6 +89,27 @@ Div3D.prototype.buildMeshes = function() {
 
 		this.iconObject.add(label);
 	}
+	/* else {
+			//DEBUG
+			var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.id);
+			//position
+			label.scale.set(this.scale, this.scale, this.scale);
+			var bb = new THREE.Box3();
+			bb.setFromObject(label);
+
+			label.position.x -= bb.max.x * 0.5;
+			label.position.y += bb.max.y;
+
+			this.iconObject.add(label);
+		}*/
+
+	if (this.isFolder()) {
+		//folder
+		this._createSelectedObjectFolder();
+	} else {
+		//file
+		this._createSelectedObjectFile();
+	}
 
 	//register into parent
 	if (this.parent) {
@@ -104,34 +125,33 @@ Div3D.prototype.buildMeshes = function() {
 
 		//add its iconobj to its selected obj
 		var clone = this.iconObject.clone();
-		this.parent.selectedObject.add(clone);
 		//random position on a sphere
 		var random1 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
 		WebExplorerUtility.MathUtility.fetchPosAtDistance(
 			this.parent.selectedObject.position,
 			random1,
-			9 * this.scale);
+			this.fetchRadiusSelectedView());
 		clone.position.copy(random1);
 		//register its plane
 		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
 		clone.userData.planeNormal = random2.cross(random1);
 		clone.userData.speed = Math.random() * 0.5 + 1.5;
+		clone.userData.radius = this.fetchRadiusSelectedView();
 		//create a line
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push(clone.position);
 		geometry.vertices.push(this.parent.selectedObject.position);
+
 		this.parent.selectedObject.add(new THREE.Line(geometry, WebExplorerUtility.MaterialUtility.lineMat));
+		this.parent.selectedObject.add(clone);
+
+		//clone register its div so in selectedview only deal with meshes
+		clone.userData.divId = this.id;
 	}
 
-
-	if (this.isFolder()) {
-		//folder
-		this._createSelectedObjectFolder();
-	} else {
-		//file
-		this._createSelectedObjectFile();
-	}
-
+};
+Div3D.prototype.fetchRadiusSelectedView = function() {
+	return 9 * this.scale;
 };
 
 Div3D.prototype.fetchDistToChildPlane = function() {
@@ -149,6 +169,9 @@ Div3D.prototype.initViewScene = function(viewScene) {
 	camera.position.y = 0;
 	camera.position.z = 1;
 
+	controls.target.x = 0;
+	controls.target.y = 0;
+	controls.target.z = 0;
 	controls.update();
 
 	scene.add(this.selectedObject);
@@ -166,14 +189,11 @@ Div3D.prototype._createSelectedObjectFolder = function() {
 Div3D.prototype._createSelectedObjectFile = function() {
 
 	var material = new THREE.MeshStandardMaterial({
-
 		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
 		roughness: 0.5,
 		metalness: 0,
 		flatShading: true
-
 	});
-
 
 	var geometry = new THREE.SphereGeometry(5 * Math.random() + 1, 32, 32);
 	var cube = new THREE.Mesh(geometry, material);

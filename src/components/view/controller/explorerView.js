@@ -66,9 +66,21 @@ ExplorerView.prototype.initSkyBox = function() {
 ExplorerView.prototype.tick = function() {
 
 	if (this.currentDiv3D) {
-		WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
-			d.iconObject.rotation.y += 0.1 * wE3D.dt;
-		});
+
+		if (this.currentDiv3D.parent) {
+
+			this.currentDiv3D.parent.children.forEach(function(child) {
+				WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
+					d.iconObject.rotation.y += 0.1 * wE3D.dt;
+				});
+			});
+
+		} else {
+			WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
+				d.iconObject.rotation.y += 0.1 * wE3D.dt;
+			});
+		}
+
 	}
 };
 
