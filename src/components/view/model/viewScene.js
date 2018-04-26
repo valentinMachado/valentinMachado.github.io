@@ -6,7 +6,7 @@ function ViewScene(canvas) {
 	this.scene = new THREE.Scene();
 
 	//THREE camera
-	this.camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+	this.camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
 
 	//control
 	this.controls = new THREE.OrbitControls(this.camera, canvas);
