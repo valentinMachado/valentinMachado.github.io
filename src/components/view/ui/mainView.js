@@ -10,13 +10,17 @@ function MainView() {
 	this.root = document.getElementById("webExplorer3D");
 	this.canvas = null;
 
-	this.ratioBetweenViews = 0.5;
+	this.ratioBetweenViews = 0.45;
 
 	this.dragging = false;
 
 	this.controllerHovered = null;
 
 	this.centralBar = null;
+
+	//where is the mouse
+	this.isOnRightView = true;
+	this.mousePos = new THREE.Vector2();
 };
 
 MainView.prototype.initialize = function(canvas) {
@@ -94,7 +98,9 @@ MainView.prototype.fetchMousePosRatio = function(event) {
 	//transform on x
 	if (x > this.ratioBetweenViews) {
 		x = Math.abs(x - this.ratioBetweenViews) / (1 - this.ratioBetweenViews);
+		this.isOnRightView = true;
 	} else {
+		this.isOnRightView = false;
 		x = x / this.ratioBetweenViews;
 	}
 
@@ -102,9 +108,11 @@ MainView.prototype.fetchMousePosRatio = function(event) {
 	y = 2 * y - 1;
 	y *= -1;
 
-	//console.log(x, y);
+	//update attr of the mouse
+	this.mousePos.x = x;
+	this.mousePos.y = y;
 
-	return new THREE.Vector2(x, y);
+	return this.mousePos;
 };
 
 MainView.prototype.onResize = function(w, h) {

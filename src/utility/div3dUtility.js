@@ -46,6 +46,8 @@ window.WebExplorerUtility.Div3dUtility = {
 		switch (el.localName) {
 			case "img":
 				return new Img3D(el);
+			case "video":
+				return new Video3D(el);
 			default:
 				return new Div3D(el);
 		}
@@ -56,10 +58,10 @@ window.WebExplorerUtility.Div3dUtility = {
 		var geometry = new THREE.TextGeometry(string, {
 			font: this.font,
 			size: 0.5,
-			height: 0.25
+			height: 0.15
 		});
 
-		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.textMat);
+		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.iconMat);
 	}
 
 }

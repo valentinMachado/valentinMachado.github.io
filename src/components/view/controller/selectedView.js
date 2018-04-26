@@ -56,6 +56,8 @@ SelectedView.prototype.tick = function() {
 		}
 
 	}
+
+	this.updateDivHovered();
 };
 
 SelectedView.prototype.setCurrentDiv3D = function(div) {
@@ -94,13 +96,13 @@ SelectedView.prototype.adjustCameraZoom = function() {
 
 };
 
-SelectedView.prototype.onPointerMove = function(mousePos, event) {
+/*SelectedView.prototype.onPointerMove = function(mousePos, event) {
 	if (this.fetchDivUnderMouse(mousePos)) {
 		document.body.style.cursor = "pointer";
 	} else {
 		document.body.style.cursor = "auto";
 	}
-};
+};*/
 
 SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
@@ -114,8 +116,9 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
 	} else {
 
-		this.divHovered = this.fetchDivUnderMouse(mousePos);
-
+		var info = this.fetchDivUnderMouse(mousePos);
+		this.divHovered = info.div;
+		
 		//camera focus
 		if (this.divHovered) {
 			explorerController.setCurrentDiv3D(this.divHovered);
@@ -127,6 +130,7 @@ SelectedView.prototype.fetchDivUnderMouse = function(mousePos) {
 
 	var minDist = Infinity;
 	var divHovered = null;
+	var meshIntersected = null;
 
 	this.currentDiv3D.selectedObject.children.forEach((child) => {
 
@@ -140,10 +144,14 @@ SelectedView.prototype.fetchDivUnderMouse = function(mousePos) {
 					//intersect
 					divHovered = Div3D.getDiv3dFromId(child.userData.divId);
 					minDist = info.distance;
+					meshIntersected = info.object;
 				}
 			}
 		}
 	});
 
-	return divHovered;
+	return {
+		div: divHovered,
+		mesh: meshIntersected
+	};
 };

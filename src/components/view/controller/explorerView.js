@@ -34,10 +34,10 @@ ExplorerView.prototype.initialize = function() {
 };
 
 ExplorerView.prototype.initSkyBox = function() {
-	var urlPrefix = "./src/assets/skybox/lightblue/";
-	var urls = [urlPrefix + "right.png", urlPrefix + "left.png",
-		urlPrefix + "top.png", urlPrefix + "bot.png",
-		urlPrefix + "front.png", urlPrefix + "back.png"
+	var urlPrefix = "./src/assets/skybox/sky/";
+	var urls = [urlPrefix + "right.jpg", urlPrefix + "left.jpg",
+		urlPrefix + "top.jpg", urlPrefix + "bot.jpg",
+		urlPrefix + "front.jpg", urlPrefix + "back.jpg"
 	];
 
 	// var reflectionCube = THREE.CubeTextureLoader(urls);
@@ -67,21 +67,25 @@ ExplorerView.prototype.tick = function() {
 
 	if (this.currentDiv3D) {
 
+		var speed = 0.0;
+
 		if (this.currentDiv3D.parent) {
 
 			this.currentDiv3D.parent.children.forEach(function(child) {
 				WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
-					d.iconObject.rotation.y += 0.1 * wE3D.dt;
+					d.iconObject.rotation.y += speed * wE3D.dt;
 				});
 			});
 
 		} else {
 			WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
-				d.iconObject.rotation.y += 0.1 * wE3D.dt;
+				d.iconObject.rotation.y += speed * wE3D.dt;
 			});
 		}
 
 	}
+
+	this.updateDivHovered();
 };
 
 ExplorerView.prototype.updatePathLine = function() {
@@ -127,11 +131,13 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	var current = this.currentDiv3D;
 	while (current.parent) {
 		current = current.parent;
-		// current.iconObject.visible = true;
-		current.showIcon(true);
+		 current.iconObject.visible = true;
+		//current.showIcon(true);
 	}
 
 	this.updatePathLine();
+
+	this.setOutline(null);
 
 	this.makeCameraFocus(div);
 
@@ -143,6 +149,7 @@ ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
 
 	var minDist = Infinity;
 	var divHovered = null;
+	var meshIntersected = null;
 
 	WebExplorerUtility.Div3dUtility.traverse(wE3D.divs3d, function(d) {
 
@@ -154,12 +161,16 @@ ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
 					//intersect
 					divHovered = d;
 					minDist = info.distance;
+					meshIntersected = info.object;
 				}
 			}
 		}
 	}.bind(this));
 
-	return divHovered;
+	return {
+		div: divHovered,
+		mesh: meshIntersected
+	};
 };
 
 ExplorerView.prototype.makeCameraFocus = function(d) {
@@ -174,15 +185,15 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 		finalTarget.y -= 0.35 * d.fetchDistToChildPlane(); //target at the center
 	}
 
-	var ratioView = 0.8;
-	var dir = new THREE.Vector3(1, ratioView, 0); //default
-	if (d.parent) {
+	var ratioView = 0.2;
+	var dir = new THREE.Vector3(0, ratioView, 1); //default
+	/*if (d.parent) {
 		// var parentWorldPos = new THREE.Vector3().setFromMatrixPosition(d.parent.iconObject.matrixWorld);
 		var parentWorldPos = camera.position.clone();
 		dir = parentWorldPos.sub(finalTarget);
 		// dir.negate();
 		dir.y = ratioView * Math.sqrt(dir.x * dir.x + dir.z * dir.z);
-	}
+	}*/
 
 	//right angle
 	var finalPos = new THREE.Vector3();
@@ -191,7 +202,7 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 	finalPos.z = finalTarget.z + dir.z;
 
 	//right zoom
-	var dist = 6 * d.scale;
+	var dist = 10 * d.scale;
 	finalPos = WebExplorerUtility.MathUtility.fetchPosAtDistance(finalTarget, finalPos, dist);
 
 	// Tween
@@ -228,13 +239,18 @@ ExplorerView.prototype.makeCameraFocus = function(d) {
 };
 
 //x,y are in ratio into this view
-ExplorerView.prototype.onPointerMove = function(mousePos, event) {
-	if (this.fetchDivUnderMouse(mousePos)) {
+/*ExplorerView.prototype.onPointerMove = function(mousePos, event) {
+
+	this.divHovered = this.fetchDivUnderMouse(mousePos);
+
+	if (this.divHovered) {
 		document.body.style.cursor = "pointer";
+		this.setOutline(this.divHovered.iconObject);
 	} else {
 		document.body.style.cursor = "auto";
+		this.setOutline(null);
 	}
-};
+};*/
 
 ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 
@@ -246,7 +262,8 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 
 	} else {
 
-		this.divHovered = this.fetchDivUnderMouse(mousePos);
+		var info = this.fetchDivUnderMouse(mousePos);
+		this.divHovered = info.div;
 
 		//camera focus
 		if (this.divHovered) {
@@ -254,13 +271,3 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 		}
 	}
 };
-
-// ExplorerView.prototype.onPointerUp = function(mousePos, event) {
-// 	if (event.which === 3) {
-// 		//previous
-// 		if (this.currentDiv3D.parent) this.setCurrentDiv3D(this.currentDiv3D.parent);
-// 	} else {
-// 		this.divHovered = this.fetchDivUnderMouse(mousePos);
-// 		if (this.divHovered) this.setCurrentDiv3D(this.divHovered);
-// 	}
-// }

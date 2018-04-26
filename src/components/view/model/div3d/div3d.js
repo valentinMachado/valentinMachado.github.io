@@ -62,14 +62,6 @@ Div3D.prototype.countDegree = function(d3D) {
 	Div3D.maxDegree = Math.max(Div3D.maxDegree, this.degree);
 };
 
-/*Div3D.prototype.addToVertices = function(object, vector) {
-
-	object.geometry.vertices.forEach(function(v) {
-		v.add(vector);
-	});
-	object.geometry.verticesNeedUpdate = true;
-};*/
-
 Div3D.prototype.buildMeshes = function() {
 
 	//compute scale
@@ -88,20 +80,18 @@ Div3D.prototype.buildMeshes = function() {
 		label.position.y += bb.max.y;
 
 		this.iconObject.add(label);
+
+		/*var singleGeometry = new THREE.Geometry();
+
+		//merge
+		this.iconObject.updateMatrix(); // as needed
+		singleGeometry.merge(this.iconObject.geometry, this.iconObject.matrix);
+
+		label.updateMatrix(); // as needed
+		singleGeometry.merge(label.geometry, label.matrix);
+
+		this.iconObject = new THREE.Mesh(singleGeometry, WebExplorerUtility.MaterialUtility.iconMat);*/
 	}
-	/* else {
-			//DEBUG
-			var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.id);
-			//position
-			label.scale.set(this.scale, this.scale, this.scale);
-			var bb = new THREE.Box3();
-			bb.setFromObject(label);
-
-			label.position.x -= bb.max.x * 0.5;
-			label.position.y += bb.max.y;
-
-			this.iconObject.add(label);
-		}*/
 
 	if (this.isFolder()) {
 		//folder
@@ -118,7 +108,7 @@ Div3D.prototype.buildMeshes = function() {
 		this.iconObject.position.y = -this.fetchDistToChildPlane();
 		var index = this.parent.children.indexOf(this);
 		var angle = index * 2 * Math.PI / this.parent.children.length;
-		var radius = 3;
+		var radius = 3 * this.scale;
 		this.iconObject.position.x = radius * this.scale * Math.cos(angle);
 		this.iconObject.position.z = radius * this.scale * Math.sin(angle);
 		this.parent.iconObject.add(this.iconObject);
