@@ -46,7 +46,7 @@ Img3D.prototype._createSelectedObjectFile = function() {
 
 	//put img on a plane
 	var textureLoader = new THREE.TextureLoader();
-	var texture = textureLoader.load(this.html.dataset.src);
+	var texture = textureLoader.load(this.html.src);
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
 		side: THREE.DoubleSide
