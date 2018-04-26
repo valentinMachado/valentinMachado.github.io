@@ -71,8 +71,10 @@ Video3D.prototype._createSelectedObjectFile = function() {
 
 	//create canvas texture
 	this.videoCanvas = document.createElement("canvas");
-	this.videoCanvas.width = 1920;
-	this.videoCanvas.height = 960;
+	
+	var sizeVideo = JSON.parse(video.dataset.size);
+	this.videoCanvas.width =  sizeVideo.width;
+	this.videoCanvas.height = sizeVideo.height;
 
 	this.videoImageContext = this.videoCanvas.getContext("2d");
 
