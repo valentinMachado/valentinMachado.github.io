@@ -46,6 +46,8 @@ window.WebExplorerUtility.Div3dUtility = {
 		switch (el.localName) {
 			case "img":
 				return new Img3D(el);
+			case "a":
+				return new Link3D(el);
 			case "video":
 				return new Video3D(el);
 			default:
