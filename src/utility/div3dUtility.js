@@ -44,6 +44,8 @@ window.WebExplorerUtility.Div3dUtility = {
 	createFromElement: function(el) {
 
 		switch (el.localName) {
+			case "a":
+				return new Link3D(el);
 			case "img":
 				return new Img3D(el);
 			case "video":

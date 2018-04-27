@@ -8,14 +8,19 @@ function WebExplorer3D() {
 	this.dt = 0;
 	this.currentFps = 60; //60 frame per second
 
-	//renderer
+	//renderers
+
+	//webgl
 	this.renderer = new THREE.WebGLRenderer({
 		antialias: true
 	});
+	var canvas = this.renderer.domElement;
 	this.renderer.setPixelRatio(window.devicePixelRatio);
 	// this.renderer.shadowMap.enabled = true;
 	// this.renderer.shadowMap.type = THREE.PCFShadowMap;
-	var canvas = this.renderer.domElement;
+
+	//css3d
+	this.cssRenderer = new THREE.CSS3DRenderer();
 
 	//controllers
 	this.controllers = {
@@ -72,7 +77,7 @@ WebExplorer3D.prototype.initialize = function() {
 	console.info("%cControllers initialized", "color:#27AE60;");
 
 	//init ui
-	this.ui.initialize(this.renderer.domElement);
+	this.ui.initialize(this.renderer.domElement, this.cssRenderer.domElement);
 	console.info("%cUI initialized", "color:#27AE60;");
 
 	//window event
@@ -89,6 +94,10 @@ WebExplorer3D.prototype.onResize = function() {
 	var h = window.innerHeight;
 
 	this.renderer.setSize(w, h);
+
+	//TODO
+	this.cssRenderer.setSize(w , h);
+
 	this.ui.onResize(w, h);
 };
 
@@ -126,7 +135,6 @@ WebExplorer3D.prototype.render = function() {
 
 	views.forEach(function(view) {
 
-
 		// get its position relative to the page's viewport
 		var rect = view.rect;
 
@@ -149,6 +157,10 @@ WebExplorer3D.prototype.render = function() {
 		renderer.render(vScene.scene, vScene.camera);
 
 	});
+
+	var vScene = this.ui.viewLeft.viewScene;
+
+	this.cssRenderer.render(vScene.scene, vScene.camera);
 };
 
 WebExplorer3D.prototype.initializeAnimationFrame = function() {

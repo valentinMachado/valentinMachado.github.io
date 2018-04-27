@@ -8,7 +8,7 @@ function MainView() {
 
 	//root of the ui
 	this.root = document.getElementById("webExplorer3D");
-	this.canvas = null;
+	this.webGlCanvas = null;
 
 	this.ratioBetweenViews = 0.45;
 
@@ -23,42 +23,52 @@ function MainView() {
 	this.mousePos = new THREE.Vector2();
 };
 
-MainView.prototype.initialize = function(canvas) {
+MainView.prototype.initialize = function(webGlCanvas, cssRendererEl) {
 
 	//init ui
-	this.canvas = canvas;
-
-	//append canvas to DOM
-	this.root.appendChild(canvas);
-
-	//create central button
-	this.initCentralButton();
+	this.webGlCanvas = webGlCanvas;
+	this.cssRendererEl = cssRendererEl;
 
 	//attach a vScene to a view
 	this.viewLeft.setViewScene(wE3D.controllers.selectedView.viewScene);
 	this.viewRight.setViewScene(wE3D.controllers.explorerView.viewScene);
 
+	//init DOM Element
+	this.initCentralButton();
+	this.initWebGlCanvas();
+	this.initCssRendererEl();
+
+};
+MainView.prototype.initWebGlCanvas = function() {
+
+	//append webGlCanvas to DOM
+	this.root.appendChild(this.webGlCanvas);
+
 	//handle orbit control
-	this.canvas.addEventListener("pointerdown", function(event) {
+	this.webGlCanvas.addEventListener("pointerdown", function(event) {
 		this.dragging = true;
 		this.updateControls(event);
 
 		this.controllerHovered.onPointerDown(this.fetchMousePosRatio(event), event);
 
 	}.bind(this));
-	this.canvas.addEventListener("pointermove", function(event) {
+	this.webGlCanvas.addEventListener("pointermove", function(event) {
 		if (!this.dragging) this.updateControls(event);
 
 		this.controllerHovered.onPointerMove(this.fetchMousePosRatio(event), event); 
 
 	}.bind(this));
-	this.canvas.addEventListener("pointerup", function(event) {
+	this.webGlCanvas.addEventListener("pointerup", function(event) {
 
 		this.controllerHovered.onPointerUp(this.fetchMousePosRatio(event), event);
 
 		this.dragging = false;
 	}.bind(this));
 
+};
+MainView.prototype.initCssRendererEl = function() {
+	this.cssRendererEl.id = "cssRenderer";
+	this.root.appendChild(this.cssRendererEl);
 };
 
 MainView.prototype.initCentralButton = function(event) {
@@ -71,9 +81,9 @@ MainView.prototype.initCentralButton = function(event) {
 	this.centralBar.addEventListener("pointerdown", function(event) {
 		draggingCentralBar = true;
 	});
-	this.canvas.addEventListener("pointermove", function(event) {
+	this.webGlCanvas.addEventListener("pointermove", function(event) {
 		if (draggingCentralBar) {
-			var x = event.clientX / this.canvas.clientWidth;
+			var x = event.clientX / this.webGlCanvas.clientWidth;
 			this.ratioBetweenViews = x;
 			var w = window.innerWidth;
 			var h = window.innerHeight;
@@ -87,13 +97,15 @@ MainView.prototype.initCentralButton = function(event) {
 	this.updateHtmlStyle();
 };
 MainView.prototype.updateHtmlStyle = function(event) {
-	var w = this.canvas.clientWidth;
+	var w = this.webGlCanvas.clientWidth;
+
+	//central button
 	this.centralBar.style.left = -this.centralBar.clientWidth / 2 + this.ratioBetweenViews * w + "px";
 };
 
 MainView.prototype.fetchMousePosRatio = function(event) {
-	var x = event.offsetX / this.canvas.clientWidth;
-	var y = event.offsetY / this.canvas.clientHeight;
+	var x = event.offsetX / this.webGlCanvas.clientWidth;
+	var y = event.offsetY / this.webGlCanvas.clientHeight;
 
 	//transform on x
 	if (x > this.ratioBetweenViews) {
@@ -124,7 +136,7 @@ MainView.prototype.onResize = function(w, h) {
 //x is ratio 0->1
 MainView.prototype.updateControls = function(event) {
 
-	var x = event.offsetX / this.canvas.clientWidth;
+	var x = event.offsetX / this.webGlCanvas.clientWidth;
 	var isOnRightView = false;
 	this.controllerHovered = wE3D.controllers.selectedView;
 

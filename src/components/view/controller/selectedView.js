@@ -15,14 +15,16 @@ SelectedView.prototype.initialize = function() {
 
 	var scene = this.viewScene.scene;
 
-	var textureLoader = new THREE.TextureLoader();
-	scene.background = textureLoader.load("./src/assets/img/bg.jpg");
+	/*var textureLoader = new THREE.TextureLoader();
+	scene.background = textureLoader.load("./src/assets/img/bg.jpg");*/
 
 	//WebExplorerUtility.DebugUtility.addCoordSystem(scene);
 };
 
 SelectedView.prototype.tick = function() {
 
+	//update this.divHovered and outline
+	this.updateDivHovered();
 
 	if (this.currentDiv3D) {
 
@@ -57,10 +59,11 @@ SelectedView.prototype.tick = function() {
 
 	}
 
-	this.updateDivHovered();
 };
 
 SelectedView.prototype.setCurrentDiv3D = function(div) {
+
+	if (this.currentDiv3D) this.currentDiv3D.onDisable(this.viewScene);
 
 	//reset
 	var scene = this.viewScene.scene;
@@ -118,7 +121,7 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
 		var info = this.fetchDivUnderMouse(mousePos);
 		this.divHovered = info.div;
-		
+
 		//camera focus
 		if (this.divHovered) {
 			explorerController.setCurrentDiv3D(this.divHovered);

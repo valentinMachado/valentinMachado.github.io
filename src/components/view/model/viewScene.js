@@ -26,7 +26,7 @@ ViewScene.prototype.initSceneDefault = function() {
 
 	scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444));
 
-	var light = new THREE.SpotLight(0xffffff, 1, 0, Math.PI / 2);
+	var light = new THREE.SpotLight(0xffffff, 0.5, 0, Math.PI / 2);
 	light.position.set(0, 1500, 1000);
 	light.target.position.set(0, 0, 0);
 

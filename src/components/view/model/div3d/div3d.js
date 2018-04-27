@@ -29,6 +29,9 @@ function Div3D(html) {
 	this.degree = 1;
 	this.scale = 0;
 
+	//is render with webgl renderer
+	this.useCssRenderer = false;
+
 	//type
 	this.type = "DIV3D";
 }
@@ -125,7 +128,7 @@ Div3D.prototype.buildMeshes = function() {
 		//register its plane
 		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
 		clone.userData.planeNormal = random2.cross(random1);
-		clone.userData.speed = Math.random() * 0.5 + 1.5;
+		clone.userData.speed = (Math.random() * 0.5 + 0.5) * this.scale;
 		clone.userData.radius = this.fetchRadiusSelectedView();
 		//create a line
 		var geometry = new THREE.Geometry();
@@ -166,6 +169,8 @@ Div3D.prototype.initViewScene = function(viewScene) {
 
 	scene.add(this.selectedObject);
 };
+
+Div3D.prototype.onDisable = function(viewScene) {};
 
 //abstract method
 Div3D.prototype._createSelectedObjectFolder = function() {
