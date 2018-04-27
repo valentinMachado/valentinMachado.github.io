@@ -1,6 +1,5 @@
 "use strict";
 
-//code take from https://stemkoski.github.io/Three.js/Video.html
 
 function Video3D(html) {
 	this._super(html);
@@ -29,6 +28,10 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	this.html.play();
 
 	scene.add(this.selectedObject);
+};
+
+Video3D.prototype.onDisable = function(viewScene) {
+	this.html.pause();
 };
 
 
@@ -62,6 +65,7 @@ Video3D.prototype.tick = function() {
 	}
 };
 
+//code take from https://stemkoski.github.io/Three.js/Video.html
 Video3D.prototype._createSelectedObjectFile = function() {
 
 	var video = this.html;
@@ -71,9 +75,9 @@ Video3D.prototype._createSelectedObjectFile = function() {
 
 	//create canvas texture
 	this.videoCanvas = document.createElement("canvas");
-	
+
 	var sizeVideo = JSON.parse(video.dataset.size);
-	this.videoCanvas.width =  sizeVideo.width;
+	this.videoCanvas.width = sizeVideo.width;
 	this.videoCanvas.height = sizeVideo.height;
 
 	this.videoImageContext = this.videoCanvas.getContext("2d");
@@ -91,7 +95,8 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	// the geometry on which the movie will be displayed;
 	// 		movie image will be scaled to fit these dimensions.
 	var size = this.scale * 10;
-	var movieGeometry = new THREE.PlaneGeometry(size, size, 4, 4);
+	var ratio = sizeVideo.width / sizeVideo.height;
+	var movieGeometry = new THREE.PlaneGeometry(ratio * size, size, 4, 4);
 	var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
 	movieScreen.rotation.x = -Math.PI / 2;
 
