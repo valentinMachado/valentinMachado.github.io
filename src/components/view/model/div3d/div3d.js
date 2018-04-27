@@ -14,6 +14,7 @@ function Div3D(html) {
 
 	//html
 	this.html = html;
+	this.htmlElements = [];
 
 	//div3d parent
 	this.parent = null;
