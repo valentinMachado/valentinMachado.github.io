@@ -62,6 +62,8 @@ SelectedView.prototype.tick = function() {
 
 SelectedView.prototype.setCurrentDiv3D = function(div) {
 
+	if (this.currentDiv3D) this.currentDiv3D.onDisable();
+
 	//reset
 	var scene = this.viewScene.scene;
 	scene.children.length = 0;
@@ -118,7 +120,7 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
 		var info = this.fetchDivUnderMouse(mousePos);
 		this.divHovered = info.div;
-		
+
 		//camera focus
 		if (this.divHovered) {
 			explorerController.setCurrentDiv3D(this.divHovered);

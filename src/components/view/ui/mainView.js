@@ -59,6 +59,17 @@ MainView.prototype.initialize = function(canvas) {
 		this.dragging = false;
 	}.bind(this));
 
+	//blocker
+	var blocker = document.getElementById('blocker');
+	blocker.style.display = 'none';
+
+	document.addEventListener('mousedown', function() {
+		blocker.style.display = '';
+	});
+	document.addEventListener('mouseup', function() {
+		blocker.style.display = 'none';
+	});
+
 };
 
 MainView.prototype.initCentralButton = function(event) {
@@ -83,12 +94,18 @@ MainView.prototype.initCentralButton = function(event) {
 	window.addEventListener("pointerup", function(event) {
 		draggingCentralBar = false;
 	});
-
-	this.updateHtmlStyle();
 };
 MainView.prototype.updateHtmlStyle = function(event) {
 	var w = this.canvas.clientWidth;
+	var h = this.canvas.clientHeight;
 	this.centralBar.style.left = -this.centralBar.clientWidth / 2 + this.ratioBetweenViews * w + "px";
+
+	var container = document.getElementById("iframe-container");
+	container.style.width = w * this.ratioBetweenViews * 0.9 + "px";
+	container.style.height = h * 0.9 + "px";
+
+	container.style.left = w * this.ratioBetweenViews * 0.05 + "px";
+	container.style.top = h * 0.05 + "px";
 };
 
 MainView.prototype.fetchMousePosRatio = function(event) {
