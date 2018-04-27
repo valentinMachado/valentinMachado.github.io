@@ -1,9 +1,9 @@
 "use strict";
 
 
-function AbstractView(canvas) {
+function AbstractView(elToListen) {
 
-	this.viewScene = new ViewScene(canvas);
+	this.viewScene = new ViewScene(elToListen);
 
 	this.outline = null;
 

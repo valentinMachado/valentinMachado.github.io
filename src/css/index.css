@@ -25,11 +25,11 @@ body{
 #selected-container{
     z-index: 2;
     position: absolute;
-    display: none;
+    /*display: none;*/
     height: 100%;
     top:0px;
     left:0px;
-    margin: 2%;
+    /*margin: 2%;*/
 }
 
 .blocker{
@@ -37,8 +37,16 @@ body{
 	/*background-color: rgba(255, 0, 0, 0.5);*/ 
 	top: 0px;
 	left: 0px;
-	width: 96%;
+	width: 100%;
 	height: 100%;
+}
+
+.button{
+	width: 50px;
+	height: 50px;
+	background: red;
+	cursor: pointer;
+	padding: 5px;
 }
 
 /*Link*/
@@ -55,5 +63,5 @@ body{
 /*Link*/
 #selected-container iframe{
 	width: 96%;
-    height: 91%; 
+    height: 95%; 
 }

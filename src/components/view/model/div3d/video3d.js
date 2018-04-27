@@ -23,14 +23,32 @@ Video3D.prototype.initViewScene = function(viewScene) {
 
 	controls.update();
 
-	//restart video
-	this.html.currentTime = 0;
-	this.html.play();
+	//restart video*
+	var video = this.html;
+	video.currentTime = 0;
+	video.play();
 
 	scene.add(this.selectedObject);
+
+	//add html
+	var container = document.getElementById("selected-container");
+
+	var speakerButton = document.createElement("div");
+	container.appendChild(speakerButton);
+	speakerButton.classList.add("button");
+
+	var soundMuted = false;
+	speakerButton.onclick = function() {
+		soundMuted = !soundMuted;
+		video.muted = soundMuted;
+	}
+
+	this.addHtmlToSelectedView(speakerButton);
 };
 
 Video3D.prototype.onDisable = function(viewScene) {
+
+	this.removeHtmlEl();
 	this.html.pause();
 };
 
