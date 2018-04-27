@@ -10,40 +10,44 @@ function Link3D(html) {
 WebExplorerUtility.JsUtility.makeHerit(Link3D, Div3D);
 
 Link3D.prototype.initViewScene = function(viewScene) {
-	/*var scene = viewScene.scene;
-	var camera = viewScene.camera;
-	var controls = viewScene.controls;
 
-	camera.position.x = 0;
-	camera.position.y = 1;
-	camera.position.z = 0;
-
-	controls.update();
-
-	scene.add(this.selectedObject);*/
-
-	var container = document.getElementById("iframe-container");
+	var container = document.getElementById("selected-container");
 	container.style.display = "block";
 
 	//create iframe
 	var iframe = document.createElement('iframe');
-	iframe.style.width = "100%";
-	iframe.style.height = "100%";
-	iframe.setAttribute("scrolling", "no");
+	iframe.setAttribute("scrolling", "yes");
 	iframe.setAttribute("frameborder", "no");
 	iframe.setAttribute("allow", "autoplay");
 	iframe.src = this.html.href;
 	container.appendChild(iframe);
+
+	//silent console of iframe
+	var iframeWindow = iframe.contentWindow;
+	iframeWindow.console.log = function() { /* nop */ };
+	iframeWindow.console.error = function() { /* nop */ };
+	iframeWindow.console.warn = function() { /* nop */ };
+	iframeWindow.console.info = function() { /* nop */ };
+
+	var link = this.html;
+	link.target = "_blank";
+	link.innerHTML = "Open in a new tab";
+
+	container.appendChild(this.html);
+
+	this.htmlElements.push(link);
+	this.htmlElements.push(iframe);
 };
 
 Link3D.prototype.onDisable = function(viewScene) {
-	var container = document.getElementById("iframe-container");
+	var container = document.getElementById("selected-container");
 	container.style.display = "none";
 
-	//remove child
-	while (container.firstChild) {
-		container.removeChild(container.firstChild);
-	}
+	this.htmlElements.forEach((el) => {
+		container.removeChild(el);
+	});
+
+	this.htmlElements.length = 0;
 };
 
 

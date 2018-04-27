@@ -10,7 +10,7 @@ function MainView() {
 	this.root = document.getElementById("webExplorer3D");
 	this.canvas = null;
 
-	this.ratioBetweenViews = 0.45;
+	this.ratioBetweenViews = 0.5;
 
 	this.dragging = false;
 
@@ -32,6 +32,7 @@ MainView.prototype.initialize = function(canvas) {
 	this.root.appendChild(canvas);
 
 	//create central button
+	this.initBlocker();
 	this.initCentralButton();
 
 	//attach a vScene to a view
@@ -59,17 +60,6 @@ MainView.prototype.initialize = function(canvas) {
 		this.dragging = false;
 	}.bind(this));
 
-	//blocker
-	var blocker = document.getElementById('blocker');
-	blocker.style.display = 'none';
-
-	document.addEventListener('mousedown', function() {
-		blocker.style.display = '';
-	});
-	document.addEventListener('mouseup', function() {
-		blocker.style.display = 'none';
-	});
-
 };
 
 MainView.prototype.initCentralButton = function(event) {
@@ -79,10 +69,14 @@ MainView.prototype.initCentralButton = function(event) {
 	this.root.appendChild(this.centralBar);
 
 	var draggingCentralBar = false;
-	this.centralBar.addEventListener("pointerdown", function(event) {
+	this.centralBar.addEventListener("pointerdown", (event) => {
 		draggingCentralBar = true;
+		this.blocker.style.display = "block";
 	});
-	this.canvas.addEventListener("pointermove", function(event) {
+
+	var container = document.getElementById("selected-container");
+
+	window.addEventListener("pointermove", function(event) {
 		if (draggingCentralBar) {
 			var x = event.clientX / this.canvas.clientWidth;
 			this.ratioBetweenViews = x;
@@ -91,8 +85,9 @@ MainView.prototype.initCentralButton = function(event) {
 			this.onResize(w, h);
 		}
 	}.bind(this));
-	window.addEventListener("pointerup", function(event) {
+	window.addEventListener("pointerup", (event) => {
 		draggingCentralBar = false;
+		this.blocker.style.display = "none";
 	});
 };
 MainView.prototype.updateHtmlStyle = function(event) {
@@ -100,12 +95,18 @@ MainView.prototype.updateHtmlStyle = function(event) {
 	var h = this.canvas.clientHeight;
 	this.centralBar.style.left = -this.centralBar.clientWidth / 2 + this.ratioBetweenViews * w + "px";
 
-	var container = document.getElementById("iframe-container");
-	container.style.width = w * this.ratioBetweenViews * 0.9 + "px";
-	container.style.height = h * 0.9 + "px";
+	var container = document.getElementById("selected-container");
+	container.style.width = w * this.ratioBetweenViews + "px";
+};
 
-	container.style.left = w * this.ratioBetweenViews * 0.05 + "px";
-	container.style.top = h * 0.05 + "px";
+MainView.prototype.initBlocker = function() {
+	var container = document.getElementById("selected-container");
+	var blocker = document.createElement("div");
+	container.appendChild(blocker);
+	blocker.classList.add("blocker");
+	blocker.style.display = "none";
+
+	this.blocker = blocker;
 };
 
 MainView.prototype.fetchMousePosRatio = function(event) {
