@@ -2,9 +2,9 @@
 
 //component use to see in detail the selected element
 
-function SelectedView(canvas) {
+function SelectedView(elToListen) {
 
-	this._super(canvas);
+	this._super(elToListen);
 
 	this.currentDiv3D = null;
 };

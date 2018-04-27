@@ -16,11 +16,12 @@ function WebExplorer3D() {
 	// this.renderer.shadowMap.enabled = true;
 	// this.renderer.shadowMap.type = THREE.PCFShadowMap;
 	var canvas = this.renderer.domElement;
+	var container = document.getElementById("selected-container");
 
 	//controllers
 	this.controllers = {
 		explorerView: new ExplorerView(canvas),
-		selectedView: new SelectedView(canvas),
+		selectedView: new SelectedView(container),
 	};
 
 	//tree of 3d div

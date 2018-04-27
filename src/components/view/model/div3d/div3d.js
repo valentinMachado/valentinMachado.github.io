@@ -43,6 +43,27 @@ Div3D.prototype.appendChild = function(d3D) {
 	this.children.push(d3D);
 };
 
+Div3D.prototype.removeHtmlEl = function() {
+	var container = document.getElementById("selected-container");
+
+	//container.style.display = "none";
+
+	this.htmlElements.forEach((el) => {
+		container.removeChild(el);
+	});
+
+	this.htmlElements.length = 0;
+};
+
+Div3D.prototype.addHtmlToSelectedView = function(el) {
+	this.htmlElements.push(el);
+	var container = document.getElementById("selected-container");
+	container.appendChild(el);
+
+	//enable container if one el is add
+	//container.style.display = "block";
+};
+
 Div3D.prototype.isFolder = function() {
 	return this.children.length;
 };
@@ -214,4 +235,7 @@ Div3D.prototype._createIconObject = function() {
 };
 
 Div3D.prototype.tick = function() {};
-Div3D.prototype.onDisable = function() {};
+
+Div3D.prototype.onDisable = function() {
+	this.removeHtmlEl();
+};

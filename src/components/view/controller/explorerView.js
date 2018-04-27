@@ -2,9 +2,9 @@
 
 //component use to handle the exploration view (going throught the 3D DOM)
 
-function ExplorerView(canvas) {
+function ExplorerView(elToListen) {
 
-	this._super(canvas);
+	this._super(elToListen);
 
 	this.pathLine = null;
 

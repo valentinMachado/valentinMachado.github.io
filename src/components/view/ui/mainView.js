@@ -40,20 +40,20 @@ MainView.prototype.initialize = function(canvas) {
 	this.viewRight.setViewScene(wE3D.controllers.explorerView.viewScene);
 
 	//handle orbit control
-	this.canvas.addEventListener("pointerdown", function(event) {
+	window.addEventListener("pointerdown", function(event) {
 		this.dragging = true;
 		this.updateControls(event);
 
 		this.controllerHovered.onPointerDown(this.fetchMousePosRatio(event), event);
 
 	}.bind(this));
-	this.canvas.addEventListener("pointermove", function(event) {
+	window.addEventListener("pointermove", function(event) {
 		if (!this.dragging) this.updateControls(event);
 
 		this.controllerHovered.onPointerMove(this.fetchMousePosRatio(event), event); 
 
 	}.bind(this));
-	this.canvas.addEventListener("pointerup", function(event) {
+	window.addEventListener("pointerup", function(event) {
 
 		this.controllerHovered.onPointerUp(this.fetchMousePosRatio(event), event);
 
