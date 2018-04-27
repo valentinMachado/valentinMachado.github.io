@@ -37,7 +37,9 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	container.appendChild(speakerButton);
 	speakerButton.classList.add("button");
 
+	//init
 	var soundMuted = false;
+	video.muted = soundMuted;
 	speakerButton.onclick = function() {
 		soundMuted = !soundMuted;
 		video.muted = soundMuted;
