@@ -18,6 +18,17 @@ body{
 	z-index: 3;
 }
 
+.centralBar-button{
+	width: 43%;
+    height: 50px;
+    position: absolute;
+    background: red;
+    cursor: pointer;
+    margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  	transform: translateY(-50%);
+  	border: solid 1px;
+}
+
 #input{
 	display: none;
 }

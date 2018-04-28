@@ -74,8 +74,6 @@ MainView.prototype.initCentralButton = function(event) {
 		this.blocker.style.display = "block";
 	});
 
-	var container = document.getElementById("selected-container");
-
 	window.addEventListener("pointermove", function(event) {
 		if (draggingCentralBar) {
 			var x = event.clientX / this.canvas.clientWidth;
@@ -89,6 +87,32 @@ MainView.prototype.initCentralButton = function(event) {
 		draggingCentralBar = false;
 		this.blocker.style.display = "none";
 	});
+
+	var leftButton = document.createElement("div");
+	var rightButton = document.createElement("div");
+	var buttonContainer = document.createElement("span");
+
+	this.centralBar.appendChild(buttonContainer);
+	buttonContainer.appendChild(rightButton);
+	buttonContainer.appendChild(leftButton);
+
+	rightButton.classList.add("centralBar-button");
+	leftButton.classList.add("centralBar-button");
+
+	rightButton.style.right = "0px";
+
+	//cb
+	rightButton.onclick = () => {
+		this.ratioBetweenViews = 1;
+		wE3D.onResize();
+	};
+
+	leftButton.onclick = () => {
+		this.ratioBetweenViews = 0;
+		wE3D.onResize();
+	};
+
+
 };
 MainView.prototype.updateHtmlStyle = function(event) {
 	var w = this.canvas.clientWidth;
