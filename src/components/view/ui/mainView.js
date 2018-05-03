@@ -102,17 +102,14 @@ MainView.prototype.initCentralButton = function(event) {
 	rightButton.style.right = "0px";
 
 	//cb
-	rightButton.onclick = () => {
-		this.ratioBetweenViews = 1;
+	rightButton.addEventListener("pointerdown", (event) => {
+		this.ratioBetweenViews = 0.99;
 		wE3D.onResize();
-	};
-
-	leftButton.onclick = () => {
-		this.ratioBetweenViews = 0;
+	});
+	leftButton.addEventListener("pointerdown", (event) => {
+		this.ratioBetweenViews = 0.01;
 		wE3D.onResize();
-	};
-
-
+	});
 };
 MainView.prototype.updateHtmlStyle = function(event) {
 	var w = this.canvas.clientWidth;
