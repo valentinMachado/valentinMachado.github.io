@@ -236,6 +236,6 @@ Div3D.prototype._createIconObject = function() {
 
 Div3D.prototype.tick = function() {};
 
-Div3D.prototype.onDisable = function() {
+Div3D.prototype.onDisable = function(viewScene) {
 	this.removeHtmlEl();
 };

@@ -48,7 +48,8 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	};
 
 	//pause/play
-	var playButton = document.createElement("div");
+	var playButton = document.createElement("img");
+	playButton.src = "./src/assets/img/loading.png"
 	playButton.classList.add("button");
 
 	//init
@@ -57,9 +58,9 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	video.play();
 	playButton.onclick = function() {
 		isPlaying = !isPlaying;
-		if(isPlaying){
+		if (isPlaying) {
 			video.play();
-		}else{
+		} else {
 			video.pause();
 		}
 	}
@@ -88,10 +89,8 @@ Video3D.prototype._createIconObject = function() {
 
 	var size = 0.4 * this.scale;
 	var geometry = new THREE.SphereGeometry(size, 32, 32);
-	var cube = new THREE.Mesh(geometry, material);
-
-
-	this.iconObject = cube;
+	var sphere = new THREE.Mesh(geometry, material);
+	this.iconObject = sphere;
 };
 
 Video3D.prototype.tick = function() {
@@ -140,4 +139,16 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	movieScreen.rotation.x = -Math.PI / 2;
 
 	this.selectedObject = movieScreen;
+
+	//add title
+	if (this.json.title) {
+		let titleMesh = WebExplorerUtility.Div3dUtility.buildLabelMesh("bite");
+		let bb = new THREE.Box3();
+		bb.setFromObject(titleMesh);
+		titleMesh.position.x = -bb.max.x / 2
+		titleMesh.position.y = -bb.max.y - size * 0.5
+		titleMesh.position.z = -bb.max.z / 2
+		this.selectedObject.add(titleMesh);
+	}
+
 };

@@ -25,8 +25,10 @@ Link3D.prototype.initViewScene = function(viewScene) {
 	//iframeWindow.console.warn = function() { /* nop */ };
 	//iframeWindow.console.info = function() { /* nop */ };
 
+
 	var link = document.createElement("a");
 	link.href = this.json.url
+	link.classList.add("link-iframe")
 	link.target = "_blank";
 	link.innerHTML = "Open in a new tab";
 
