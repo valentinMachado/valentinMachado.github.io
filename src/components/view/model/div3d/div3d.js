@@ -6,14 +6,14 @@ var idMap = {};
 
 Div3D.maxDegree = 1;
 
-function Div3D(html) {
+function Div3D(json) {
 
 	this.id = idCount;
 	idMap[this.id] = this;
 	idCount++;
 
 	//html
-	this.html = html;
+	this.json = json;
 	this.htmlElements = [];
 
 	//div3d parent
@@ -91,8 +91,8 @@ Div3D.prototype.buildMeshes = function() {
 
 	this._createIconObject();
 	//common mesh decoration
-	if (this.html.dataset.label) {
-		var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.html.dataset.label);
+	if (this.json.label) {
+		var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.json.label);
 		//position
 		label.scale.set(this.scale, this.scale, this.scale);
 		var bb = new THREE.Box3();

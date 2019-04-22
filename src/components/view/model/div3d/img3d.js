@@ -1,7 +1,7 @@
 "use strict";
 
-function Img3D(html) {
-	this._super(html);
+function Img3D(json) {
+	this._super(json);
 
 	//override
 	this.type = "IMG3D";
@@ -46,7 +46,7 @@ Img3D.prototype._createSelectedObjectFile = function() {
 
 	//put img on a plane
 	var textureLoader = new THREE.TextureLoader();
-	var texture = textureLoader.load(this.html.src);
+	var texture = textureLoader.load(this.json.path);
 	var material = new THREE.MeshBasicMaterial({
 		map: texture,
 		side: THREE.DoubleSide
