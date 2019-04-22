@@ -34,7 +34,7 @@ ExplorerView.prototype.initialize = function() {
 };
 
 ExplorerView.prototype.initSkyBox = function() {
-	var urlPrefix = "./src/assets/skybox/sky/";
+	var urlPrefix = "./src/assets/skybox/space/";
 	var urls = [urlPrefix + "right.jpg", urlPrefix + "left.jpg",
 		urlPrefix + "top.jpg", urlPrefix + "bot.jpg",
 		urlPrefix + "front.jpg", urlPrefix + "back.jpg"

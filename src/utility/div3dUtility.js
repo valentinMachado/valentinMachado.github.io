@@ -52,6 +52,8 @@ window.WebExplorerUtility.Div3dUtility = {
 				return new Video3D(el);
 			case "div3d":
 				return new Div3D(el);
+			case "html3d":
+				return new Html3D(el)
 			default:
 				console.error("no type in json")
 		}

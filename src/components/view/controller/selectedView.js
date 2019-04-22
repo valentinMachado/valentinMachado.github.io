@@ -16,7 +16,7 @@ SelectedView.prototype.initialize = function() {
 	var scene = this.viewScene.scene;
 
 	var textureLoader = new THREE.TextureLoader();
-	scene.background = textureLoader.load("./src/assets/img/bg.jpg");
+	scene.background = textureLoader.load("./src/assets/img/selected_bg.jpeg");
 
 	//WebExplorerUtility.DebugUtility.addCoordSystem(scene);
 };
@@ -62,7 +62,7 @@ SelectedView.prototype.tick = function() {
 
 SelectedView.prototype.setCurrentDiv3D = function(div) {
 
-	if (this.currentDiv3D) this.currentDiv3D.onDisable();
+	if (this.currentDiv3D) this.currentDiv3D.onDisable(this.viewScene);
 
 	//reset
 	var scene = this.viewScene.scene;

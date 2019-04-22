@@ -60,8 +60,21 @@ body{
 	padding: 5px;
 }
 
+/*html container*/
+.html-container{
+	color: white;
+    overflow-y: scroll;
+    padding: 50px;
+    height: 90%;
+    font-size: x-large;
+}
+
+.html-container a{
+	color: white;
+}
+
 /*Link*/
-#selected-container a{
+.link-iframe{
 	width: 96%;
     height: 5%;
     display: inherit;

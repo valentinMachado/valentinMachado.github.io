@@ -1,26 +1,25 @@
 "use strict";
 
+//load here to avoid async stuff
 let structureJSON = {
 	"label": "Valentin Machado",
 	"child": [{
-		"label": "Mon etudes",
+		"label": "Etudes",
 		"child": [{
-			"label": "lycée ph Lamour",
-			"child": [{
-				"type": "link",
-				"label": "Site",
-				"url": "https://www.lyc-lamour-nimes.ac-montpellier.fr/",
-				"child": []
-			}],
-			"type": "div3d"
-		}, {
-			"label": "cpge daudet",
+			"label": "Lycee",
 			"child": [],
-			"type": "div3d"
+			"type": "html3d",
+			"html": "J'ai effectué mon lycée, à Nîmes au <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-lamour-nimes.ac-montpellier.fr/\">lycée Phillipe Lamour</a>. J'ai choisi l'option science en seconde, et j'ai pris l'option spé maths en terminal parce que j'aime bien la science vous voyez"
+		}, {
+			"label": "Classe preparatoire",
+			"child": [],
+			"type": "html3d",
+			"html":"Je me suis ensuite orienter en classe de MPSI parce les ciences patincoufin au lycée <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">lycée Alphonse Daudet</a>"
 		}, {
 			"label": "cpe lyon",
 			"child": [],
-			"type": "div3d"
+			"type": "link",
+			"url":"https://www.cpe.fr/"
 		}, {
 			"label": "queens university",
 			"child": [],
@@ -56,6 +55,12 @@ let structureJSON = {
 					"path": "./src/assets/video/water.mp4",
 					"width": 480,
 					"height": 480,
+					"title": "radiosity",
+					"child": []
+				}, {
+					"type": "html3d",
+					"label": "explication",
+					"html": "<p>Ceci est un test de text</p><img src=\"./src/assets/img/loading.png\" ></img>",
 					"child": []
 				}]
 			}, {
