@@ -14,12 +14,12 @@ let structureJSON = {
 			"label": "Classe preparatoire",
 			"child": [],
 			"type": "html3d",
-			"html":"Je me suis ensuite orienter en classe de MPSI parce les ciences patincoufin au lycée <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">lycée Alphonse Daudet</a>"
+			"html": "Je me suis ensuite orienter en classe de MPSI parce les ciences patincoufin au lycée <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">lycée Alphonse Daudet</a>"
 		}, {
 			"label": "cpe lyon",
 			"child": [],
 			"type": "link",
-			"url":"https://www.cpe.fr/"
+			"url": "https://www.cpe.fr/"
 		}, {
 			"label": "queens university",
 			"child": [],
@@ -82,19 +82,30 @@ let structureJSON = {
 		"child": [{
 			"type": "div3d",
 			"label": "programmation",
-			"child": [
-
-				{
+			"child": [{
 					"type": "div3d",
 					"label": "souk",
-					"child": []
+					"child": [{
+						"type": "link",
+						"label": "play game !",
+						"url": "./src/assets/build/souk/souk.html",
+						"child": []
+					}]
+				}, {
+					"type": "div3d",
+					"label": "steampong",
+					"child": [{
+						"type": "video",
+						"label": "trailer",
+						"path": "./src/assets/video/ggj2014-steam-pong.mp4",
+						"title": "Trailer SteamPong",
+						"width": 1280,
+						"height": 720,
+						"child": []
+					}]
 				}, {
 					"type": "div3d",
 					"label": "demon",
-					"child": []
-				}, {
-					"type": "div3d",
-					"label": "maze",
 					"child": []
 				}, {
 					"type": "div3d",
@@ -102,7 +113,7 @@ let structureJSON = {
 					"child": []
 				}, {
 					"type": "div3d",
-					"label": "steampong",
+					"label": "maze",
 					"child": []
 				}, {
 					"type": "div3d",
@@ -123,6 +134,11 @@ let structureJSON = {
 					"child": []
 				}]
 			}, {
+				"type": "html3d",
+				"label": "playlist",
+				"html": "Je fais des playlist dispo <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\">ici</a>",
+				"child": []
+			}, {
 				"type": "div3d",
 				"label": "machette",
 				"child": [{
@@ -134,9 +150,10 @@ let structureJSON = {
 			}]
 		}]
 	}, {
-		"type": "div3d",
+		"type": "html3d",
 		"label": "cv",
-		"child": []
+		"child": [],
+		"html": "<embed src=\"./src/assets/pdf/CV.pdf\" width=\"100%\" height=\"100%\" />"
 	}, {
 		"type": "div3d",
 		"label": "contact",

@@ -54,7 +54,7 @@ WebExplorer3D.prototype.load = function() {
 WebExplorer3D.prototype.initialize = function(json) {
 	//create 3d ui
 	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(json, true);
-	console.info("%cHTML converted", "color:#27AE60;");
+	console.info("%cJSON converted", "color:#27AE60;");
 	WebExplorerUtility.Div3dUtility.traverse(this.divs3d, function(d) {
 		//display
 		var text = "";
