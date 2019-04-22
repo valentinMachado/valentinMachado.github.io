@@ -36,7 +36,7 @@ let structureJSON = {
 			"child": [{
 				"type": "link",
 				"label": "site",
-				"url": "http://www.ihmtek.com/",
+				"url": "https://www.ihmtek.com/",
 				"child": []
 			}]
 		}, {
@@ -45,7 +45,7 @@ let structureJSON = {
 			"child": [{
 				"type": "link",
 				"label": "site",
-				"url": "http://www.wanadev.fr/",
+				"url": "https://www.wanadev.fr/",
 				"child": []
 			}, {
 				"type": "div3d",
