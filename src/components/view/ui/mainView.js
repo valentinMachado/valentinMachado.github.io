@@ -77,7 +77,7 @@ MainView.prototype.initCentralButton = function(event) {
 	window.addEventListener("pointermove", function(event) {
 		if (draggingCentralBar) {
 			var x = event.clientX / this.canvas.clientWidth;
-			this.ratioBetweenViews = x;
+			this.setRatio(x)
 			var w = window.innerWidth;
 			var h = window.innerHeight;
 			this.onResize(w, h);
@@ -102,14 +102,14 @@ MainView.prototype.initCentralButton = function(event) {
 	rightButton.style.right = "0px";
 
 	//cb
-	rightButton.addEventListener("pointerdown", (event) => {
-		this.ratioBetweenViews = 0.99;
+	rightButton.onclick = (event) => {
+		this.setRatio(1)
 		wE3D.onResize();
-	});
-	leftButton.addEventListener("pointerdown", (event) => {
-		this.ratioBetweenViews = 0.01;
+	};
+	leftButton.onclick = (event) => {
+		this.setRatio(0)
 		wE3D.onResize();
-	});
+	};
 };
 MainView.prototype.updateHtmlStyle = function(event) {
 	var w = this.canvas.clientWidth;
@@ -120,6 +120,7 @@ MainView.prototype.updateHtmlStyle = function(event) {
 	container.style.width = w * this.ratioBetweenViews + "px";
 };
 
+//to not control another view when controlling one (?)
 MainView.prototype.initBlocker = function() {
 	var container = document.getElementById("selected-container");
 	var blocker = document.createElement("div");
@@ -175,3 +176,8 @@ MainView.prototype.updateControls = function(event) {
 	this.viewRight.viewScene.controls.enabled = isOnRightView;
 	this.viewLeft.viewScene.controls.enabled = !isOnRightView;
 };
+
+MainView.prototype.setRatio = function(value) {
+	var offset = 0.1
+	this.ratioBetweenViews = Math.max(Math.min(1 - offset, value), offset);
+}

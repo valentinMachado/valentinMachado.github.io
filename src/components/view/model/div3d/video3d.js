@@ -1,11 +1,15 @@
 "use strict";
 
 
-function Video3D(html) {
-	this._super(html);
+function Video3D(json) {
+	this._super(json);
 
 	this.videoCanvas = null;
 	this.videoTexture = null;
+
+	//create html
+	this.html = document.createElement("video")
+	this.html.src = this.json.path
 
 	//override
 	this.type = "VIDEO3D";
@@ -24,7 +28,7 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	controls.update();
 
 	//restart video*
-	var video = this.html;
+	var video = this.html
 
 	scene.add(this.selectedObject);
 
@@ -112,9 +116,8 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	//create canvas texture
 	this.videoCanvas = document.createElement("canvas");
 
-	var sizeVideo = JSON.parse(video.dataset.size);
-	this.videoCanvas.width = sizeVideo.width;
-	this.videoCanvas.height = sizeVideo.height;
+	this.videoCanvas.width = this.json.width;
+	this.videoCanvas.height = this.json.height;
 
 	this.videoImageContext = this.videoCanvas.getContext("2d");
 
@@ -131,7 +134,7 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	// the geometry on which the movie will be displayed;
 	// 		movie image will be scaled to fit these dimensions.
 	var size = this.scale * 10;
-	var ratio = sizeVideo.width / sizeVideo.height;
+	var ratio = this.json.width / this.json.height;
 	var movieGeometry = new THREE.PlaneGeometry(ratio * size, size, 4, 4);
 	var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
 	movieScreen.rotation.x = -Math.PI / 2;

@@ -8,12 +8,12 @@ window.WebExplorerUtility.Div3dUtility = {
 	font: null,
 
 	//take two class as argument and make them herit
-	createFromHtml: function(html, firstCall) {
+	createFromHtml: function(json, firstCall) {
 
-		var result = this.createFromElement(html);
+		var result = this.createFromElement(json);
 
-		for (let i = 0; i < result.html.children.length; i++) {
-			var child = result.html.children[i];
+		for (let i = 0; i < result.json.child.length; i++) {
+			var child = result.json.child[i];
 			result.appendChild(this.createFromHtml(child, false))
 		}
 
@@ -43,15 +43,17 @@ window.WebExplorerUtility.Div3dUtility = {
 
 	createFromElement: function(el) {
 
-		switch (el.localName) {
-			case "img":
+		switch (el.type) {
+			case "image":
 				return new Img3D(el);
-			case "a":
+			case "link":
 				return new Link3D(el);
 			case "video":
 				return new Video3D(el);
-			default:
+			case "div3d":
 				return new Div3D(el);
+			default:
+				console.error("no type in json")
 		}
 	},
 

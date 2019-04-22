@@ -1,8 +1,8 @@
 "use strict";
 
 
-function Link3D(html) {
-	this._super(html);
+function Link3D(json) {
+	this._super(json);
 
 	//override
 	this.type = "Link3D";
@@ -16,7 +16,7 @@ Link3D.prototype.initViewScene = function(viewScene) {
 	iframe.setAttribute("scrolling", "yes");
 	iframe.setAttribute("frameborder", "no");
 	iframe.setAttribute("allow", "autoplay");
-	iframe.src = this.html.href;
+	iframe.src = this.json.url;
 
 	//silent console of iframe
 	//var iframeWindow = iframe.contentWindow;
@@ -25,12 +25,13 @@ Link3D.prototype.initViewScene = function(viewScene) {
 	//iframeWindow.console.warn = function() { /* nop */ };
 	//iframeWindow.console.info = function() { /* nop */ };
 
-	var link = this.html;
+	var link = document.createElement("a");
+	link.href = this.json.url
 	link.target = "_blank";
 	link.innerHTML = "Open in a new tab";
 
 	this.addHtmlToSelectedView(iframe);
-	this.addHtmlToSelectedView(this.html);
+	this.addHtmlToSelectedView(link);
 };
 
 

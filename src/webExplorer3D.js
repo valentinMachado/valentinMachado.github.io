@@ -51,10 +51,9 @@ WebExplorer3D.prototype.load = function() {
 	});
 };
 
-WebExplorer3D.prototype.initialize = function() {
+WebExplorer3D.prototype.initialize = function(json) {
 	//create 3d ui
-	let inputHtml = document.getElementById("input");
-	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(inputHtml, true);
+	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(json, true);
 	console.info("%cHTML converted", "color:#27AE60;");
 	WebExplorerUtility.Div3dUtility.traverse(this.divs3d, function(d) {
 		//display
