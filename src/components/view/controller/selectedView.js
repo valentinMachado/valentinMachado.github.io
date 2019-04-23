@@ -28,7 +28,7 @@ SelectedView.prototype.initialize = function() {
 	var scene = this.viewScene.scene;
 
 	var textureLoader = new THREE.TextureLoader();
-	scene.background = textureLoader.load("./src/assets/img/selected_bg.jpeg");
+	scene.background = textureLoader.load("./src/assets/img/bg.jpeg");
 
 	this.setCurrentDiv3D(wE3D.divs3d);
 	//WebExplorerUtility.DebugUtility.addCoordSystem(scene);
