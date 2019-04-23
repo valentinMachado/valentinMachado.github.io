@@ -93,27 +93,42 @@ let structureJSON = {
 					}]
 				}, {
 					"type": "div3d",
-					"label": "steampong",
+					"label": "Steampong",
 					"child": [{
+						"type": "html3d",
+						"label": "Context",
+						"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://globalgamejam.org/2014/games/steam-pong\">Steampong</a> is a game made at the Global Game Jam 2014. The team was composed of only 3 people : a programmer, an artist and myself as a sound designer. We worked together on the game design. The whole content has been produced within a 48h period including full graphics, 3 music themes and the whole game code.The game received positive feedbacks from the audience.",
+						"child": []
+					}, {
 						"type": "video",
-						"label": "trailer",
+						"label": "Trailer",
 						"path": "./src/assets/video/ggj2014-steam-pong.mp4",
 						"title": "Trailer SteamPong",
 						"width": 1280,
 						"height": 720,
 						"child": []
+					}, {
+						"type": "link",
+						"label": "OST",
+						"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/21336300&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+						"child": []
 					}]
 				}, {
 					"type": "div3d",
 					"label": "demon",
-					"child": []
+					"child": [{
+						"type": "link",
+						"label": "play game !",
+						"url": "./src/assets/build/demon/index.html",
+						"child": []
+					}]
 				}, {
 					"type": "div3d",
 					"label": "portfolio",
 					"child": []
 				}, {
 					"type": "div3d",
-					"label": "maze",
+					"label": "walls",
 					"child": []
 				}, {
 					"type": "div3d",
@@ -129,8 +144,9 @@ let structureJSON = {
 				"type": "div3d",
 				"label": "mcv",
 				"child": [{
-					"type": "div3d",
+					"type": "link",
 					"label": "site",
+					"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/524173593&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
 					"child": []
 				}]
 			}, {

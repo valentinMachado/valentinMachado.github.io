@@ -15,3 +15,7 @@ AbstractController.prototype.onPointerMove = function(mousePos, event) {
 AbstractController.prototype.onPointerUp = function(mousePos, event) {
 	// console.log("abstract up");
 };
+
+AbstractController.prototype.onDoubleClick = function(mousePos, event) {
+	//console.log("abstract dbl click")
+};
