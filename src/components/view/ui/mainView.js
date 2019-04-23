@@ -89,6 +89,15 @@ MainView.prototype.initHelpGUI = function() {
 		iconImage.classList.remove("display")
 		iconImage.classList.add("hide")
 	}
+
+	let homeIcon = document.createElement("img")
+	homeIcon.classList.add("home-button")
+	homeIcon.src = "./src/assets/img/home.png"
+	this.root.appendChild(homeIcon)
+	homeIcon.onclick = function(evt){
+		//reset
+		wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
+	}
 };
 
 MainView.prototype.initCentralButton = function(event) {
@@ -207,6 +216,6 @@ MainView.prototype.updateControls = function(event) {
 };
 
 MainView.prototype.setRatio = function(value) {
-	var offset = 0.1
+	var offset = 1.6 * 50 / this.canvas.width
 	this.ratioBetweenViews = Math.max(Math.min(1 - offset, value), offset);
 }

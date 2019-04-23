@@ -35,9 +35,9 @@ ExplorerView.prototype.initialize = function() {
 
 ExplorerView.prototype.initSkyBox = function() {
 	var urlPrefix = "./src/assets/skybox/space/";
-	var urls = [urlPrefix + "right.jpg", urlPrefix + "left.jpg",
-		urlPrefix + "top.jpg", urlPrefix + "bot.jpg",
-		urlPrefix + "front.jpg", urlPrefix + "back.jpg"
+	var urls = [urlPrefix + "right.jpeg", urlPrefix + "left.jpeg",
+		urlPrefix + "top.jpeg", urlPrefix + "bot.jpeg",
+		urlPrefix + "front.jpeg", urlPrefix + "back.jpeg"
 	];
 
 	// var reflectionCube = THREE.CubeTextureLoader(urls);
@@ -56,7 +56,8 @@ ExplorerView.prototype.initSkyBox = function() {
 	});
 
 	// build the skybox Mesh
-	var skyboxMesh = new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), material);
+	let size = 300
+	var skyboxMesh = new THREE.Mesh(new THREE.BoxGeometry(size, size, size), material);
 	// add it to the scene
 	var scene = this.viewScene.scene;
 
