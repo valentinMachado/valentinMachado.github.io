@@ -18,6 +18,7 @@ SelectedView.prototype.initialize = function() {
 	var textureLoader = new THREE.TextureLoader();
 	scene.background = textureLoader.load("./src/assets/img/selected_bg.jpeg");
 
+	this.setCurrentDiv3D(wE3D.divs3d);
 	//WebExplorerUtility.DebugUtility.addCoordSystem(scene);
 };
 
@@ -112,19 +113,24 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
 	if (event.which === 3) {
 		//right click
-		if (this.currentDiv3D.parent) {
-			explorerController.setCurrentDiv3D(this.currentDiv3D.parent);
+		if (explorerController.currentDiv3D.parent) {
+			explorerController.setCurrentDiv3D(explorerController.currentDiv3D.parent);
 		}
 
 	} else {
 
 		var info = this.fetchDivUnderMouse(mousePos);
 		this.divHovered = info.div;
+	}
+};
 
-		//camera focus
-		if (this.divHovered) {
-			explorerController.setCurrentDiv3D(this.divHovered);
-		}
+SelectedView.prototype.onDoubleClick = function(mousePos, event) {
+
+	//camera focus
+	if (this.divHovered) {
+		var explorerController = wE3D.controllers.explorerView;
+		explorerController.setCurrentDiv3D(this.divHovered);
+		this.setCurrentDiv3D(this.divHovered)
 	}
 };
 

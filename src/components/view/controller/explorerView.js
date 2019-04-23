@@ -131,7 +131,7 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	var current = this.currentDiv3D;
 	while (current.parent) {
 		current = current.parent;
-		 current.iconObject.visible = true;
+		current.iconObject.visible = true;
 		//current.showIcon(true);
 	}
 
@@ -140,9 +140,6 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	this.setOutline(null);
 
 	this.makeCameraFocus(div);
-
-	//update other view
-	wE3D.controllers.selectedView.setCurrentDiv3D(div);
 };
 
 ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
@@ -270,4 +267,16 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 			this.setCurrentDiv3D(this.divHovered);
 		}
 	}
+};
+
+ExplorerView.prototype.onDoubleClick = function(mousePos, event) {
+
+	var info = this.fetchDivUnderMouse(mousePos);
+	this.divHovered = info.div;
+
+	if (this.divHovered) {
+		//update other view
+		wE3D.controllers.selectedView.setCurrentDiv3D(this.divHovered);
+	}
+
 };

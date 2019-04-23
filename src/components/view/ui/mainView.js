@@ -43,10 +43,11 @@ MainView.prototype.initialize = function(canvas) {
 	window.addEventListener("pointerdown", function(event) {
 		this.dragging = true;
 		this.updateControls(event);
-
 		this.controllerHovered.onPointerDown(this.fetchMousePosRatio(event), event);
-
 	}.bind(this));
+	window.ondblclick = function() {
+		this.controllerHovered.onDoubleClick(this.fetchMousePosRatio(event), event);
+	}.bind(this)
 	window.addEventListener("pointermove", function(event) {
 		if (!this.dragging) this.updateControls(event);
 
