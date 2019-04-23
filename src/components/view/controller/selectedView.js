@@ -7,6 +7,18 @@ function SelectedView(elToListen) {
 	this._super(elToListen);
 
 	this.currentDiv3D = null;
+
+	this.exitButton = document.createElement("img")
+	this.exitButton.classList.add("exit-button")
+	this.exitButton.src = "./src/assets/img/cross.png"
+	var container = document.getElementById("selected-container");
+	container.appendChild(this.exitButton)
+	this.exitButton.style.display = "none"
+	this.exitButton.onclick = function(evt) {
+		if (this.currentDiv3D && this.currentDiv3D.parent) {
+			this.setCurrentDiv3D(this.currentDiv3D.parent)
+		}
+	}.bind(this)
 };
 
 WebExplorerUtility.JsUtility.makeHerit(SelectedView, AbstractView);
@@ -77,6 +89,13 @@ SelectedView.prototype.setCurrentDiv3D = function(div) {
 	//adjust zoom camera
 	this.adjustCameraZoom();
 
+	//add ui to leave selected if its not a folder
+	if (!div.isFolder()) {
+		this.exitButton.style.display = ""
+	} else {
+		this.exitButton.style.display = "none"
+	}
+
 };
 SelectedView.prototype.adjustCameraZoom = function() {
 
@@ -112,7 +131,8 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 	var explorerController = wE3D.controllers.explorerView;
 
 	if (event.which === 3) {
-		//right click
+
+		//right click always trigger explorer view
 		if (explorerController.currentDiv3D.parent) {
 			explorerController.setCurrentDiv3D(explorerController.currentDiv3D.parent);
 		}
@@ -121,16 +141,13 @@ SelectedView.prototype.onPointerDown = function(mousePos, event) {
 
 		var info = this.fetchDivUnderMouse(mousePos);
 		this.divHovered = info.div;
-	}
-};
 
-SelectedView.prototype.onDoubleClick = function(mousePos, event) {
-
-	//camera focus
-	if (this.divHovered) {
-		var explorerController = wE3D.controllers.explorerView;
-		explorerController.setCurrentDiv3D(this.divHovered);
-		this.setCurrentDiv3D(this.divHovered)
+		//camera focus
+		if (this.divHovered) {
+			var explorerController = wE3D.controllers.explorerView;
+			explorerController.setCurrentDiv3D(this.divHovered);
+			this.setCurrentDiv3D(this.divHovered)
+		}
 	}
 };
 

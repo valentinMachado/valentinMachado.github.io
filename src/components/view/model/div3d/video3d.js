@@ -141,8 +141,7 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	this.selectedObject = movieScreen;
 
 	//add title
-	if (this.json.title != "") {
-		console.log("TITLE")
+	if (this.json.title) {
 		let titleMesh = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.json.title);
 		let bb = new THREE.Box3();
 		bb.setFromObject(titleMesh);

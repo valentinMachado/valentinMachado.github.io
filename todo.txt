@@ -5,3 +5,5 @@ video a produire:
 - une par projet perso progra
 
 demander à léo pour element ui
+
+réfléchir ergo

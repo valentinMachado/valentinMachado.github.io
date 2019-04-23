@@ -31,6 +31,8 @@ MainView.prototype.initialize = function(canvas) {
 	//append canvas to DOM
 	this.root.appendChild(canvas);
 
+	this.initHelpGUI();
+
 	//create central button
 	this.initBlocker();
 	this.initCentralButton();
@@ -61,6 +63,32 @@ MainView.prototype.initialize = function(canvas) {
 		this.dragging = false;
 	}.bind(this));
 
+};
+
+MainView.prototype.initHelpGUI = function() {
+
+	let iconHelp = document.createElement("img")
+	iconHelp.classList.add("help-button")
+	iconHelp.src = "./src/assets/img/info.png"
+	this.root.appendChild(iconHelp)
+
+	let iconImage = document.createElement("img")
+	iconImage.classList.add("help-img")
+	iconImage.src = "./src/assets/img/tuto.jpeg"
+	iconImage.style.transform = "scale(0)";
+	this.root.appendChild(iconImage)
+
+	iconHelp.onmouseenter = function() {
+		console.log("enter help")
+		iconImage.classList.remove("hide")
+		iconImage.classList.add("display")
+	}
+
+	iconHelp.onmouseleave = function() {
+		console.log("leave help")
+		iconImage.classList.remove("display")
+		iconImage.classList.add("hide")
+	}
 };
 
 MainView.prototype.initCentralButton = function(event) {
