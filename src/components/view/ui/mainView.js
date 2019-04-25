@@ -67,8 +67,10 @@ MainView.prototype.initialize = function(canvas) {
 
 MainView.prototype.initHelpGUI = function() {
 
+	let countFromTop = 0
+
 	let iconHelp = document.createElement("img")
-	iconHelp.classList.add("help-button")
+	iconHelp.classList.add("right-button")
 	iconHelp.src = "./src/assets/img/info.png"
 	this.root.appendChild(iconHelp)
 
@@ -89,12 +91,27 @@ MainView.prototype.initHelpGUI = function() {
 		iconImage.classList.remove("display")
 		iconImage.classList.add("hide")
 	}
+	iconHelp.style.top = wE3D.conf.minDim * countFromTop + "px"
+	countFromTop++;
 
+	//focus icon
+	let focusIcon = document.createElement("img")
+	focusIcon.classList.add("right-button")
+	focusIcon.src = "./src/assets/img/home.png"
+	this.root.appendChild(focusIcon)
+	focusIcon.onclick = function(evt) {
+		//reset
+		let explorer = wE3D.controllers.explorerView
+		explorer.setCurrentDiv3D(explorer.currentDiv3D)
+	}
+	focusIcon.style.top = wE3D.conf.minDim * countFromTop + "px"
+
+	//home icon
 	let homeIcon = document.createElement("img")
 	homeIcon.classList.add("home-button")
 	homeIcon.src = "./src/assets/img/home.png"
 	this.root.appendChild(homeIcon)
-	homeIcon.onclick = function(evt){
+	homeIcon.onclick = function(evt) {
 		//reset
 		wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
 	}

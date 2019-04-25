@@ -1,6 +1,8 @@
 "use strict";
 
-function WebExplorer3D() {
+function WebExplorer3D(conf) {
+
+	this.conf = conf
 
 	this.ui = new MainView();
 
@@ -35,7 +37,11 @@ function WebExplorer3D() {
 	// this.controllers.explorerView.viewScene.scene.add(cicle);
 };
 
+
 WebExplorer3D.prototype.load = function() {
+
+	//load audio
+	//this.ambiantAudio = new Audio("./src/assets/sound/Atmosphere-01.wav");
 
 	return new Promise((resolve, reject) => {
 
@@ -100,6 +106,14 @@ WebExplorer3D.prototype.tick = function() {
 			this.controllers[c].tick();
 		}
 	}
+
+	//audio
+	// if(this.controllers.selectedView.currentDiv3D.isFolder() &&
+	// 	this.ambiantAudio){
+	// 	this.ambiantAudio.play()
+	// }else{
+	// 	this.ambiantAudio.pause()
+	// }
 
 	//animation update
 	TWEEN.update();

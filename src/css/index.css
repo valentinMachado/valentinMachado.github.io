@@ -143,12 +143,12 @@ iframe{
 	cursor:pointer;
 }
 
-.help-button{
+.right-button{
 	width:50px;
 	position: absolute;
-	top: 0px;
+
 	right:0px;
-	cursor: help;
+	cursor: pointer;
 	z-index: 10;
 }
 

@@ -40,7 +40,7 @@ Link3D.prototype.initViewScene = function(viewScene) {
 Link3D.prototype._createIconObject = function() {
 
 	var size = 0.4 * this.scale;
-	this.iconObject = WebExplorerUtility.ModelUtility.fetch("pillar", size);
+	this.iconObject = WebExplorerUtility.ModelUtility.create("pillar", size);
 };
 
 Link3D.prototype._createSelectedObjectFile = function() {
