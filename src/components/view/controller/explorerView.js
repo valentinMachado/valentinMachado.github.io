@@ -68,7 +68,7 @@ ExplorerView.prototype.tick = function() {
 
 	// if (this.currentDiv3D) {
 
-	// 	var speed =0.5;
+
 
 	// 	this.currentDiv3D.children.forEach(function(child) {
 	// 		WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
@@ -87,6 +87,13 @@ ExplorerView.prototype.tick = function() {
 	// 	// }
 
 	// }
+
+	//var speed = 0.5;
+
+	//make label look at camera
+	WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
+		d.labelObject.quaternion.copy(this.viewScene.camera.quaternion);
+	}.bind(this));
 
 	this.updateDivHovered();
 };

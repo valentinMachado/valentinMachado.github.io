@@ -28,7 +28,7 @@ Html3D.prototype.onDisable = function(viewScene) {
 Html3D.prototype._createIconObject = function() {
 
 	var size = 0.4 * this.scale;
-	this.iconObject = WebExplorerUtility.ModelUtility.fetch("barrel", size);
+	this.iconObject = WebExplorerUtility.ModelUtility.create("barrel", size);
 };
 
 Html3D.prototype._createSelectedObjectFile = function() {

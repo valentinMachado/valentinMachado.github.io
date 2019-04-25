@@ -49,7 +49,7 @@ window.WebExplorerUtility.ModelUtility = {
 		});
 	},
 
-	fetch: function(modelTag, size) {
+	create: function(modelTag, size) {
 		let original = this.models[modelTag];
 
 		let geo = original.geometry.clone()

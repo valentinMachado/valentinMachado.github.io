@@ -183,7 +183,9 @@ let structureJSON = {
 	"type": "div3d"
 };
 
-window.wE3D = new WebExplorer3D();
+window.wE3D = new WebExplorer3D({
+	minDim: 50
+});
 
 try {
 	console.info("%cInitialize app ...", "color:#0000FF;");

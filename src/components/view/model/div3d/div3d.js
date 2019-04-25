@@ -25,6 +25,7 @@ function Div3D(json) {
 	//meshes
 	this.iconObject = null;
 	this.selectedObject = null;
+	this.labelObject = null
 
 	//what degree into the tree
 	this.degree = 1;
@@ -98,8 +99,10 @@ Div3D.prototype.buildMeshes = function() {
 		var bb = new THREE.Box3();
 		bb.setFromObject(label);
 
-		label.position.x -= bb.max.x * 0.5;
-		label.position.y += bb.max.y;
+		//label.position.x -= bb.max.x * 0.5;
+		label.position.y += bb.max.y * 1.5;
+
+		this.labelObject = label
 
 		this.iconObject.add(label);
 	}
@@ -206,7 +209,7 @@ Div3D.prototype._createSelectedObjectFile = function() {
 Div3D.prototype._createIconObject = function() {
 
 	var size = 0.5 * this.scale;
-	this.iconObject = WebExplorerUtility.ModelUtility.fetch("perso", size);
+	this.iconObject = WebExplorerUtility.ModelUtility.create("perso", size);
 };
 
 Div3D.prototype.tick = function() {};
