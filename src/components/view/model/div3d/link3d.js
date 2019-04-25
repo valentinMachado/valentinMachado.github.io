@@ -39,21 +39,8 @@ Link3D.prototype.initViewScene = function(viewScene) {
 
 Link3D.prototype._createIconObject = function() {
 
-	var material = new THREE.MeshStandardMaterial({
-
-		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-		roughness: 0.5,
-		metalness: 0,
-		flatShading: true
-
-	});
-
 	var size = 0.4 * this.scale;
-	var geometry = new THREE.SphereGeometry(size, 32, 32);
-	var cube = new THREE.Mesh(geometry, material);
-
-
-	this.iconObject = cube;
+	this.iconObject = WebExplorerUtility.ModelUtility.fetch("pillar", size);
 };
 
 Link3D.prototype._createSelectedObjectFile = function() {

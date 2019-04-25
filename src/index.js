@@ -191,7 +191,11 @@ try {
 	//wait image of the loading screen to be load to begin to load app
 	loadingHtml.image.addEventListener('load', function() {
 
-		wE3D.load()
+		//load model 3d
+		WebExplorerUtility.ModelUtility.load()
+			.then(function() {
+				return wE3D.load();
+			})
 			.then(function() {
 
 				wE3D.initialize(structureJSON);
