@@ -2,6 +2,10 @@ body{
 	/*cursor: none;*/
 	overflow: hidden;
 	margin: 0px;
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 canvas{
