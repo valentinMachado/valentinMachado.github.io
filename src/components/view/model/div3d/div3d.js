@@ -102,17 +102,6 @@ Div3D.prototype.buildMeshes = function() {
 		label.position.y += bb.max.y;
 
 		this.iconObject.add(label);
-
-		/*var singleGeometry = new THREE.Geometry();
-
-		//merge
-		this.iconObject.updateMatrix(); // as needed
-		singleGeometry.merge(this.iconObject.geometry, this.iconObject.matrix);
-
-		label.updateMatrix(); // as needed
-		singleGeometry.merge(label.geometry, label.matrix);
-
-		this.iconObject = new THREE.Mesh(singleGeometry, WebExplorerUtility.MaterialUtility.iconMat);*/
 	}
 
 	if (this.isFolder()) {
