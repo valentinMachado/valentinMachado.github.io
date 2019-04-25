@@ -205,22 +205,8 @@ Div3D.prototype._createSelectedObjectFile = function() {
 
 Div3D.prototype._createIconObject = function() {
 
-	var material = new THREE.MeshStandardMaterial({
-
-		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-		roughness: 0.5,
-		metalness: 0,
-		flatShading: true
-
-	});
-
-	//default meshes
 	var size = 0.5 * this.scale;
-	var geometry = new THREE.BoxGeometry(size, size, size);
-	var cube = new THREE.Mesh(geometry, material);
-
-
-	this.iconObject = cube;
+	this.iconObject = WebExplorerUtility.ModelUtility.fetch("perso", size);
 };
 
 Div3D.prototype.tick = function() {};

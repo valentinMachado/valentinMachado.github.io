@@ -20,6 +20,11 @@ window.WebExplorerUtility.ModelUtility = {
 				folder: "./src/assets/model/Pillar/",
 				file: "LP_Pillar.obj"
 			});
+			modelData.push({
+				id: "perso",
+				folder: "./src/assets/model/Perso/",
+				file: "Perso.obj"
+			});
 
 			var objLoader = new THREE.OBJLoader();
 			var count = 0;
@@ -46,14 +51,13 @@ window.WebExplorerUtility.ModelUtility = {
 
 	fetch: function(modelTag, size) {
 		let original = this.models[modelTag];
-		let copy = original.clone()
 
-		//normalize so its only one geo
-		copy.geometry.vertices.forEach(function(vertex) {
-			vertex *= size;
-		});
+		let geo = original.geometry.clone()
+		for (var i = geo.vertices.length - 1; i >= 0; i--) {
+			geo.vertices[i].multiplyScalar(size)
+		}
 
-		return copy
+		return new THREE.Mesh(geo, WebExplorerUtility.MaterialUtility.iconMat)
 	},
 
 	normalize: function(object) {

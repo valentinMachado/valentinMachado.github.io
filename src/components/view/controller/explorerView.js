@@ -66,25 +66,27 @@ ExplorerView.prototype.initSkyBox = function() {
 
 ExplorerView.prototype.tick = function() {
 
-	if (this.currentDiv3D) {
+	// if (this.currentDiv3D) {
 
-		var speed = 0.0;
+	// 	var speed =0.5;
 
-		if (this.currentDiv3D.parent) {
+	// 	this.currentDiv3D.children.forEach(function(child) {
+	// 		WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
+	// 			d.iconObject.rotation.y += speed * wE3D.dt;
+	// 		});
+	// 	});
 
-			this.currentDiv3D.parent.children.forEach(function(child) {
-				WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
-					d.iconObject.rotation.y += speed * wE3D.dt;
-				});
-			});
+	// 	// if (this.currentDiv3D.parent) {
 
-		} else {
-			WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
-				d.iconObject.rotation.y += speed * wE3D.dt;
-			});
-		}
 
-	}
+
+	// 	// } else {
+	// 	// 	WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
+	// 	// 		d.iconObject.rotation.y += speed * wE3D.dt;
+	// 	// 	});
+	// 	// }
+
+	// }
 
 	this.updateDivHovered();
 };

@@ -37,6 +37,11 @@ let structureJSON = {
 				"label": "site",
 				"url": "https://www.ihmtek.com/",
 				"child": []
+			}, {
+				"type": "link",
+				"label": "Ludomuse",
+				"url": "https://docs.google.com/presentation/d/e/2PACX-1vQBTJDzJ_ycIXlUt6RQOGRqZdib38s_Xn74M9MKl-cwDWc6RUDXhLwSf_OJYJjgIos1VSZI_spXbyEm/embed?start=false&loop=false&delayms=3000",
+				"child": []
 			}]
 		}, {
 			"type": "div3d",
