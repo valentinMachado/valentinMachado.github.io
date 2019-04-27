@@ -41,8 +41,6 @@ SelectedView.prototype.tick = function() {
 
 		if (this.currentDiv3D.isFolder()) {
 
-			var zero = new THREE.Vector3();
-
 			this.currentDiv3D.selectedObject.children.forEach(function(child) {
 
 				if (child.userData.planeNormal) {
@@ -52,7 +50,7 @@ SelectedView.prototype.tick = function() {
 
 					//security set length
 					WebExplorerUtility.MathUtility.fetchPosAtDistance(
-						zero,
+						new THREE.Vector3(),
 						child.position,
 						child.userData.radius);
 

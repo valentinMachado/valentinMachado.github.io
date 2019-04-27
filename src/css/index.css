@@ -81,6 +81,15 @@ canvas{
 	color: white;
 }
 
+.html-container iframe{
+	height: 400px;
+	width: 100%;
+}
+
+.html-container img{
+	width: 100%;
+}
+
 /*Link*/
 .link-iframe{
 	width: 96%;
@@ -92,15 +101,10 @@ canvas{
     text-decoration:none;
 }
 
-/*Link*/
-#selected-container iframe{
-	width: 98%;
-    height: 90%;
-}
-
 /*iframe*/
 iframe{
 	height: 90%;
+	width: calc(100% - 48px);
 }
 
 /*loading screen*/

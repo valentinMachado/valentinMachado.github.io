@@ -23,11 +23,14 @@ function ViewScene(elToListen) {
 
 ViewScene.prototype.initSceneDefault = function() {
 	var scene = this.scene;
+	// scene.lights = []
 
-	scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444));
+	let ambient = new THREE.HemisphereLight(0xffffff, 0xffffff)
+	ambient.intensity = 0.25
+	scene.add(ambient);
 
-	var light = new THREE.SpotLight(0xffffff, 1, 0, Math.PI / 2);
-	light.position.set(0, 1500, 1000);
+	var light = new THREE.DirectionalLight(0xFFF68F, 1.0);
+	light.position.set(10, 50, 200);
 	light.target.position.set(0, 0, 0);
 
 	// light.castShadow = true;
