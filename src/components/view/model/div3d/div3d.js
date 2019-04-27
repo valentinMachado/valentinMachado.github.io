@@ -93,14 +93,17 @@ Div3D.prototype.buildMeshes = function() {
 	this._createIconObject();
 	//common mesh decoration
 	if (this.json.label) {
-		var label = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.json.label);
+		var label = WebExplorerUtility.ModelUtility.buildLabelMesh(this.json.label);
 		//position
 		label.scale.set(this.scale, this.scale, this.scale);
 		var bb = new THREE.Box3();
 		bb.setFromObject(label);
 
 		//label.position.x -= bb.max.x * 0.5;
-		label.position.y += bb.max.y * 1.5;
+		label.position.y += (bb.max.y - bb.min.y) * 0.5;
+
+		bb.setFromObject(this.iconObject)
+		label.position.y += (bb.max.y - bb.min.y) * 0.6;
 
 		this.labelObject = label
 
@@ -209,7 +212,17 @@ Div3D.prototype._createSelectedObjectFile = function() {
 Div3D.prototype._createIconObject = function() {
 
 	var size = 0.5 * this.scale;
-	this.iconObject = WebExplorerUtility.ModelUtility.create("perso", size);
+
+	if (this.json.modelId) {
+		this.iconObject = WebExplorerUtility.ModelUtility.create(this.json.modelId, size);
+	} else {
+
+		if (this.isFolder()) {
+			this.iconObject = WebExplorerUtility.ModelUtility.create("cube", size);
+		} else {
+			this.iconObject = WebExplorerUtility.ModelUtility.create("sphere", size);
+		}
+	}
 };
 
 Div3D.prototype.tick = function() {};

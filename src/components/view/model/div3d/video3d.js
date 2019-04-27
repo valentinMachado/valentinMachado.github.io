@@ -75,24 +75,6 @@ Video3D.prototype.onDisable = function(viewScene) {
 	this.html.pause();
 };
 
-
-Video3D.prototype._createIconObject = function() {
-
-	var material = new THREE.MeshStandardMaterial({
-
-		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-		roughness: 0.5,
-		metalness: 0,
-		flatShading: true
-
-	});
-
-	var size = 0.4 * this.scale;
-	var geometry = new THREE.SphereGeometry(size, 32, 32);
-	var sphere = new THREE.Mesh(geometry, material);
-	this.iconObject = sphere;
-};
-
 Video3D.prototype.tick = function() {
 
 	var video = this.html;
@@ -142,7 +124,7 @@ Video3D.prototype._createSelectedObjectFile = function() {
 
 	//add title
 	if (this.json.title) {
-		let titleMesh = WebExplorerUtility.Div3dUtility.buildLabelMesh(this.json.title);
+		let titleMesh = WebExplorerUtility.ModelUtility.buildLabelMesh(this.json.title);
 		let bb = new THREE.Box3();
 		bb.setFromObject(titleMesh);
 		titleMesh.position.x = -bb.max.x / 2

@@ -7,6 +7,16 @@ window.WebExplorerUtility.ModelUtility = {
 	models: {},
 
 	load: function() {
+
+		console.info("%cModel loading", "color:#27AE60;");
+
+		//create basic shape cube + sphere
+		this.models["sphere"] = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32),
+			WebExplorerUtility.MaterialUtility.iconMat);
+
+		this.models["cube"] = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1),
+			WebExplorerUtility.MaterialUtility.iconMat);
+
 		return new Promise((resolve, reject) => {
 
 			var modelData = []
@@ -53,11 +63,43 @@ window.WebExplorerUtility.ModelUtility = {
 		let original = this.models[modelTag];
 
 		let geo = original.geometry.clone()
+
 		for (var i = geo.vertices.length - 1; i >= 0; i--) {
 			geo.vertices[i].multiplyScalar(size)
 		}
 
+		let color = new THREE.Color().setHSL(Math.random(), 1.0, 0.5);
+		geo.faces.forEach(function(face) {
+			face.color = color
+		})
+
 		return new THREE.Mesh(geo, WebExplorerUtility.MaterialUtility.iconMat)
+	},
+
+	//font load async
+	font: null,
+
+	buildLabelMesh: function(string) {
+		var geometry = new THREE.TextGeometry(string, {
+			font: this.font,
+			size: 0.5,
+			height: 0.15
+		});
+
+		geometry.computeBoundingBox()
+		let dim = new THREE.Vector3()
+		dim.x = geometry.boundingBox.max.x - geometry.boundingBox.min.x
+		dim.y = geometry.boundingBox.max.y - geometry.boundingBox.min.y
+		dim.z = geometry.boundingBox.max.z - geometry.boundingBox.min.z
+
+		//center on x z
+		geometry.vertices.forEach(function(vertex) {
+			vertex.x -= dim.x * 0.5
+			vertex.z -= dim.z * 0.5
+			vertex.y -= dim.y * 0.5
+		});
+
+		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.labelMat);
 	},
 
 	normalize: function(object) {
@@ -80,7 +122,7 @@ window.WebExplorerUtility.ModelUtility = {
 					vertices[i + 1] *= (normalizeSize / dim.y)
 					vertices[i + 2] *= (normalizeSize / dim.z)
 
-					vertices[i + 1] -= normalizeSize
+					vertices[i + 1] -= normalizeSize * 0.5
 				}
 
 				child.updateMatrix()

@@ -3,8 +3,10 @@
 //load here to avoid async stuff
 let structureJSON = {
 	"label": "Valentin Machado",
+	"modelId": "perso",
 	"child": [{
 		"label": "Etudes",
+		"modelId": "pillar",
 		"child": [{
 			"label": "Lycee",
 			"child": [],
@@ -29,6 +31,7 @@ let structureJSON = {
 	}, {
 		"type": "div3d",
 		"label": "Experience pro",
+		"modelId": "barrel",
 		"child": [{
 			"type": "div3d",
 			"label": "IHMTEK",
@@ -157,7 +160,7 @@ let structureJSON = {
 			}, {
 				"type": "html3d",
 				"label": "playlist",
-				"html": "Je fais des playlist dispo <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\">ici</a>",
+				"html": "<img src = \"./src/assets/img/playlist.png\"> Les playlist du jailln et de la mache - Playlist on a particular theme or music genre. <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\"> website</a> <br> <iframe src=\"https://player.vimeo.com/video/330845878\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/315117555\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/307960107\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/303532748\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/298485745\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/299649347\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/298484622\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe>",
 				"child": []
 			}, {
 				"type": "div3d",
@@ -183,6 +186,12 @@ let structureJSON = {
 	"type": "div3d"
 };
 
+// let structureJSON = {
+// 	"type": "div3d",
+// 	"label": "Naïs Collet",
+// 	"child": []
+// }
+
 window.wE3D = new WebExplorer3D({
 	minDim: 50
 });
@@ -199,7 +208,10 @@ try {
 	loadingHtml.image.addEventListener('load', function() {
 
 		//load model 3d
-		WebExplorerUtility.ModelUtility.load()
+		WebExplorerUtility.MaterialUtility.load()
+			.then(function() {
+				return WebExplorerUtility.ModelUtility.load();
+			})
 			.then(function() {
 				return wE3D.load();
 			})

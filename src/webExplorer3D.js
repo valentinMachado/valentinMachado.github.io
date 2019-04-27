@@ -48,7 +48,7 @@ WebExplorer3D.prototype.load = function() {
 		var loader = new THREE.FontLoader();
 
 		loader.load('./src/assets/fonts/helvetiker_regular.typeface.json', function(font) {
-			WebExplorerUtility.Div3dUtility.font = font;
+			WebExplorerUtility.ModelUtility.font = font;
 			console.info("%cFont Loaded", "color:#27AE60;");
 
 			//end promise

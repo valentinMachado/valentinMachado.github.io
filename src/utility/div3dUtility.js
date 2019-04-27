@@ -4,9 +4,6 @@ window.WebExplorerUtility = window.WebExplorerUtility || {};
 
 window.WebExplorerUtility.Div3dUtility = {
 
-	//font load async
-	font: null,
-
 	//take two class as argument and make them herit
 	createFromHtml: function(json, firstCall) {
 
@@ -57,30 +54,6 @@ window.WebExplorerUtility.Div3dUtility = {
 			default:
 				console.error("no type in json")
 		}
-	},
-
-	//common mesh building
-	buildLabelMesh: function(string) {
-		var geometry = new THREE.TextGeometry(string, {
-			font: this.font,
-			size: 0.5,
-			height: 0.15
-		});
-
-		geometry.computeBoundingBox()
-		let dim = new THREE.Vector3()
-		dim.x = geometry.boundingBox.max.x - geometry.boundingBox.min.x
-		dim.y = geometry.boundingBox.max.y - geometry.boundingBox.min.y
-		dim.z = geometry.boundingBox.max.z - geometry.boundingBox.min.z
-
-		//center on x z
-		geometry.vertices.forEach(function(vertex){
-			vertex.x -= dim.x * 0.5
-			vertex.z -= dim.z * 0.5
-			vertex.y -= dim.y * 0.5
-		});
-
-		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.iconMat);
 	}
 
 }

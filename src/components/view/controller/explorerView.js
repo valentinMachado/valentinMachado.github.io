@@ -66,29 +66,30 @@ ExplorerView.prototype.initSkyBox = function() {
 
 ExplorerView.prototype.tick = function() {
 
-	// if (this.currentDiv3D) {
+	if (this.currentDiv3D) {
 
+		if (this.currentDiv3D.isFolder()) {
 
+			//not the best for perf but easy
+			let speed = 0.05
 
-	// 	this.currentDiv3D.children.forEach(function(child) {
-	// 		WebExplorerUtility.Div3dUtility.traverse(child, function(d) {
-	// 			d.iconObject.rotation.y += speed * wE3D.dt;
-	// 		});
-	// 	});
+			this.currentDiv3D.children.forEach(function(child) {
 
-	// 	// if (this.currentDiv3D.parent) {
+				let deltaX = child.iconObject.position.x
+				let deltaZ = child.iconObject.position.z
 
+				let dist = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ)
+				let rad = Math.atan2(deltaZ, deltaX); // In radians
+				rad += speed * wE3D.dt //speed
 
+				child.iconObject.position.x = dist * Math.cos(rad)
+				child.iconObject.position.z = dist * Math.sin(rad)
 
-	// 	// } else {
-	// 	// 	WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
-	// 	// 		d.iconObject.rotation.y += speed * wE3D.dt;
-	// 	// 	});
-	// 	// }
+			});
+		}
 
-	// }
+	}
 
-	//var speed = 0.5;
 
 	//make label look at camera
 	WebExplorerUtility.Div3dUtility.traverse(this.currentDiv3D, function(d) {
@@ -275,6 +276,10 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 		//camera focus
 		if (this.divHovered) {
 			this.setCurrentDiv3D(this.divHovered);
+
+			if (!this.divHovered.isFolder()) {
+				wE3D.controllers.selectedView.setCurrentDiv3D(this.divHovered);
+			}
 		}
 	}
 };

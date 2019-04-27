@@ -22,26 +22,6 @@ Img3D.prototype.initViewScene = function(viewScene) {
 	scene.add(this.selectedObject);
 };
 
-
-Img3D.prototype._createIconObject = function() {
-
-	var material = new THREE.MeshStandardMaterial({
-
-		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-		roughness: 0.5,
-		metalness: 0,
-		flatShading: true
-
-	});
-
-	var size = 0.25 * this.scale;
-	var geometry = new THREE.SphereGeometry(size, 32, 32);
-	var cube = new THREE.Mesh(geometry, material);
-
-
-	this.iconObject = cube;
-};
-
 Img3D.prototype._createSelectedObjectFile = function() {
 
 	//put img on a plane

@@ -25,12 +25,6 @@ Html3D.prototype.onDisable = function(viewScene) {
 	viewScene.controls.enableZoom = true
 }
 
-Html3D.prototype._createIconObject = function() {
-
-	var size = 0.4 * this.scale;
-	this.iconObject = WebExplorerUtility.ModelUtility.create("barrel", size);
-};
-
 Html3D.prototype._createSelectedObjectFile = function() {
 
 	var material = new THREE.MeshStandardMaterial({

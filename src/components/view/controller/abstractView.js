@@ -34,10 +34,10 @@ AbstractView.prototype.setOutline = function(mesh) {
 	if (!mesh) return;
 
 	this.outline = new THREE.Mesh(mesh.geometry, WebExplorerUtility.MaterialUtility.outlineMat);
+	this.outline.scale.multiplyScalar(1.1);
 	var position = new THREE.Vector3();
 	position.setFromMatrixPosition(mesh.matrixWorld);
 	this.outline.position.copy(position);
-	this.outline.scale.multiplyScalar(1.1);
 	scene.add(this.outline);
 };
 
