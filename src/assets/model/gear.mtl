@@ -1,0 +1,14 @@
+# Blender MTL File: 'gear_base.blend'
+# Material Count: 1
+
+newmtl gear
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd vuosg6i40em8-Gear/gear/metal circle.jpg
+map_Bump -bm 1.567376 vuosg6i40em8-Gear/gear/gear/metal circle_NRM.png

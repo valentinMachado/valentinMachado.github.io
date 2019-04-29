@@ -92,6 +92,7 @@ let structureJSON = {
 	}, {
 		"type": "div3d",
 		"label": "Projet personnel",
+		"modelId":"barrel",
 		"child": [{
 			"type": "div3d",
 			"label": "programmation",
@@ -109,6 +110,7 @@ let structureJSON = {
 				}, {
 					"type": "div3d",
 					"label": "Steampong",
+					"modelId":"gear",
 					"child": [{
 						"type": "html3d",
 						"label": "Context",
@@ -231,6 +233,9 @@ window.wE3D = new WebExplorer3D({
 	}, {
 		id: "pillar",
 		file: "pillar.obj"
+	}, {
+		id: "gear",
+		file: "gear.obj"
 	}]
 });
 

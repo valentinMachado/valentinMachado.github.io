@@ -48,6 +48,8 @@ window.WebExplorerUtility.ModelUtility = {
 		});
 	},
 
+	index:0,
+
 	fetchRandomColor: function() {
 
 		let possibleColor = [];
@@ -62,7 +64,9 @@ window.WebExplorerUtility.ModelUtility = {
 
 		let indexRand = Math.round(Math.random() * (possibleColor.length - 1))
 
-		return possibleColor[indexRand]
+		this.index = (this.index+1)%(possibleColor.length-1)
+
+		return possibleColor[this.index]
 	},
 
 	create: function(modelTag, size) {
