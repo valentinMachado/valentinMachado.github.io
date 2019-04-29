@@ -6,6 +6,8 @@ window.WebExplorerUtility.ModelUtility = {
 
 	models: {},
 
+	normalizeSize: 3,
+
 	load: function() {
 
 		console.info("%cModel loading", "color:#27AE60;");
@@ -19,31 +21,18 @@ window.WebExplorerUtility.ModelUtility = {
 
 		return new Promise((resolve, reject) => {
 
-			var modelData = []
-			modelData.push({
-				id: "barrel",
-				folder: "./src/assets/model/Barrel/",
-				file: "LP_Barrel.obj"
-			});
-			modelData.push({
-				id: "pillar",
-				folder: "./src/assets/model/Pillar/",
-				file: "LP_Pillar.obj"
-			});
-			modelData.push({
-				id: "perso",
-				folder: "./src/assets/model/Perso/",
-				file: "Perso.obj"
-			});
+			var modelData = wE3D.conf.modelData
 
 			var objLoader = new THREE.OBJLoader();
 			var count = 0;
+			objLoader.setPath("./src/assets/model/");
 
 			modelData.forEach(function(data) {
 
-				objLoader.setPath(data.folder);
-
 				objLoader.load(data.file, function(object) {
+
+					console.info(data.id + " is imported")
+
 					object = this.normalize(object)
 					this.models[data.id] = object
 
@@ -59,7 +48,25 @@ window.WebExplorerUtility.ModelUtility = {
 		});
 	},
 
+	fetchRandomColor: function() {
+
+		let possibleColor = [];
+		possibleColor.push(new THREE.Color(0x7ebbd2))
+		possibleColor.push(new THREE.Color(0xCAFFD4))
+		possibleColor.push(new THREE.Color(0xd2cd60))
+		possibleColor.push(new THREE.Color(0xff9568))
+		possibleColor.push(new THREE.Color(0x97dd6a))
+		possibleColor.push(new THREE.Color(0x19c6ec))
+		possibleColor.push(new THREE.Color(0xced645))
+		possibleColor.push(new THREE.Color(0xa5afe3))
+
+		let indexRand = Math.round(Math.random() * (possibleColor.length - 1))
+
+		return possibleColor[indexRand]
+	},
+
 	create: function(modelTag, size) {
+		if (!this.models[modelTag]) alert(modelTag + ".obj not found")
 		let original = this.models[modelTag];
 
 		let geo = original.geometry.clone()
@@ -68,7 +75,7 @@ window.WebExplorerUtility.ModelUtility = {
 			geo.vertices[i].multiplyScalar(size)
 		}
 
-		let color = new THREE.Color().setHSL(Math.random(), 1.0, 0.5);
+		let color = this.fetchRandomColor()
 		geo.faces.forEach(function(face) {
 			face.color = color
 		})
@@ -79,11 +86,11 @@ window.WebExplorerUtility.ModelUtility = {
 	//font load async
 	font: null,
 
-	buildLabelMesh: function(string) {
+	buildLabelMesh: function(string, scale) {
 		var geometry = new THREE.TextGeometry(string, {
 			font: this.font,
-			size: 0.5,
-			height: 0.15
+			size: 1,
+			height: 0.3
 		});
 
 		geometry.computeBoundingBox()
@@ -99,7 +106,10 @@ window.WebExplorerUtility.ModelUtility = {
 			vertex.y -= dim.y * 0.5
 		});
 
-		return new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.labelMat);
+		let result = new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.labelMat)
+		result.scale.multiplyScalar(this.normalizeSize * scale * 0.2)
+
+		return result;
 	},
 
 	normalize: function(object) {
@@ -110,7 +120,9 @@ window.WebExplorerUtility.ModelUtility = {
 		dim.y = bb.max.y - bb.min.y
 		dim.z = bb.max.z - bb.min.z
 
-		let normalizeSize = 2
+		let maxDim = Math.max(Math.max(dim.x, dim.y), dim.z)
+		let normalizeSize = this.normalizeSize
+		let ratio = normalizeSize / maxDim
 		let singleGeo = new THREE.Geometry()
 
 		object.traverse(function(child) {
@@ -118,11 +130,16 @@ window.WebExplorerUtility.ModelUtility = {
 
 				let vertices = child.geometry.attributes.position.array;
 				for (let i = 0; i < vertices.length; i += 3) {
-					vertices[i] *= (normalizeSize / dim.x)
-					vertices[i + 1] *= (normalizeSize / dim.y)
-					vertices[i + 2] *= (normalizeSize / dim.z)
 
-					vertices[i + 1] -= normalizeSize * 0.5
+					//reset origin
+					vertices[i] -= bb.min.x + dim.x * 0.5
+					vertices[i + 1] -= bb.min.y + dim.y * 0.5
+					vertices[i + 2] -= bb.min.z + dim.z * 0.5
+
+					//scale so maxDim = normalizeSize
+					vertices[i] *= ratio
+					vertices[i + 1] *= ratio
+					vertices[i + 2] *= ratio
 				}
 
 				child.updateMatrix()

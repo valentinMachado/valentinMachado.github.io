@@ -11,12 +11,13 @@ window.WebExplorerUtility.MaterialUtility = {
 			new THREE.TextureLoader().load(
 				"./src/assets/material/metal/metal.jpg",
 				function(texture) {
-					this.iconMat = new THREE.MeshStandardMaterial({
+					this.labelMat = new THREE.MeshStandardMaterial({
 						map: texture,
-						metalness: 0.3,
-						roughness: 0.2,
-						emissive: new THREE.Color(0.15, 0.15, 0.15),
-						vertexColors: THREE.VertexColors
+						color: new THREE.Color(1, 1, 1),
+						roughness: 0.5,
+						metalness: 0.6,
+						flatShading: true,
+						emissive: new THREE.Color(0.3, 0.3, 0.3)
 					})
 
 					resolve();
@@ -29,16 +30,15 @@ window.WebExplorerUtility.MaterialUtility = {
 		linewidth: 0.5
 	}),
 
-	iconMat: null,
 
-	labelMat: new THREE.MeshStandardMaterial({
-		color: new THREE.Color(1, 1, 1),
-		roughness: 0.5,
+	iconMat: new THREE.MeshStandardMaterial({
 		metalness: 0.6,
-		flatShading: true,
-		emissive: new THREE.Color(0.3, 0.3, 0.3)
+		roughness: 0.7,
+		emissive: new THREE.Color(0.15, 0.15, 0.15),
+		vertexColors: THREE.VertexColors
 	}),
-	// iconMat: new THREE.MeshNormalMaterial(),
+
+	labelMat: null,
 
 	outlineMat: new THREE.MeshBasicMaterial({
 		color: 0xb0e0e6,

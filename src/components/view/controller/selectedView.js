@@ -45,7 +45,7 @@ SelectedView.prototype.tick = function() {
 
 				if (child.userData.planeNormal) {
 					var forwardVector = child.position.clone().cross(child.userData.planeNormal);
-					forwardVector.setLength(child.userData.speed * wE3D.dt);
+					forwardVector.setLength(child.userData.speed * wE3D.dt * 0.3 * this.currentDiv3D.scale);
 					child.position.add(forwardVector);
 
 					//security set length
@@ -59,7 +59,7 @@ SelectedView.prototype.tick = function() {
 					child.geometry.verticesNeedUpdate = true;
 				}
 
-			});
+			}.bind(this));
 
 		} else {
 
