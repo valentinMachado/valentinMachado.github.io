@@ -4,17 +4,19 @@ window.WebExplorerUtility = window.WebExplorerUtility || {};
 
 window.WebExplorerUtility.HtmlUtility = {
 
+	loadingLabel: null,
+
 	createLoadingScreen: function() {
 
 		var result = document.createElement("div")
 		result.classList.add("loading-screen")
 
 		//text
-		let loadingLabel = document.createElement("div")
-		loadingLabel.classList.add("loading-label")
-		loadingLabel.innerHTML = "c'est en train de charger"
+		this.loadingLabel = document.createElement("div")
+		this.loadingLabel.classList.add("loading-label")
+		this.loadingLabel.innerHTML = "Loading..."
 
-		result.appendChild(loadingLabel)
+		result.appendChild(this.loadingLabel)
 
 		//rolling stuff
 		let loadingRoll = document.createElement("img")
@@ -26,6 +28,10 @@ window.WebExplorerUtility.HtmlUtility = {
 		result.image = loadingRoll
 
 		return result;
+	},
+
+	writeLoadingScreen: function(text) {
+		this.loadingLabel.innerHTML = text
 	}
 
 

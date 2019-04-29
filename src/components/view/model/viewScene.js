@@ -30,7 +30,7 @@ ViewScene.prototype.initSceneDefault = function() {
 	scene.add(ambient);
 
 	var light = new THREE.DirectionalLight(0xFFF68F, 1.0);
-	light.position.set(10, 50, 200);
+	light.position.set(0, 10, 20);
 	light.target.position.set(0, 0, 0);
 
 	// light.castShadow = true;

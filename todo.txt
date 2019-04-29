@@ -7,3 +7,5 @@ video a produire:
 demander à léo pour element ui
 
 réfléchir ergo
+
+mettre credit model 3d

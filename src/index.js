@@ -3,10 +3,10 @@
 //load here to avoid async stuff
 let structureJSON = {
 	"label": "Valentin Machado",
-	"modelId": "perso",
+	"modelId": "casa",
 	"child": [{
 		"label": "Etudes",
-		"modelId": "pillar",
+		"modelId": "thinker",
 		"child": [{
 			"label": "Lycee",
 			"child": [],
@@ -31,7 +31,7 @@ let structureJSON = {
 	}, {
 		"type": "div3d",
 		"label": "Experience pro",
-		"modelId": "barrel",
+		"modelId": "computer",
 		"child": [{
 			"type": "div3d",
 			"label": "IHMTEK",
@@ -55,6 +55,11 @@ let structureJSON = {
 				"url": "https://www.wanadev.fr/",
 				"child": []
 			}, {
+				"type": "link",
+				"label": "popup house",
+				"url": "https://www.popup-house.com/fr/my-popup/",
+				"child": []
+			}, {
 				"type": "div3d",
 				"label": "water simu",
 				"child": [{
@@ -63,7 +68,7 @@ let structureJSON = {
 					"path": "./src/assets/video/water.mp4",
 					"width": 480,
 					"height": 480,
-					"title": "radiosity",
+					"title": "water post pro",
 					"child": []
 				}, {
 					"type": "html3d",
@@ -86,16 +91,18 @@ let structureJSON = {
 		}]
 	}, {
 		"type": "div3d",
-		"label": "projet perso",
+		"label": "Projet personnel",
 		"child": [{
 			"type": "div3d",
 			"label": "programmation",
+			"modelId": "computer",
 			"child": [{
 					"type": "div3d",
-					"label": "souk",
+					"label": "Souk",
+					"modelId": "diamond",
 					"child": [{
 						"type": "link",
-						"label": "play game !",
+						"label": "Play it!",
 						"url": "./src/assets/build/souk/souk.html",
 						"child": []
 					}]
@@ -118,12 +125,14 @@ let structureJSON = {
 					}, {
 						"type": "link",
 						"label": "OST",
+						"modelId": "radio",
 						"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/21336300&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
 						"child": []
 					}]
 				}, {
 					"type": "div3d",
 					"label": "demon",
+					"modelId": "pillar",
 					"child": [{
 						"type": "link",
 						"label": "play game !",
@@ -137,9 +146,11 @@ let structureJSON = {
 				}, {
 					"type": "div3d",
 					"label": "walls",
+					"modelId": "wall",
 					"child": []
 				}, {
 					"type": "div3d",
+					"modelId": "chest",
 					"label": "dongeon dragon",
 					"child": []
 				}
@@ -148,29 +159,25 @@ let structureJSON = {
 		}, {
 			"type": "div3d",
 			"label": "musique",
+			"modelId": "speaker",
 			"child": [{
-				"type": "div3d",
-				"label": "mcv",
-				"child": [{
-					"type": "link",
-					"label": "site",
-					"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/524173593&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
-					"child": []
-				}]
+				"type": "link",
+				"label": "Ma Chandelle Verte",
+				"modelId": "radio",
+				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/524173593&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+				"child": []
 			}, {
 				"type": "html3d",
-				"label": "playlist",
+				"label": "Playlist",
+				"modelId": "radio",
 				"html": "<img src = \"./src/assets/img/playlist.png\"> Les playlist du jailln et de la mache - Playlist on a particular theme or music genre. <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\"> website</a> <br> <iframe src=\"https://player.vimeo.com/video/330845878\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/315117555\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/307960107\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/303532748\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/298485745\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/299649347\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe><iframe src=\"https://player.vimeo.com/video/298484622\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe>",
 				"child": []
 			}, {
-				"type": "div3d",
-				"label": "machette",
-				"child": [{
-					"type": "link",
-					"label": "site",
-					"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
-					"child": []
-				}]
+				"type": "link",
+				"label": "Soundcloud",
+				"modelId": "radio",
+				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
+				"child": []
 			}]
 		}]
 	}, {
@@ -193,7 +200,38 @@ let structureJSON = {
 // }
 
 window.wE3D = new WebExplorer3D({
-	minDim: 50
+	minDim: 50,
+	modelData: [{
+		id: "barrel",
+		file: "barrel.obj"
+	}, {
+		id: "computer",
+		file: "computer.obj"
+	}, {
+		id: "chest",
+		file: "chest.obj"
+	}, {
+		id: "speaker",
+		file: "speaker.obj"
+	}, {
+		id: "radio",
+		file: "radio.obj"
+	}, {
+		id: "diamond",
+		file: "diamond.obj"
+	}, {
+		id: "thinker",
+		file: "thinker.obj"
+	}, {
+		id: "casa",
+		file: "casa.obj"
+	}, {
+		id: "wall",
+		file: "wall.obj"
+	}, {
+		id: "pillar",
+		file: "pillar.obj"
+	}]
 });
 
 try {
@@ -208,12 +246,15 @@ try {
 	loadingHtml.image.addEventListener('load', function() {
 
 		//load model 3d
-		WebExplorerUtility.MaterialUtility.load()
+		WebExplorerUtility.HtmlUtility.writeLoadingScreen("App loading...")
+		wE3D.load()
 			.then(function() {
+				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Model loading...")
 				return WebExplorerUtility.ModelUtility.load();
 			})
 			.then(function() {
-				return wE3D.load();
+				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Material loading...")
+				return WebExplorerUtility.MaterialUtility.load();
 			})
 			.then(function() {
 
