@@ -149,7 +149,15 @@ let structureJSON = {
 					"type": "div3d",
 					"label": "walls",
 					"modelId": "wall",
-					"child": []
+					"child": [{
+						"type": "video",
+						"label": "Trailer",
+						"path": "./src/assets/video/walls_trailer.mp4",
+						"title": "Trailer Walls",
+						"width": 640,
+						"height": 352,
+						"child": []
+					}]
 				}, {
 					"type": "div3d",
 					"modelId": "chest",
