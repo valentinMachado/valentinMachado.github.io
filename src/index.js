@@ -77,16 +77,10 @@ let structureJSON = {
 					"child": []
 				}]
 			}, {
-				"type": "div3d",
-				"label": "radiosity",
-				"child": [{
-					"type": "video",
-					"label": "demo video",
-					"path": "./src/assets/video/radiosity.mp4",
-					"width": 1920,
-					"height": 960,
-					"child": []
-				}]
+				"type": "link",
+				"label": "Internship R&D",
+				"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/pub?start=false&loop=false&delayms=3000",
+				"child": []
 			}]
 		}]
 	}, {
