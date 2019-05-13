@@ -79,7 +79,7 @@ let structureJSON = {
 			}, {
 				"type": "link",
 				"label": "Internship R&D",
-				"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/pub?start=false&loop=false&delayms=3000",
+				"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/embed?start=false&loop=false&delayms=3000",
 				"child": []
 			}]
 		}]
