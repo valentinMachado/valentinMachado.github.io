@@ -69,9 +69,9 @@ WebExplorer3D.prototype.initialize = function(json) {
 		//display
 		var text = "";
 		for (let i = 1; i < d.degree; i++) {
-			text += "______";
+			text += "    ";
 		}
-		text += d.type + "_" + d.id;
+		text += d.type + "_" + d.json.label;
 		console.info("%c" + text, "color:#27AE60;");
 	});
 
@@ -91,10 +91,17 @@ WebExplorer3D.prototype.initialize = function(json) {
 
 	//check if param in url to focus right div
 	let urlId = this.getURLParameter("urlId");
-	let urlDiv = WebExplorerUtility.Div3dUtility.fetchDiv3DByUrlId(urlId, this.divs3d);
-	if (urlDiv) {
-		this.controllers.explorerView.setCurrentDiv3D(urlDiv)
-		this.controllers.selectedView.setCurrentDiv3D(urlDiv)
+
+	if (urlId) {
+		let urlDiv = WebExplorerUtility.Div3dUtility.fetchDiv3DByUrlId(urlId, this.divs3d);
+		if (urlDiv) {
+			this.controllers.explorerView.setCurrentDiv3D(urlDiv)
+			this.controllers.selectedView.setCurrentDiv3D(urlDiv)
+		} else {
+			this.controllers.explorerView.setCurrentDiv3D(this.divs3d)
+			this.controllers.selectedView.setCurrentDiv3D(this.divs3d)
+		}
+
 	} else {
 		this.controllers.explorerView.setCurrentDiv3D(this.divs3d)
 		this.controllers.selectedView.setCurrentDiv3D(this.divs3d)

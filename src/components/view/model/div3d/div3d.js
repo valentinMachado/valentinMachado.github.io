@@ -206,7 +206,7 @@ Div3D.prototype._createSelectedObjectFile = function() {
 
 	var geometry = new THREE.SphereGeometry(5 * Math.random() + 1, 32, 32);
 	var cube = new THREE.Mesh(geometry, material);
-	console.info(JSON.stringify(this.json) + " is an empty file")
+	//console.info(JSON.stringify(this.json) + " is an empty file")
 
 	this.selectedObject = cube;
 };

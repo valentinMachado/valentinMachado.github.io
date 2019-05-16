@@ -32,7 +32,34 @@ window.WebExplorerUtility.HtmlUtility = {
 
 	writeLoadingScreen: function(text) {
 		this.loadingLabel.innerHTML = text
-	}
+	},
+
+	createLabelDiv: function(labelString) {
+		let label = document.createElement("div")
+		label.innerHTML = labelString
+		return label
+	},
+
+	createLabelInput: function(labelString) {
+
+		let label = this.createLabelDiv(labelString)
+
+		let input = document.createElement("input")
+		input.type = "text"
+		input.name = labelString
+
+		input.onclick = function(evt){
+			this.focus()//has to be done by hand
+		}
+
+		let container = document.createElement("div")
+		container.appendChild(label)
+		container.appendChild(input)
+
+		container.input = input
+
+		return container
+	},
 
 
 }

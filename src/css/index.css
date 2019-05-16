@@ -1,11 +1,17 @@
 body{
-	/*cursor: none;*/
 	overflow: hidden;
 	margin: 0px;
 	-moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+input{
+    -moz-user-select: all;
+    -webkit-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
 }
 
 canvas{
@@ -23,19 +29,25 @@ canvas{
 	top:0px;
 	width: 50px;
 	height: 100%;
-	background: gray;
+	background-image: linear-gradient(#56888691, gray);
 	z-index: 3;
+	cursor: col-resize;
 }
 
 .centralBar-button{
+	margin:2px;
 	width: 43%;
     height: 50px;
     position: absolute;
-    background: red;
+    background-image: linear-gradient(black,#56888691);
     cursor: pointer;
     margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
   	transform: translateY(-50%);
-  	border: solid 1px;
+  	border-radius: 10px;
+}
+
+.centralBar-button:hover{
+	background-image: linear-gradient(#56888691,black);
 }
 
 #input{
@@ -73,8 +85,9 @@ canvas{
 	color: white;
     overflow-y: scroll;
     padding: 50px;
-    height: 90%;
     font-size: x-large;
+    width: calc(100% - 130px);
+    height: calc(100% - 150px);
 }
 
 .html-container a{
@@ -82,8 +95,12 @@ canvas{
 }
 
 .html-container iframe{
-	height: 400px;
+	height: 80%;
 	width: 100%;
+}
+
+.html-video{
+	height: 400px !important;
 }
 
 .html-container img{
@@ -103,8 +120,9 @@ canvas{
 
 /*iframe*/
 iframe{
+	display: block;
 	height: 90%;
-	width: calc(100% - 48px);
+	width: calc(100% - 50px);
 }
 
 /*loading screen*/
@@ -112,7 +130,8 @@ iframe{
 	width: 100%;
     height: 100%;
     opacity: 0.5;
-    background: #56888691;
+    /*background: #56888691;*/
+    background-image: linear-gradient(#56888691, gray);
     z-index: 100;
     position: absolute;
     text-align: center;

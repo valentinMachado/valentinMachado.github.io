@@ -233,6 +233,6 @@ MainView.prototype.updateControls = function(event) {
 };
 
 MainView.prototype.setRatio = function(value) {
-	var offset = 1.6 * 50 / this.canvas.width
+	var offset = 1.5 * wE3D.conf.minDim / document.body.clientWidth
 	this.ratioBetweenViews = Math.max(Math.min(1 - offset, value), offset);
 }
