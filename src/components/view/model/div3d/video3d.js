@@ -18,12 +18,18 @@ WebExplorerUtility.JsUtility.makeHerit(Video3D, Div3D);
 
 Video3D.prototype.initViewScene = function(viewScene) {
 	var scene = viewScene.scene;
+	viewScene.initSceneDefault();
 	var camera = viewScene.camera;
 	var controls = viewScene.controls;
 
 	camera.position.x = 0;
-	camera.position.y = 1;
-	camera.position.z = 0;
+	camera.position.y = 0;
+	camera.position.z = this.scale * 10;
+
+	controls.target.x = 0;
+	controls.target.y = 0;
+	controls.target.z = 0;
+
 
 	controls.update();
 
@@ -118,15 +124,21 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	var ratio = this.json.width / this.json.height;
 	var movieGeometry = new THREE.PlaneGeometry(ratio * size, size, 4, 4);
 	var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
-	movieScreen.rotation.x = -Math.PI / 2;
 
-	let computer = WebExplorerUtility.ModelUtility.create("computer",this.scale);
-	computer.rotation.x = -Math.PI / 2;
-	computer.material = movieMaterial
+
+	let computer = WebExplorerUtility.ModelUtility.create("computer", 5 * this.scale);
+
+	computer.position.y = -2.08 * this.scale
+	computer.position.z = -4.64 * this.scale
+	computer.scale.x = ratio * computer.scale.y
+
 
 	this.selectedObject = new THREE.Object3D();
 	this.selectedObject.add(computer)
 	this.selectedObject.add(movieScreen)
+
+	//this.selectedObject.rotation.x = -Math.PI / 2;
+	this.selectedObject.scale.setScalar(0.8)
 
 	//add title
 	if (this.json.title) {

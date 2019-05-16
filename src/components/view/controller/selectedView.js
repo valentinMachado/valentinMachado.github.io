@@ -6,6 +6,11 @@ function SelectedView(elToListen) {
 
 	this._super(elToListen);
 
+	//override controls
+
+	this.viewScene.controls.maxPolarAngle = Math.PI/2
+	this.viewScene.controls.update()
+
 	this.currentDiv3D = null;
 
 	this.exitButton = document.createElement("img")
@@ -100,6 +105,8 @@ SelectedView.prototype.adjustCameraZoom = function() {
 	var camera = this.viewScene.camera;
 	var controls = this.viewScene.controls;
 	controls.enabled = false;
+
+
 
 	var finalPos = WebExplorerUtility.MathUtility.fetchPosAtDistance(
 		new THREE.Vector3(),
