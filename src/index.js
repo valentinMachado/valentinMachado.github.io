@@ -2,6 +2,7 @@
 
 //load here to avoid async stuff
 let structureJSON = {
+	"urlId": "home",
 	"label": "Valentin Machado",
 	"modelId": "casa",
 	"child": [{
@@ -36,6 +37,7 @@ let structureJSON = {
 			"type": "div3d",
 			"label": "IHMTEK",
 			"child": [{
+				"urlId":"ihmtek",
 				"type": "link",
 				"label": "site",
 				"url": "https://www.ihmtek.com/",
@@ -86,7 +88,7 @@ let structureJSON = {
 	}, {
 		"type": "div3d",
 		"label": "Projet personnel",
-		"modelId":"barrel",
+		"modelId": "barrel",
 		"child": [{
 			"type": "div3d",
 			"label": "programmation",
@@ -104,7 +106,7 @@ let structureJSON = {
 				}, {
 					"type": "div3d",
 					"label": "Steampong",
-					"modelId":"gear",
+					"modelId": "gear",
 					"child": [{
 						"type": "html3d",
 						"label": "Context",
@@ -157,9 +159,9 @@ let structureJSON = {
 					"modelId": "chest",
 					"label": "Dongeon Card",
 					"path": "./src/assets/video/dungeoncard_compressed.mp4",
-						"title": "Trailer Dungeon Card",
-						"width": 640,
-						"height": 352,
+					"title": "Trailer Dungeon Card",
+					"width": 640,
+					"height": 352,
 					"child": []
 				}
 

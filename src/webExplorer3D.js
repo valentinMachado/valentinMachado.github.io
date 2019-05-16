@@ -57,6 +57,10 @@ WebExplorer3D.prototype.load = function() {
 	});
 };
 
+WebExplorer3D.prototype.getURLParameter = function(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
 WebExplorer3D.prototype.initialize = function(json) {
 	//create 3d ui
 	this.divs3d = WebExplorerUtility.Div3dUtility.createFromHtml(json, true);
@@ -84,6 +88,23 @@ WebExplorer3D.prototype.initialize = function(json) {
 	//window event
 	window.onresize = this.onResize.bind(this);
 	this.initializeAnimationFrame();
+
+	//check if param in url to focus right div
+	let urlId = this.getURLParameter("urlId");
+	let urlDiv = WebExplorerUtility.Div3dUtility.fetchDiv3DByUrlId(urlId, this.divs3d);
+	if (urlDiv) {
+		this.controllers.explorerView.setCurrentDiv3D(urlDiv)
+		this.controllers.selectedView.setCurrentDiv3D(urlDiv)
+	} else {
+		this.controllers.explorerView.setCurrentDiv3D(this.divs3d)
+		this.controllers.selectedView.setCurrentDiv3D(this.divs3d)
+	}
+
+	let ratio = this.getURLParameter("ratio")
+	if (ratio != null && ratio != undefined) {
+		ratio = parseFloat(ratio)
+		this.ui.setRatio(ratio)
+	}
 
 	//resize
 	this.onResize();

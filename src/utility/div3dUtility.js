@@ -38,6 +38,19 @@ window.WebExplorerUtility.Div3dUtility = {
 		}
 	},
 
+	fetchDiv3DByUrlId: function(urlId, div) {
+
+		var result;
+
+		this.traverse(div, function(d) {
+			if (d.json.urlId == urlId) {
+				result = d
+			}
+		});
+
+		return result;
+	},
+
 	createFromElement: function(el) {
 
 		switch (el.type) {
