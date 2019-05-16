@@ -29,7 +29,7 @@ canvas{
 	top:0px;
 	width: 50px;
 	height: 100%;
-	background-image: linear-gradient(#56888691, gray);
+	background-image: linear-gradient(#56888691,gray);
 	z-index: 3;
 	cursor: col-resize;
 }
@@ -39,7 +39,7 @@ canvas{
 	width: 43%;
     height: 50px;
     position: absolute;
-    background-image: linear-gradient(black,#56888691);
+    background-image: linear-gradient(black,#568886);
     cursor: pointer;
     margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
   	transform: translateY(-50%);
@@ -47,7 +47,7 @@ canvas{
 }
 
 .centralBar-button:hover{
-	background-image: linear-gradient(#56888691,black);
+	background-image: linear-gradient(#568886,black);
 }
 
 #input{
@@ -130,8 +130,8 @@ iframe{
 	width: 100%;
     height: 100%;
     opacity: 0.5;
-    /*background: #56888691;*/
-    background-image: linear-gradient(#56888691, gray);
+    /*background: #568886;*/
+    background-image: linear-gradient(#568886, gray);
     z-index: 100;
     position: absolute;
     text-align: center;
@@ -222,4 +222,26 @@ iframe{
 	right:0px;
 	cursor: pointer;
 	z-index: 10;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #568886;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #99B7B6;
 }
