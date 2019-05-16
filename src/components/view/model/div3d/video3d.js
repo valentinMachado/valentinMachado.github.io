@@ -120,7 +120,13 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
 	movieScreen.rotation.x = -Math.PI / 2;
 
-	this.selectedObject = movieScreen;
+	let computer = WebExplorerUtility.ModelUtility.create("computer",this.scale);
+	computer.rotation.x = -Math.PI / 2;
+	computer.material = movieMaterial
+
+	this.selectedObject = new THREE.Object3D();
+	this.selectedObject.add(computer)
+	this.selectedObject.add(movieScreen)
 
 	//add title
 	if (this.json.title) {

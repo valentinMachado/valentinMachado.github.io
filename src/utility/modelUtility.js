@@ -48,7 +48,7 @@ window.WebExplorerUtility.ModelUtility = {
 		});
 	},
 
-	index:0,
+	index: 0,
 
 	fetchRandomColor: function() {
 
@@ -62,9 +62,9 @@ window.WebExplorerUtility.ModelUtility = {
 		possibleColor.push(new THREE.Color(0xced645))
 		possibleColor.push(new THREE.Color(0xa5afe3))
 
-		let indexRand = Math.round(Math.random() * (possibleColor.length - 1))
+		//let indexRand = Math.round(Math.random() * (possibleColor.length - 1))
 
-		this.index = (this.index+1)%(possibleColor.length-1)
+		this.index = (this.index + 1) % (possibleColor.length - 1)
 
 		return possibleColor[this.index]
 	},
