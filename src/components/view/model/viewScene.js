@@ -14,7 +14,7 @@ function ViewScene(elToListen) {
 	this.controls.maxDistance = 100;
 	this.controls.zoomSpeed = 2;
 	this.controls.update();
-	// this.controls.enablePan = false;
+	this.controls.enablePan = false;
 	// this.controls.enableZoom = false;
 	// this.controls.enabled = false;
 
