@@ -40,10 +40,10 @@ window.WebExplorerUtility.Div3dUtility = {
 
 	fetchDiv3DByUrlId: function(urlId, div) {
 
-		var result;
+		var result = null;
 
 		this.traverse(div, function(d) {
-			if (d.json.urlId == urlId) {
+			if (urlId && d.json.urlId == urlId) {
 				result = d
 			}
 		});
@@ -64,6 +64,8 @@ window.WebExplorerUtility.Div3dUtility = {
 				return new Div3D(el);
 			case "html3d":
 				return new Html3D(el)
+			case "contact":
+				return new Contact3D(el)
 			default:
 				console.error("no type in json")
 		}

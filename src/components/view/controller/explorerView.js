@@ -30,6 +30,7 @@ ExplorerView.prototype.initialize = function() {
 
 	//add tree meshes to scene
 	scene.add(wE3D.divs3d.iconObject);
+	this.setOutline(null);
 	//this.setCurrentDiv3D(wE3D.divs3d);
 };
 
