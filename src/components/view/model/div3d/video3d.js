@@ -139,14 +139,15 @@ Video3D.prototype._createSelectedObjectFile = function() {
 
 	//this.selectedObject.rotation.x = -Math.PI / 2;
 	this.selectedObject.scale.setScalar(0.8)
+	let bbGlobal = new THREE.Box3()
+	bbGlobal.setFromObject(this.selectedObject);
+	this.selectedObject.position.y += (bbGlobal.max.y) / 2
 
 	//add title
 	if (this.json.title) {
 
 		let titleMesh = WebExplorerUtility.ModelUtility.buildLabelMesh(this.json.title, 0.8 * this.scale);
 		let bb = titleMesh.geometry.boundingBox;
-		let bbGlobal = new THREE.Box3()
-		bbGlobal.setFromObject(this.selectedObject);
 		//titleMesh.position.x = (bbGlobal.max.x) / 2
 		titleMesh.position.y = (bbGlobal.max.y) + bb.max.y * 2
 		//titleMesh.position.z = (bbGlobal.max.z) / 2
