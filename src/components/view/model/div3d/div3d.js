@@ -156,6 +156,8 @@ Div3D.prototype.buildMeshes = function() {
 		clone.userData.divId = this.id;
 	}
 
+	//update
+	this.iconObject.updateMatrixWorld(true)
 };
 Div3D.prototype.fetchRadiusSelectedView = function() {
 	return 9 * this.scale;

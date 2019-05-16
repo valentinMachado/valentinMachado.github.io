@@ -30,7 +30,7 @@ ExplorerView.prototype.initialize = function() {
 
 	//add tree meshes to scene
 	scene.add(wE3D.divs3d.iconObject);
-	this.setCurrentDiv3D(wE3D.divs3d);
+	//this.setCurrentDiv3D(wE3D.divs3d);
 };
 
 ExplorerView.prototype.initSkyBox = function() {
