@@ -77,16 +77,10 @@ let structureJSON = {
 					"child": []
 				}]
 			}, {
-				"type": "div3d",
-				"label": "radiosity",
-				"child": [{
-					"type": "video",
-					"label": "demo video",
-					"path": "./src/assets/video/radiosity.mp4",
-					"width": 1920,
-					"height": 960,
-					"child": []
-				}]
+				"type": "link",
+				"label": "Internship R&D",
+				"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/embed?start=false&loop=false&delayms=3000",
+				"child": []
 			}]
 		}]
 	}, {
@@ -149,11 +143,23 @@ let structureJSON = {
 					"type": "div3d",
 					"label": "walls",
 					"modelId": "wall",
-					"child": []
+					"child": [{
+						"type": "video",
+						"label": "Trailer",
+						"path": "./src/assets/video/walls_trailer.mp4",
+						"title": "Trailer Walls",
+						"width": 640,
+						"height": 352,
+						"child": []
+					}]
 				}, {
-					"type": "div3d",
+					"type": "video",
 					"modelId": "chest",
-					"label": "dongeon dragon",
+					"label": "Dongeon Card",
+					"path": "./src/assets/video/dungeoncard_compressed.mp4",
+						"title": "Trailer Dungeon Card",
+						"width": 640,
+						"height": 352,
 					"child": []
 				}
 
