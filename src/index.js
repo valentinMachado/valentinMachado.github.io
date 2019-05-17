@@ -109,6 +109,7 @@ let structureJSON = {
 				}, {
 					"type": "div3d",
 					"label": "Le Demon",
+					"urlId":"le_demon",
 					"modelId": "pillar",
 					"child": [{
 						"type": "link",
