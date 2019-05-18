@@ -71,7 +71,7 @@ Multi.prototype.tick = function(viewScene) {
 		let closestPoint = WebExplorerUtility.MathUtility.fetchPosAtDistance(
 			viewScene.controls.target,
 			viewScene.camera.position.clone(),
-			object.userData.radius);
+			1.2 * object.userData.radius);
 
 		object.position.x = closestPoint.x
 		object.position.y = closestPoint.y

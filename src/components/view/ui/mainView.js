@@ -105,6 +105,48 @@ MainView.prototype.initHelpGUI = function() {
 		explorer.setCurrentDiv3D(explorer.currentDiv3D)
 	}
 	focusIcon.style.top = wE3D.conf.minDim * countFromTop + "px"
+	countFromTop++;
+
+	//url icon
+	let urlIcon = document.createElement("img")
+	urlIcon.classList.add("right-button")
+	urlIcon.src = "./src/assets/img/home.png"
+	this.root.appendChild(urlIcon)
+	urlIcon.onclick = function(evt) {
+		function fallbackCopyTextToClipboard(text) {
+			var textArea = document.createElement("textarea");
+			textArea.value = text;
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+
+			try {
+				var successful = document.execCommand('copy');
+				var msg = successful ? 'successful' : 'unsuccessful';
+				console.log('Fallback: Copying text command was ' + msg);
+			} catch (err) {
+				console.error('Fallback: Oops, unable to copy', err);
+			}
+
+			document.body.removeChild(textArea);
+		}
+
+		let ratio = this.ratioBetweenViews
+		ratio *= 100
+		ratio = Math.round(ratio)
+		ratio /= 100
+		let url = window.location.href.split("?")[0]
+		let current = wE3D.controllers.selectedView.currentDiv3D
+		let urlId = current.json.urlId
+		while (!urlId) {
+			current = current.parent
+			urlId = current.json.urlId
+		}
+
+		fallbackCopyTextToClipboard(url + "?urlId=" + urlId + "&ratio=" + ratio)
+	}.bind(this)
+	urlIcon.style.top = wE3D.conf.minDim * countFromTop + "px"
+	countFromTop++;
 
 	//home icon
 	let homeIcon = document.createElement("img")
