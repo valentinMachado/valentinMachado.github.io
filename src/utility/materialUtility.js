@@ -32,8 +32,8 @@ window.WebExplorerUtility.MaterialUtility = {
 
 
 	iconMat: new THREE.MeshStandardMaterial({
-		metalness: 0.6,
-		roughness: 0.7,
+		metalness: 0.7,
+		roughness: 0.5,
 		emissive: new THREE.Color(0.15, 0.15, 0.15),
 		vertexColors: THREE.VertexColors
 	}),
