@@ -116,6 +116,52 @@ window.WebExplorerUtility.ModelUtility = {
 		return result;
 	},
 
+	scale: function(object, scale) {
+		let bb = new THREE.Box3();
+		bb.setFromObject(object);
+		let dim = new THREE.Vector3()
+		dim.x = bb.max.x - bb.min.x
+		dim.y = bb.max.y - bb.min.y
+		dim.z = bb.max.z - bb.min.z
+
+		let maxDim = Math.max(dim.x, dim.y)
+		maxDim = Math.max(maxDim, dim.z)
+
+		let ratio = scale / maxDim
+		object.scale.multiplyScalar(ratio)
+		// object.traverse(function(child) {
+		// 	if (child.geometry) {
+
+		// 		let found = false;
+
+		// 		if (child.geometry.attributes && child.geometry.attributes.position) {
+		// 			let vertices = child.geometry.attributes.position.array;
+		// 			for (let i = 0; i < vertices.length; i += 3) {
+		// 				//scale so maxDim = normalizeSize
+		// 				vertices[i] *= ratio
+		// 				vertices[i + 1] *= ratio
+		// 				vertices[i + 2] *= ratio
+		// 			}
+
+		// 			found = true;
+		// 		}
+
+		// 		if (child.geometry.vertices) {
+		// 			child.geometry.vertices.forEach(function(vertice) {
+		// 				vertice.multiplyScalar(ratio);
+		// 			})
+		// 			child.verticesNeedUpdate = true;
+		// 			found = true;
+		// 		}
+
+
+
+		// 		if (!found) console.warn("case not handle")
+		// 		child.updateMatrix()
+		// 	}
+		// });
+	},
+
 	normalize: function(object) {
 		let bb = new THREE.Box3();
 		bb.setFromObject(object);

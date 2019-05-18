@@ -26,6 +26,7 @@ let structureJSON = {
 			"url": "https://www.cpe.fr/"
 		}, {
 			"label": "Queen's University",
+			"urlId": "queens_university",
 			"child": [],
 			"type": "div3d"
 		}],
@@ -68,19 +69,53 @@ let structureJSON = {
 			}, {
 				"type": "div3d",
 				"label": "R&D",
+				"urlId": "wanadev_rd",
 				"child": [{
 					"type": "link",
 					"label": "Internship",
 					"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/embed?start=false&loop=false&delayms=3000",
 					"child": []
 				}, {
-					"type": "video",
-					"urlId": "water_pp",
-					"title": "Water post-process made with BABYLON JS",
-					"label": "Water Post-process",
-					"path": "./src/assets/video/water.mp4",
-					"width": 480,
-					"height": 480,
+					"type": "multi",
+					"urlId": "some_video",
+					"label": "Some video",
+					"multiChild": [{
+						"type": "video",
+						"urlId": "debugger3d",
+						"title": "Texture debugger made with BABYLON JS",
+						"label": "Debugger",
+						"path": "./src/assets/video/debugger3d.mp4",
+						"width": 1280,
+						"height": 642,
+						"child": []
+					}, {
+						"type": "video",
+						"urlId": "disktree",
+						"title": "Disk tree made with BABYLON JS",
+						"label": "Disk tree",
+						"path": "./src/assets/video/disktree.mp4",
+						"width": 1280,
+						"height": 642,
+						"child": []
+					}, {
+						"type": "video",
+						"urlId": "gizmo",
+						"title": "Gizmo made with BABYLON JS",
+						"label": "Gizmo",
+						"path": "./src/assets/video/gizmo.mp4",
+						"width": 1280,
+						"height": 642,
+						"child": []
+					}, {
+						"type": "video",
+						"urlId": "water_pp",
+						"title": "Water post-process made with BABYLON JS",
+						"label": "Water Post-process",
+						"path": "./src/assets/video/water.mp4",
+						"width": 480,
+						"height": 480,
+						"child": []
+					}],
 					"child": []
 				}]
 			}]
@@ -109,7 +144,7 @@ let structureJSON = {
 				}, {
 					"type": "div3d",
 					"label": "Le Demon",
-					"urlId":"le_demon",
+					"urlId": "le_demon",
 					"modelId": "pillar",
 					"child": [{
 						"type": "link",

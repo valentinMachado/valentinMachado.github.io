@@ -1,5 +1,35 @@
 "use strict";
 
+//composite of a Div3D
+function Css3D(content, position, rotation, size) {
+	this.position = position
+	this.rotation = rotation
+	this.size = size
+
+	this.html = document.createElement("div")
+	this.html.classList.add("css3d")
+	this.html.appendChild(content)
+}
+
+Css3D.prototype.update = function(viewScene) {
+
+	//update visibility
+	let planeNormal = new THREE.Vector3(0, 0, 1)
+	//apply transform TODO
+	let ctrl = viewScene.controls
+	let cam = viewScene.camera
+	let eyeVector = ctrl.target.clone().sub(cam.position)
+	if (planeNormal.dot(eyeVector) > 0) {
+		//not visible
+		this.html.style.display = "none"
+	} else {
+		this.html.style.display = "block"
+	}
+
+	//update css transform according this THREE.Camera
+	//https://github.com/ivee-tech/three-css3drenderer/blob/master/index.js
+}
+
 
 var idCount = 1;
 var idMap = {};
@@ -15,6 +45,7 @@ function Div3D(json) {
 	//html
 	this.json = json;
 	this.htmlElements = [];
+	this.css3dElements = [];
 
 	//div3d parent
 	this.parent = null;
@@ -93,7 +124,7 @@ Div3D.prototype.buildMeshes = function() {
 	this._createIconObject();
 	//common mesh decoration
 	if (this.json.label) {
-		var label = WebExplorerUtility.ModelUtility.buildLabelMesh(this.json.label,this.scale);
+		var label = WebExplorerUtility.ModelUtility.buildLabelMesh(this.json.label, this.scale);
 
 		//position
 		var bb = new THREE.Box3();
@@ -131,26 +162,22 @@ Div3D.prototype.buildMeshes = function() {
 		this.parent.iconObject.add(this.iconObject);
 
 		//add its iconobj to its selected obj
-		var clone = this.iconObject.clone();
-		//random position on a sphere
-		var random1 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-		WebExplorerUtility.MathUtility.fetchPosAtDistance(
-			this.parent.selectedObject.position,
-			random1,
-			this.fetchRadiusSelectedView());
-		clone.position.copy(random1);
-		//register its plane
-		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
-		clone.userData.planeNormal = random2.cross(random1);
-		clone.userData.speed = Math.random() * 0.5 + 1.5;
-		clone.userData.radius = this.fetchRadiusSelectedView();
-		//create a line
-		var geometry = new THREE.Geometry();
-		geometry.vertices.push(clone.position);
-		geometry.vertices.push(this.parent.selectedObject.position);
+		var clone;
+		// if (this.parent.isFolder()) {
+		// 	clone = this.selectedObject.clone();
+		// 	WebExplorerUtility.ModelUtility.scale(clone, this.scale)
+		// } else {
+		// 	clone = this.iconObject.clone();
+		// }
+		clone = this.iconObject.clone();
 
-		this.parent.selectedObject.add(new THREE.Line(geometry, WebExplorerUtility.MaterialUtility.lineMat));
-		this.parent.selectedObject.add(clone);
+		// while (clone.children.length) {
+		// 	let child = clone.children[0]
+		// 	clone.remove(child)
+		// }
+		//random position on a sphere
+		WebExplorerUtility.Div3dUtility.placeOnOrbit(
+			this.parent.selectedObject, clone, this.fetchRadiusSelectedView())
 
 		//clone register its div so in selectedview only deal with meshes
 		clone.userData.divId = this.id;
@@ -184,6 +211,28 @@ Div3D.prototype.initViewScene = function(viewScene) {
 	controls.update();
 
 	scene.add(this.selectedObject);
+
+	//add html css 3d
+	if (!this.isFolder()) {
+		let content = document.createElement("div")
+		content.innerHTML = "Ceci est un Test"
+
+		let css3d = new Css3D(content,
+			new THREE.Vector3(),
+			new THREE.Vector3(),
+			this.scale)
+
+		this.css3dElements.push(css3d)
+
+		this.addHtmlToSelectedView(css3d.html)
+	} else {
+		// this.children.forEach(function(child) {
+		// 	if (child instanceof Video3D)  {
+		// 		child.html.play()
+		// 	}
+		// });
+	}
+
 };
 
 //abstract method
@@ -196,18 +245,8 @@ Div3D.prototype._createSelectedObjectFolder = function() {
 };
 
 Div3D.prototype._createSelectedObjectFile = function() {
-
-	var material = new THREE.MeshStandardMaterial({
-		color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-		roughness: 0.5,
-		metalness: 0,
-		flatShading: true
-	});
-
 	var geometry = new THREE.SphereGeometry(5 * Math.random() + 1, 32, 32);
-	var cube = new THREE.Mesh(geometry, material);
-	//console.info(JSON.stringify(this.json) + " is an empty file")
-
+	var cube = new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.iconMat);
 	this.selectedObject = cube;
 };
 
@@ -227,7 +266,17 @@ Div3D.prototype._createIconObject = function() {
 	}
 };
 
-Div3D.prototype.tick = function() {};
+Div3D.prototype.tick = function(viewScene) {
+
+	this.css3dElements.forEach(function(el) {
+		el.update(viewScene)
+	});
+
+	// this.children.forEach(function(child) {
+	// 	if (!child.isFolder()) child.tick();
+	// });
+
+};
 
 Div3D.prototype.onDisable = function(viewScene) {
 	this.removeHtmlEl();

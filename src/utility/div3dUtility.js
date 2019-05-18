@@ -64,11 +64,39 @@ window.WebExplorerUtility.Div3dUtility = {
 				return new Div3D(el);
 			case "html3d":
 				return new Html3D(el)
-			case "contact":
-				return new Contact3D(el)
+			case "multi":
+				return new Multi(el)
 			default:
 				console.error("no type in json")
 		}
+	},
+
+	placeOnOrbit: function(parent, child, radius, line) {
+
+		if (line == undefined) line = true;
+
+		var random1 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+		WebExplorerUtility.MathUtility.fetchPosAtDistance(
+			parent.position,
+			random1,
+			radius);
+		child.position.copy(random1);
+		//register its plane
+		var random2 = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5);
+		child.userData.planeNormal = random2.cross(random1);
+		child.userData.speed = Math.random() * 0.5 + 1.5;
+		child.userData.radius = radius;
+
+		if (line) {
+			//create a line
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(child.position);
+			geometry.vertices.push(parent.position);
+			parent.add(new THREE.Line(geometry, WebExplorerUtility.MaterialUtility.lineMat));
+		}
+
+
+		parent.add(child);
 	}
 
 }
