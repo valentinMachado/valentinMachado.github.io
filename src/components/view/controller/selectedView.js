@@ -8,7 +8,7 @@ function SelectedView(elToListen) {
 
 	//override controls
 
-	this.viewScene.controls.maxPolarAngle = Math.PI/2
+	this.viewScene.controls.maxPolarAngle = Math.PI / 2
 	this.viewScene.controls.update()
 
 	this.currentDiv3D = null;
@@ -67,10 +67,9 @@ SelectedView.prototype.tick = function() {
 
 			}.bind(this));
 
-		} else {
-
-			this.currentDiv3D.tick();
 		}
+
+		this.currentDiv3D.tick(this.viewScene);
 
 	}
 

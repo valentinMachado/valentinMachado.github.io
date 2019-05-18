@@ -9,6 +9,7 @@ function Video3D(json) {
 
 	//create html
 	this.html = document.createElement("video")
+	//this.html.autoplay = true;
 	this.html.src = this.json.path
 
 	//override
@@ -90,6 +91,10 @@ Video3D.prototype.tick = function() {
 		if (this.videoTexture)
 			this.videoTexture.needsUpdate = true;
 	}
+
+	if (video.ended) {
+		video.play()
+	}
 };
 
 //code take from https://stemkoski.github.io/Three.js/Video.html
@@ -151,7 +156,7 @@ Video3D.prototype._createSelectedObjectFile = function() {
 		//titleMesh.position.x = (bbGlobal.max.x) / 2
 		titleMesh.position.y = (bbGlobal.max.y) + bb.max.y * 2
 		//titleMesh.position.z = (bbGlobal.max.z) / 2
-
+		this.titleMesh = titleMesh
 		this.selectedObject.add(titleMesh);
 	}
 
