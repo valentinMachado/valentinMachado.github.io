@@ -40,12 +40,12 @@ window.WebExplorerUtility.HtmlUtility = {
 		return label
 	},
 
-	createLabelInput: function(labelString) {
+	createLabelInput: function(labelString,type) {
 
 		let label = this.createLabelDiv(labelString)
 
 		let input = document.createElement("input")
-		input.type = "text"
+		input.type = type
 		input.name = labelString
 
 		input.onclick = function(evt){
