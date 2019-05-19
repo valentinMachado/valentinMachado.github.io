@@ -19,7 +19,6 @@ function SelectedView(elToListen) {
 	var container = document.getElementById("selected-container");
 	container.appendChild(this.exitButton)
 	this.exitButton.style.display = "none"
-	//this.exitButton.style.position = "absolute"
 	this.exitButton.onclick = function(evt) {
 		if (this.currentDiv3D && this.currentDiv3D.parent) {
 			this.setCurrentDiv3D(this.currentDiv3D.parent)
@@ -94,7 +93,7 @@ SelectedView.prototype.setCurrentDiv3D = function(div) {
 
 	//add ui to leave selected if its not a folder
 	if (!div.isFolder()) {
-		this.exitButton.style.display = ""
+		this.exitButton.style.display = "block"
 	} else {
 		this.exitButton.style.display = "none"
 	}

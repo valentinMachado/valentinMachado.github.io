@@ -1,17 +1,129 @@
 "use strict";
 
+function epsilon(value) {
+	return Math.abs(value) < 1e-10 ? 0 : value;
+}
+
+function getObjectCSSMatrix(matrix3) {
+
+	var elements = matrix3.elements;
+	var matrix3d = 'matrix3d(' +
+		epsilon(elements[0]) + ',' +
+		epsilon(elements[1]) + ',' +
+		0 + ',' +
+		epsilon(elements[2]) + ',' +
+		epsilon(elements[3]) + ',' +
+		epsilon(elements[4]) + ',' +
+		0 + ',' +
+		epsilon(elements[5]) + ',' +
+		0 + ',' +
+		0 + ',' +
+		1 + ',' +
+		0 + ',' +
+		epsilon(elements[6]) + ',' +
+		epsilon(elements[7]) + ',' +
+		0 + ',' +
+		epsilon(elements[8]) +
+		')';
+
+	return matrix3d;
+}
+
 //composite of a Div3D
-function Css3D(content, position, rotation, size) {
-	this.position = position
-	this.rotation = rotation
-	this.size = size
+function Css3D(container, content, position, quaternion, scale) {
+
+	this.container = container;
+
+	this.position = position //vec3
+	this.quaternion = quaternion //quaternion
+	this.scale = scale //vec2
+
+	this.points = this.computePoints()
+	this.projectedPoints = [];
 
 	this.html = document.createElement("div")
 	this.html.classList.add("css3d")
+	this.html.style.width = "100px";
+	this.html.style.height = "100px";
 	this.html.appendChild(content)
+
+	//DEBUG
+	// this.debugPoints = [
+	// 	document.createElement("div"),
+	// 	document.createElement("div"),
+	// 	document.createElement("div"),
+	// 	document.createElement("div")
+	// ]
+	// this.debugPoints.forEach(function(p) {
+	// 	p.classList.add("debug")
+	// 	this.container.appendChild(p)
+	// }.bind(this));
+	// this.debugPoints[0].style.background = "red";
+	// this.debugPoints[1].style.background = "green";
+	// this.debugPoints[2].style.background = "yellow";
+	// this.debugPoints[3].style.background = "orange";
 }
 
-Css3D.prototype.update = function(viewScene) {
+Css3D.prototype.computePoints = function() {
+
+	let result = [];
+
+	result.push(new THREE.Vector3(-this.scale.x * 0.5, this.scale.y * 0.5, 0))
+	result.push(new THREE.Vector3(this.scale.x * 0.5, this.scale.y * 0.5, 0))
+	result.push(new THREE.Vector3(this.scale.x * 0.5, -this.scale.y * 0.5, 0))
+	result.push(new THREE.Vector3(-this.scale.x * 0.5, -this.scale.y * 0.5, 0))
+
+	result.forEach(function(p) {
+		p.applyQuaternion(this.quaternion)
+		p.add(this.position)
+	}.bind(this));
+
+	return result;
+}
+
+Css3D.prototype.getHalfSize = function() {
+	return new THREE.Vector2(this.container.clientWidth * 0.5, this.container.clientHeight * 0.5);
+}
+
+Css3D.prototype.computeProjectedPoints = function(viewScene) {
+	this.projectedPoints.length = 0;
+	let size = this.getHalfSize()
+	let dim = 25
+
+	//center points to isolate translation
+	let bb = new THREE.Vector2(Infinity, -Infinity)
+
+	for (var i = 0; i < this.points.length; i++) {
+		let point = this.points[i];
+		let matrix = new THREE.Matrix4()
+		matrix.makeTranslation(point.x, point.y, point.z)
+		let projectedPoint = point.clone()
+		projectedPoint.project(viewScene.camera);
+
+		let pp = new THREE.Vector2((1 + projectedPoint.x) * size.x, (1 - projectedPoint.y) * size.y)
+		this.projectedPoints.push(pp)
+
+		if (pp.x < bb.x) {
+			bb.x = pp.x
+		}
+		if (pp.y > bb.y) {
+			bb.y = pp.y
+		}
+
+		//DEBUG
+		// this.debugPoints[i].style.top = (this.projectedPoints[i].y - dim) + "px"
+		// this.debugPoints[i].style.left = (this.projectedPoints[i].x - dim) + "px"
+	}
+
+	this.bb = bb
+
+	this.projectedPoints.forEach(function(p) {
+		//p.x -= (size.x - bb.x * 0.5)
+		//p.y -= (size.y - bb.y * 0.5)
+	})
+}
+
+Css3D.prototype.tick = function(viewScene) {
 
 	//update visibility
 	let planeNormal = new THREE.Vector3(0, 0, 1)
@@ -20,17 +132,81 @@ Css3D.prototype.update = function(viewScene) {
 	let cam = viewScene.camera
 	let eyeVector = ctrl.target.clone().sub(cam.position)
 	if (planeNormal.dot(eyeVector) > 0) {
+
 		//not visible
 		this.html.style.display = "none"
+		return;
+
 	} else {
 		this.html.style.display = "block"
 	}
 
-	//update css transform according this THREE.Camera
-	//https://github.com/ivee-tech/three-css3drenderer/blob/master/index.js
+	this.computeProjectedPoints(viewScene)
+
+	var matrix = this.computeMatrix()
+	if (matrix) {
+		var style = getObjectCSSMatrix(matrix);
+
+		this.html.style.WebkitTransform = style;
+		this.html.style.MozTransform = style;
+		this.html.style.transform = style;
+	}
 }
 
+//https://math.stackexchange.com/questions/296794/finding-the-transform-matrix-from-4-projected-points-with-javascript
+Css3D.prototype.computeMatrix = function() {
 
+	function solve(points) {
+
+		if (points.length != 4) return null;
+
+		let system = new THREE.Matrix3().set(
+			points[0].x, points[1].x, points[2].x,
+			points[0].y, points[1].y, points[2].y,
+			1, 1, 1);
+
+		//resolve
+		system.getInverse(system)
+		let solution = new THREE.Vector3(points[3].x, points[3].y, 1).applyMatrix3(system)
+
+		return new THREE.Matrix3().set(
+			solution.x * points[0].x, solution.y * points[1].x, solution.z * points[2].x,
+			solution.x * points[0].y, solution.y * points[1].y, solution.z * points[2].y,
+			solution.x, solution.y, solution.z)
+	}
+
+
+
+	let p1 = new THREE.Vector2(0, 0)
+	let p2 = new THREE.Vector2(0, 100)
+	let p3 = new THREE.Vector2(100, 100)
+	let p4 = new THREE.Vector2(100, 0)
+
+	let A = solve([p1, p2, p3, p4])
+	if (!A) return null;
+
+	let offset = this.bb.clone().multiplyScalar(0)
+
+
+	let permu = []
+	permu[0] = this.projectedPoints[0].add(offset)
+	permu[1] = this.projectedPoints[3].add(offset)
+	permu[2] = this.projectedPoints[2].add(offset)
+	permu[3] = this.projectedPoints[1].add(offset)
+
+
+
+	let B = solve(permu)
+	if (!B) return null;
+
+	A.getInverse(A); //inverse A
+
+	let C = B.multiply(A)
+
+	return C;
+}
+
+//DIV3D
 var idCount = 1;
 var idMap = {};
 
@@ -163,19 +339,8 @@ Div3D.prototype.buildMeshes = function() {
 
 		//add its iconobj to its selected obj
 		var clone;
-		// if (this.parent.isFolder()) {
-		// 	clone = this.selectedObject.clone();
-		// 	WebExplorerUtility.ModelUtility.scale(clone, this.scale)
-		// } else {
-		// 	clone = this.iconObject.clone();
-		// }
 		clone = this.iconObject.clone();
 
-		// while (clone.children.length) {
-		// 	let child = clone.children[0]
-		// 	clone.remove(child)
-		// }
-		//random position on a sphere
 		WebExplorerUtility.Div3dUtility.placeOnOrbit(
 			this.parent.selectedObject, clone, this.fetchRadiusSelectedView())
 
@@ -214,15 +379,29 @@ Div3D.prototype.initViewScene = function(viewScene) {
 
 	//add html css 3d
 	if (!this.isFolder()) {
-		let content = document.createElement("div")
-		content.innerHTML = "Ceci est un Test"
 
-		let css3d = new Css3D(content,
-			new THREE.Vector3(),
-			new THREE.Vector3(),
-			this.scale)
 
-		this.css3dElements.push(css3d)
+		let container = document.createElement("div")
+
+		let homeIcon = document.createElement("img")
+		homeIcon.classList.add("right-button")
+		homeIcon.src = "./src/assets/img/home.png"
+		homeIcon.onclick = function(evt) {
+			wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
+		}
+		container.appendChild(homeIcon)
+		//container.innerHTML = "TEST"
+
+		// //DEBUG
+		// let size = 6
+		// let css3d = new Css3D(
+		// 	document.getElementById("selected-container"),
+		// 	container,
+		// 	new THREE.Vector3(10, 5, 0),
+		// 	new THREE.Quaternion(),
+		// 	new THREE.Vector2(size, size))
+
+		// this.css3dElements.push(css3d)
 
 		this.addHtmlToSelectedView(css3d.html)
 	} else {
@@ -245,6 +424,18 @@ Div3D.prototype._createSelectedObjectFolder = function() {
 };
 
 Div3D.prototype._createSelectedObjectFile = function() {
+	// let size = 6
+	// var geometry = new THREE.PlaneGeometry(size, size);
+	// var material = new THREE.MeshBasicMaterial({
+	// 	color: 0xffff00
+	// });
+	// var plane = new THREE.Mesh(geometry, material);
+	// plane.position.x = 10
+	// plane.position.y = 5
+
+	// this.selectedObject = plane;
+	//this.selectedObject = new THREE.Object3D();
+
 	var geometry = new THREE.SphereGeometry(5 * Math.random() + 1, 32, 32);
 	var cube = new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.iconMat);
 	this.selectedObject = cube;
@@ -269,7 +460,7 @@ Div3D.prototype._createIconObject = function() {
 Div3D.prototype.tick = function(viewScene) {
 
 	this.css3dElements.forEach(function(el) {
-		el.update(viewScene)
+		el.tick(viewScene)
 	});
 
 	// this.children.forEach(function(child) {
@@ -280,4 +471,7 @@ Div3D.prototype.tick = function(viewScene) {
 
 Div3D.prototype.onDisable = function(viewScene) {
 	this.removeHtmlEl();
+	this.children.forEach(function(child) {
+		child.onDisable()
+	})
 };
