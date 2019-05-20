@@ -34,46 +34,12 @@ Video3D.prototype.initViewScene = function(viewScene) {
 
 	controls.update();
 
-	//restart video*
-	var video = this.html
-
 	scene.add(this.selectedObject);
 
-	//add html
-	var container = document.getElementById("selected-container");
-
-	//sound
-	var speakerButton = document.createElement("div");
-	speakerButton.classList.add("button");
-
-	//init
-	var soundMuted = false;
-	video.muted = soundMuted;
-	speakerButton.onclick = function() {
-		soundMuted = !soundMuted;
-		video.muted = soundMuted;
-	};
-
-	//pause/play
-	var playButton = document.createElement("img");
-	playButton.src = "./src/assets/img/loading.png"
-	playButton.classList.add("button");
-
-	//init
-	var isPlaying = true;
-	video.currentTime = 0;
-	video.play();
-	playButton.onclick = function() {
-		isPlaying = !isPlaying;
-		if (isPlaying) {
-			video.play();
-		} else {
-			video.pause();
-		}
-	}
-
-	this.addHtmlToSelectedView(speakerButton);
-	this.addHtmlToSelectedView(playButton);
+	this.html.play()
+	this.css3dElements.forEach(function(c) {
+		this.addHtmlToSelectedView(c.html)
+	}.bind(this))
 };
 
 Video3D.prototype.onDisable = function(viewScene) {
@@ -82,7 +48,7 @@ Video3D.prototype.onDisable = function(viewScene) {
 	this.html.pause();
 };
 
-Video3D.prototype.tick = function() {
+Video3D.prototype.tick = function(viewScene) {
 
 	var video = this.html;
 
@@ -95,6 +61,10 @@ Video3D.prototype.tick = function() {
 	if (video.ended) {
 		video.play()
 	}
+
+	this.css3dElements.forEach(function(c) {
+		c.tick(viewScene)
+	})
 };
 
 //code take from https://stemkoski.github.io/Three.js/Video.html
@@ -161,3 +131,60 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	}
 
 };
+
+Video3D.prototype._buildCSS3D = function() {
+	//restart video*
+	var video = this.html
+	//add html
+	var container = document.createElement("div")
+
+	//sound
+	var speakerButton = document.createElement("div");
+	speakerButton.classList.add("button");
+
+	//init
+	var soundMuted = false;
+	video.muted = soundMuted;
+	speakerButton.onclick = function() {
+		soundMuted = !soundMuted;
+		video.muted = soundMuted;
+	};
+
+	//pause/play
+	var playButton = document.createElement("img");
+	playButton.src = "./src/assets/img/loading.png"
+	playButton.classList.add("button");
+
+	//init
+	var isPlaying = true;
+	video.currentTime = 0;
+
+	playButton.onclick = function() {
+		isPlaying = !isPlaying;
+		if (isPlaying) {
+			video.play();
+		} else {
+			video.pause();
+		}
+	}
+
+	container.appendChild(playButton)
+	container.appendChild(speakerButton)
+
+	let bb = new THREE.Box3()
+	bb.setFromObject(this.selectedObject);
+	let dim = new THREE.Vector2()
+	dim.x = bb.max.x - bb.min.x
+	dim.y = bb.max.y - bb.min.y
+
+	//add this ui on tv
+	let ratio = 0.3
+	let uiTV = new Css3D(
+		document.getElementById("selected-container"),
+		container,
+		new THREE.Vector3(0, -dim.y * ratio, 0),
+		new THREE.Quaternion(),
+		new THREE.Vector2(dim.x, dim.y * ratio))
+
+	this.css3dElements.push(uiTV)
+}

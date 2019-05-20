@@ -7,6 +7,9 @@ function ViewScene(elToListen) {
 
 	//THREE camera
 	this.camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
+	this.camera.position.x = 0
+	this.camera.position.y = 0
+	this.camera.position.z = 1
 
 	//control
 	this.controls = new THREE.OrbitControls(this.camera, elToListen);

@@ -78,6 +78,10 @@ Css3D.prototype.computePoints = function() {
 		p.add(this.position)
 	}.bind(this));
 
+	let a = result[2].clone().sub(result[0])
+	let b = result[1].clone().sub(result[0])
+	this.planeNormal = a.cross(b).normalize()
+
 	return result;
 }
 
@@ -90,9 +94,6 @@ Css3D.prototype.computeProjectedPoints = function(viewScene) {
 	let size = this.getHalfSize()
 	let dim = 25
 
-	//center points to isolate translation
-	let bb = new THREE.Vector2(Infinity, -Infinity)
-
 	for (var i = 0; i < this.points.length; i++) {
 		let point = this.points[i];
 		let matrix = new THREE.Matrix4()
@@ -103,30 +104,16 @@ Css3D.prototype.computeProjectedPoints = function(viewScene) {
 		let pp = new THREE.Vector2((1 + projectedPoint.x) * size.x, (1 - projectedPoint.y) * size.y)
 		this.projectedPoints.push(pp)
 
-		if (pp.x < bb.x) {
-			bb.x = pp.x
-		}
-		if (pp.y > bb.y) {
-			bb.y = pp.y
-		}
-
 		//DEBUG
 		// this.debugPoints[i].style.top = (this.projectedPoints[i].y - dim) + "px"
 		// this.debugPoints[i].style.left = (this.projectedPoints[i].x - dim) + "px"
 	}
-
-	this.bb = bb
-
-	this.projectedPoints.forEach(function(p) {
-		//p.x -= (size.x - bb.x * 0.5)
-		//p.y -= (size.y - bb.y * 0.5)
-	})
 }
 
 Css3D.prototype.tick = function(viewScene) {
 
 	//update visibility
-	let planeNormal = new THREE.Vector3(0, 0, 1)
+	let planeNormal = this.planeNormal
 	//apply transform TODO
 	let ctrl = viewScene.controls
 	let cam = viewScene.camera
@@ -185,21 +172,16 @@ Css3D.prototype.computeMatrix = function() {
 	let A = solve([p1, p2, p3, p4])
 	if (!A) return null;
 
-	let offset = this.bb.clone().multiplyScalar(0)
-
-
 	let permu = []
-	permu[0] = this.projectedPoints[0].add(offset)
-	permu[1] = this.projectedPoints[3].add(offset)
-	permu[2] = this.projectedPoints[2].add(offset)
-	permu[3] = this.projectedPoints[1].add(offset)
-
-
+	permu[0] = this.projectedPoints[0]
+	permu[1] = this.projectedPoints[3]
+	permu[2] = this.projectedPoints[2]
+	permu[3] = this.projectedPoints[1]
 
 	let B = solve(permu)
 	if (!B) return null;
 
-	A.getInverse(A); //inverse A
+	A.getInverse(A); //inverse A TODO compute A one time
 
 	let C = B.multiply(A)
 
@@ -348,9 +330,16 @@ Div3D.prototype.buildMeshes = function() {
 		clone.userData.divId = this.id;
 	}
 
+	this._buildCSS3D()
+
 	//update
 	this.iconObject.updateMatrixWorld(true)
 };
+
+Div3D.prototype._buildCSS3D = function() {
+	//abstarct
+}
+
 Div3D.prototype.fetchRadiusSelectedView = function() {
 	return 9 * this.scale;
 };
@@ -403,7 +392,7 @@ Div3D.prototype.initViewScene = function(viewScene) {
 
 		// this.css3dElements.push(css3d)
 
-		this.addHtmlToSelectedView(css3d.html)
+		//this.addHtmlToSelectedView(css3d.html)
 	} else {
 		// this.children.forEach(function(child) {
 		// 	if (child instanceof Video3D)  {
@@ -472,6 +461,6 @@ Div3D.prototype.tick = function(viewScene) {
 Div3D.prototype.onDisable = function(viewScene) {
 	this.removeHtmlEl();
 	this.children.forEach(function(child) {
-		child.onDisable()
+		child.onDisable(viewScene)
 	})
 };
