@@ -170,6 +170,7 @@ Video3D.prototype._buildCSS3D = function() {
 
 	container.appendChild(playButton)
 	container.appendChild(speakerButton)
+	container.style.display = "flex"
 
 	let bb = new THREE.Box3()
 	bb.setFromObject(this.selectedObject);
