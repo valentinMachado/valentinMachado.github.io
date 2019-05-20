@@ -165,6 +165,7 @@ iframe{
 	width:50px;
 	cursor:pointer;
 	display: none;
+	position: absolute;
 }
 
 .right-button{
