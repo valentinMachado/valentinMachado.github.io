@@ -22,6 +22,7 @@ window.WebExplorerUtility.Div3dUtility = {
 
 			this.traverse(result, function(d) {
 				d.buildMeshes();
+				d.buildCSS3D();
 			});
 		}
 

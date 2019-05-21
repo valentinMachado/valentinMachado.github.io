@@ -40,7 +40,7 @@ window.WebExplorerUtility.HtmlUtility = {
 		return label
 	},
 
-	createLabelInput: function(labelString,type) {
+	createLabelInput: function(labelString, type) {
 
 		let label = this.createLabelDiv(labelString)
 
@@ -48,8 +48,8 @@ window.WebExplorerUtility.HtmlUtility = {
 		input.type = type
 		input.name = labelString
 
-		input.onclick = function(evt){
-			this.focus()//has to be done by hand
+		input.onclick = function(evt) {
+			this.focus() //has to be done by hand
 		}
 
 		let container = document.createElement("div")
@@ -60,6 +60,12 @@ window.WebExplorerUtility.HtmlUtility = {
 
 		return container
 	},
+
+	toLabel: function(total) {
+		let sec = parseInt(total % 60)
+		let minute = parseInt((total / 60) % 60)
+		return minute + ":" + sec
+	}
 
 
 }

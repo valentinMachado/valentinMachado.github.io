@@ -164,13 +164,13 @@ Css3D.prototype.computeMatrix = function() {
 
 
 
-	let p1 = new THREE.Vector2(0, 0)
-	let p2 = new THREE.Vector2(0, 100)
-	let p3 = new THREE.Vector2(100, 100)
-	let p4 = new THREE.Vector2(100, 0)
+	// let p1 = new THREE.Vector2(0, 0)
+	// let p2 = new THREE.Vector2(0, 100)
+	// let p3 = new THREE.Vector2(100, 100)
+	// let p4 = new THREE.Vector2(100, 0)
 
-	let A = solve([p1, p2, p3, p4])
-	if (!A) return null;
+	// let A = solve([p1, p2, p3, p4])
+	// if (!A) return null;
 
 	let permu = []
 	permu[0] = this.projectedPoints[0]
@@ -181,7 +181,12 @@ Css3D.prototype.computeMatrix = function() {
 	let B = solve(permu)
 	if (!B) return null;
 
-	A.getInverse(A); //inverse A TODO compute A one time
+	//A.getInverse(A); //inverse A TODO compute A one time
+
+	//precomputed A-1 for square of 100*100
+	let A = new THREE.Matrix3().set(
+		0, -0.01, 1, 0.01, -0.01, 0,
+		0.01, 0, 0)
 
 	let C = B.multiply(A)
 
@@ -330,13 +335,11 @@ Div3D.prototype.buildMeshes = function() {
 		clone.userData.divId = this.id;
 	}
 
-	this._buildCSS3D()
-
 	//update
 	this.iconObject.updateMatrixWorld(true)
 };
 
-Div3D.prototype._buildCSS3D = function() {
+Div3D.prototype.buildCSS3D = function() {
 	//abstarct
 }
 
