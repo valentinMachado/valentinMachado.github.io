@@ -110,7 +110,7 @@ MainView.prototype.initHelpGUI = function() {
 	//url icon
 	let urlIcon = document.createElement("img")
 	urlIcon.classList.add("right-button")
-	urlIcon.src = "./src/assets/img/home.png"
+	urlIcon.src = "./src/assets/img/link.png"
 	this.root.appendChild(urlIcon)
 	urlIcon.onclick = function(evt) {
 		function fallbackCopyTextToClipboard(text) {

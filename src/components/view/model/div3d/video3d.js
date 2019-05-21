@@ -37,6 +37,8 @@ Video3D.prototype.initViewScene = function(viewScene) {
 	scene.add(this.selectedObject);
 
 	this.html.play()
+	this.html.currentTime = 0;
+
 	this.css3dElements.forEach(function(c) {
 		this.addHtmlToSelectedView(c.html)
 	}.bind(this))
@@ -58,9 +60,9 @@ Video3D.prototype.tick = function(viewScene) {
 			this.videoTexture.needsUpdate = true;
 	}
 
-	if (video.ended) {
-		video.play()
-	}
+	// if (video.ended) {
+	// 	video.play()
+	// }
 
 	this.css3dElements.forEach(function(c) {
 		c.tick(viewScene)
@@ -116,7 +118,7 @@ Video3D.prototype._createSelectedObjectFile = function() {
 	this.selectedObject.scale.setScalar(0.8)
 	let bbGlobal = new THREE.Box3()
 	bbGlobal.setFromObject(this.selectedObject);
-	this.selectedObject.position.y += (bbGlobal.max.y) / 2
+	//this.selectedObject.position.y += (bbGlobal.max.y) / 2
 
 	//add title
 	if (this.json.title) {
@@ -132,15 +134,17 @@ Video3D.prototype._createSelectedObjectFile = function() {
 
 };
 
-Video3D.prototype._buildCSS3D = function() {
+Video3D.prototype.buildCSS3D = function() {
 	//restart video*
 	var video = this.html
+
 	//add html
 	var container = document.createElement("div")
 
 	//sound
-	var speakerButton = document.createElement("div");
-	speakerButton.classList.add("button");
+	var speakerButton = document.createElement("img");
+	speakerButton.classList.add("css3d-button");
+	speakerButton.src = "./src/assets/img/volume.png"
 
 	//init
 	var soundMuted = false;
@@ -148,28 +152,66 @@ Video3D.prototype._buildCSS3D = function() {
 	speakerButton.onclick = function() {
 		soundMuted = !soundMuted;
 		video.muted = soundMuted;
+
+		if (soundMuted) {
+			speakerButton.src = "./src/assets/img/muted.png"
+		} else {
+			speakerButton.src = "./src/assets/img/volume.png"
+		}
 	};
 
 	//pause/play
 	var playButton = document.createElement("img");
-	playButton.src = "./src/assets/img/loading.png"
-	playButton.classList.add("button");
+	playButton.src = "./src/assets/img/pause.png"
+	playButton.classList.add("css3d-button");
 
 	//init
 	var isPlaying = true;
-	video.currentTime = 0;
+	//video.currentTime = 0;
+	video.loop = true;
 
 	playButton.onclick = function() {
 		isPlaying = !isPlaying;
 		if (isPlaying) {
 			video.play();
+			playButton.src = "./src/assets/img/pause.png"
 		} else {
 			video.pause();
+			playButton.src = "./src/assets/img/play.png"
 		}
+	}
+
+	//cursor video
+	let cursor = document.createElement("input")
+	cursor.type = "range"
+	cursor.value = 0
+	cursor.style.marginTop = "63px";
+	cursor.style.marginLeft = "-52px";
+	cursor.style.cursor = "pointer"
+	let sizeCursor = 95
+	cursor.style.width = sizeCursor + "px"
+	cursor.onclick = function(evt) {
+		let ratioClicked = evt.offsetX / sizeCursor
+		this.value = ratioClicked * 100
+
+		let newTime = video.duration * ratioClicked
+		if (!isNaN(newTime)) {
+			// console.log(newTime)
+			video.currentTime = newTime + ""
+			// console.log(video.currentTime)
+		}
+	}
+
+	//cursor follow ratio
+	video.ontimeupdate = function(evt) {
+		let ratio = this.currentTime / this.duration
+		cursor.value = ratio * 100
+		//cursor.title = WebExplorerUtility.HtmlUtility.toLabel(this.currentTime)
 	}
 
 	container.appendChild(playButton)
 	container.appendChild(speakerButton)
+	container.appendChild(cursor)
 	container.style.display = "flex"
 
 	let bb = new THREE.Box3()
@@ -179,11 +221,11 @@ Video3D.prototype._buildCSS3D = function() {
 	dim.y = bb.max.y - bb.min.y
 
 	//add this ui on tv
-	let ratio = 0.3
+	let ratio = 0.26
 	let uiTV = new Css3D(
 		document.getElementById("selected-container"),
 		container,
-		new THREE.Vector3(0, -dim.y * ratio, 0),
+		new THREE.Vector3(0, -this.scale * 6, this.scale * 0.5),
 		new THREE.Quaternion(),
 		new THREE.Vector2(dim.x, dim.y * ratio))
 
