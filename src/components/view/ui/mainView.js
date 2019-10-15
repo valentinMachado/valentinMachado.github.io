@@ -150,13 +150,15 @@ MainView.prototype.initHelpGUI = function() {
 
 	//home icon
 	let homeIcon = document.createElement("img")
-	homeIcon.classList.add("home-button")
+	homeIcon.classList.add("right-button")
 	homeIcon.src = "./src/assets/img/home.png"
 	this.root.appendChild(homeIcon)
 	homeIcon.onclick = function(evt) {
 		//reset
 		wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
 	}
+	homeIcon.style.top = wE3D.conf.minDim * countFromTop + "px"
+	countFromTop++;
 };
 
 MainView.prototype.initCentralButton = function(event) {

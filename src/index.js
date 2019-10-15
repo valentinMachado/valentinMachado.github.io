@@ -154,14 +154,6 @@ let structureJSON = {
 						"child": []
 					}]
 				}, {
-					"type": "html3d",
-					"label": "Portfolio 3D",
-					"html": "<div>Icons made by <a href=\"https://www.flaticon.com/authors/smashicons\" title=\"Smashicons\">Smashicons</a> from <a href=\"https://www.flaticon.com/\" 		    title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" 		    title=\"Creative Commons BY 3.0\" target=\"_blank\">CC 3.0 BY</a></div>",
-					//<div>Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-					//<div>Icons made by <a href="https://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha">Pixel Buddha</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-					//<div>Icons made by <a href="https://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha">Pixel Buddha</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-					"child": []
-				}, {
 					"type": "video",
 					"urlId": "walls",
 					"label": "Walls",
@@ -241,6 +233,11 @@ let structureJSON = {
 		"label": "CV",
 		"child": [],
 		"html": "<embed src=\"./src/assets/pdf/CV.pdf\" width=\"100%\" height=\"100%\" />"
+	}, {
+		"type": "html3d",
+		"label": "Credits",
+		"html": "<div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D model are from <a href=\"https://www.free3d.com/\" title=\"Free3D\">www.free3d.com</a><\div> ",
+		"child": []
 	}],
 	"type": "div3d"
 };
@@ -317,6 +314,10 @@ try {
 
 				//remove loading screen
 				wE3DHtml.removeChild(loadingHtml)
+
+				//add information popup
+				let beginMsg = "This is a work in progress experience, hover the interogation point to know how to use the website :)"
+				//alert(beginMsg)
 
 				console.info("%c... ok!", "color:#0000FF;");
 			})
