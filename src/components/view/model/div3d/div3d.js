@@ -183,7 +183,7 @@ Css3D.prototype.computeMatrix = function() {
 
 	//A.getInverse(A); //inverse A TODO compute A one time
 
-	//precomputed A-1 for square of 100*100
+	//precomputed A-1 for square of 1000*1000
 	let A = new THREE.Matrix3().set(
 		0, -0.01, 1, 0.01, -0.01, 0,
 		0.01, 0, 0)

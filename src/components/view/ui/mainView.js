@@ -81,13 +81,11 @@ MainView.prototype.initHelpGUI = function() {
 	this.root.appendChild(iconImage)
 
 	iconHelp.onmouseenter = function() {
-		console.log("enter help")
 		iconImage.classList.remove("hide")
 		iconImage.classList.add("display")
 	}
 
 	iconHelp.onmouseleave = function() {
-		console.log("leave help")
 		iconImage.classList.remove("display")
 		iconImage.classList.add("hide")
 	}
