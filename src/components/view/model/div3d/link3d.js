@@ -18,6 +18,8 @@ Link3D.prototype.initViewScene = function(viewScene) {
 	iframe.setAttribute("allow", "autoplay");
 	iframe.src = this.json.url;
 
+	iframe.classList.add("urlDiv")
+
 	//silent console of iframe
 	//var iframeWindow = iframe.contentWindow;
 	//iframeWindow.console.log = function() { /* nop */ };

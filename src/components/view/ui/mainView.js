@@ -71,12 +71,12 @@ MainView.prototype.initHelpGUI = function() {
 
 	let iconHelp = document.createElement("img")
 	iconHelp.classList.add("right-button")
-	iconHelp.src = "./src/assets/img/info.png"
+	iconHelp.src = "./src/assets/img/icons/info.png"
 	this.root.appendChild(iconHelp)
 
 	let iconImage = document.createElement("img")
 	iconImage.classList.add("help-img")
-	iconImage.src = "./src/assets/img/tuto.jpeg"
+	iconImage.src = "./src/assets/img/tutorial.jpeg"
 	iconImage.style.transform = "scale(0)";
 	this.root.appendChild(iconImage)
 
@@ -95,7 +95,7 @@ MainView.prototype.initHelpGUI = function() {
 	//focus icon
 	let focusIcon = document.createElement("img")
 	focusIcon.classList.add("right-button")
-	focusIcon.src = "./src/assets/img/home.png"
+	focusIcon.src = "./src/assets/img/icons/aim.png"
 	this.root.appendChild(focusIcon)
 	focusIcon.onclick = function(evt) {
 		//reset
@@ -108,7 +108,7 @@ MainView.prototype.initHelpGUI = function() {
 	//url icon
 	let urlIcon = document.createElement("img")
 	urlIcon.classList.add("right-button")
-	urlIcon.src = "./src/assets/img/link.png"
+	urlIcon.src = "./src/assets/img/icons/link.png"
 	this.root.appendChild(urlIcon)
 	urlIcon.onclick = function(evt) {
 		function fallbackCopyTextToClipboard(text) {
@@ -149,7 +149,7 @@ MainView.prototype.initHelpGUI = function() {
 	//home icon
 	let homeIcon = document.createElement("img")
 	homeIcon.classList.add("right-button")
-	homeIcon.src = "./src/assets/img/home.png"
+	homeIcon.src = "./src/assets/img/icons/home.png"
 	this.root.appendChild(homeIcon)
 	homeIcon.onclick = function(evt) {
 		//reset

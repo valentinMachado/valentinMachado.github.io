@@ -15,7 +15,7 @@ function SelectedView(elToListen) {
 
 	this.exitButton = document.createElement("img")
 	this.exitButton.classList.add("exit-button")
-	this.exitButton.src = "./src/assets/img/cross.png"
+	this.exitButton.src = "./src/assets/img/icons/cross.png"
 	var container = document.getElementById("selected-container");
 	container.appendChild(this.exitButton)
 	this.exitButton.style.display = "none"
@@ -33,7 +33,7 @@ SelectedView.prototype.initialize = function() {
 	var scene = this.viewScene.scene;
 
 	var textureLoader = new THREE.TextureLoader();
-	scene.background = textureLoader.load("./src/assets/img/bg.jpeg");
+	scene.background = textureLoader.load("./src/assets/img/background.jpeg");
 
 	//this.setCurrentDiv3D(wE3D.divs3d);
 	//WebExplorerUtility.DebugUtility.addCoordSystem(scene);

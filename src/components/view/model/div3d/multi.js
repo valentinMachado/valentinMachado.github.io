@@ -123,7 +123,7 @@ Multi.prototype._createSelectedObjectFile = function() {
 			let bbGlobal = new THREE.Box3()
 			bbGlobal.setFromObject(child.selectedObject);
 			let bb = child.titleMesh.geometry.boundingBox;
-			child.itleMesh.position.y = (bbGlobal.max.y) + bb.max.y * 2
+			child.titleMesh.position.y = (bbGlobal.max.y) + bb.max.y * 2
 		}
 
 
