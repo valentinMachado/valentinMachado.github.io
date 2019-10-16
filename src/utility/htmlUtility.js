@@ -21,7 +21,7 @@ window.WebExplorerUtility.HtmlUtility = {
 		//rolling stuff
 		let loadingRoll = document.createElement("img")
 		loadingRoll.classList.add("loading-roll");
-		loadingRoll.src = "./src/assets/img/loading.png"
+		loadingRoll.src = "./src/assets/img/icons/loading.png"
 		result.appendChild(loadingRoll)
 
 		//register

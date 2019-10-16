@@ -60,9 +60,9 @@ Video3D.prototype.tick = function(viewScene) {
 			this.videoTexture.needsUpdate = true;
 	}
 
-	// if (video.ended) {
-	// 	video.play()
-	// }
+	if (video.ended) {
+		video.play()
+	}
 
 	this.css3dElements.forEach(function(c) {
 		c.tick(viewScene)
@@ -144,7 +144,7 @@ Video3D.prototype.buildCSS3D = function() {
 	//sound
 	var speakerButton = document.createElement("img");
 	speakerButton.classList.add("css3d-button");
-	speakerButton.src = "./src/assets/img/volume.png"
+	speakerButton.src = "./src/assets/img/icons/volume.png"
 
 	//init
 	var soundMuted = false;
@@ -154,15 +154,15 @@ Video3D.prototype.buildCSS3D = function() {
 		video.muted = soundMuted;
 
 		if (soundMuted) {
-			speakerButton.src = "./src/assets/img/muted.png"
+			speakerButton.src = "./src/assets/img/icons/muted.png"
 		} else {
-			speakerButton.src = "./src/assets/img/volume.png"
+			speakerButton.src = "./src/assets/img/icons/volume.png"
 		}
 	};
 
 	//pause/play
 	var playButton = document.createElement("img");
-	playButton.src = "./src/assets/img/pause.png"
+	playButton.src = "./src/assets/img/icons/pause.png"
 	playButton.classList.add("css3d-button");
 
 	//init
@@ -174,10 +174,10 @@ Video3D.prototype.buildCSS3D = function() {
 		isPlaying = !isPlaying;
 		if (isPlaying) {
 			video.play();
-			playButton.src = "./src/assets/img/pause.png"
+			playButton.src = "./src/assets/img/icons/pause.png"
 		} else {
 			video.pause();
-			playButton.src = "./src/assets/img/play.png"
+			playButton.src = "./src/assets/img/icons/play.png"
 		}
 	}
 

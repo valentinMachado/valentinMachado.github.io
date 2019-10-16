@@ -125,7 +125,6 @@ let structureJSON = {
 		"type": "div3d",
 		"label": "Personnal project",
 		"urlId": "personnal_project",
-		"modelId": "barrel",
 		"child": [{
 			"type": "div3d",
 			"urlId": "programming",
@@ -146,7 +145,6 @@ let structureJSON = {
 					"type": "div3d",
 					"label": "Le Demon",
 					"urlId": "le_demon",
-					"modelId": "pillar",
 					"child": [{
 						"type": "link",
 						"label": "play game !",
@@ -216,7 +214,7 @@ let structureJSON = {
 				"label": "Playlist",
 				"urlId": "playlist_jailln_mache",
 				"modelId": "radio",
-				"html": "<img src = \"./src/assets/img/playlist.png\"> Les playlist du jailln et de la mache - Playlist on a particular theme or music genre. <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\"> website</a> <br> <iframe src=\"https://player.vimeo.com/video/330845878\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/315117555\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/307960107\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/303532748\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298485745\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/299649347\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298484622\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe>",
+				"html": "<img src = \"./src/assets/img/playlist.png\"> Les playlist du jailln et de la mache - Playlist on a particular theme or music genre. <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\"> website</a> <br> <iframe src=\"https://player.vimeo.com/video/343542945\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/342856045\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/330845878\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/315117555\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/307960107\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/303532748\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298485745\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/299649347\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298484622\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe>",
 				"child": []
 			}, {
 				"type": "link",
@@ -236,24 +234,16 @@ let structureJSON = {
 	}, {
 		"type": "html3d",
 		"label": "Credits",
-		"html": "<div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D model are from <a href=\"https://www.free3d.com/\" title=\"Free3D\">www.free3d.com</a><\div> ",
+		"urlId": "credits",
+		"html": "<div>This app is powered by THREE.js and TWEEN.js</div><br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D models are from <a href=\"https://www.free3d.com/\" title=\"Free3D\">www.free3d.com</a><\div> ",
 		"child": []
 	}],
 	"type": "div3d"
 };
 
-// let structureJSON = {
-// 	"type": "div3d",
-// 	"label": "Naïs Collet",
-// 	"child": []
-// }
-
 window.wE3D = new WebExplorer3D({
 	minDim: 50,
 	modelData: [{
-		id: "barrel",
-		file: "barrel.obj"
-	}, {
 		id: "computer",
 		file: "computer.obj"
 	}, {
@@ -278,9 +268,6 @@ window.wE3D = new WebExplorer3D({
 		id: "wall",
 		file: "wall.obj"
 	}, {
-		id: "pillar",
-		file: "pillar.obj"
-	}, {
 		id: "gear",
 		file: "gear.obj"
 	}]
@@ -301,11 +288,11 @@ try {
 		WebExplorerUtility.HtmlUtility.writeLoadingScreen("App loading...")
 		wE3D.load()
 			.then(function() {
-				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Model loading...")
+				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Models loading...")
 				return WebExplorerUtility.ModelUtility.load();
 			})
 			.then(function() {
-				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Material loading...")
+				WebExplorerUtility.HtmlUtility.writeLoadingScreen("Materials loading...")
 				return WebExplorerUtility.MaterialUtility.load();
 			})
 			.then(function() {
