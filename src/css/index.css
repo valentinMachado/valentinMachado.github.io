@@ -46,10 +46,6 @@ canvas{
   	border-radius: 10px;
 }
 
-.centralBar-button:hover{
-	background-image: linear-gradient(#568886,black);
-}
-
 #input{
 	display: none;
 }
