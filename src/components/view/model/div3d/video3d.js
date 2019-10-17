@@ -9,7 +9,6 @@ function Video3D(json) {
 
 	//create html
 	this.html = document.createElement("video")
-	//this.html.autoplay = true;
 	this.html.src = this.json.path
 
 	//override
@@ -36,7 +35,8 @@ Video3D.prototype.initViewScene = function(viewScene) {
 
 	scene.add(this.selectedObject);
 
-	this.html.play()
+	//this.html.play()
+	this.html.autoplay = true
 	this.html.currentTime = 0;
 
 	this.css3dElements.forEach(function(c) {
@@ -48,6 +48,7 @@ Video3D.prototype.onDisable = function(viewScene) {
 
 	this.removeHtmlEl();
 	this.html.pause();
+	this.html.autoplay = false
 };
 
 Video3D.prototype.tick = function(viewScene) {
@@ -205,7 +206,9 @@ Video3D.prototype.buildCSS3D = function() {
 	//cursor follow ratio
 	video.ontimeupdate = function(evt) {
 		let ratio = this.currentTime / this.duration
-		cursor.value = ratio * 100
+		if (!isNaN(ratio)) {
+			cursor.value = ratio * 100
+		}
 		//cursor.title = WebExplorerUtility.HtmlUtility.toLabel(this.currentTime)
 	}
 
