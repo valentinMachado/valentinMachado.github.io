@@ -370,39 +370,39 @@ Div3D.prototype.initViewScene = function(viewScene) {
 	scene.add(this.selectedObject);
 
 	//add html css 3d
-	if (!this.isFolder()) {
+	// if (!this.isFolder()) {
 
 
-		let container = document.createElement("div")
+	// 	let container = document.createElement("div")
 
-		let homeIcon = document.createElement("img")
-		homeIcon.classList.add("right-button")
-		homeIcon.src = "./src/assets/img/home.png"
-		homeIcon.onclick = function(evt) {
-			wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
-		}
-		container.appendChild(homeIcon)
-		//container.innerHTML = "TEST"
+	// 	let homeIcon = document.createElement("img")
+	// 	homeIcon.classList.add("right-button")
+	// 	homeIcon.src = "./src/assets/img/icons/home.png"
+	// 	homeIcon.onclick = function(evt) {
+	// 		wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
+	// 	}
+	// 	container.appendChild(homeIcon)
+	// 	//container.innerHTML = "TEST"
 
-		// //DEBUG
-		// let size = 6
-		// let css3d = new Css3D(
-		// 	document.getElementById("selected-container"),
-		// 	container,
-		// 	new THREE.Vector3(10, 5, 0),
-		// 	new THREE.Quaternion(),
-		// 	new THREE.Vector2(size, size))
+	// 	// //DEBUG
+	// 	// let size = 6
+	// 	// let css3d = new Css3D(
+	// 	// 	document.getElementById("selected-container"),
+	// 	// 	container,
+	// 	// 	new THREE.Vector3(10, 5, 0),
+	// 	// 	new THREE.Quaternion(),
+	// 	// 	new THREE.Vector2(size, size))
 
-		// this.css3dElements.push(css3d)
+	// 	// this.css3dElements.push(css3d)
 
-		//this.addHtmlToSelectedView(css3d.html)
-	} else {
-		// this.children.forEach(function(child) {
-		// 	if (child instanceof Video3D)  {
-		// 		child.html.play()
-		// 	}
-		// });
-	}
+	// 	//this.addHtmlToSelectedView(css3d.html)
+	// } else {
+	// 	// this.children.forEach(function(child) {
+	// 	// 	if (child instanceof Video3D)  {
+	// 	// 		child.html.play()
+	// 	// 	}
+	// 	// });
+	// }
 
 };
 

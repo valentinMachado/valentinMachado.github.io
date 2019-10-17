@@ -137,21 +137,29 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 		d.iconObject.visible = false;
 	});
 	//make current + child visible
-	this.currentDiv3D.showIcon(true);
+	if (div.isFolder()) {
+		div.showIcon(true);
+	} else {
+		div.parent.showIcon(true);
+	}
 
 	//all parent are visible
 	var current = this.currentDiv3D;
 	while (current.parent) {
 		current = current.parent;
 		current.iconObject.visible = true;
-		//current.showIcon(true);
 	}
 
 	this.updatePathLine();
 
 	this.setOutline(null);
 
-	this.makeCameraFocus(div);
+	if (div.isFolder()) {
+		this.makeCameraFocus(div);
+	} else {
+		this.makeCameraFocus(div.parent)
+	}
+
 };
 
 ExplorerView.prototype.fetchDivUnderMouse = function(mousePos) {
