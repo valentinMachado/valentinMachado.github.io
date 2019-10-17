@@ -32,7 +32,13 @@ Multi.prototype.initViewScene = function(viewScene) {
 
 	//play video
 	this.multiChild.forEach(function(child) {
-		if (child instanceof Video3D) child.html.play()
+		if (child instanceof Video3D) {
+			if (child.isLoaded) {
+				child.html.play()
+			} else {
+				child.html.autoplay = true
+			}
+		}
 	});
 
 };

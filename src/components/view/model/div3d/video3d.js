@@ -10,6 +10,12 @@ function Video3D(json) {
 	//create html
 	this.html = document.createElement("video")
 	this.html.src = this.json.path
+	this.html.loop = true
+
+	this.isLoaded = false
+	this.html.oncanplay = function() {
+		this.isLoaded = true
+	}.bind(this)
 
 	//override
 	this.type = "VIDEO3D";
@@ -35,9 +41,15 @@ Video3D.prototype.initViewScene = function(viewScene) {
 
 	scene.add(this.selectedObject);
 
-	//this.html.play()
-	this.html.autoplay = true
+	//
+	//this.html.autoplay = true
 	this.html.currentTime = 0;
+	if (this.isLoaded) {
+		//video loaded
+		this.html.play()
+	} else {
+		this.html.autoplay = true;
+	}
 
 	this.css3dElements.forEach(function(c) {
 		this.addHtmlToSelectedView(c.html)
@@ -47,8 +59,13 @@ Video3D.prototype.initViewScene = function(viewScene) {
 Video3D.prototype.onDisable = function(viewScene) {
 
 	this.removeHtmlEl();
-	this.html.pause();
-	this.html.autoplay = false
+	if (this.isLoaded) {
+		this.html.pause();
+	} else {
+		this.html.autoplay = false
+	}
+
+	//this.html.autoplay = false
 };
 
 Video3D.prototype.tick = function(viewScene) {
@@ -61,9 +78,9 @@ Video3D.prototype.tick = function(viewScene) {
 			this.videoTexture.needsUpdate = true;
 	}
 
-	if (video.ended) {
-		video.play()
-	}
+	// if (video.ended) {
+	// 	video.play()
+	// }
 
 	this.css3dElements.forEach(function(c) {
 		c.tick(viewScene)
@@ -169,7 +186,7 @@ Video3D.prototype.buildCSS3D = function() {
 	//init
 	var isPlaying = true;
 	//video.currentTime = 0;
-	video.loop = true;
+	//video.loop = true;
 
 	playButton.onclick = function() {
 		isPlaying = !isPlaying;
@@ -191,15 +208,18 @@ Video3D.prototype.buildCSS3D = function() {
 	cursor.style.cursor = "pointer"
 	let sizeCursor = 95
 	cursor.style.width = sizeCursor + "px"
+
+	let that = this
+
 	cursor.onclick = function(evt) {
 		let ratioClicked = evt.offsetX / sizeCursor
 		this.value = ratioClicked * 100
 
 		let newTime = video.duration * ratioClicked
-		if (!isNaN(newTime)) {
+		if (!isNaN(newTime) && that.isLoaded) {
 			// console.log(newTime)
 			video.currentTime = newTime + ""
-			// console.log(video.currentTime)
+			console.log(video.currentTime)
 		}
 	}
 
