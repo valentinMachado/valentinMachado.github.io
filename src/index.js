@@ -1,5 +1,16 @@
 "use strict";
 
+/*
+
+TODO:
+
+-mettre point au début des el ul
+-traduire en anglais
+
+
+*/
+
+
 //load here to avoid async stuff
 let structureJSON = {
 	"urlId": "home",
@@ -13,23 +24,26 @@ let structureJSON = {
 			"label": "High School",
 			"child": [],
 			"type": "html3d",
-			"html": "J'ai effectué mon lycée, à Nîmes au <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-lamour-nimes.ac-montpellier.fr/\">lycée Phillipe Lamour</a>. J'ai choisi l'option science en seconde, et j'ai pris l'option spé maths en terminal parce que j'aime bien la science vous voyez"
+			"urlId": "highschool",
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-lamour-nimes.ac-montpellier.fr/\">Lycée Phillipe Lamour</a> (Nîmes, Gard, FRANCE) <br>2006-2009  <ul>Classe de Seconde : option Sciences</ul><ul>Bac scientifique, option mathématiques, mention Bien</ul>"
 		}, {
 			"label": "CPGE",
 			"urlId": "cpge",
 			"child": [],
 			"type": "html3d",
-			"html": "Je me suis ensuite orienter en classe de MPSI parce les ciences patincoufin au lycée <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">lycée Alphonse Daudet</a>"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">Lycée Alphonse Daudet</a> (Nîmes, Gard, FRANCE)<br>2009-2012  <ul>1ère année MPSI (Mathématiques Physique Sciences de l'Ingénieur)</ul><ul>2ème & 3ème (5/2) année MP (Mathématiques Physique)</ul>"
 		}, {
 			"label": "CPE Lyon",
 			"child": [],
-			"type": "link",
-			"url": "https://www.cpe.fr/"
+			"type": "html3d",
+			"urlId": "cpe",
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.cpe.fr\">CPE</a> (Lyon, Rhône, FRANCE)<br>2012-2014 <ul>1ère année : filière ETI (Electronique, Télécommunication, Informatique)</ul><ul>2ème année : spécialisation Informatique</ul><ul>3ème année : Queen's University (Canada, voir fichier)</ul> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.cpe.fr\">"
 		}, {
 			"label": "Queen's University",
 			"urlId": "queens_university",
+			"type": "html3d",
 			"child": [],
-			"type": "div3d"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.queensu.ca/\">Queen's University</a> (Kingston, Ontario, CANADA)<br>2014-2015 <ul>lister les cours</ul>"
 		}],
 		"type": "div3d"
 	}, {
@@ -53,19 +67,15 @@ let structureJSON = {
 				"child": []
 			}]
 		}, {
-			"type": "div3d",
+			"type": "html3d",
+			"html": "<iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.wanadev.fr/\">",
 			"label": "Wanadev",
 			"urlId": "wanadev",
 			"child": [{
-				"type": "link",
-				"label": "Website",
-				"url": "https://www.wanadev.fr/",
-				"child": []
-			}, {
 				"type": "html3d",
 				"urlId": "popup_builder",
 				"label": "Popup Builder",
-				"html": "<iframe src=\"https://www.popup-house.com/fr/my-popup/\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen height=\"70%\"></iframe>J'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé sur ce projetJ'ai travaillé ",
+				"html": "<iframe src=\"https://www.popup-house.com/fr/my-popup/\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen height=\"70%\"></iframe>",
 				"child": []
 			}, {
 				"type": "div3d",
@@ -221,7 +231,7 @@ let structureJSON = {
 				"label": "Soundcloud",
 				"urlId": "soundcloud",
 				"modelId": "radio",
-				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
+				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
 				"child": []
 			}]
 		}]
@@ -235,7 +245,7 @@ let structureJSON = {
 		"type": "html3d",
 		"label": "Credits",
 		"urlId": "credits",
-		"html": "<div>This app is powered by THREE.js and TWEEN.js</div><br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D models are from <a href=\"https://www.free3d.com/\" title=\"Free3D\">www.free3d.com</a><\div> ",
+		"html": "<div>All the programmation of this portfolio has been realised by myself, I used <a href=\"https://threejs.org\" target=\"_blank\" title=\"THREE.js\">THREE.js</a> as 3D engine, and <a href=\"https://github.com/tweenjs/tween.js\" target=\"_blank\" title=\"TWEEN.js\">TWEEN.js</a> for the camera animation.</div><br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" target=\"_blank\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" target=\"_blank\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D models are from <a href=\"https://www.free3d.com/\" target=\"_blank\" title=\"Free3D\">www.free3d.com</a><\div> ",
 		"child": []
 	}],
 	"type": "div3d"

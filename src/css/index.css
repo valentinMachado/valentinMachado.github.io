@@ -84,10 +84,10 @@ canvas{
 	color: white;
 }
 
-.html-container iframe{
+/*.html-container iframe{
 	height: 80%;
 	width: 100%;
-}
+}*/
 
 .html-video{
 	height: 400px !important;
@@ -117,7 +117,7 @@ iframe{
 
 .urlDiv{
 	display: block;
-    height: calc(100% - 170px);
+    /*height: calc(100% - 170px);*/
     width: calc(100% - 100px);
     padding: 50px;
 }
@@ -132,12 +132,12 @@ iframe{
     z-index: 100;
     position: absolute;
     text-align: center;
-    padding-top: 27%;
+    /*padding-top: calc(30%);*/
     top: 0px;
 }
 
 .loading-label{
-    font-size: -webkit-xxx-large;
+    font-size: 50px;
 }
 
 @keyframes Rotate {

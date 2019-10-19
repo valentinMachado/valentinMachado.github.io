@@ -263,6 +263,10 @@ Div3D.prototype.isFolder = function() {
 	return this.children.length;
 };
 
+Div3D.prototype.isBasicFolder = function() {
+	return this.children.length && this.type == "DIV3D";
+};
+
 Div3D.prototype.showIcon = function(show) {
 	[this].concat(this.children).forEach(function(div) {
 		div.iconObject.visible = show;
