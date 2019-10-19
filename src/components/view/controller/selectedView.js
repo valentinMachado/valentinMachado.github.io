@@ -44,7 +44,8 @@ SelectedView.prototype.tick = function() {
 
 	if (this.currentDiv3D) {
 
-		if (this.currentDiv3D.isFolder()) {
+		//a basic folder make gravitate its files (child)
+		if (this.currentDiv3D.isBasicFolder()) {
 
 			this.currentDiv3D.selectedObject.children.forEach(function(child) {
 
