@@ -273,8 +273,21 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 
 	if (event.which === 3) {
 		//right click
-		if (this.currentDiv3D.parent) {
-			this.setCurrentDiv3D(this.currentDiv3D.parent);
+
+		let folder = null
+
+		if (this.currentDiv3D.isFolder()) {
+
+			folder = this.currentDiv3D
+
+		} else {
+
+			folder = this.currentDiv3D.parent
+		}
+
+
+		if (folder.parent) {
+			this.setCurrentDiv3D(folder.parent);
 		}
 
 	} else {
@@ -286,7 +299,7 @@ ExplorerView.prototype.onPointerDown = function(mousePos, event) {
 		if (this.divHovered) {
 			this.setCurrentDiv3D(this.divHovered);
 
-			if (!this.divHovered.isFolder()) {
+			if (!this.divHovered.isBasicFolder()) {
 				wE3D.controllers.selectedView.setCurrentDiv3D(this.divHovered);
 			}
 		}

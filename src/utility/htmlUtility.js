@@ -27,6 +27,8 @@ window.WebExplorerUtility.HtmlUtility = {
 		//register
 		result.image = loadingRoll
 
+		result.style.paddingTop = window.innerHeight * 0.5 - 50 + "px"
+
 		return result;
 	},
 

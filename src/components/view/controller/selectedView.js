@@ -92,7 +92,7 @@ SelectedView.prototype.setCurrentDiv3D = function(div) {
 	this.adjustCameraZoom();
 
 	//add ui to leave selected if its not a folder
-	if (!div.isFolder()) {
+	if (!div.isBasicFolder()) {
 		this.exitButton.style.display = "block"
 	} else {
 		this.exitButton.style.display = "none"
