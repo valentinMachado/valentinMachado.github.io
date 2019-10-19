@@ -308,8 +308,8 @@ Div3D.prototype.buildMeshes = function() {
 		this.iconObject.add(label);
 	}
 
-	if (this.isFolder()) {
-		//folder
+	if (this.isBasicFolder()) {
+		//basic folder
 		this._createSelectedObjectFolder();
 	} else {
 		//file
@@ -372,42 +372,6 @@ Div3D.prototype.initViewScene = function(viewScene) {
 	controls.update();
 
 	scene.add(this.selectedObject);
-
-	//add html css 3d
-	// if (!this.isFolder()) {
-
-
-	// 	let container = document.createElement("div")
-
-	// 	let homeIcon = document.createElement("img")
-	// 	homeIcon.classList.add("right-button")
-	// 	homeIcon.src = "./src/assets/img/icons/home.png"
-	// 	homeIcon.onclick = function(evt) {
-	// 		wE3D.controllers.explorerView.setCurrentDiv3D(wE3D.divs3d)
-	// 	}
-	// 	container.appendChild(homeIcon)
-	// 	//container.innerHTML = "TEST"
-
-	// 	// //DEBUG
-	// 	// let size = 6
-	// 	// let css3d = new Css3D(
-	// 	// 	document.getElementById("selected-container"),
-	// 	// 	container,
-	// 	// 	new THREE.Vector3(10, 5, 0),
-	// 	// 	new THREE.Quaternion(),
-	// 	// 	new THREE.Vector2(size, size))
-
-	// 	// this.css3dElements.push(css3d)
-
-	// 	//this.addHtmlToSelectedView(css3d.html)
-	// } else {
-	// 	// this.children.forEach(function(child) {
-	// 	// 	if (child instanceof Video3D)  {
-	// 	// 		child.html.play()
-	// 	// 	}
-	// 	// });
-	// }
-
 };
 
 //abstract method
@@ -445,7 +409,7 @@ Div3D.prototype._createIconObject = function() {
 		this.iconObject = WebExplorerUtility.ModelUtility.create(this.json.modelId, size);
 	} else {
 
-		if (this.isFolder()) {
+		if (this.isBasicFolder()) {
 			this.iconObject = WebExplorerUtility.ModelUtility.create("cube", size);
 		} else {
 			this.iconObject = WebExplorerUtility.ModelUtility.create("sphere", size);
@@ -458,11 +422,6 @@ Div3D.prototype.tick = function(viewScene) {
 	this.css3dElements.forEach(function(el) {
 		el.tick(viewScene)
 	});
-
-	// this.children.forEach(function(child) {
-	// 	if (!child.isFolder()) child.tick();
-	// });
-
 };
 
 Div3D.prototype.onDisable = function(viewScene) {

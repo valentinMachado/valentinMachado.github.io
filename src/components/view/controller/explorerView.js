@@ -136,10 +136,13 @@ ExplorerView.prototype.setCurrentDiv3D = function(div) {
 	WebExplorerUtility.Div3dUtility.traverse(wE3D.divs3d, function(d) {
 		d.iconObject.visible = false;
 	});
-	//make current + child visible
+
+	
 	if (div.isFolder()) {
+		//only current
 		div.showIcon(true);
 	} else {
+		//make current + parent.child visible
 		div.parent.showIcon(true);
 	}
 
