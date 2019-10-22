@@ -35,11 +35,11 @@ ExplorerView.prototype.initialize = function() {
 };
 
 ExplorerView.prototype.initSkyBox = function() {
-	var urlPrefix = "./src/assets/skybox/space/";
+	var urlPrefix = "./src/assets/skybox/";
 	var urls = [urlPrefix + "right.jpeg", urlPrefix + "left.jpeg",
 		urlPrefix + "top.jpeg", urlPrefix + "bot.jpeg",
 		urlPrefix + "front.jpeg", urlPrefix + "back.jpeg"
-	];
+	];	
 
 	// var reflectionCube = THREE.CubeTextureLoader(urls);
 	var loader = new THREE.CubeTextureLoader();
