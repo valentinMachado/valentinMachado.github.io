@@ -332,8 +332,11 @@ Div3D.prototype.buildMeshes = function() {
 		var clone;
 		clone = this.iconObject.clone();
 
-		WebExplorerUtility.Div3dUtility.placeOnOrbit(
-			this.parent.selectedObject, clone, this.fetchRadiusSelectedView())
+		//only when its a basic folder
+		if (this.parent.isBasicFolder()) {
+			WebExplorerUtility.Div3dUtility.placeOnOrbit(
+				this.parent.selectedObject, clone, this.fetchRadiusSelectedView())
+		}
 
 		//clone register its div so in selectedview only deal with meshes
 		clone.userData.divId = this.id;
@@ -384,18 +387,6 @@ Div3D.prototype._createSelectedObjectFolder = function() {
 };
 
 Div3D.prototype._createSelectedObjectFile = function() {
-	// let size = 6
-	// var geometry = new THREE.PlaneGeometry(size, size);
-	// var material = new THREE.MeshBasicMaterial({
-	// 	color: 0xffff00
-	// });
-	// var plane = new THREE.Mesh(geometry, material);
-	// plane.position.x = 10
-	// plane.position.y = 5
-
-	// this.selectedObject = plane;
-	//this.selectedObject = new THREE.Object3D();
-
 	var geometry = new THREE.SphereGeometry(5 * Math.random() + 1, 32, 32);
 	var cube = new THREE.Mesh(geometry, WebExplorerUtility.MaterialUtility.iconMat);
 	this.selectedObject = cube;

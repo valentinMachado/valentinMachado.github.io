@@ -3,8 +3,6 @@
 /*
 
 TODO:
-
--mettre point au début des el ul
 -traduire en anglais
 
 
@@ -25,25 +23,25 @@ let structureJSON = {
 			"child": [],
 			"type": "html3d",
 			"urlId": "highschool",
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-lamour-nimes.ac-montpellier.fr/\">Lycée Phillipe Lamour</a> (Nîmes, Gard, FRANCE) <br>2006-2009  <ul>Classe de Seconde : option Sciences</ul><ul>Bac scientifique, option mathématiques, mention Bien</ul>"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-lamour-nimes.ac-montpellier.fr/\">Lycée Phillipe Lamour</a> (Nîmes, Gard, FRANCE) <br>2006-2009  <ul> <li>Classe de Seconde : option Sciences</li><li> Bac scientifique, option mathématiques, mention Bien</li></ul>"
 		}, {
 			"label": "CPGE",
 			"urlId": "cpge",
 			"child": [],
 			"type": "html3d",
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">Lycée Alphonse Daudet</a> (Nîmes, Gard, FRANCE)<br>2009-2012  <ul>1ère année MPSI (Mathématiques Physique Sciences de l'Ingénieur)</ul><ul>2ème & 3ème (5/2) année MP (Mathématiques Physique)</ul>"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.lyc-daudet-nimes.ac-montpellier.fr/content/cpge\">Lycée Alphonse Daudet</a> (Nîmes, Gard, FRANCE)<br>2009-2012  <ul><li>1ère année MPSI (Mathématiques Physique Sciences de l'Ingénieur)</li><li>2ème & 3ème (5/2) année MP (Mathématiques Physique)</li></ul>"
 		}, {
 			"label": "CPE Lyon",
 			"child": [],
 			"type": "html3d",
 			"urlId": "cpe",
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.cpe.fr\">CPE</a> (Lyon, Rhône, FRANCE)<br>2012-2014 <ul>1ère année : filière ETI (Electronique, Télécommunication, Informatique)</ul><ul>2ème année : spécialisation Informatique</ul><ul>3ème année : Queen's University (Canada, voir fichier)</ul> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.cpe.fr\">"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.cpe.fr\">CPE</a> (Lyon, Rhône, FRANCE)<br>2012-2014 <ul><li>1ère année : filière ETI (Electronique, Télécommunication, Informatique)</li><li>2ème année : spécialisation Informatique</li><li>3ème année : Queen's University (Canada, voir fichier)</li></ul> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.cpe.fr\">"
 		}, {
 			"label": "Queen's University",
 			"urlId": "queens_university",
 			"type": "html3d",
 			"child": [],
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.queensu.ca/\">Queen's University</a> (Kingston, Ontario, CANADA)<br>2014-2015 <ul>lister les cours</ul>"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.queensu.ca/\">Queen's University</a> (Kingston, Ontario, CANADA)<br>2014-2015 <ul><li>Artificial Intelligence</li><li>Algorithms</li><li>Fundamentals of Software Development</li><li>Game Design</li><li>Advanced User Interface Design</li></ul>"
 		}],
 		"type": "div3d"
 	}, {
@@ -52,23 +50,20 @@ let structureJSON = {
 		"urlId": "professional_exp",
 		"modelId": "computer",
 		"child": [{
-			"type": "div3d",
+			"type": "html3d",
+			"html": "J'ai travaillé chez IHMTEK dans le cadre d'un stage d'élève ingénieur<br><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.ihmtek.com/\">",
 			"label": "IHMTEK",
 			"urlId": "ihmtek",
 			"child": [{
 				"type": "link",
-				"label": "Website",
-				"url": "https://www.ihmtek.com/",
-				"child": []
-			}, {
-				"type": "link",
 				"label": "Ludomuse",
+				"urlId": "ludomuse",
 				"url": "https://docs.google.com/presentation/d/e/2PACX-1vQBTJDzJ_ycIXlUt6RQOGRqZdib38s_Xn74M9MKl-cwDWc6RUDXhLwSf_OJYJjgIos1VSZI_spXbyEm/embed?start=false&loop=false&delayms=3000",
 				"child": []
 			}]
 		}, {
 			"type": "html3d",
-			"html": "<iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.wanadev.fr/\">",
+			"html":"<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.wanadev.fr/\">Wanadev</a> (Lyon, Rhône, FRANCE) <br>2016-2018  <ul> <li>Stage : tralali</li><li> CDI: tralali</li></ul><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.wanadev.fr/\">",
 			"label": "Wanadev",
 			"urlId": "wanadev",
 			"child": [{
@@ -141,46 +136,63 @@ let structureJSON = {
 			"label": "Programming",
 			"modelId": "computer",
 			"child": [{
-					"type": "div3d",
+					"type": "html3d",
 					"label": "Souk",
 					"urlId": "souk",
 					"modelId": "diamond",
+					"html": "souk is game developped in gamejam using godot engine (lien)lister parti capture ecran expliquer regle",
 					"child": [{
 						"type": "link",
-						"label": "Play it!",
+						"label": "Play",
 						"url": "./src/assets/build/souk/souk.html",
 						"child": []
 					}]
 				}, {
-					"type": "div3d",
+					"type": "html3d",
 					"label": "Le Demon",
 					"urlId": "le_demon",
+					"html": "Le Demon is a game made in a gamejam using Unity (mettre lien) lister les participants expliquer regle + capture ecran",
 					"child": [{
 						"type": "link",
-						"label": "play game !",
+						"urlId": "play_le_demon",
+						"label": "Play",
 						"url": "./src/assets/build/demon/index.html",
 						"child": []
 					}]
 				}, {
-					"type": "video",
-					"urlId": "walls",
+					"type": "html3d",
 					"label": "Walls",
+					"urlId": "walls",
 					"modelId": "wall",
-					"path": "./src/assets/video/walls_trailer.mp4",
-					"title": "Queen's University school project",
-					"width": 640,
-					"height": 352,
-					"child": []
+					"html": "Walls is a game made for a school project. It has been developped in Java for Android platform. <br> <img src = \"./src/assets/img/walls.jpg\">",
+					"child": [{
+						"type": "video",
+						"urlId": "walls_trailer",
+						"label": "Trailer",
+						"modelId": "computer",
+						"path": "./src/assets/video/walls_trailer.mp4",
+						"title": "Queen's University school project",
+						"width": 640,
+						"height": 352,
+						"child": []
+					}]
 				}, {
-					"type": "video",
-					"urlId": "dungeon_trailer",
-					"title": "Project made with GameMaker",
-					"modelId": "chest",
+					"type": "html3d",
 					"label": "Dungeon Card",
-					"path": "./src/assets/video/dungeoncard_compressed.mp4",
-					"width": 640,
-					"height": 352,
-					"child": []
+					"urlId": "dungeon_card",
+					"modelId": "chest",
+					"html": "Dungeon card is a game made in a gamejam. It has been developped on GameMaker (mettre lien).",
+					"child": [{
+						"type": "video",
+						"urlId": "dungeon_trailer",
+						"title": "Project made with GameMaker",
+						"modelId": "computer",
+						"label": "Trailer",
+						"path": "./src/assets/video/dungeoncard_compressed.mp4",
+						"width": 640,
+						"height": 352,
+						"child": []
+					}]
 				}
 
 			]
@@ -190,15 +202,12 @@ let structureJSON = {
 			"urlId": "music",
 			"modelId": "speaker",
 			"child": [{
-				"type": "div3d",
+				"type": "html3d",
 				"label": "Steampong",
+				"urlId": "steampong",
+				"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://globalgamejam.org/2014/games/steam-pong\">Steampong</a> is a game made at the Global Game Jam 2014. The team was composed of only 3 people : a programmer, an artist and myself as a sound designer. We worked together on the game design. The whole content has been produced within a 48h period including full graphics, 3 music themes and the whole game code.The game received positive feedbacks from the audience. <img src = \"./src/assets/img/steampong.png\">",
 				"modelId": "gear",
 				"child": [{
-					"type": "html3d",
-					"label": "Context",
-					"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://globalgamejam.org/2014/games/steam-pong\">Steampong</a> is a game made at the Global Game Jam 2014. The team was composed of only 3 people : a programmer, an artist and myself as a sound designer. We worked together on the game design. The whole content has been produced within a 48h period including full graphics, 3 music themes and the whole game code.The game received positive feedbacks from the audience.",
-					"child": []
-				}, {
 					"type": "video",
 					"label": "Trailer",
 					"path": "./src/assets/video/ggj2014-steam-pong.mp4",
@@ -208,16 +217,17 @@ let structureJSON = {
 					"child": []
 				}, {
 					"type": "link",
-					"label": "OST",
+					"label": "Music",
 					"modelId": "radio",
 					"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/21336300&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
 					"child": []
 				}]
 			}, {
-				"type": "link",
+				"type": "html3d",
 				"label": "Ma Chandelle Verte",
+				"urlId": "mcv",
 				"modelId": "radio",
-				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/524173593&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+				"html": "Groupe de rock au lycée <br> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/524173593&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\">",
 				"child": []
 			}, {
 				"type": "html3d",
@@ -227,11 +237,11 @@ let structureJSON = {
 				"html": "<img src = \"./src/assets/img/playlist.png\"> Les playlist du jailln et de la mache - Playlist on a particular theme or music genre. <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://vimeo.com/album/5527011\"> website</a> <br> <iframe src=\"https://player.vimeo.com/video/343542945\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/342856045\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/330845878\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/315117555\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/307960107\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/303532748\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298485745\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/299649347\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe><iframe src=\"https://player.vimeo.com/video/298484622\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen class=\"html-video\"></iframe>",
 				"child": []
 			}, {
-				"type": "link",
+				"type": "html3d",
 				"label": "Soundcloud",
 				"urlId": "soundcloud",
 				"modelId": "radio",
-				"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+				"html": "Production musicale sous les logiciels Fruity loops & Ableton <br> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/26062108&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\">",
 				"child": []
 			}]
 		}]
@@ -313,7 +323,7 @@ try {
 				wE3DHtml.removeChild(loadingHtml)
 
 				//add information popup
-				let beginMsg = "This is a work in progress experience, hover the interogation point to know how to use the website :)"
+				let beginMsg = "This is a work in progress experience, hover the i int the top right corner to know how to use the website :)"
 				//alert(beginMsg)
 
 				console.info("%c... ok!", "color:#0000FF;");
