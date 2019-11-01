@@ -15,11 +15,11 @@ let structureJSON = {
 	"label": "Valentin Machado",
 	"modelId": "casa",
 	"child": [{
-		"label": "Studies",
+		"label": "Etudes",
 		"urlId": "studies",
 		"modelId": "thinker",
 		"child": [{
-			"label": "High School",
+			"label": "Lycee",
 			"child": [],
 			"type": "html3d",
 			"urlId": "highschool",
@@ -35,23 +35,23 @@ let structureJSON = {
 			"child": [],
 			"type": "html3d",
 			"urlId": "cpe",
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.cpe.fr\">CPE</a> (Lyon, Rhône, FRANCE)<br>2012-2014 <ul><li>1ère année : filière ETI (Electronique, Télécommunication, Informatique)</li><li>2ème année : spécialisation Informatique</li><li>3ème année : Queen's University (Canada, voir fichier)</li></ul> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.cpe.fr\">"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.cpe.fr\">CPE</a> (Lyon, Rhône, FRANCE)<br>2012-2014 <ul><li>1ère année : filière ETI (Electronique, Télécommunication, Informatique)</li><li>2ème année : spécialisation Informatique</li><li>3ème année : Queen's University (Canada, voir dossier)</li></ul> <iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.cpe.fr\">"
 		}, {
 			"label": "Queen's University",
 			"urlId": "queens_university",
 			"type": "html3d",
 			"child": [],
-			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.queensu.ca/\">Queen's University</a> (Kingston, Ontario, CANADA)<br>2014-2015 <ul><li>Artificial Intelligence</li><li>Algorithms</li><li>Fundamentals of Software Development</li><li>Game Design</li><li>Advanced User Interface Design</li></ul>"
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.queensu.ca/\">Queen's University</a> (Kingston, Ontario, CANADA)<br>2014-2015 <ul><li>Artificial Intelligence (Intelligence artificielle)</li><li>Algorithms (Algorithmique)</li><li>Fundamentals of Software Development (Bases de développement de logiciel)</li><li>Game Design</li><li>Advanced User Interface Design (Design d'interface utilisateur avancé)</li></ul>"
 		}],
 		"type": "div3d"
 	}, {
 		"type": "div3d",
-		"label": "Professional experience",
+		"label": "Experiences professionnelles",
 		"urlId": "professional_exp",
 		"modelId": "computer",
 		"child": [{
 			"type": "html3d",
-			"html": "J'ai travaillé chez IHMTEK dans le cadre d'un stage d'élève ingénieur<br><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.ihmtek.com/\">",
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.ihmtek.com/\">IHMTEK</a> (Vienne, Isère, FRANCE)<br>2015<br> J'ai travaillé chez IHMTEK dans le cadre d'un stage d'élève ingénieur : développement d’un moteur de jeux à destination de musée (Ludomuse) implémenté sous Cocos 2d-x (C++).<br><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.ihmtek.com/\">",
 			"label": "IHMTEK",
 			"urlId": "ihmtek",
 			"child": [{
@@ -63,14 +63,14 @@ let structureJSON = {
 			}]
 		}, {
 			"type": "html3d",
-			"html":"<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.wanadev.fr/\">Wanadev</a> (Lyon, Rhône, FRANCE) <br>2016-2018  <ul> <li>Stage : tralali</li><li> CDI: tralali</li></ul><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.wanadev.fr/\">",
+			"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.wanadev.fr/\">Wanadev</a> (Lyon, Rhône, FRANCE) <br>2016-2018  <ul> <li>PFE (Projet de Fin d'Etudes) : Recherche et développement d’algorithme d’illumination globale en WebGL.</li><li> CDI : <ul><li>Gestion de projets</li><li>Conception & implémentation d’applications WebGL</li><li>Contact client</li></ul></li></ul><iframe class=\"urlDiv\" scrolling = \"yes\" frameborder=\"no\" allow=\"autoplay\" src=\"https://www.wanadev.fr/\">",
 			"label": "Wanadev",
 			"urlId": "wanadev",
 			"child": [{
 				"type": "html3d",
 				"urlId": "popup_builder",
 				"label": "Popup Builder",
-				"html": "<iframe src=\"https://www.popup-house.com/fr/my-popup/\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen height=\"70%\"></iframe>",
+				"html": "CDI : <ul><li>Gestion de projets</li><li>Conception & implémentation d’applications WebGL</li><li>Contact client</li></ul> Au cours de mon expérience à Wanadev, j'ai eu l'occasion de travailler sur plusieurs projets. Le Popup Builder (cf. ci-dessous) a cependant été celui sur lequel j'ai passé la majeure partie de mon temps. <br><br><iframe src=\"https://www.popup-house.com/fr/my-popup/\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen height=\"70%\"></iframe>",
 				"child": []
 			}, {
 				"type": "div3d",
@@ -78,17 +78,18 @@ let structureJSON = {
 				"urlId": "wanadev_rd",
 				"child": [{
 					"type": "link",
-					"label": "Internship",
+					"label": "Illumination globale",
+					"urlId": "radiosity",
 					"url": "https://docs.google.com/presentation/d/e/2PACX-1vTo2-dyyrSwNW8yzhvimOaZyukHdWVXoGVgsnc4UovFDvVpIPU-E8vjGlnBfGjKnMEDHxP2ykJLSgWT/embed?start=false&loop=false&delayms=3000",
 					"child": []
 				}, {
 					"type": "multi",
 					"urlId": "some_video",
-					"label": "Some video",
+					"label": "Videos",
 					"multiChild": [{
 						"type": "video",
 						"urlId": "debugger3d",
-						"title": "Texture debugger made with BABYLON JS",
+						"title": "Texture debugger BABYLON JS",
 						"label": "Debugger",
 						"path": "./src/assets/video/debugger3d.mp4",
 						"width": 1280,
@@ -97,7 +98,7 @@ let structureJSON = {
 					}, {
 						"type": "video",
 						"urlId": "disktree",
-						"title": "Disk tree made with BABYLON JS",
+						"title": "Disk tree BABYLON JS",
 						"label": "Disk tree",
 						"path": "./src/assets/video/disktree.mp4",
 						"width": 1280,
@@ -106,7 +107,7 @@ let structureJSON = {
 					}, {
 						"type": "video",
 						"urlId": "gizmo",
-						"title": "Gizmo made with BABYLON JS",
+						"title": "Gizmo BABYLON JS",
 						"label": "Gizmo",
 						"path": "./src/assets/video/gizmo.mp4",
 						"width": 1280,
@@ -115,7 +116,7 @@ let structureJSON = {
 					}, {
 						"type": "video",
 						"urlId": "water_pp",
-						"title": "Water post-process made with BABYLON JS",
+						"title": "Water post-process BABYLON JS",
 						"label": "Water Post-process",
 						"path": "./src/assets/video/water.mp4",
 						"width": 480,
@@ -128,22 +129,23 @@ let structureJSON = {
 		}]
 	}, {
 		"type": "div3d",
-		"label": "Personnal project",
+		"label": "Projets personnels",
 		"urlId": "personnal_project",
 		"child": [{
 			"type": "div3d",
 			"urlId": "programming",
-			"label": "Programming",
+			"label": "Programmation",
 			"modelId": "computer",
 			"child": [{
 					"type": "html3d",
 					"label": "Souk",
 					"urlId": "souk",
 					"modelId": "diamond",
-					"html": "souk is game developped in gamejam using godot engine (lien)lister parti capture ecran expliquer regle",
+					"html": "Souk est un jeu réalisé dans le cadre d'une gamejam de 48h. Il a été développé sous le moteur de jeu Godot.",
 					"child": [{
 						"type": "link",
-						"label": "Play",
+						"label": "Jouer a la version web",
+						"urlId": "play_souk",
 						"url": "./src/assets/build/souk/souk.html",
 						"child": []
 					}]
@@ -151,11 +153,11 @@ let structureJSON = {
 					"type": "html3d",
 					"label": "Le Demon",
 					"urlId": "le_demon",
-					"html": "Le Demon is a game made in a gamejam using Unity (mettre lien) lister les participants expliquer regle + capture ecran",
+					"html": "Le Demon est un jeu réalisé dans le cadre d'une gamejam de 24h. Il a été développé sous le moteur de jeu Unity.",
 					"child": [{
 						"type": "link",
 						"urlId": "play_le_demon",
-						"label": "Play",
+						"label": "Jouer a la version web",
 						"url": "./src/assets/build/demon/index.html",
 						"child": []
 					}]
@@ -164,14 +166,14 @@ let structureJSON = {
 					"label": "Walls",
 					"urlId": "walls",
 					"modelId": "wall",
-					"html": "Walls is a game made for a school project. It has been developped in Java for Android platform. <br> <img src = \"./src/assets/img/walls.jpg\">",
+					"html": "Walls est un jeu réalisé dans le cadre d'un projet universitaire au Canada (Queen's University, voir dossier). Il a été développé en Java pour des plateformes Android. <br> <img src = \"./src/assets/img/walls.jpg\">",
 					"child": [{
 						"type": "video",
 						"urlId": "walls_trailer",
 						"label": "Trailer",
 						"modelId": "computer",
 						"path": "./src/assets/video/walls_trailer.mp4",
-						"title": "Queen's University school project",
+						"title": "Walls trailer",
 						"width": 640,
 						"height": 352,
 						"child": []
@@ -181,11 +183,11 @@ let structureJSON = {
 					"label": "Dungeon Card",
 					"urlId": "dungeon_card",
 					"modelId": "chest",
-					"html": "Dungeon card is a game made in a gamejam. It has been developped on GameMaker (mettre lien).",
+					"html": "Dungeon card est un jeu réalisé dans le cadre d'une gamejam de 48h. Il a été développé sous <a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://www.yoyogames.com/gamemaker\">GameMaker</a>.",
 					"child": [{
 						"type": "video",
 						"urlId": "dungeon_trailer",
-						"title": "Project made with GameMaker",
+						"title": "Dungeon card trailer",
 						"modelId": "computer",
 						"label": "Trailer",
 						"path": "./src/assets/video/dungeoncard_compressed.mp4",
@@ -198,14 +200,14 @@ let structureJSON = {
 			]
 		}, {
 			"type": "div3d",
-			"label": "Music",
+			"label": "Musique",
 			"urlId": "music",
 			"modelId": "speaker",
 			"child": [{
 				"type": "html3d",
 				"label": "Steampong",
 				"urlId": "steampong",
-				"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://globalgamejam.org/2014/games/steam-pong\">Steampong</a> is a game made at the Global Game Jam 2014. The team was composed of only 3 people : a programmer, an artist and myself as a sound designer. We worked together on the game design. The whole content has been produced within a 48h period including full graphics, 3 music themes and the whole game code.The game received positive feedbacks from the audience. <img src = \"./src/assets/img/steampong.png\">",
+				"html": "<a rel=\"noopener noreferrer\"  target=\"_blank\" href = \"https://globalgamejam.org/2014/games/steam-pong\">Steampong</a> est un jeu réalisé lors de la Global Game Jam 2014. L'équipe était composée de seulement trois personnes : un programmeur, un graphiste et moi-même en tant que sound designer. Tout le contenu a été produit en 48h incluant : tous les graphismes, trois musiques et le code du jeu. Celui-ci a reçu un retour très positif du jury. <img src = \"./src/assets/img/steampong.png\">",
 				"modelId": "gear",
 				"child": [{
 					"type": "video",
@@ -217,7 +219,7 @@ let structureJSON = {
 					"child": []
 				}, {
 					"type": "link",
-					"label": "Music",
+					"label": "Musique",
 					"modelId": "radio",
 					"url": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/21336300&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
 					"child": []
@@ -246,16 +248,27 @@ let structureJSON = {
 			}]
 		}]
 	}, {
-		"type": "html3d",
-		"urlId": "cv",
+		"type": "div3d",
 		"label": "CV",
-		"child": [],
-		"html": "<embed src=\"./src/assets/pdf/CV.pdf\" width=\"100%\" height=\"100%\" />"
+		"urlId": "cv",
+		"child": [{
+			"type": "html3d",
+			"urlId": "cv_french",
+			"label": "Francais",
+			"child": [],
+			"html": "<embed src=\"./src/assets/pdf/CV_french.pdf\" width=\"100%\" height=\"100%\" />"
+		}, {
+			"type": "html3d",
+			"urlId": "cv_english",
+			"label": "English",
+			"child": [],
+			"html": "<embed src=\"./src/assets/pdf/CV_english.pdf\" width=\"100%\" height=\"100%\" />"
+		}]
 	}, {
 		"type": "html3d",
 		"label": "Credits",
 		"urlId": "credits",
-		"html": "<div>All the programmation of this portfolio has been realised by myself, I used <a href=\"https://threejs.org\" target=\"_blank\" title=\"THREE.js\">THREE.js</a> as 3D engine, and <a href=\"https://github.com/tweenjs/tween.js\" target=\"_blank\" title=\"TWEEN.js\">TWEEN.js</a> for the camera animation.</div><br> <div>Icons made by <a href=\"https://www.flaticon.com/authors/roundicons\" target=\"_blank\" title=\"Roundicons\">Roundicons</a> from <a href=\"https://www.flaticon.com/\" target=\"_blank\" title=\"Flaticon\">www.flaticon.com</a></div></br><div>All 3D models are from <a href=\"https://www.free3d.com/\" target=\"_blank\" title=\"Free3D\">www.free3d.com</a><\div> ",
+		"html": "<div>J'ai utilisé <a href=\"https://threejs.org\" target=\"_blank\" title=\"THREE.js\">THREE.js</a> comme moteur 3D et <a href=\"https://github.com/tweenjs/tween.js\" target=\"_blank\" title=\"TWEEN.js\">TWEEN.js</a> pour animer les mouvements de caméra.</div><br> <div>Les icônes ont été réalisées par <a href=\"https://www.flaticon.com/authors/roundicons\" target=\"_blank\" title=\"Roundicons\">Roundicons</a> de <a href=\"https://www.flaticon.com/\" target=\"_blank\" title=\"Flaticon\">www.flaticon.com</a>.</div></br><div>Tous les modèles 3D proviennent de <a href=\"https://www.free3d.com/\" target=\"_blank\" title=\"Free3D\">www.free3d.com</a>.<\div> ",
 		"child": []
 	}],
 	"type": "div3d"
@@ -323,8 +336,9 @@ try {
 				wE3DHtml.removeChild(loadingHtml)
 
 				//add information popup
-				let beginMsg = "This is a work in progress experience, hover the i int the top right corner to know how to use the website :)"
-				//alert(beginMsg)
+				//let beginMsg = "This is a work in progress experience, hover the i in the top right corner to know how to use the website :)"
+				let beginMsg = "Portfolio expérimental en construction. Survolez le \"i\" dans le coin en haut à droite pour voir comment marche le site :)"
+				alert(beginMsg)
 
 				console.info("%c... ok!", "color:#0000FF;");
 			})
