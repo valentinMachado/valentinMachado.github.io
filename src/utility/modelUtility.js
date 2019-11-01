@@ -53,8 +53,9 @@ window.WebExplorerUtility.ModelUtility = {
 	fetchRandomColor: function() {
 
 		let possibleColor = [];
+		possibleColor.push(new THREE.Color(0x25b7d3))
+		possibleColor.push(new THREE.Color(0xe04f5e))
 		possibleColor.push(new THREE.Color(0x7ebbd2))
-		possibleColor.push(new THREE.Color(0xCAFFD4))
 		possibleColor.push(new THREE.Color(0xd2cd60))
 		possibleColor.push(new THREE.Color(0xff9568))
 		possibleColor.push(new THREE.Color(0x97dd6a))

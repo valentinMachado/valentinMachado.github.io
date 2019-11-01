@@ -76,7 +76,7 @@ MainView.prototype.initHelpGUI = function() {
 
 	let iconImage = document.createElement("img")
 	iconImage.classList.add("help-img")
-	iconImage.src = "./src/assets/img/tutorial.jpeg"
+	iconImage.src = "./src/assets/img/tutoriallast.jpeg"
 	iconImage.style.transform = "scale(0)";
 	this.root.appendChild(iconImage)
 
