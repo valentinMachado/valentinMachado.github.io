@@ -1,5 +1,3 @@
-Portfolio
-
 ## How to run it
 
 Since the deployment is handle by [github pages](https://pages.github.com/) (which can only deals with static website) there isn't deployment CLI in the project.
