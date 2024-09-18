@@ -1,58 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<meta charset=utf-8 />
     <title>Valentin Machado</title>
-    <link rel="stylesheet" href="./src/css/index.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <body oncontextmenu="return false;">
-
-  	<!-- App HTML container -->
-  	<div id ="webExplorer3D">
-     <div id = "selected-container" ></div>
-    </div>
-
-  	<!-- IMPORT VENDORS -->
-    <script src="./src/vendors/Tween.js"></script>
-    <script src="./src/vendors/three.js"></script>
-    <script src="./src/vendors/THREE.OrbitControls.js"></script>
-    <script src="./src/vendors/THREE.CSS3DRenderer.js"></script>
-    <script src="./src/vendors/THREE.OBJLoader.js"></script>
-    <script src="./src/vendors/THREE.MTLLoader.js"></script>
-
-  	<!-- IMPORT APP JAVASCRIPT -->
-
-  	<!-- UTILITY -->
-    <script src="./src/utility/jsUtility.js"></script>
-    <script src="./src/utility/materialUtility.js"></script>
-    <script src="./src/utility/div3dUtility.js"></script>
-    <script src="./src/utility/mathUtility.js"></script>
-    <script src="./src/utility/debugUtility.js"></script>
-    <script src="./src/utility/htmlUtility.js"></script>
-    <script src="./src/utility/modelUtility.js"></script>
-
-  	<!-- MODEL -->
-    <script src="./src/components/view/model/viewScene.js"></script>
-    <script src="./src/components/view/model/div3d/div3d.js"></script>
-    <script src="./src/components/view/model/div3d/img3d.js"></script>
-    <script src="./src/components/view/model/div3d/video3d.js"></script>
-    <script src="./src/components/view/model/div3d/link3d.js"></script>
-    <script src="./src/components/view/model/div3d/html3d.js"></script>
-    <script src="./src/components/view/model/div3d/multi.js"></script>
-
-    <!-- CONTROLLER -->
-    <script src="./src/components/abstractController.js"></script>
-
-    <script src="./src/components/view/controller/abstractView.js"></script>
-    <script src="./src/components/view/controller/selectedView.js"></script>
-    <script src="./src/components/view/controller/explorerView.js"></script>
-
-    <!-- UI -->
-    <script src="./src/components/view/ui/mainView.js"></script>
-    <script src="./src/components/view/ui/viewport.js"></script>
-
-    <script src="./src/webExplorer3D.js"></script>
-    <script src="./src/index.js"></script>
-
+  <body>
+    <script src="./dist/bundle.js"></script>
   </body>
 </html>
