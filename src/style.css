@@ -1,0 +1,42 @@
+/* step div controller move animation */
+
+.move_animation {
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes up_off_screen {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: -100%;
+  }
+}
+
+@keyframes up_on_screen {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes down_off_screen {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes down_on_screen {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
