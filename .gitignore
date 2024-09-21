@@ -1,5 +1,5 @@
 todo.txt
 node_modules
-.vscode
-.vs
-.map
+*.vscode
+*.vs
+*.map

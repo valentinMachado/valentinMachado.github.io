@@ -4,8 +4,63 @@
     <title>Valentin Machado</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div id="loading_screen_loader" class="opacity_transition">
+      <label id="loading_screen_loader_label">0%</label>
+      <div class="loading_screen_loader_inner">
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+      </div>
+    </div>
+    <div id="loading_screen_top" class="full_screen"></div>
+    <div id="loading_screen_bottom" class="full_screen"></div>
+    <canvas id="three_canvas" class="full_screen"></canvas>
+    <div id="on_screen" class="full_screen">
+      <div id="home" class="root_step hidden">
+        <p>
+          phrase d'accroche phrase d'accroche et je suis comme si et je suis
+          comme ca avec des effets css de batard
+        </p>
+      </div>
+      <div id="projects" class="root_step hidden">
+        <h1>Projects</h1>
+        <ul>
+          <li>Popup builder</li>
+          <li>smaio i-plan</li>
+          <li>contribution itowns ud-viz</li>
+          <li>ud-imuv mettre l'article</li>
+          <li>galeri3 mettre l'article</li>
+        </ul>
+      </div>
+      <div id="about" class="root_step hidden">
+        <h1>About</h1>
+        <ul>
+          <li>parcours pro ihmtek => wanadev => freelance ?? => labex imu</li>
+          <li>Gamejams as coder and sound designer</li>
+          <li>MAO fruty loop ableton +guitare</li>
+          <li>ce portfolio</li>
+          <footer>
+            <a>get in touch</a>
+            <a>github</a>
+            <a>linkedin</a>
+          </footer>
+        </ul>
+      </div>
+    </div>
+    <div id="off_screen" class="full_screen hidden"></div>
+    <div id="move_to_home" class="custom_button custom_button_selected">
+      Valentin Machado
+    </div>
+    <div class="top_right">
+      <div id="move_to_projects" class="custom_button">Projects</div>
+      <div id="move_to_about" class="custom_button">About</div>
+    </div>
     <script src="./dist/bundle.js"></script>
   </body>
 </html>
