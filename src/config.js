@@ -1,32 +1,110 @@
+import { MeshBasicMaterial, Mesh, SphereGeometry, Vector3 } from "three";
+import { Background3D } from "./Background3D";
+
+class StepScene {
+  constructor(init, onFocus, onLeave, tick) {
+    this.dynamicObject3Ds = new Map();
+
+    this.onFocus = onFocus.bind(this);
+    this.onLeave = onLeave.bind(this);
+    this.tick = tick.bind(this);
+
+    init.call(this);
+  }
+}
+
 export const config = {
   steps: [
     {
       div_id: "home",
-      camera_matrix: [
-        0.1411142377637039, 2.7755575615628914e-17, 0.9899933191190577, 0,
-        -0.10768952679488566, 0.9940660638750862, 0.015350129334526001, 0,
-        -0.9841187619993139, -0.1087780338666455, 0.14027687489049823, 0,
-        -331.0087472030906, 29.748431845490387, -8.59731880046958, 1,
-      ],
+      camera_position: new Vector3(10, 10, 10),
+      camera_target: new Vector3(),
+      stepScene: new StepScene(
+        function () {
+          const sphereCursor = new Mesh(
+            new SphereGeometry(0.5),
+            new MeshBasicMaterial()
+          );
+
+          this.dynamicObject3Ds.set("cursor", sphereCursor);
+        },
+        /**
+         *
+         * @param {Background3D} background3D
+         */
+        function (background3D) {
+          console.log("home focus");
+          // background3D.scene.add(this.dynamicObject3Ds.get("cursor"));
+        },
+        /**
+         *
+         * @param {Background3D} background3D
+         */
+        function (background3D) {
+          console.log("home leave");
+          // background3D.scene.remove(this.dynamicObject3Ds.get("cursor"));
+        },
+        function () {}
+      ),
     },
     {
       div_id: "projects",
-      camera_matrix: [
-        0.9247284400987568, 0, -0.38062752406062295, 0, -0.35426536095870925,
-        0.3656809636634083, -0.8606819893776078, 0, 0.13918823979530573,
-        0.9307402606604064, 0.33815558710227367, 0, -1.8065198014634163,
-        502.6697330644424, 135.0486063606868, 1,
-      ],
+      camera_position: new Vector3(10, 10, 10),
+      camera_target: new Vector3(),
+      stepScene: new StepScene(
+        function () {},
+        function () {
+          console.log("projects focus");
+        },
+        function () {
+          console.log("projects leave");
+        },
+        function () {}
+      ),
     },
     {
       div_id: "about",
-      camera_matrix: [
-        -0.8460726008061255, 1.1102230246251565e-16, -0.5330676825368037, 0,
-        0.5330676825365371, 0.000001000044449472881, -0.8460726008057025, 0,
-        5.330913770418277e-7, -0.9999999999995, -8.461102083412442e-7, 0,
-        -3.007273802625343, -110.44856643982516, 21.708091372115398, 1,
-      ],
+      camera_position: new Vector3(10, 10, 10),
+      camera_target: new Vector3(),
+      stepScene: new StepScene(
+        function () {},
+        function () {
+          console.log("about focus");
+        },
+        function () {
+          console.log("about leave");
+        },
+        function () {}
+      ),
     },
   ],
   duration_step_move: 1000,
+  fbx: {
+    models: {
+      blue_guy: { scale: 0.01, path: "./assets/fbx/blue_guy_model.fbx" },
+      pink_guy: { scale: 0.01, path: "./assets/fbx/pink_guy_model.fbx" },
+    },
+    animations: {
+      start_plank: { scale: 1, path: "./assets/fbx/start_plank_anim.fbx" },
+      sitting_laughing: {
+        scale: 1,
+        path: "./assets/fbx/sitting_laughing_anim.fbx",
+      },
+      breakdance_1990: {
+        scale: 1,
+        path: "./assets/fbx/breakdance_1990_anim.fbx",
+      },
+      rumba_dancing: { scale: 1, path: "./assets/fbx/rumba_dancing_anim.fbx" },
+    },
+  },
+  materials: {
+    parquet: {
+      scale: 10,
+      color: "./assets/img/material/parquet/parquet_color.jpg",
+      ao: "./assets/img/material/parquet/parquet_ao.jpg",
+      displacement: "./assets/img/material/parquet/parquet_displacement.jpg",
+      normal: "./assets/img/material/parquet/parquet_normal.jpg",
+      roughness: "./assets/img/material/parquet/parquet_roughness.jpg",
+    },
+  },
 };
