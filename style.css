@@ -1,5 +1,5 @@
 :root {
-  --duration-loading-screen-end: 1.5s;
+  --duration-loading-screen-end: 2s;
   --loading-screen-dot-size: 20px;
   --margin-table: 5%;
   --color-one: rgb(255, 255, 255);
@@ -34,7 +34,7 @@ body {
   height: 100%;
   width: 100%;
   opacity: 1;
-  transition: opacity var(--duration-loading-screen-end) ease-in-out;
+  transition: opacity calc(0.5 * var(--duration-loading-screen-end)) ease-in-out;
 }
 
 .opacity_fade_out {
@@ -130,7 +130,8 @@ body {
   z-index: 10;
   width: 100%;
   height: 50%;
-  transition: transform var(--duration-loading-screen-end) ease-in-out;
+  transition: transform calc(0.5 * var(--duration-loading-screen-end))
+    ease-in-out calc(0.5 * var(--duration-loading-screen-end));
 }
 
 #loading_screen_bottom {
@@ -139,7 +140,8 @@ body {
   height: 50%;
   background-color: var(--color-one);
   transform: translateY(100%);
-  transition: transform var(--duration-loading-screen-end) ease-in-out;
+  transition: transform calc(0.5 * var(--duration-loading-screen-end))
+    ease-in-out calc(0.5 * var(--duration-loading-screen-end));
 }
 
 .loading_screen_top_end {

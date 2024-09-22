@@ -31,5 +31,8 @@
     "uuid": "^9.0.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "three-inspect": "^0.7.2"
   }
 }

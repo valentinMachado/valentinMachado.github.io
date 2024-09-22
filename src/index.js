@@ -3,7 +3,7 @@ import { StepDivController } from "./StepDivController";
 import { config } from "./config";
 import "./style.css";
 
-window.DEBUG_3D = true;
+window.DEBUG_3D = false;
 
 window.onload = async () => {
   // background3D
