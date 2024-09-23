@@ -28,3 +28,14 @@ export const bounceInOut = (amount) => {
   }
   return bounceOut(amount * 2 - 1) * 0.5 + 0.5;
 };
+
+/**
+ * return the first el with class name in parent
+ *
+ * @param {HTMLElement} parentId
+ * @param {string} className
+ * @return {HTMLElement}
+ */
+export const getElementByClass = (parentId, className) => {
+  return document.getElementById(parentId).getElementsByClassName(className)[0];
+};
