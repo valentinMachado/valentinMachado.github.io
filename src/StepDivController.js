@@ -5,7 +5,7 @@ export class StepDivController {
     /**
      * @type {number}
      */
-    this.currentIndex = 0;
+    this.currentIndex = config.initial_index;
     this._currentStepDiv().classList.remove("hidden");
 
     /**
@@ -51,7 +51,7 @@ export class StepDivController {
   }
 
   currentStepDivId() {
-    return config.steps[this.currentIndex]["div_id"];
+    return config.steps[this.currentIndex].divId;
   }
 
   _endMove() {
@@ -73,11 +73,9 @@ export class StepDivController {
    */
   async move(div, animationName) {
     return new Promise((resolve, reject) => {
-      div.classList.add("move_animation");
       div.style.animationName = animationName;
       div.style.animationDuration = config.duration_step_move / 1000 + "s";
       div.onanimationend = () => {
-        div.classList.remove("move_animation");
         div.style.animationName = "";
         resolve();
       };
