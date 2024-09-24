@@ -39,3 +39,40 @@ export const bounceInOut = (amount) => {
 export const getElementByClass = (parentId, className) => {
   return document.getElementById(parentId).getElementsByClassName(className)[0];
 };
+
+export function parallelTraverse(a, b, callback) {
+  callback(a, b);
+
+  for (let i = 0; i < a.children.length; i++) {
+    parallelTraverse(a.children[i], b.children[i], callback);
+  }
+}
+
+export function resetClonedSkinnedMeshes(source, clone) {
+  const clonedMeshes = [];
+  const meshSources = {};
+  const boneClones = {};
+
+  parallelTraverse(source, clone, function (sourceNode, clonedNode) {
+    if (sourceNode.isSkinnedMesh) {
+      meshSources[clonedNode.uuid] = sourceNode;
+      clonedMeshes.push(clonedNode);
+    }
+    if (sourceNode.isBone) boneClones[sourceNode.uuid] = clonedNode;
+  });
+
+  for (let i = 0, l = clonedMeshes.length; i < l; i++) {
+    const clone = clonedMeshes[i];
+    const sourceMesh = meshSources[clone.uuid];
+    const sourceBones = sourceMesh.skeleton.bones;
+
+    clone.skeleton = sourceMesh.skeleton.clone();
+    clone.bindMatrix.copy(sourceMesh.bindMatrix);
+
+    clone.skeleton.bones = sourceBones.map(function (bone) {
+      return boneClones[bone.uuid];
+    });
+
+    clone.bind(clone.skeleton, clone.bindMatrix);
+  }
+}

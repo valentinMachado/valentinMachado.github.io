@@ -1,11 +1,8 @@
-import { config } from "./config";
+import { globalParameters } from "./globalParameters";
 
 export class StepDivController {
   constructor(divOnScreen, divOffScreen) {
-    /**
-     * @type {number}
-     */
-    this.currentIndex = config.initial_index;
+    this.currentStepId = globalParameters.initial_id;
     this._currentStepDiv().classList.remove("hidden");
 
     /**
@@ -47,11 +44,11 @@ export class StepDivController {
   }
 
   _currentStepDiv() {
-    return document.getElementById(this.currentStepDivId());
+    return document.getElementById(this.currentStep().divId);
   }
 
-  currentStepDivId() {
-    return config.steps[this.currentIndex].divId;
+  currentStep() {
+    return globalParameters.steps.get(this.currentStepId);
   }
 
   _endMove() {
@@ -74,7 +71,8 @@ export class StepDivController {
   async move(div, animationName) {
     return new Promise((resolve, reject) => {
       div.style.animationName = animationName;
-      div.style.animationDuration = config.duration_step_move / 1000 + "s";
+      div.style.animationDuration =
+        globalParameters.duration_step_move / 1000 + "s";
       div.onanimationend = () => {
         div.style.animationName = "";
         resolve();
@@ -84,9 +82,13 @@ export class StepDivController {
   }
 
   async movePrevious() {
-    if (this.isMoving || this.currentIndex - 1 < 0) return Promise.resolve; // cant move down
+    if (
+      this.isMoving ||
+      !globalParameters.steps.has(this.currentStep().previousStepId)
+    )
+      return Promise.resolve;
 
-    this.currentIndex--;
+    this.currentStepId = this.currentStep().previousStepId;
 
     this._initMove();
 
@@ -98,10 +100,13 @@ export class StepDivController {
   }
 
   async moveNext() {
-    if (this.isMoving || this.currentIndex + 1 > config.steps.length - 1)
-      return Promise.resolve; // cant move up
+    if (
+      this.isMoving ||
+      !globalParameters.steps.has(this.currentStep().nextStepId)
+    )
+      return Promise.resolve;
 
-    this.currentIndex++;
+    this.currentStepId = this.currentStep().nextStepId;
 
     this._initMove();
 
@@ -112,21 +117,31 @@ export class StepDivController {
     ]).then(() => this._endMove());
   }
 
-  async moveToIndex(index) {
+  async moveToStep(id) {
     if (
-      this.currentIndex == index ||
+      this.currentStepId == id ||
       this.isMoving ||
-      index > config.steps.length - 1 ||
-      index < 0
+      !globalParameters.steps.has(id)
     )
       return Promise.resolve;
 
-    const lastIndex = this.currentIndex;
-    this.currentIndex = index;
+    const lastId = this.currentStepId;
+    this.currentStepId = id;
+
+    let findLastFirst = false;
+    for (const [stepId] of globalParameters.steps) {
+      if (stepId == lastId) {
+        findLastFirst = true;
+        break;
+      }
+      if (stepId == id) {
+        break;
+      }
+    }
 
     this._initMove();
 
-    if (lastIndex < this.currentIndex) {
+    if (findLastFirst) {
       return Promise.all([
         this.move(this.divOnScreen, "up_on_screen"),
         this.move(this.divOffScreen, "up_off_screen"),

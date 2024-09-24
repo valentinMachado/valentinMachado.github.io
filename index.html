@@ -36,8 +36,48 @@
               class="carousel_preview"
             >
               <img src="./assets/img/carousel/popup_builder.png" />
-              <div class="carousel_preview_content">
-                carousel preview text 1
+              <div
+                id="popup_builder_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Popup builder</h2>
+                <p>webGL configurator to edit 3D model of a popup house</p>
+                <div class="custom_button">More information</div>
+              </div>
+              <div
+                id="smaio_i_plan_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>SMAIO i-PLAN</h2>
+                <p>webGL configurator to edit a spine</p>
+                <div class="custom_button">More information</div>
+              </div>
+              <div
+                id="open_source_contributions_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Open source contributions</h2>
+                <p>contributions to geospatial open-source projects</p>
+                <div class="custom_button">More information</div>
+              </div>
+              <div
+                id="ud_imuv_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>UD-IMUV</h2>
+                <p>webGL game to interact with urban data</p>
+                <div class="custom_button">More information</div>
+              </div>
+              <div
+                id="galeri3_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Galeri3</h2>
+                <p>
+                  webGL application to work in team around underground
+                  geospatial point cloud
+                </p>
+                <div class="custom_button">More information</div>
               </div>
             </div>
             <div
@@ -52,39 +92,46 @@
           </div>
           <div class="carousel_item_container">
             <div
-              id="popup_builder"
+              id="popup_builder_item"
               class="carousel_item"
               style="
                 background-image: url(./assets/img/carousel/popup_builder.png);
               "
             ></div>
             <div
-              id="smaio_i_plan"
+              id="smaio_i_plan_item"
               class="carousel_item"
               style="
                 background-image: url(./assets/img/carousel/smaio_i_plan.png);
               "
             ></div>
             <div
-              id="open_source_contributions"
+              id="open_source_contributions_item"
               class="carousel_item"
               style="
                 background-image: url(./assets/img/carousel/open_source_contributions.png);
               "
             ></div>
             <div
-              id="ud_imuv"
+              id="ud_imuv_item"
               class="carousel_item"
               style="background-image: url(./assets/img/carousel/ud_imuv.png)"
             ></div>
             <div
-              id="galeri3"
+              id="galeri3_item"
               class="carousel_item"
               style="background-image: url(./assets/img/carousel/galeri3.png)"
             ></div>
           </div>
         </div>
       </div>
+      <div id="popup_builder_step" class="root_step hidden">popup</div>
+      <div id="smaio_i_plan_step" class="root_step hidden">smaio</div>
+      <div id="open_source_contributions_step" class="root_step hidden">
+        opensource
+      </div>
+      <div id="ud_imuv_step" class="root_step hidden">udimuv</div>
+      <div id="galeri3_step" class="root_step hidden">galeri3</div>
       <div id="about" class="root_step hidden">
         <h1>About</h1>
         <ul>
@@ -93,9 +140,23 @@
           <li>MAO fruty loop ableton +guitare</li>
           <li>ce portfolio</li>
           <footer>
-            <a>get in touch</a>
-            <a>github</a>
-            <a>linkedin</a>
+            <div class="bottom_right">
+              <img
+                id="gmail_icon"
+                class="link_icon"
+                src="assets/img/icon/gmail.png"
+              />
+              <img
+                id="github_icon"
+                class="link_icon"
+                src="assets/img/icon/github.png"
+              />
+              <img
+                id="linkedin_icon"
+                class="link_icon"
+                src="assets/img/icon/linkedin.png"
+              />
+            </div>
           </footer>
         </ul>
       </div>

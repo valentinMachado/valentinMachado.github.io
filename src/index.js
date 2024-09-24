@@ -1,6 +1,6 @@
 import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
-import { config } from "./config";
+import { globalParameters } from "./globalParameters";
 import { getElementByClass } from "./utils";
 
 window.DEBUG_3D = false;
@@ -72,36 +72,29 @@ window.onload = async () => {
     }
   };
 
-  const moveToDivId = (id) => {
+  const moveToStepId = (id) => {
     if (background3D.isMoving || stepDivController.isMoving) return; // to keep sync
-
-    let indexHome = -1;
-    config.steps.filter((el, index) => {
-      if (el.divId == id) {
-        indexHome = index;
-      }
-    });
-    background3D.moveToIndex(indexHome);
-    stepDivController.moveToIndex(indexHome);
+    background3D.moveToStep(id);
+    stepDivController.moveToStep(id);
   };
 
   document.getElementById("move_to_home").onclick = () => {
-    moveToDivId("home");
+    moveToStepId("home");
   };
 
   document.getElementById("move_to_projects").onclick = () => {
-    moveToDivId("projects");
+    moveToStepId("projects");
   };
 
   document.getElementById("move_to_about").onclick = () => {
-    moveToDivId("about");
+    moveToStepId("about");
   };
 
   stepDivController.addOnMoveEndRequester(() => {
     for (let customButton of document.getElementsByClassName("custom_button")) {
       customButton.classList.remove("custom_button_selected");
     }
-    switch (stepDivController.currentStepDivId()) {
+    switch (stepDivController.currentStep().divId) {
       case "home":
         document
           .getElementById("move_to_home")
@@ -122,11 +115,28 @@ window.onload = async () => {
   });
 
   // projects carousel
+
+  /**
+   *
+   * @param {HTMLElement} item
+   * @param {string} previewId
+   */
   const setCarouselPreviewWithItem = (item, previewId) => {
-    getElementByClass(previewId, "carousel_preview_content").innerHTML =
-      config.project_carousel_items[item.id].innerHTML;
+    for (let content of document
+      .getElementById(previewId)
+      .getElementsByClassName("carousel_preview_content")) {
+      content.classList.add("hidden");
+    }
+
+    const content = document.getElementById(
+      item.id.replace("_item", "_preview_content")
+    );
+    content.classList.remove("hidden");
+    document.getElementById(previewId).appendChild(content);
     document.getElementById(previewId).querySelector("img").src =
-      config.project_carousel_items[item.id].path_image;
+      item.style.backgroundImage
+        .replace(/^url\(["']?/, "")
+        .replace(/["']?\)$/, "");
   };
 
   let isMoving = false;
@@ -157,6 +167,11 @@ window.onload = async () => {
     if (alreadySelected) return;
 
     isMoving = true;
+
+    // update 3D
+    globalParameters.steps
+      .get("projects")
+      .selectProject3D(itemSelected.id.replace("_item", ""));
 
     itemSelected.classList.add("carousel_item_selected");
 
@@ -235,6 +250,31 @@ window.onload = async () => {
     }
     item.onclick = selectCarouselItem.bind(null, item);
   }
+
+  for (let content of document
+    .getElementById("projects_carousel_preview_on_screen")
+    .getElementsByClassName("carousel_preview_content")) {
+    content.getElementsByClassName("custom_button")[0].onclick =
+      moveToStepId.bind(null, content.id.replace("_preview_content", ""));
+  }
+
+  // link icon
+
+  document.getElementById("gmail_icon").onclick = () => {
+    location.href = "mailto:valentin.machado.cpe@gmail.com";
+  };
+  document.getElementById("github_icon").onclick = () => {
+    const a = document.createElement("a");
+    a.href = "https://github.com/valentinMachado";
+    a.target = "_blank";
+    a.click();
+  };
+  document.getElementById("linkedin_icon").onclick = () => {
+    const a = document.createElement("a");
+    a.href = "https://www.linkedin.com/in/valentin-machado-6b408110b/";
+    a.target = "_blank";
+    a.click();
+  };
 
   const nextSelectDuration = 10000;
   setInterval(() => {
