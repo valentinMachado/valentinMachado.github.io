@@ -2,12 +2,8 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  AmbientLight,
-  Vector3,
-  DirectionalLight,
   Color,
   AnimationMixer,
-  Mesh,
   Object3D,
   MeshStandardMaterial,
   RepeatWrapping,
@@ -15,14 +11,14 @@ import {
 } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
-import { config, Step } from "./config";
-import { quadraticInOut } from "./utils";
+import { globalParameters, globalInit } from "./globalParameters";
+import { quadraticInOut, resetClonedSkinnedMeshes } from "./utils";
 import { createInspector } from "three-inspect/vanilla";
 import { AjaxTextureLoader } from "./AjaxTextureLoader";
 
 export class Background3D {
   constructor(canvas) {
-    this._currentIndex = config.initial_index;
+    this._currentStepId = globalParameters.initial_id;
 
     // scene
     this.scene = new Scene();
@@ -32,7 +28,7 @@ export class Background3D {
       canvas: canvas,
       antialias: true,
     });
-    this.renderer.setClearColor(new Color(0.25, 0.25, 0.25), 1);
+    // this.renderer.setClearColor(new Color(0.25, 0.25, 0.25), 1);
     this.renderer.shadowMap.enabled = true;
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -49,14 +45,14 @@ export class Background3D {
 
     // debug
     if (window.DEBUG_3D) {
-      const controls = new OrbitControls(this.camera, this.renderer.domElement); // free camera not working on threlte
-      controls.target.copy(this.currentStep.cameraTarget);
-      controls.update();
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement); // free camera not working on threlte
+      this.controls.target.copy(this.currentStep.cameraTarget);
+      this.controls.update();
       window.addEventListener("keyup", (event) => {
         if (event.key == "a") {
-          controls.enabled = !controls.enabled;
+          this.controls.enabled = !this.controls.enabled;
         }
-        console.log(this.camera.position, controls.target);
+        console.log(this.camera.position, this.controls.target);
         const string =
           "cameraPosition: new Vector3(" +
           this.camera.position.x +
@@ -65,11 +61,11 @@ export class Background3D {
           "," +
           this.camera.position.z +
           "),cameraTarget: new Vector3(" +
-          controls.target.x +
+          this.controls.target.x +
           "," +
-          controls.target.y +
+          this.controls.target.y +
           "," +
-          controls.target.z +
+          this.controls.target.z +
           ")";
         navigator.clipboard.writeText(string);
       });
@@ -95,7 +91,7 @@ export class Background3D {
   }
 
   get currentStep() {
-    return config.steps[this._currentIndex];
+    return globalParameters.steps.get(this._currentStepId);
   }
 
   async load(onProgress) {
@@ -117,9 +113,9 @@ export class Background3D {
     const ajaxTextureLoader = new AjaxTextureLoader();
     const promises = [];
 
-    const loadFbxs = (configObject, onLoad) => {
-      for (let id in configObject) {
-        const path = configObject[id].path;
+    const loadFbxs = (paramObject, onLoad) => {
+      for (let id in paramObject) {
+        const path = paramObject[id].path;
         progress.set(path, 0);
         promises.push(
           new Promise((resolve, reject) => {
@@ -127,9 +123,9 @@ export class Background3D {
               path,
               (object) => {
                 object.scale.set(
-                  configObject[id].scale,
-                  configObject[id].scale,
-                  configObject[id].scale
+                  paramObject[id].scale,
+                  paramObject[id].scale,
+                  paramObject[id].scale
                 );
                 onLoad(id, object);
                 resolve();
@@ -148,14 +144,14 @@ export class Background3D {
       }
     };
 
-    loadFbxs(config.fbx.models, (id, object) => {
+    loadFbxs(globalParameters.fbx.models, (id, object) => {
       object.traverse((child) => {
         child.castShadow = true;
         child.receiveShadow = true;
       });
       models.set(id, object);
     });
-    loadFbxs(config.fbx.animations, (id, object) => {
+    loadFbxs(globalParameters.fbx.animations, (id, object) => {
       const anim = object.animations[0];
       anim.name = id;
       animations.set(id, anim);
@@ -184,33 +180,33 @@ export class Background3D {
         );
       });
     };
-    for (let id in config.materials) {
+    for (let id in globalParameters.materials) {
       const result = new MeshStandardMaterial();
       promises.push(
         loadTexture(
-          config.materials[id].color,
-          config.materials[id].scale,
+          globalParameters.materials[id].color,
+          globalParameters.materials[id].scale,
           (texture) => (result.map = texture)
         )
       );
       promises.push(
         loadTexture(
-          config.materials[id].ao,
-          config.materials[id].scale,
+          globalParameters.materials[id].ao,
+          globalParameters.materials[id].scale,
           (texture) => (result.aoMap = texture)
         )
       );
       promises.push(
         loadTexture(
-          config.materials[id].normal,
-          config.materials[id].scale,
+          globalParameters.materials[id].normal,
+          globalParameters.materials[id].scale,
           (texture) => (result.normalMap = texture)
         )
       );
       promises.push(
         loadTexture(
-          config.materials[id].roughness,
-          config.materials[id].scale,
+          globalParameters.materials[id].roughness,
+          globalParameters.materials[id].scale,
           (texture) => (result.roughnessMap = texture)
         )
       );
@@ -232,47 +228,6 @@ export class Background3D {
           const result = models.get(modelId).clone();
 
           if (animIds) {
-            function parallelTraverse(a, b, callback) {
-              callback(a, b);
-
-              for (let i = 0; i < a.children.length; i++) {
-                parallelTraverse(a.children[i], b.children[i], callback);
-              }
-            }
-            function resetClonedSkinnedMeshes(source, clone) {
-              const clonedMeshes = [];
-              const meshSources = {};
-              const boneClones = {};
-
-              parallelTraverse(
-                source,
-                clone,
-                function (sourceNode, clonedNode) {
-                  if (sourceNode.isSkinnedMesh) {
-                    meshSources[clonedNode.uuid] = sourceNode;
-                    clonedMeshes.push(clonedNode);
-                  }
-                  if (sourceNode.isBone)
-                    boneClones[sourceNode.uuid] = clonedNode;
-                }
-              );
-
-              for (let i = 0, l = clonedMeshes.length; i < l; i++) {
-                const clone = clonedMeshes[i];
-                const sourceMesh = meshSources[clone.uuid];
-                const sourceBones = sourceMesh.skeleton.bones;
-
-                clone.skeleton = sourceMesh.skeleton.clone();
-                clone.bindMatrix.copy(sourceMesh.bindMatrix);
-
-                clone.skeleton.bones = sourceBones.map(function (bone) {
-                  return boneClones[bone.uuid];
-                });
-
-                clone.bind(clone.skeleton, clone.bindMatrix);
-              }
-            }
-
             resetClonedSkinnedMeshes(models.get(modelId), result);
 
             result.userData.actions = new Map();
@@ -290,17 +245,20 @@ export class Background3D {
           }
           result.name = modelId + "_" + fbxId;
           fbxId++;
-          this.scene.add(result);
           return result;
         };
 
+        ["red", "green", "blue", "yellow", "orange"].forEach((color) =>
+          materials.set(color, new MeshStandardMaterial({ color: color }))
+        );
         this.materials = materials;
 
-        const ambienLight = new AmbientLight("white", 0.1);
-        this.scene.add(ambienLight);
+        globalInit(this);
 
         // initialize step scene
-        config.steps.forEach((s) => s.init(this));
+        for (const [, step] of globalParameters.steps) {
+          step.init(this);
+        }
 
         // start rendering
         {
@@ -308,48 +266,6 @@ export class Background3D {
           let fps = maxFps;
           let now;
           let then = Date.now();
-
-          // camera move
-          const currentCameraMoveDirection = new Vector3(
-            Math.random(),
-            Math.random(),
-            Math.random()
-          );
-          const oldCameraPosition = new Vector3();
-          const makeCameraDirectionValid = () => {
-            // new direction vector have to be in half a space
-            let normal;
-            const ccp = this.currentStep.cameraPosition;
-            const cp = this.camera.position;
-            if (
-              cp.distanceToSquared(ccp) >
-              this.currentStep.maxMovingDistCamera *
-                this.currentStep.maxMovingDistCamera
-            ) {
-              normal = ccp.clone().sub(cp);
-              currentCameraMoveDirection.set(
-                Math.random(),
-                Math.random(),
-                Math.random()
-              );
-
-              // a bit naive but should works
-              if (currentCameraMoveDirection.dot(normal) < 0) {
-                currentCameraMoveDirection.x *= -1;
-                if (currentCameraMoveDirection.dot(normal) < 0) {
-                  currentCameraMoveDirection.y *= -1;
-                  if (currentCameraMoveDirection.dot(normal) < 0) {
-                    currentCameraMoveDirection.z *= -1;
-                  }
-                }
-              }
-
-              currentCameraMoveDirection.normalize();
-              return true;
-            }
-
-            return false;
-          };
 
           // looping function
           const tick = () => {
@@ -382,30 +298,9 @@ export class Background3D {
 
               if (this.moveCallback) {
                 this.moveCallback(this.dt);
-              } else if (!window.DEBUG_3D) {
-                oldCameraPosition.copy(this.camera.position);
-
-                // move the camera
-                this.camera.position.x +=
-                  currentCameraMoveDirection.x *
-                  this.dt *
-                  this.currentStep.movingSpeedCamera;
-                this.camera.position.y +=
-                  currentCameraMoveDirection.y *
-                  this.dt *
-                  this.currentStep.movingSpeedCamera;
-                this.camera.position.z +=
-                  currentCameraMoveDirection.z *
-                  this.dt *
-                  this.currentStep.movingSpeedCamera;
-                this.camera.lookAt(this.currentStep.cameraTarget);
-
-                if (makeCameraDirectionValid()) {
-                  this.camera.position.copy(oldCameraPosition);
-                }
+              } else {
+                this.currentStep.tick();
               }
-
-              this.currentStep.tick();
 
               this.renderer.render(this.scene, this.camera);
             }
@@ -437,7 +332,7 @@ export class Background3D {
 
       this.moveCallback = (dt) => {
         currentTime += dt;
-        let ratio = currentTime / config.duration_step_move;
+        let ratio = currentTime / globalParameters.duration_step_move;
         ratio = quadraticInOut(Math.min(Math.max(0, ratio), 1));
 
         const p = position.clone().lerp(startPosition, 1 - ratio);
@@ -452,6 +347,8 @@ export class Background3D {
           this.isMoving = false;
           this._lastStep.onLeave();
           this.currentStep.onFocus();
+          if (this.controls)
+            this.controls.target.copy(this.currentStep.cameraTarget);
           resolve(true);
         }
       };
@@ -467,35 +364,41 @@ export class Background3D {
   }
 
   async moveNext() {
-    if (this.isMoving || this._currentIndex + 1 > config.steps.length - 1)
+    if (
+      this.isMoving ||
+      !globalParameters.steps.has(this.currentStep.nextStepId)
+    )
       return Promise.resolve;
 
     this._lastStep = this.currentStep;
-    this._currentIndex++;
+    this._currentStepId = this.currentStep.nextStepId;
 
     await this.move();
   }
 
   async movePrevious() {
-    if (this.isMoving || this._currentIndex - 1 < 0) return Promise.resolve;
-
-    this._lastStep = this.currentStep;
-    this._currentIndex--;
-
-    await this.move();
-  }
-
-  async moveToIndex(index) {
     if (
-      this._currentIndex == index ||
       this.isMoving ||
-      index < 0 ||
-      index > config.steps.length - 1
+      !globalParameters.steps.has(this.currentStep.previousStepId)
     )
       return Promise.resolve;
 
     this._lastStep = this.currentStep;
-    this._currentIndex = index;
+    this._currentStepId = this.currentStep.previousStepId;
+
+    await this.move();
+  }
+
+  async moveToStep(id) {
+    if (
+      this._currentStepId == id ||
+      this.isMoving ||
+      !globalParameters.steps.has(id)
+    )
+      return Promise.resolve;
+
+    this._lastStep = this.currentStep;
+    this._currentStepId = id;
 
     await this.move();
   }
