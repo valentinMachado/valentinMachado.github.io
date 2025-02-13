@@ -27,8 +27,9 @@ export class Background3D {
     this.renderer = new WebGLRenderer({
       canvas: canvas,
       antialias: true,
+      alpha: true,
     });
-    // this.renderer.setClearColor(new Color(0.25, 0.25, 0.25), 1);
+    this.renderer.setClearColor(new Color(), 0);
     this.renderer.shadowMap.enabled = true;
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -180,6 +181,7 @@ export class Background3D {
         );
       });
     };
+
     for (let id in globalParameters.materials) {
       const result = new MeshStandardMaterial();
       promises.push(
@@ -248,7 +250,7 @@ export class Background3D {
           return result;
         };
 
-        ["red", "green", "blue", "yellow", "orange"].forEach((color) =>
+        ["red", "green", "blue", "yellow", "orange", "brown"].forEach((color) =>
           materials.set(color, new MeshStandardMaterial({ color: color }))
         );
         this.materials = materials;

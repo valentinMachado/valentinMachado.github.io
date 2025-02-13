@@ -70,6 +70,10 @@ export class StepDivController {
    */
   async move(div, animationName) {
     return new Promise((resolve, reject) => {
+      // pause media
+      document.querySelectorAll("video").forEach((video) => video.pause());
+      document.querySelectorAll("audio").forEach((audio) => audio.pause());
+
       div.style.animationName = animationName;
       div.style.animationDuration =
         globalParameters.duration_step_move / 1000 + "s";

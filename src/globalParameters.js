@@ -243,7 +243,8 @@ let popupBuilderMesh,
   smaioIPlanMesh,
   openSourceContributionsMesh,
   udImuvMesh,
-  galeri3Mesh;
+  galeri3Mesh,
+  radiosityMesh;
 
 /**
  *
@@ -258,19 +259,20 @@ export const globalInit = (background3D) => {
    * @param {Platform} platform
    */
   const initPlatformScene = (platform) => {
-    // ground
-    const ground = new Mesh(
-      new CircleGeometry(platform.size),
-      background3D.materials.get("parquet").clone()
-    );
-    ground.name = "ground";
-    ground.receiveShadow = true;
-    ground.rotation.x = -Math.PI / 2;
-
+    
     platform.object3D = new Object3D();
     platform.object3D.position.copy(platform.position);
-    platform.object3D.add(ground);
     background3D.scene.add(platform.object3D);
+    
+    // ground
+    // const ground = new Mesh(
+    //   new CircleGeometry(platform.size),
+    //   background3D.materials.get("parquet").clone()
+    // );
+    // ground.name = "ground";
+    // ground.receiveShadow = true;
+    // ground.rotation.x = -Math.PI / 2;
+    // platform.object3D.add(ground);
 
     // lighting
     const spotLight = new SpotLight();
@@ -308,43 +310,53 @@ export const globalInit = (background3D) => {
     background3D.materials.get("green")
   );
   smaioIPlanMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((2 * Math.PI) / 5),
+    0.8 * projectsPlatform.size * Math.cos((2 * Math.PI) / 6),
     0,
-    0.8 * projectsPlatform.size * Math.sin((2 * Math.PI) / 5)
+    0.8 * projectsPlatform.size * Math.sin((2 * Math.PI) / 6)
   );
   openSourceContributionsMesh = new Mesh(
     new BoxGeometry(),
     background3D.materials.get("blue")
   );
   openSourceContributionsMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((4 * Math.PI) / 5),
+    0.8 * projectsPlatform.size * Math.cos((4 * Math.PI) / 6),
     0,
-    0.8 * projectsPlatform.size * Math.sin((4 * Math.PI) / 5)
+    0.8 * projectsPlatform.size * Math.sin((4 * Math.PI) / 6)
   );
   udImuvMesh = new Mesh(
     new BoxGeometry(),
     background3D.materials.get("yellow")
   );
   udImuvMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((6 * Math.PI) / 5),
+    0.8 * projectsPlatform.size * Math.cos((6 * Math.PI) / 6),
     0,
-    0.8 * projectsPlatform.size * Math.sin((6 * Math.PI) / 5)
+    0.8 * projectsPlatform.size * Math.sin((6 * Math.PI) / 6)
   );
   galeri3Mesh = new Mesh(
     new BoxGeometry(),
     background3D.materials.get("orange")
   );
   galeri3Mesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((8 * Math.PI) / 5),
+    0.8 * projectsPlatform.size * Math.cos((8 * Math.PI) / 6),
     0,
-    0.8 * projectsPlatform.size * Math.sin((8 * Math.PI) / 5)
+    0.8 * projectsPlatform.size * Math.sin((8 * Math.PI) / 6)
+  );
+  radiosityMesh = new Mesh(
+    new BoxGeometry(),
+    background3D.materials.get("brown")
+  );
+  radiosityMesh.position.set(
+    0.8 * projectsPlatform.size * Math.cos((10 * Math.PI) / 6),
+    0,
+    0.8 * projectsPlatform.size * Math.sin((10 * Math.PI) / 6)
   );
   projectsPlatform.object3D.add(
     popupBuilderMesh,
     smaioIPlanMesh,
     openSourceContributionsMesh,
     udImuvMesh,
-    galeri3Mesh
+    galeri3Mesh,
+    radiosityMesh
   );
 
   initPlatformScene(aboutPlatform);
@@ -355,134 +367,10 @@ export const globalParameters = {
     [
       "home",
       new Step({
-        init: function (_this) {
-          // piano
-          const piano = _this.background3D.createFromFBX("piano");
-          piano.position.set(1.04, -0.01, 0.08);
-          piano.rotation.set(-3.14, 0, -3.14);
-          homePlatform.object3D.add(piano);
-
-          // piano player
-          const pianoPlayer = _this.background3D.createFromFBX("pink_guy", [
-            "piano_playing",
-          ]);
-          homePlatform.object3D.add(pianoPlayer);
-
-          // guy laying
-          const guyLaying = _this.background3D.createFromFBX("blue_guy", [
-            "laying_pose",
-          ]);
-          homePlatform.object3D.add(guyLaying);
-          guyLaying.position.set(2, 0, -0.38);
-          guyLaying.rotation.set(0, -0.97, 0);
-
-          _this.moveCameraCallback = createMoveCameraCallback(
-            _this.background3D,
-            0.00005,
-            1
-          );
-
-          _this.cursorMesh = new Mesh(
-            new TorusGeometry(0.25, 0.05),
-            new MeshBasicMaterial()
-          );
-          _this.cursorMesh.scale.set(1, 1, 0.01);
-          _this.cursorMesh.rotation.x = -Math.PI * 0.5;
-          homePlatform.object3D.add(_this.cursorMesh);
-
-          _this.happyWalker = _this.background3D.createFromFBX("blue_guy", [
-            "happy_walk",
-            "happy_idle",
-            "waving",
-          ]);
-          _this.happyWalker.position.x = homePlatform.size * 0.5;
-          loopAction(_this.happyWalker, "happy_idle");
-          homePlatform.object3D.add(_this.happyWalker);
-          homePlatform.spotLight.target = _this.happyWalker;
-
-          _this.happyWalkerDestination = null;
-          _this.onClick = () => {
-            if (!_this.cursorMesh.visible) return;
-            _this.happyWalkerDestination = _this.cursorMesh.position.clone();
-          };
-
-          _this.onMouseMove = (event) => {
-            raycaster.setFromCamera(
-              _this.background3D.computeMouseCoord(event),
-              _this.background3D.camera
-            );
-            const intersects = raycaster.intersectObject(
-              homePlatform.object3D.getObjectByName("ground")
-            );
-            if (intersects.length) {
-              setWorldPosition(_this.cursorMesh, intersects[0].point);
-            }
-          };
-        },
-        onFocus: function (_this) {
-          homePlatform.spotLight.intensity = 0;
-          _this.cursorMesh.visible = true;
-
-          window.addEventListener("mousemove", _this.onMouseMove);
-          window.addEventListener("mouseup", _this.onClick);
-        },
-        onLeave: function (_this) {
-          _this.cursorMesh.visible = false;
-          homePlatform.spotLight.intensity = 0;
-
-          window.removeEventListener("mousemove", _this.onMouseMove);
-          window.removeEventListener("mouseup", _this.onClick);
-          loopAction(_this.happyWalker, "happy_idle", 700);
-        },
-        tick: function (_this) {
-          homePlatform.spotLight.intensity = Math.min(
-            1,
-            homePlatform.spotLight.intensity + 0.0005 * _this.background3D.dt
-          );
-          _this.moveCameraCallback();
-          homePlatform.object3D.rotation.y += 0.000005 * _this.background3D.dt;
-
-          _this.cursorMesh.visible = !_this.happyWalkerDestination;
-
-          // happy walker
-          if (!_this.happyWalkerDestination) {
-            loopAction(_this.happyWalker, "happy_idle", 700);
-          } else {
-            const dir = _this.happyWalkerDestination
-              .clone()
-              .sub(_this.happyWalker.position);
-
-            if (dir.lengthSq() < 0.1) {
-              const dirCam = _this.background3D.camera.position
-                .clone()
-                .sub(_this.happyWalker.getWorldPosition(positionBuffer));
-
-              setWorldEuler(
-                _this.happyWalker,
-                new Euler(0, Math.atan2(dirCam.x, dirCam.z), 0)
-              );
-
-              loopAction(_this.happyWalker, "waving", 200, () => {
-                loopAction(_this.happyWalker, "happy_idle", 100);
-                _this.happyWalkerDestination = null;
-              });
-            } else {
-              loopAction(_this.happyWalker, "happy_walk", 500);
-
-              _this.happyWalker.rotation.y = Math.atan2(dir.x, dir.z);
-              _this.happyWalker.rotation.x = _this.happyWalker.rotation.z = 0;
-
-              dir.normalize();
-              const speed = 0.001;
-              _this.happyWalker.position.x +=
-                dir.x * speed * _this.background3D.dt;
-              _this.happyWalker.position.y +=
-                dir.y * speed * _this.background3D.dt;
-              _this.happyWalker.position.z +=
-                dir.z * speed * _this.background3D.dt;
-            }
-          }
-        },
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
         divId: "home",
         cameraPosition: new Vector3(
           homePlatform.size * 2.3,
@@ -499,6 +387,12 @@ export const globalParameters = {
         previousStepId: "home",
         nextStepId: "about",
         init: function (_this) {
+          _this.moveCameraCallback = createMoveCameraCallback(
+            _this.background3D,
+            0.00005,
+            1
+          );
+
           // by default target popup
           const offset = Math.PI / 2 + Math.PI / 8;
           _this.rotationYDest = offset;
@@ -515,20 +409,24 @@ export const globalParameters = {
                 projectsPlatform.spotLight.target = popupBuilderMesh;
                 break;
               case "smaio_i_plan":
-                _this.rotationYDest = (2 * Math.PI) / 5;
+                _this.rotationYDest = (2 * Math.PI) / 6;
                 projectsPlatform.spotLight.target = smaioIPlanMesh;
                 break;
               case "open_source_contributions":
-                _this.rotationYDest = (4 * Math.PI) / 5;
+                _this.rotationYDest = (4 * Math.PI) / 6;
                 projectsPlatform.spotLight.target = openSourceContributionsMesh;
                 break;
               case "ud_imuv":
-                _this.rotationYDest = (6 * Math.PI) / 5;
+                _this.rotationYDest = (6 * Math.PI) / 6;
                 projectsPlatform.spotLight.target = udImuvMesh;
                 break;
               case "galeri3":
-                _this.rotationYDest = (8 * Math.PI) / 5;
+                _this.rotationYDest = (8 * Math.PI) / 6;
                 projectsPlatform.spotLight.target = galeri3Mesh;
+                break;
+              case "radiosity":
+                _this.rotationYDest = (10 * Math.PI) / 6;
+                projectsPlatform.spotLight.target = radiosityMesh;
                 break;
               default:
                 break;
@@ -550,23 +448,23 @@ export const globalParameters = {
         onFocus: function (_this) {},
         onLeave: function (_this) {},
         tick: function (_this) {
+          _this.moveCameraCallback();
+
           const speed = 0.001;
           // _this.rotationYDest 0 => 2pi
+          const amount = speed * _this.background3D.dt;
           if (
             Math.abs(
               projectsPlatform.object3D.rotation.y - _this.rotationYDest
-            ) >
-            100 * speed
+            ) > amount
           ) {
             if (
               projectsPlatform.object3D.rotation.y - _this.rotationYDest <
               0
             ) {
-              projectsPlatform.object3D.rotation.y +=
-                speed * _this.background3D.dt;
+              projectsPlatform.object3D.rotation.y += amount;
             } else {
-              projectsPlatform.object3D.rotation.y -=
-                speed * _this.background3D.dt;
+              projectsPlatform.object3D.rotation.y -= amount;
             }
             projectsPlatform.spotLight.target.updateMatrixWorld();
           }
@@ -584,7 +482,11 @@ export const globalParameters = {
       "about",
       new Step({
         previousStepId: "projects",
-        init: function (_this) {},
+        init: function (_this) {
+          _this.selectProject3D = (id) => {
+            console.log("select " + id);
+          };
+        },
         onFocus: function (_this) {},
         onLeave: function (_this) {},
         tick: function (_this) {},
@@ -697,41 +599,154 @@ export const globalParameters = {
         ),
       }),
     ],
+    [
+      "radiosity",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "radiosity_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "steampong",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "steampong_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "souk",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "souk_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "covidjam",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "covidjam_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "daw",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "daw_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "guitar",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "guitar_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
+    [
+      "portfolio",
+      new Step({
+        init: function (_this) {},
+        onFocus: function (_this) {},
+        onLeave: function (_this) {},
+        tick: function (_this) {},
+        divId: "portfolio_step",
+        cameraPosition: new Vector3(
+          70.88385204449825,
+          12.509098432068043,
+          -6.149763100098089
+        ),
+        cameraTarget: new Vector3(
+          35.62221594037345,
+          -16.007222546768897,
+          6.0484699638794295
+        ),
+      }),
+    ],
   ]),
   initial_id: "home",
   duration_step_move: 1000,
   fbx: {
     models: {
       blue_guy: { scale: 0.01, path: "./assets/fbx/blue_guy_model.fbx" },
-      pink_guy: { scale: 0.01, path: "./assets/fbx/pink_guy_model.fbx" },
-      piano: { scale: 0.01, path: "./assets/fbx/piano_model.fbx" },
     },
-    animations: {
-      waving: { scale: 1, path: "./assets/fbx/waving_anim.fbx" },
-      start_plank: { scale: 1, path: "./assets/fbx/start_plank_anim.fbx" },
-      happy_walk: { scale: 1, path: "./assets/fbx/happy_walk_anim.fbx" },
-      running: { scale: 1, path: "./assets/fbx/running_anim.fbx" },
-      happy_idle: { scale: 1, path: "./assets/fbx/happy_idle_anim.fbx" },
-      laying_pose: { scale: 1, path: "./assets/fbx/laying_pose_anim.fbx" },
-      sitting_laughing: {
-        scale: 1,
-        path: "./assets/fbx/sitting_laughing_anim.fbx",
-      },
-      breakdance_1990: {
-        scale: 1,
-        path: "./assets/fbx/breakdance_1990_anim.fbx",
-      },
-      rumba_dancing: { scale: 1, path: "./assets/fbx/rumba_dancing_anim.fbx" },
-      piano_playing: { scale: 1, path: "./assets/fbx/piano_playing_anim.fbx" },
-    },
+    animations: {},
   },
-  materials: {
-    parquet: {
-      scale: 4,
-      color: "./assets/img/material/parquet/parquet_color.jpg",
-      ao: "./assets/img/material/parquet/parquet_ao.jpg",
-      normal: "./assets/img/material/parquet/parquet_normal.jpg",
-      roughness: "./assets/img/material/parquet/parquet_roughness.jpg",
-    },
-  },
+  materials: {},
 };

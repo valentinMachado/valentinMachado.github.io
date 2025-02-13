@@ -2,15 +2,23 @@
   --duration-loading-screen-end: 2s;
   --loading-screen-dot-size: 20px;
   --color-one: rgba(255, 255, 255, 1);
-  --color-two: red;
+  --color-two: rgb(255, 255, 255);
   --color-three: rgb(14, 14, 56);
+  --size-back-button: 50px;
+  --background-color-hover: rgba(255, 255, 255, 0.08);
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
   user-select: none;
   margin: 0%;
   overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
+  background: linear-gradient(0deg, rgb(56, 56, 56), black) no-repeat;
 }
 
 .hidden {
@@ -23,6 +31,12 @@ body {
   position: absolute;
   top: 0%;
   left: 0%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* loading */
@@ -160,7 +174,15 @@ body {
   font-size: var(--loading-screen-dot-size);
 }
 
-/* end loading */
+/* disclaimer */
+.disclaimer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: x-large;
+  text-align: left;
+  transform: translate(-50%, -50%);
+}
 
 #move_to_home {
   margin: 10px;
@@ -215,10 +237,16 @@ body {
 
 .carousel_preview_container {
   height: 80%;
+  margin: 10px;
+}
+
+.carousel_preview_container:hover {
+  background-color: var(--background-color-hover);
 }
 
 .carousel_preview {
   position: absolute;
+  width: 100%;
   top: 50px;
   left: 0;
   height: calc(80% - 50px);
@@ -276,7 +304,8 @@ body {
 }
 
 .carousel_preview img {
-  width: 60%;
+  min-width: 40%;
+  max-width: 50%;
   margin: auto 50px auto 50px;
   max-height: calc(100% - 100px);
 }
@@ -313,13 +342,40 @@ body {
 
 .root_step {
   color: var(--color-two);
-  font-size: xx-large;
+  font-size: larger;
   text-align: center;
   width: 100%;
   height: calc(100% - 50px);
   margin-top: 50px;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
+}
+
+.step_content {
+  margin: 10px;
+  text-align: left;
+  font-size: large;
+  overflow-y: scroll;
+  padding-left: 10%;
+  padding-right: 10%;
+  height: calc(
+    88% - var(--size-back-button)
+  ); /***90 (- 2) because of the 8% of the image***/
+  scrollbar-width: none;
+  filter: drop-shadow(2px 4px 6px black);
+  background-color: var(--background-color-hover);
+}
+
+.step_content a {
+  color: var(--color-two);
+}
+.step_content iframe {
+  margin-top: 20px;
+}
+
+.root_content_preview_img {
+  margin-top: var(--size-back-button);
+  height: 10%;
 }
 
 @keyframes up_off_screen {
@@ -363,10 +419,60 @@ body {
 .bottom_right {
   position: absolute;
   bottom: 0%;
-  right: 0%;
+  right: 2%;
 }
 
 .link_icon {
   width: 50px;
   cursor: pointer;
+}
+
+/* back button */
+
+.back_button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(var(--size-back-button) - 10px);
+}
+
+.back_button img {
+  animation: bounce 2s ease infinite;
+  width: var(--size-back-button);
+  height: var(--size-back-button);
+}
+
+.back_button:hover {
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  70% {
+    transform: translateY(0%);
+  }
+  80% {
+    transform: translateY(-15%);
+  }
+  90% {
+    transform: translateY(0%);
+  }
+  95% {
+    transform: translateY(-7%);
+  }
+  97% {
+    transform: translateY(0%);
+  }
+  99% {
+    transform: translateY(-3%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* embeded el */
+
+.vimeo_video_container {
+  position: relative;
+  display: inline-flex;
 }

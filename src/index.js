@@ -5,7 +5,7 @@ import { getElementByClass } from "./utils";
 
 window.DEBUG_3D = false;
 
-window.onload = async () => {
+const main = async () => {
   const mobileCheck = function () {
     let check = false;
     (function (a) {
@@ -30,7 +30,7 @@ window.onload = async () => {
 
   await background3D.load((amountLoaded) => {
     document.getElementById("loading_screen_loader_label").innerText =
-      Math.round(amountLoaded * 100) + "%";
+      "Chargement 3D: " + Math.round(amountLoaded * 100) + "%";
   });
 
   document
@@ -115,148 +115,232 @@ window.onload = async () => {
   });
 
   // projects carousel
-
-  /**
-   *
-   * @param {HTMLElement} item
-   * @param {string} previewId
-   */
-  const setCarouselPreviewWithItem = (item, previewId) => {
-    for (let content of document
-      .getElementById(previewId)
-      .getElementsByClassName("carousel_preview_content")) {
-      content.classList.add("hidden");
-    }
-
-    const content = document.getElementById(
-      item.id.replace("_item", "_preview_content")
-    );
-    content.classList.remove("hidden");
-    document.getElementById(previewId).appendChild(content);
-    document.getElementById(previewId).querySelector("img").src =
-      item.style.backgroundImage
-        .replace(/^url\(["']?/, "")
-        .replace(/["']?\)$/, "");
+  const cssPath2tagPath = (cssPath) => {
+    return cssPath.replace(/^url\(["']?/, "").replace(/["']?\)$/, "");
   };
 
-  let isMoving = false;
-  let lastSelectTimestamp = 0;
-  const selectCarouselItem = (itemSelected) => {
-    if (isMoving) return;
-    let alreadySelected = false;
-    let previousItem = null;
-    let previousItemBeforeItemSelected = false;
-    for (let item of document
-      .getElementById("projects")
-      .getElementsByClassName("carousel_item")) {
-      if (item.classList.contains("carousel_item_selected")) {
-        if (item == itemSelected) {
-          alreadySelected = true;
-          break;
-        } else {
-          previousItem = item;
-          previousItem.classList.remove("carousel_item_selected");
+  const initializeCarousel = (carouselId) => {
+    /**
+     *
+     * @param {HTMLElement} item
+     * @param {string} previewId
+     */
+    const setCarouselPreviewWithItem = (item, previewId) => {
+      for (let content of document
+        .getElementById(previewId)
+        .getElementsByClassName("carousel_preview_content")) {
+        content.classList.add("hidden");
+      }
+
+      const content = document.getElementById(
+        item.id.replace("_item", "_preview_content")
+      );
+      content.classList.remove("hidden");
+      document.getElementById(previewId).appendChild(content);
+      document.getElementById(previewId).querySelector("img").src =
+        cssPath2tagPath(item.style.backgroundImage);
+    };
+
+    let isMoving = false;
+    let lastSelectTimestamp = Date.now();
+    const selectCarouselItem = (itemSelected) => {
+      if (isMoving) return;
+      let alreadySelected = false;
+      let previousItem = null;
+      let previousItemBeforeItemSelected = false;
+      for (let item of document
+        .getElementById(carouselId)
+        .getElementsByClassName("carousel_item")) {
+        if (item.classList.contains("carousel_item_selected")) {
+          if (item == itemSelected) {
+            alreadySelected = true;
+            break;
+          } else {
+            previousItem = item;
+            previousItem.classList.remove("carousel_item_selected");
+          }
+        }
+
+        if (item == itemSelected && previousItem) {
+          previousItemBeforeItemSelected = true;
         }
       }
+      if (alreadySelected) return;
 
-      if (item == itemSelected && previousItem) {
-        previousItemBeforeItemSelected = true;
+      lastSelectTimestamp = Date.now();
+      isMoving = true;
+
+      // update 3D
+      globalParameters.steps
+        .get(carouselId)
+        .selectProject3D(itemSelected.id.replace("_item", ""));
+
+      itemSelected.classList.add("carousel_item_selected");
+
+      setCarouselPreviewWithItem(
+        previousItem,
+        carouselId + "_carousel_preview_off_screen"
+      );
+      setCarouselPreviewWithItem(
+        itemSelected,
+        carouselId + "_carousel_preview_on_screen"
+      );
+
+      document
+        .getElementById(carouselId + "_carousel_preview_off_screen")
+        .classList.remove("hidden");
+
+      const move = async (div, animationName) => {
+        return new Promise((resolve, reject) => {
+          div.style.animationName = animationName;
+          div.onanimationend = () => {
+            div.style.animationName = "";
+            resolve();
+          };
+          div.onerror = reject;
+        });
+      };
+
+      const promises = [];
+      if (previousItemBeforeItemSelected) {
+        // left move
+        promises.push(
+          move(
+            document.getElementById(
+              carouselId + "_carousel_preview_off_screen"
+            ),
+            "move_carousel_preview_left_off_screen"
+          )
+        );
+        promises.push(
+          move(
+            document.getElementById(carouselId + "_carousel_preview_on_screen"),
+            "move_carousel_preview_right_on_screen"
+          )
+        );
+      } else {
+        // right move
+        promises.push(
+          move(
+            document.getElementById(
+              carouselId + "_carousel_preview_off_screen"
+            ),
+            "move_carousel_preview_right_off_screen"
+          )
+        );
+        promises.push(
+          move(
+            document.getElementById(carouselId + "_carousel_preview_on_screen"),
+            "move_carousel_preview_left_on_screen"
+          )
+        );
       }
-    }
 
-    if (alreadySelected) return;
-
-    isMoving = true;
-
-    // update 3D
-    globalParameters.steps
-      .get("projects")
-      .selectProject3D(itemSelected.id.replace("_item", ""));
-
-    itemSelected.classList.add("carousel_item_selected");
-
-    setCarouselPreviewWithItem(
-      previousItem,
-      "projects_carousel_preview_off_screen"
-    );
-    setCarouselPreviewWithItem(
-      itemSelected,
-      "projects_carousel_preview_on_screen"
-    );
-
-    document
-      .getElementById("projects_carousel_preview_off_screen")
-      .classList.remove("hidden");
-
-    const move = async (div, animationName) => {
-      return new Promise((resolve, reject) => {
-        div.style.animationName = animationName;
-        div.onanimationend = () => {
-          div.style.animationName = "";
-          resolve();
-        };
-        div.onerror = reject;
+      Promise.all(promises).then(() => {
+        isMoving = false;
+        document
+          .getElementById(carouselId + "_carousel_preview_off_screen")
+          .classList.add("hidden");
       });
     };
 
-    const promises = [];
-    if (previousItemBeforeItemSelected) {
-      // left move
-      promises.push(
-        move(
-          document.getElementById("projects_carousel_preview_off_screen"),
-          "move_carousel_preview_left_off_screen"
-        )
-      );
-      promises.push(
-        move(
-          document.getElementById("projects_carousel_preview_on_screen"),
-          "move_carousel_preview_right_on_screen"
-        )
-      );
-    } else {
-      // right move
-      promises.push(
-        move(
-          document.getElementById("projects_carousel_preview_off_screen"),
-          "move_carousel_preview_right_off_screen"
-        )
-      );
-      promises.push(
-        move(
-          document.getElementById("projects_carousel_preview_on_screen"),
-          "move_carousel_preview_left_on_screen"
-        )
-      );
+    let carouselInitialized = false;
+    for (let item of document
+      .getElementById(carouselId)
+      .getElementsByClassName("carousel_item")) {
+      if (!carouselInitialized) {
+        setCarouselPreviewWithItem(
+          item,
+          carouselId + "_carousel_preview_on_screen"
+        );
+        item.classList.add("carousel_item_selected");
+        carouselInitialized = true;
+      }
+      item.onclick = selectCarouselItem.bind(null, item);
     }
 
-    Promise.all(promises).then(() => {
-      lastSelectTimestamp = Date.now();
-      isMoving = false;
-      document
-        .getElementById("projects_carousel_preview_off_screen")
-        .classList.add("hidden");
-    });
+    for (let content of document
+      .getElementById(carouselId + "_carousel_preview_on_screen")
+      .getElementsByClassName("carousel_preview_content")) {
+      const stepIdDestination = content.id.replace("_preview_content", "");
+
+      // add a back button
+      const stepDivDestination = document.getElementById(
+        globalParameters.steps.get(stepIdDestination).divId
+      );
+      const previewImg = document.createElement("img");
+      previewImg.src =
+        "./assets/img/carousel/" +
+        carouselId +
+        "/" +
+        stepIdDestination +
+        ".png"; // TODO do not hardcode this
+      stepDivDestination.insertBefore(
+        previewImg,
+        stepDivDestination.firstChild
+      );
+      previewImg.classList.add("root_content_preview_img");
+
+      const backButton = document.createElement("div");
+      backButton.classList.add("back_button");
+      const img = document.createElement("img");
+      img.src = "./assets/img/icon/back_button.png";
+      backButton.appendChild(img);
+      stepDivDestination.insertBefore(
+        backButton,
+        stepDivDestination.firstChild
+      );
+      backButton.onclick = () => {
+        moveToStepId(carouselId);
+      };
+
+      content.getElementsByClassName("custom_button")[0].onclick =
+        moveToStepId.bind(null, stepIdDestination);
+    }
+
+    // observe when preview is hovered to disable automatic select
+    const previewContainer = getElementByClass(
+      carouselId,
+      "carousel"
+    ).getElementsByClassName("carousel_preview_container")[0];
+    let previewContainerIsHovered = false;
+    previewContainer.onmousemove = () => {
+      previewContainerIsHovered = true;
+    };
+    previewContainer.onmouseleave = () => {
+      previewContainerIsHovered = false;
+    };
+
+    const nextSelectDuration = 4000;
+
+    // run automatic select
+    setInterval(() => {
+      if (
+        previewContainerIsHovered ||
+        document.getElementById(carouselId).classList.contains("hidden")
+      ) {
+        lastSelectTimestamp = Date.now();
+        return;
+      }
+      if (Date.now() - lastSelectTimestamp > nextSelectDuration) {
+        for (let item of document
+          .getElementById(carouselId)
+          .getElementsByClassName("carousel_item")) {
+          if (item.classList.contains("carousel_item_selected")) {
+            if (item.nextElementSibling) {
+              selectCarouselItem(item.nextElementSibling);
+            } else {
+              selectCarouselItem(item.parentElement.firstElementChild);
+            }
+            break;
+          }
+        }
+      }
+    }, 100);
   };
 
-  let carouselInitialized = false;
-  for (let item of document
-    .getElementById("projects")
-    .getElementsByClassName("carousel_item")) {
-    if (!carouselInitialized) {
-      setCarouselPreviewWithItem(item, "projects_carousel_preview_on_screen");
-      item.classList.add("carousel_item_selected");
-      carouselInitialized = true;
-    }
-    item.onclick = selectCarouselItem.bind(null, item);
-  }
-
-  for (let content of document
-    .getElementById("projects_carousel_preview_on_screen")
-    .getElementsByClassName("carousel_preview_content")) {
-    content.getElementsByClassName("custom_button")[0].onclick =
-      moveToStepId.bind(null, content.id.replace("_preview_content", ""));
-  }
+  initializeCarousel("projects");
+  initializeCarousel("about");
 
   // link icon
 
@@ -275,24 +359,15 @@ window.onload = async () => {
     a.target = "_blank";
     a.click();
   };
+  document.getElementById("instagram_icon").onclick = () => {
+    const a = document.createElement("a");
+    a.href = "https://www.instagram.com/mache7218/";
+    a.target = "_blank";
+    a.click();
+  };
 
-  const nextSelectDuration = 10000;
-  setInterval(() => {
-    if (Date.now() - lastSelectTimestamp > nextSelectDuration) {
-      for (let item of document
-        .getElementById("projects")
-        .getElementsByClassName("carousel_item")) {
-        if (item.classList.contains("carousel_item_selected")) {
-          if (item.nextElementSibling) {
-            selectCarouselItem(item.nextElementSibling);
-          } else {
-            selectCarouselItem(item.parentElement.firstElementChild);
-          }
-          break;
-        }
-      }
-    }
-  }, nextSelectDuration);
+  // all link are blank
+  document.querySelectorAll("a").forEach((a) => (a.target = "_blank"));
 
   if (window.DEBUG_3D) {
     const style = document.createElement("style");
@@ -303,3 +378,5 @@ window.onload = async () => {
     document.getElementById("off_screen").classList.add("debug");
   }
 };
+
+window.onload = main;
