@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Valentin Machado</title>
+    <title>Valentin MACHADO</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <!-- third party scripts -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <!-- html -->
+
+    <!-- loading html -->
     <div id="loading_screen_loader" class="opacity_transition">
-      <label id="loading_screen_loader_label">0%</label>
+      <label id="loading_screen_loader_label">Chargement des ressources</label>
       <div class="loading_screen_loader_inner">
         <label>●</label>
         <label>●</label>
@@ -18,15 +23,19 @@
         <label>●</label>
       </div>
     </div>
+
     <div id="loading_screen_top" class="full_screen"></div>
     <div id="loading_screen_bottom" class="full_screen"></div>
+
+    <!-- main app -->
     <canvas id="three_canvas" class="full_screen"></canvas>
     <div id="on_screen" class="full_screen">
       <div id="home" class="root_step hidden">
-        <p>
-          phrase d'accroche phrase d'accroche et je suis comme si et je suis
-          comme ca avec des effets css de batard
-        </p>
+        <div class="disclaimer">
+          Ingénieur en informatique de formation, je souhaite aujourd’hui me
+          reconvertir dans les métiers du son, un univers qui m’a toujours
+          passionné
+        </div>
       </div>
       <div id="projects" class="root_step hidden">
         <div class="carousel">
@@ -35,38 +44,62 @@
               id="projects_carousel_preview_on_screen"
               class="carousel_preview"
             >
-              <img src="./assets/img/carousel/popup_builder.png" />
+              <img src="./assets/img/carousel/projects/radiosity.png" />
+              <div
+                id="radiosity_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Projet de fin d'étude</h2>
+                <p>
+                  algorithmes d'illumination globale en webGL<br />
+                  (mars 2016 - aout 2016)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
               <div
                 id="popup_builder_preview_content"
                 class="carousel_preview_content hidden"
               >
                 <h2>Popup builder</h2>
-                <p>webGL configurator to edit 3D model of a popup house</p>
-                <div class="custom_button">More information</div>
+                <p>
+                  éditeur 3D en webGL de maison en kit<br />
+                  (septembre 2016 - avril 2018)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
               </div>
               <div
                 id="smaio_i_plan_preview_content"
                 class="carousel_preview_content hidden"
               >
                 <h2>SMAIO i-PLAN</h2>
-                <p>webGL configurator to edit a spine</p>
-                <div class="custom_button">More information</div>
+                <p>
+                  éditeur 3D en webGL de colonne vertebrale<br />
+                  (septembre 2016 - avril 2018)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
               </div>
               <div
                 id="open_source_contributions_preview_content"
                 class="carousel_preview_content hidden"
               >
-                <h2>Open source contributions</h2>
-                <p>contributions to geospatial open-source projects</p>
-                <div class="custom_button">More information</div>
+                <h2>Contributions open source</h2>
+                <p>
+                  contributions à des projets géospatial open-source
+                  <br />(janvier 2021 - décembre 2023)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
               </div>
               <div
                 id="ud_imuv_preview_content"
                 class="carousel_preview_content hidden"
               >
                 <h2>UD-IMUV</h2>
-                <p>webGL game to interact with urban data</p>
-                <div class="custom_button">More information</div>
+                <p>
+                  jeu sérieux multijoueur en webGL pour interagir autour de
+                  données géospatiales<br />
+                  (janvier 2021 - décembre 2023)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
               </div>
               <div
                 id="galeri3_preview_content"
@@ -74,101 +107,680 @@
               >
                 <h2>Galeri3</h2>
                 <p>
-                  webGL application to work in team around underground
-                  geospatial point cloud
+                  application en webGL pour collaborer autour de donnée 3D
+                  géospatiale <br />(janvier 2021 - décembre 2023)
                 </p>
-                <div class="custom_button">More information</div>
+                <div class="custom_button">Plus d'informations</div>
               </div>
             </div>
             <div
               id="projects_carousel_preview_off_screen"
               class="carousel_preview hidden"
             >
-              <img src="./assets/img/carousel/popup_builder.png" />
+              <img src="./assets/img/carousel/projects/popup_builder.png" />
               <div class="carousel_preview_content">
-                carousel preview text 2
+                should not be displayed
               </div>
             </div>
           </div>
           <div class="carousel_item_container">
             <div
-              id="popup_builder_item"
+              id="radiosity_item"
+              title="projet de fin d'étude"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/popup_builder.png);
+                background-image: url(./assets/img/carousel/projects/radiosity.png);
+              "
+            ></div>
+            <div
+              id="popup_builder_item"
+              title="popup builder"
+              class="carousel_item"
+              style="
+                background-image: url(./assets/img/carousel/projects/popup_builder.png);
               "
             ></div>
             <div
               id="smaio_i_plan_item"
+              title="smaio"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/smaio_i_plan.png);
+                background-image: url(./assets/img/carousel/projects/smaio_i_plan.png);
               "
             ></div>
             <div
               id="open_source_contributions_item"
+              title="contributions open source"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/open_source_contributions.png);
+                background-image: url(./assets/img/carousel/projects/open_source_contributions.png);
               "
             ></div>
             <div
               id="ud_imuv_item"
+              title="ud-imuv"
               class="carousel_item"
-              style="background-image: url(./assets/img/carousel/ud_imuv.png)"
+              style="
+                background-image: url(./assets/img/carousel/projects/ud_imuv.png);
+              "
             ></div>
             <div
               id="galeri3_item"
+              title="galeri3"
               class="carousel_item"
-              style="background-image: url(./assets/img/carousel/galeri3.png)"
+              style="
+                background-image: url(./assets/img/carousel/projects/galeri3.png);
+              "
             ></div>
           </div>
         </div>
       </div>
-      <div id="popup_builder_step" class="root_step hidden">popup</div>
-      <div id="smaio_i_plan_step" class="root_step hidden">smaio</div>
-      <div id="open_source_contributions_step" class="root_step hidden">
-        opensource
+      <div id="popup_builder_step" class="root_step hidden">
+        <div class="step_content">
+          Projet réalisé chez
+          <a href="https://www.wanadev.com/">Wanadev</a>, une entreprise
+          spécialisée dans le développement de solutions numériques innovantes.
+          <br />
+          <br />
+          J'ai eu l'opportunité de travailler sur un projet ambitieux : le Popup
+          Builder, une application réalisé en
+          <a href="https://threejs.org/">three.js</a>, permettant de concevoir
+          des maisons en kit de type Popup House, en 2D et en 3D. Cet outil
+          offre une personnalisation intuitive et génére automatiquement les
+          matériaux nécessaires, avec des fichiers prêts à être envoyés à
+          l'usine pour fabrication.
+          <br />
+          <br />
+          <img src="./assets/gif/popup_builder.gif" class="center" />
+          <br />
+          <br />
+          Ce projet m'a permis de développer des compétences variées :
+          <br />
+          - Gestion de projet, en coordonnant les étapes du développement pour
+          garantir le respect des délais et exigences.
+          <br />
+          - Conception et développement webGL, pour des rendus interactifs en
+          3D.<br />
+          - Communication client, en intégrant leurs besoins et retours dans le
+          processus.
+          <br />
+          <br />
+          Cette expérience, à la fois technique et humaine, m'a permis de
+          renforcer mes compétences en programmation et modélisation 3D tout en
+          découvrant les enjeux globaux d'un projet. Bien que la startup Popup
+          House n'existe plus, des vidéos du programme sont encore disponibles
+          <br />
+          <div class="vimeo_video_container">
+            <iframe
+              src="https://player.vimeo.com/video/416834411?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              class="vimeo_video"
+              title="Visualiser un modèle standard"
+            ></iframe>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              src="https://player.vimeo.com/video/512577940?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              class="vimeo_video"
+              title="Modifier un modèle"
+            ></iframe>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              src="https://player.vimeo.com/video/416838226?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              class="vimeo_video"
+              title="Importer un plan"
+            ></iframe>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              src="https://player.vimeo.com/video/416837784?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              class="vimeo_video"
+              title="Changer les finitions, le mobilier"
+            ></iframe>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              src="https://player.vimeo.com/video/416838696?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+              class="vimeo_video"
+              title="Annoter un dessin"
+            ></iframe>
+          </div>
+        </div>
       </div>
-      <div id="ud_imuv_step" class="root_step hidden">udimuv</div>
-      <div id="galeri3_step" class="root_step hidden">galeri3</div>
+      <div id="smaio_i_plan_step" class="root_step hidden">
+        <div class="step_content">
+          Projet réalisé chez
+          <a href="https://www.wanadev.com/">Wanadev</a>, une entreprise
+          spécialisée dans le développement de solutions numériques innovantes.
+          <br />
+          <br />
+          J'ai développé un éditeur de colonne vertébrale, réalisé en
+          <a href="https://www.babylonjs.com/">babylon.js</a>, intégré dans un
+          logiciel destiné aux chirurgiens spécialisés sur la colonne
+          vertébrale. Ce programme innovant génère une colonne vertébrale à
+          partir d'un nuage de points et permet également d'éditer ces données.
+          <br />
+          <br />
+          <img src="./assets/gif/smaio.gif" class="center" />
+          <br />
+          <br />
+          L'objectif principal est d'aider les chirurgiens à planifier leurs
+          opérations avec précision, en leur fournissant un outil leur
+          permettant de visualiser et d'ajuster les structures vertébrales en
+          amont des interventions. Ce projet, à la fois technique et médical,
+          s'est révélé particulièrement intéressant et porteur de sens grâce à
+          son impact concret sur la santé des patients.
+          <iframe
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/3_H3A_Gvpuw?si=Ld5X-flTOlRg5o4M"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div id="open_source_contributions_step" class="root_step hidden">
+        <div class="step_content">
+          Lors de mon emploi au
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU de Lyon</a
+          >, j'ai collaboré couramment avec l'équipe
+          <a href="https://projet.liris.cnrs.fr/vcity/">VCity</a>, du
+          <a href="https://liris.cnrs.fr/">LIRIS</a>, ce qui m'a permis de
+          contribuer à plusieurs projets open source qu'ils utilisaient.
+          <br />
+          <br />
+          Parmi ces projets, j'ai travaillé sur :
+          <br />
+          <br />
+          - <b><a href="https://www.itowns-project.org/">iTowns</a></b
+          >: un framework basé sur <a href="https://threejs.org/">three.js</a>,
+          développé par <a href="https://www.ign.fr/">l'ign</a> pour la
+          visualisation de données 3D géospatiales. J'ai contribué à ce projet
+          en réalisant plusieurs <i>pull requests</i>, notamment sur la gestion
+          du style des
+          <a href="https://github.com/CesiumGS/3d-tiles">3D Tiles</a>.
+          <img src="./assets/gif/itowns.gif" class="center" />
+          <br />
+          <br />
+          - <b><a href="https://github.com/VCityTeam/UD-Viz">ud-viz</a></b
+          >: une collection de packages JavaScript (back et front) reposant sur
+          iTowns. J'ai supervisé et architecturé l'ensemble du
+          <i>repository</i>, tout en développant différents modules. J'ai, entre
+          autres, conçu un moteur de jeux permettant la création de scene
+          géospatiale multijoueur ou non, la visualisation et l'interaction avec
+          des nuages de points, ainsi que plusieurs utilitaires complémentaires.
+          <img src="./assets/gif/ud_viz.gif" class="center" />
+          <br />
+          <br />
+          Cette expérience m'a permis de renforcer mes compétences en
+          développement logiciel et en manipulation de données 3D tout en
+          contribuant activement à des outils utilisés dans des environnements
+          de recherche avancés.
+        </div>
+      </div>
+      <div id="ud_imuv_step" class="root_step hidden">
+        <div class="step_content">
+          Projet réalisé pour le
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU de Lyon</a
+          >, ce travail vise à créer un espace virtuel collaboratif et innovant,
+          principalement destiné aux laboratoires et partenaires de la
+          communauté IMU. Cet espace a également pour ambition de rester
+          accessible 24h/24 aux acteurs de la ville, qu'il s'agisse de
+          praticiens ou de citoyens intéressés par les réflexions autour de
+          l’aménagement urbain dans divers domaines scientifiques et
+          universitaires.
+          <br />
+          <br />
+          Ce projet s'est concrétisé par le développement d'un
+          <b>jeu web multijoueur</b>, basé sur le moteur de jeu d'<a
+            href="https://github.com/VCityTeam/UD-Viz"
+            >ud-viz</a
+          >. Les joueurs y contrôlent un avatar évoluant sur une île volante
+          située au-dessus de la ville de Lyon.
+          <br />
+          <br />
+          <img src="./assets/gif/ud_imuv_2.gif" class="center" />
+          <br />
+          Plusieurs activités interactives y sont proposées, notamment :
+          <br />
+          - Une salle de conférence avec une maquette dynamique pour visualiser
+          et étudier des données urbaines.
+          <br />
+          - La création de studios collaboratifs, dédiés à l’exploration et à
+          l’étude de la ville.
+          <br />
+          - Des zones de discussion (chat) pour échanger avec d’autres joueurs.
+          <br />
+          - Une salle d’exposition, mettant en avant divers contenus liés à
+          l’urbanisme.
+          <br />
+          <br />
+          <img src="./assets/gif/ud_imuv.gif" class="center" />
+          <br />
+          <br />
+          Ce projet a permis de créer un outil à la fois ludique et utile,
+          favorisant l’échange et la collaboration autour des enjeux urbains et
+          scientifiques.
+          <br />
+          <br />
+          Le code est open-source et disponnible
+          <a href="https://github.com/VCityTeam/UD-Imuv">ici</a>.
+          <br />
+          Un article scientifique a été publié
+          <a
+            href="https://www.researchgate.net/publication/381085596_IMUV_A_Digital_Twin_for_Mediation_to_Discover_and_Exchange_on_Territories"
+            >ici</a
+          >.
+          <br />
+          <br />
+          <iframe
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/7NU3nX-nCk0?si=9M9o-maXPVm8_tXn"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div id="galeri3_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a
+              href="https://imu.universite-lyon.fr/studios/galeri3/galeri3-281920.kjsp"
+              >Galeri3</a
+            ></b
+          >
+          est un studio du
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU de Lyon</a
+          >, dédié à l'étude transversale des
+          <a href="https://fr.wikipedia.org/wiki/Ar%C3%AAtes_de_poisson"
+            >arêtes de poisson</a
+          >
+          à Lyon.
+          <br />
+          <br />
+          Dans ce cadre, j'ai développé une application de collaboration
+          géospatialisée. Cette dernière, basée sur
+          <a href="https://github.com/VCityTeam/UD-Viz">ud-viz</a>, offre
+          plusieurs fonctionnalités :
+          <br />
+          - Création de conversations géospatialisées, permettant d’échanger
+          directement sur des données géolocalisées.
+          <br />
+          - Gestion des utilisateurs avec un rôle d’administrateur, incluant la
+          supervision et les droits d'accès.
+          <br />
+          - Importation et stockage de données 3D directement sur les serveurs,
+          facilitant leur exploitation.
+          <br />
+          <br />
+          <img class="center" src="./assets/gif/galeri3.gif" />
+          <br />
+          <br />
+          Le code est open source et accessible
+          <a href="https://github.com/VCityTeam/GALERI3">ici</a>.
+          <br />
+          <br />
+          <video class="center" width="560" height="315" controls>
+            <source
+              src="https://video.bm-lyon.fr/mp4/03_04_24_aretes_poisson.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+          <i class="center" style="text-align: center; font-size: small"
+            >la présentation du programme commence à 38 minutes</i
+          >
+        </div>
+      </div>
+      <div id="radiosity_step" class="root_step hidden">
+        <div class="step_content">
+          Mon projet de fin d'études, réalisé lors d'un stage chez
+          <a href="https://www.wanadev.com/">Wanadev</a> m'a permis
+          d'approfondir les algorithmes d'<a
+            href="https://fr.wikipedia.org/wiki/Illumination_globale"
+            >illumination globale</a
+          >, notamment la
+          <b
+            ><a
+              href="https://fr.wikipedia.org/wiki/Radiosit%C3%A9_(infographie)"
+              >radiosité</a
+            ></b
+          >
+          et l'<b
+            ><a href="https://fr.wikipedia.org/wiki/Occlusion_ambiante"
+              >ambient occlusion</a
+            ></b
+          >, dans un environnement web. En utilisant
+          <a href="https://www.babylonjs.com/">babylon.js</a> j'ai travaillé sur
+          leur intégration et leur optimisation pour le web.
+          <br />
+          <br />
+          <iframe
+            class="center"
+            src="https://docs.google.com/presentation/d/e/2PACX-1vRNKJ1EwAJN6O_BlGXze7UwaI_KYoP5U16oDp_BYg_glP9LsrUFa_Ds51PYQ3CaZWoIM18DdSTWqpYw/embed?start=false&loop=false&delayms=10000"
+            frameborder="0"
+            width="560"
+            height="315"
+            allowfullscreen="true"
+            mozallowfullscreen="true"
+            webkitallowfullscreen="true"
+          ></iframe>
+          <br />
+          <br />
+          J'ai également développé une application web dédiée, permettant de
+          calculer l'ambient occlusion d'un modèle 3D, offrant ainsi une
+          solution interactive et accessible pour visualiser et analyser cet
+          effet visuel.
+          <br />
+          <br />
+          <iframe
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/CIm7KY8lIXo"
+          ></iframe>
+        </div>
+      </div>
       <div id="about" class="root_step hidden">
-        <h1>About</h1>
-        <ul>
-          <li>parcours pro ihmtek => wanadev => freelance ?? => labex imu</li>
-          <li>Gamejams as coder and sound designer</li>
-          <li>MAO fruty loop ableton +guitare</li>
-          <li>ce portfolio</li>
-          <footer>
-            <div class="bottom_right">
-              <img
-                id="gmail_icon"
-                class="link_icon"
-                src="assets/img/icon/gmail.png"
-              />
-              <img
-                id="github_icon"
-                class="link_icon"
-                src="assets/img/icon/github.png"
-              />
-              <img
-                id="linkedin_icon"
-                class="link_icon"
-                src="assets/img/icon/linkedin.png"
-              />
+        <div class="carousel">
+          <div class="carousel_preview_container">
+            <div id="about_carousel_preview_on_screen" class="carousel_preview">
+              <img src="./assets/img/carousel/about/steampong.png" />
+              <div
+                id="guitar_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Guitare</h2>
+                <p>Je joue de la guitare et suis passioné par cet instrument</p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
+              <div
+                id="daw_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Musique assisté par ordinateur</h2>
+                <p>Je compose sous Fruity loops et Ableton Live 11</p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
+              <div
+                id="steampong_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Steam Pong</h2>
+                <p>
+                  un jeu vidéo stratégique ou deux joueurs s'affrontent<br />
+                  (2014)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
+              <div
+                id="souk_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Souk</h2>
+                <p>
+                  un jeu vidéo multijoueur d'observation et de discrétion
+                  <br />(2018)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
+              <div
+                id="covidjam_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Covidjam</h2>
+                <p>
+                  un jeu vidéo multijoueur ou l'on incarne une foule de
+                  manifestant<br />
+                  (2019)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
+              <div
+                id="portfolio_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Portfolio</h2>
+                <p>
+                  a three js portfolio<br />
+                  (2025)
+                </p>
+                <div class="custom_button">Plus d'informations</div>
+              </div>
             </div>
-          </footer>
-        </ul>
+            <div
+              id="about_carousel_preview_off_screen"
+              class="carousel_preview hidden"
+            >
+              <img src="./assets/img/carousel/about/steampong.png" />
+              <div class="carousel_preview_content">
+                should not be displayed
+              </div>
+            </div>
+          </div>
+          <div class="carousel_item_container">
+            <div
+              id="guitar_item"
+              title="guitare"
+              class="carousel_item"
+              style="
+                background-image: url(./assets/img/carousel/about/guitar.png);
+              "
+            ></div>
+            <div
+              id="daw_item"
+              title="musique asisté par ordinateur"
+              class="carousel_item"
+              style="background-image: url(./assets/img/carousel/about/daw.png)"
+            ></div>
+            <div
+              id="steampong_item"
+              class="carousel_item"
+              title="steampong"
+              style="
+                background-image: url(./assets/img/carousel/about/steampong.png);
+              "
+            ></div>
+            <div
+              id="souk_item"
+              class="carousel_item"
+              title="souk"
+              style="
+                background-image: url(./assets/img/carousel/about/souk.png);
+              "
+            ></div>
+            <div
+              id="covidjam_item"
+              class="carousel_item"
+              title="covidjam"
+              style="
+                background-image: url(./assets/img/carousel/about/covidjam.png);
+              "
+            ></div>
+            <div
+              id="portfolio_item"
+              class="carousel_item"
+              title="porfolio"
+              style="
+                background-image: url(./assets/img/carousel/about/portfolio.png);
+              "
+            ></div>
+          </div>
+        </div>
+        <footer>
+          <div class="bottom_right">
+            <img
+              id="gmail_icon"
+              class="link_icon"
+              src="assets/img/icon/gmail.png"
+              title="gmail"
+            />
+            <img
+              id="github_icon"
+              class="link_icon"
+              src="assets/img/icon/github.png"
+              title="github"
+            />
+            <img
+              id="linkedin_icon"
+              class="link_icon"
+              src="assets/img/icon/linkedin.png"
+              title="linkedin"
+            />
+            <img
+              id="instagram_icon"
+              class="link_icon"
+              src="assets/img/icon/instagram.png"
+              title="instagram"
+            />
+          </div>
+        </footer>
+      </div>
+      <div id="steampong_step" class="root_step hidden">
+        <div class="step_content">
+          Steam Pong est un jeu vidéo multijoueur développé en 48 heures lors de
+          la
+          <a href="https://globalgamejam.org/">GLOBAL GAME JAM</a> 2014.
+          L'équipe se composait d'un graphiste, d'un développeur et de moi-même
+          en tant que sound designer.
+          <br />
+          Nous avons d'abord conçu le gameplay : deux joueurs, dans un style
+          inspiré du
+          <a href="https://fr.wikipedia.org/wiki/Pong">Pong</a> classique,
+          s'envoient des unités. Chaque unité qui traverse la ligne adverse
+          rapporte des points. Pour contrer les unités adverses, il faut
+          utiliser les siennes en choisissant la bonne couleur, suivant une
+          mécanique de type "pierre-feuille-ciseaux".
+          <br />
+          <img class="center" src="./assets/gif/steampong.gif" />
+          <br />
+          De mon côté, j'ai créé deux musiques électroniques industrielles pour
+          renforcer l'immersion des joueurs, ainsi que divers bruitages pour
+          accompagner l'action. À la fin de la game jam, le jeu a été évalué et
+          a reçu des retours positifs.
+          <br />
+          <br />
+          <iframe
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/EGPmbF13RTw"
+          ></iframe>
+        </div>
+      </div>
+      <div id="souk_step" class="root_step hidden">
+        <div class="step_content">
+          Souk est un jeu vidéo multijoueur développé en 48 heures lors d'une
+          game jam. L'équipe était composée de trois développeurs, deux
+          graphistes et d'un musicien. Le gameplay, conçu collectivement, place
+          les joueurs dans un souk animé, au milieu de
+          <a href="https://fr.wikipedia.org/wiki/Personnage_non-joueur">PNJ</a>.
+          L'objectif est de se fondre dans la foule pour récupérer discrètement
+          des diamants disséminés sur le marché, tout en évitant de se faire
+          repérer par les autres joueurs. Parallèlement, chaque joueur doit
+          identifier et éliminer ses adversaires avant qu'ils n'accumulent
+          suffisament de diamand.
+          <br />
+          <br />
+          <img class="center" src="./assets/gif/souk.gif" />
+        </div>
+      </div>
+      <div id="covidjam_step" class="root_step hidden">
+        <div class="step_content">
+          Covidjam est un jeu multijoueur développé en 48 heures à la fin de
+          l'année 2019. Réalisé à distance, le projet rassemblait une équipe de
+          trois développeurs et deux graphistes. Le gameplay, conçu
+          collectivement, plonge les joueurs dans les rues d'une ville. Leur
+          objectif est de rassembler le plus grand nombre de manifestants pour
+          former une foule imposante et convertir ainsi la population de la
+          ville à leur cause.
+          <br />
+          <br />
+          <img class="center" src="./assets/gif/covidjam.gif" />
+        </div>
+      </div>
+      <div id="daw_step" class="root_step hidden">
+        <div class="step_content">
+          Au début des années 2010, j'ai commencé à m'intéresser aux logiciels
+          de musique assisté par ordinateur en utilisant tout d'abord
+          <a href="https://www.image-line.com/fl-studio/">Fruity loops</a>, avec
+          lequel j'ai composé principalement de la musique électronique. Cette
+          expérience m'a initié aux différents composants d'un pipeline sonore,
+          tels que le compresseur, le phaser, l'égaliseur ou encore la
+          réverbération, tout en affinant et en sensibilisant mon écoute.
+          Aujourd'hui, je travaille sur
+          <a href="https://www.ableton.com/en/">Ableton Live set 11</a> ou je
+          compose des morceaux variés basés sur mes goûts musicaux.
+          <br />
+          <br />
+          <audio class="center" controls>
+            <source src="./assets/audio/manouche.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+          <br />
+          <br />
+          <audio class="center" controls>
+            <source src="./assets/audio/boom_bap.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <div id="guitar_step" class="root_step hidden">
+        <div class="step_content">
+          Je joue de la guitare depuis 2006 en formant un groupe de musique.
+          Au-delà de la scène, il a fallu organiser des concerts et travailler
+          jusqu’à pouvoir enregistrer en studio. Cette expérience m’a permis de
+          rencontrer des personnes de milieux variés et d’élargir mes horizons,
+          tant dans la musique que dans d’autres domaines. Aujourd'hui je
+          continue d'explorer différents répertoires et poursuit la pratique de
+          cet instrument.
+          <br />
+          <br />
+          <audio class="center" controls>
+            <source src="./assets/audio/valse.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+          <br />
+          <br />
+          <audio class="center" controls>
+            <source src="./assets/audio/dark_balad.mp3" type="audio/mp3" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <div id="portfolio_step" class="root_step hidden">
+        <div class="= step_content">voir a la fin ce qque l'on met ici</div>
       </div>
     </div>
     <div id="off_screen" class="full_screen hidden"></div>
     <div id="move_to_home" class="custom_button custom_button_selected">
-      Valentin Machado
+      Valentin MACHADO
     </div>
     <div class="top_right">
-      <div id="move_to_projects" class="custom_button">Projects</div>
-      <div id="move_to_about" class="custom_button">About</div>
+      <div id="move_to_projects" class="custom_button">Projets</div>
+      <div id="move_to_about" class="custom_button">A propos de moi</div>
     </div>
+
+    <!-- js -->
     <script src="./dist/bundle.js"></script>
   </body>
 </html>
