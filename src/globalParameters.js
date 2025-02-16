@@ -259,11 +259,10 @@ export const globalInit = (background3D) => {
    * @param {Platform} platform
    */
   const initPlatformScene = (platform) => {
-    
     platform.object3D = new Object3D();
     platform.object3D.position.copy(platform.position);
     background3D.scene.add(platform.object3D);
-    
+
     // ground
     // const ground = new Mesh(
     //   new CircleGeometry(platform.size),
@@ -393,11 +392,11 @@ export const globalParameters = {
             1
           );
 
-          // by default target popup
+          // by default target radiosity
           const offset = Math.PI / 2 + Math.PI / 8;
           _this.rotationYDest = offset;
           projectsPlatform.object3D.rotation.y = _this.rotationYDest;
-          popupBuilderMesh.getWorldPosition(
+          radiosityMesh.getWorldPosition(
             projectsPlatform.spotLight.target.position
           );
           projectsPlatform.spotLight.target.updateMatrixWorld();

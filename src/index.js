@@ -311,7 +311,7 @@ const main = async () => {
       previewContainerIsHovered = false;
     };
 
-    const nextSelectDuration = 4000;
+    const nextSelectDuration = 8000;
 
     // run automatic select
     setInterval(() => {
