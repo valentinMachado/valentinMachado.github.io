@@ -21,7 +21,8 @@ const main = async () => {
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
   };
-  if (mobileCheck()) alert("For a better experience use a computer");
+  if (mobileCheck())
+    alert("Pour une meilleure expérience, accéder au site sur un ordinateur");
 
   // background3D
   const background3D = new Background3D(
