@@ -719,13 +719,13 @@ export const globalParameters = {
       }),
     ],
     [
-      "portfolio",
+      "meteoblocks",
       new Step({
         init: function (_this) {},
         onFocus: function (_this) {},
         onLeave: function (_this) {},
         tick: function (_this) {},
-        divId: "portfolio_step",
+        divId: "meteoblocks_step",
         cameraPosition: new Vector3(
           70.88385204449825,
           12.509098432068043,
@@ -742,9 +742,7 @@ export const globalParameters = {
   initial_id: "home",
   duration_step_move: 1000,
   fbx: {
-    models: {
-      blue_guy: { scale: 0.01, path: "./assets/fbx/blue_guy_model.fbx" },
-    },
+    models: {},
     animations: {},
   },
   materials: {},
