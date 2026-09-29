@@ -1,5 +1,22 @@
-todo.txt
+# dependencies
 node_modules
+
+# dev bundle (npm run dev / build-dev); the production bundle in dist/ is committed
+dist-dev
+*.map
+
+# local config
+.env
+
+# logs
+npm-debug.log*
+
+# editors / OS
 *.vscode
 *.vs
-*.map
+.idea
+.DS_Store
+Thumbs.db
+
+# personal notes
+todo.txt

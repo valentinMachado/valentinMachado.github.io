@@ -31,15 +31,15 @@ result.module.rules.push({
   ],
 });
 
-// (path remains same one cause because github pages handle backend which does not allow a dynamic build of html)
-result.output.path = path.resolve(process.cwd(), "./dist");
-
-// production or development
+// production bundle is committed in dist/ (GitHub Pages serves the repo as is);
+// the dev bundle goes to dist-dev/, served as /dist by bin/dev.js
 if (process.env.NODE_ENV == "production") {
   result.mode = "production";
+  result.output.path = path.resolve(process.cwd(), "./dist");
 } else {
   result.mode = "development";
   result.devtool = "source-map";
+  result.output.path = path.resolve(process.cwd(), "./dist-dev");
 }
 
 module.exports = result;
