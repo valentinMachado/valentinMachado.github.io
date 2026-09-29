@@ -267,6 +267,7 @@ const main = async () => {
         globalParameters.steps.get(stepIdDestination).divId
       );
       const previewImg = document.createElement("img");
+      previewImg.loading = "lazy";
       previewImg.src =
         "./assets/img/carousel/" +
         carouselId +
