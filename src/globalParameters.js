@@ -482,9 +482,8 @@ export const globalParameters = {
       new Step({
         previousStepId: "projects",
         init: function (_this) {
-          _this.selectProject3D = (id) => {
-            console.log("select " + id);
-          };
+          // no 3D counterpart for this carousel
+          _this.selectProject3D = () => {};
         },
         onFocus: function (_this) {},
         onLeave: function (_this) {},

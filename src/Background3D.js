@@ -79,11 +79,6 @@ export class Background3D {
         renderer: this.renderer,
       });
     }
-    // debug
-    window.addEventListener("keyup", (event) => {
-      console.log(this.scene);
-      console.log(this.camera);
-    });
 
     this.moveCallback = null;
     this.isMoving = false;
@@ -270,19 +265,11 @@ export class Background3D {
       const tick = () => {
         // optimize fps
         if (this.dt > 2000 / fps) {
-          // take two time more than expected to request frame
-          fps = Math.max(fps * 0.9, 1); // lower a bit fps
-          if (fps < (2 * maxFps) / 3) {
-            console.log("ca lag pas mal");
-            // baisser la quali de rendu
-          }
+          // frames take twice as long as expected: lower the target fps
+          fps = Math.max(fps * 0.9, 1);
         } else if (this.dt < 1000 / (fps * 2)) {
-          // take two time less than expected to request frame
+          // plenty of headroom: raise it back
           fps = Math.min(maxFps, fps * 1.1);
-          if (fps == maxFps) {
-            // console.log("on est large");
-            // augmenter la quali de rendu
-          }
         }
 
         requestAnimationFrame(tick);

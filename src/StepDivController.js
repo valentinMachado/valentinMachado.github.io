@@ -35,7 +35,7 @@ export class StepDivController {
       }
     }
 
-    if (!stepDivMovingOffScreen) debugger;
+    if (!stepDivMovingOffScreen) throw new Error("no visible step to move");
 
     this._currentStepDiv().classList.remove("hidden");
 
