@@ -289,7 +289,8 @@ export class Background3D {
         now = Date.now();
         this.dt = now - then;
         if (this.dt > 1000 / fps) {
-          then = now - (this.dt % 1000) / fps;
+          // keep the remainder so frames stay aligned on the 1000 / fps interval
+          then = now - (this.dt % (1000 / fps));
 
           this._animationMixers.forEach((a) => {
             a.update(this.dt * 0.001);
