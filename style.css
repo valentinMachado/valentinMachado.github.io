@@ -198,9 +198,14 @@ body {
 }
 
 .link_icon {
+  display: inline-block;
   width: 35px;
   margin: 3px;
-  cursor: pointer;
+}
+
+.link_icon img {
+  display: block;
+  width: 100%;
 }
 
 .custom_button {

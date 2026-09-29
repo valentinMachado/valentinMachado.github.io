@@ -3,7 +3,6 @@ import {
   PerspectiveCamera,
   WebGLRenderer,
   Color,
-  MeshStandardMaterial,
 } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { globalParameters, globalInit } from "./globalParameters";
@@ -85,12 +84,6 @@ export class Background3D {
   }
 
   async load() {
-    const materials = new Map();
-    ["red", "green", "blue", "yellow", "orange", "brown"].forEach((color) =>
-      materials.set(color, new MeshStandardMaterial({ color: color }))
-    );
-    this.materials = materials;
-
     globalInit(this);
 
     // initialize step scene
@@ -187,29 +180,11 @@ export class Background3D {
   }
 
   async moveNext() {
-    if (
-      this.isMoving ||
-      !globalParameters.steps.has(this.currentStep.nextStepId)
-    )
-      return;
-
-    this._lastStep = this.currentStep;
-    this._currentStepId = this.currentStep.nextStepId;
-
-    await this.move();
+    return this.moveToStep(this.currentStep.nextStepId);
   }
 
   async movePrevious() {
-    if (
-      this.isMoving ||
-      !globalParameters.steps.has(this.currentStep.previousStepId)
-    )
-      return;
-
-    this._lastStep = this.currentStep;
-    this._currentStepId = this.currentStep.previousStepId;
-
-    await this.move();
+    return this.moveToStep(this.currentStep.previousStepId);
   }
 
   async moveToStep(id) {

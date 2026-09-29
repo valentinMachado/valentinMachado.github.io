@@ -5,37 +5,48 @@ import {
   SpotLight,
   Object3D,
   BoxGeometry,
+  MeshStandardMaterial,
 } from "three";
 
 /**
  * @callback StepCallback
- * @param {Step}
+ * @param {Step} step
  */
+
+const noop = () => {};
 
 export class Step {
   /**
    *
    * @param {Object} params
-   * @param {StepCallback} params.onFocus
-   * @param {StepCallback} params.onLeave
-   * @param {StepCallback} params.tick
-   * @param {StepCallback} params.init
-   * @param {string} divId
-   * @param {Vector3} cameraPosition
-   * @param {Vector3} cameraTarget
+   * @param {StepCallback} [params.init] called once the 3D scene is ready
+   * @param {StepCallback} [params.onFocus]
+   * @param {StepCallback} [params.onLeave]
+   * @param {StepCallback} [params.tick] called each frame while the step is displayed
+   * @param {string} params.divId
+   * @param {Vector3} params.cameraPosition
+   * @param {Vector3} params.cameraTarget
+   * @param {string} [params.nextStepId]
+   * @param {string} [params.previousStepId]
    */
-  constructor(params) {
+  constructor({
+    init = noop,
+    onFocus = noop,
+    onLeave = noop,
+    tick = noop,
+    ...params
+  }) {
     /**
      * @type {import("./Background3D").Background3D}
      */
     this.background3D = null;
 
-    this.onFocus = params.onFocus.bind(this, this);
-    this.onLeave = params.onLeave.bind(this, this);
-    this.tick = params.tick.bind(this, this);
+    this.onFocus = () => onFocus(this);
+    this.onLeave = () => onLeave(this);
+    this.tick = () => tick(this);
     this.init = (background3D) => {
       this.background3D = background3D;
-      params.init(this);
+      init(this);
     };
 
     this.divId = params.divId;
@@ -156,15 +167,23 @@ const aboutPlatform = {
   ),
 };
 
+// projects carousel items, in the order of their 3D meshes around the platform
+const projectMeshColors = new Map([
+  ["popup_builder", "red"],
+  ["smaio_i_plan", "green"],
+  ["open_source_contributions", "blue"],
+  ["ud_imuv", "yellow"],
+  ["galeri3", "orange"],
+  ["radiosity", "brown"],
+]);
+
 /**
- * @type {Mesh}
+ * @type {Map<string, Mesh>}
  */
-let popupBuilderMesh,
-  smaioIPlanMesh,
-  openSourceContributionsMesh,
-  udImuvMesh,
-  galeri3Mesh,
-  radiosityMesh;
+const projectMeshes = new Map();
+
+/** angle of a project mesh around the projects platform */
+const projectAngle = (index) => (2 * Math.PI * index) / projectMeshColors.size;
 
 /**
  *
@@ -204,82 +223,58 @@ export const globalInit = (background3D) => {
   initPlatformScene(homePlatform);
   initPlatformScene(projectsPlatform);
 
-  // projects meshes
-  popupBuilderMesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("red")
-  );
-  popupBuilderMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos(0),
-    0,
-    0.8 * projectsPlatform.size * Math.sin(0)
-  );
-  smaioIPlanMesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("green")
-  );
-  smaioIPlanMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((2 * Math.PI) / 6),
-    0,
-    0.8 * projectsPlatform.size * Math.sin((2 * Math.PI) / 6)
-  );
-  openSourceContributionsMesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("blue")
-  );
-  openSourceContributionsMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((4 * Math.PI) / 6),
-    0,
-    0.8 * projectsPlatform.size * Math.sin((4 * Math.PI) / 6)
-  );
-  udImuvMesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("yellow")
-  );
-  udImuvMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((6 * Math.PI) / 6),
-    0,
-    0.8 * projectsPlatform.size * Math.sin((6 * Math.PI) / 6)
-  );
-  galeri3Mesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("orange")
-  );
-  galeri3Mesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((8 * Math.PI) / 6),
-    0,
-    0.8 * projectsPlatform.size * Math.sin((8 * Math.PI) / 6)
-  );
-  radiosityMesh = new Mesh(
-    new BoxGeometry(),
-    background3D.materials.get("brown")
-  );
-  radiosityMesh.position.set(
-    0.8 * projectsPlatform.size * Math.cos((10 * Math.PI) / 6),
-    0,
-    0.8 * projectsPlatform.size * Math.sin((10 * Math.PI) / 6)
-  );
-  projectsPlatform.object3D.add(
-    popupBuilderMesh,
-    smaioIPlanMesh,
-    openSourceContributionsMesh,
-    udImuvMesh,
-    galeri3Mesh,
-    radiosityMesh
-  );
+  // projects meshes, evenly spread around the platform
+  [...projectMeshColors].forEach(([id, color], index) => {
+    const mesh = new Mesh(
+      new BoxGeometry(),
+      new MeshStandardMaterial({ color: color })
+    );
+    const angle = projectAngle(index);
+    mesh.position.set(
+      0.8 * projectsPlatform.size * Math.cos(angle),
+      0,
+      0.8 * projectsPlatform.size * Math.sin(angle)
+    );
+    projectMeshes.set(id, mesh);
+    projectsPlatform.object3D.add(mesh);
+  });
 
   initPlatformScene(aboutPlatform);
 };
+
+// all detail pages share the same camera view
+const detailCameraPosition = new Vector3(
+  70.88385204449825,
+  12.509098432068043,
+  -6.149763100098089
+);
+const detailCameraTarget = new Vector3(
+  35.62221594037345,
+  -16.007222546768897,
+  6.0484699638794295
+);
+
+// declaration order matters: it sets the direction of the transition between two steps
+const detailStepIds = [
+  "popup_builder",
+  "smaio_i_plan",
+  "ud_imuv",
+  "open_source_contributions",
+  "galeri3",
+  "radiosity",
+  "steampong",
+  "souk",
+  "covidjam",
+  "daw",
+  "guitar",
+  "meteoblocks",
+];
 
 export const globalParameters = {
   steps: new Map([
     [
       "home",
       new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
         divId: "home",
         cameraPosition: new Vector3(
           homePlatform.size * 2.3,
@@ -295,58 +290,34 @@ export const globalParameters = {
       new Step({
         previousStepId: "home",
         nextStepId: "about",
-        init: function (_this) {
-          _this.moveCameraCallback = createMoveCameraCallback(
-            _this.background3D,
+        init: (step) => {
+          step.moveCameraCallback = createMoveCameraCallback(
+            step.background3D,
             0.00005,
             1
           );
 
           // by default target radiosity
           const offset = Math.PI / 2 + Math.PI / 8;
-          _this.rotationYDest = offset;
-          projectsPlatform.object3D.rotation.y = _this.rotationYDest;
-          radiosityMesh.getWorldPosition(
-            projectsPlatform.spotLight.target.position
-          );
+          step.rotationYDest = offset;
+          projectsPlatform.object3D.rotation.y = step.rotationYDest;
+          projectMeshes
+            .get("radiosity")
+            .getWorldPosition(projectsPlatform.spotLight.target.position);
           projectsPlatform.spotLight.target.updateMatrixWorld();
 
-          _this.selectProject3D = (id) => {
-            switch (id) {
-              case "popup_builder":
-                _this.rotationYDest = 0;
-                projectsPlatform.spotLight.target = popupBuilderMesh;
-                break;
-              case "smaio_i_plan":
-                _this.rotationYDest = (2 * Math.PI) / 6;
-                projectsPlatform.spotLight.target = smaioIPlanMesh;
-                break;
-              case "open_source_contributions":
-                _this.rotationYDest = (4 * Math.PI) / 6;
-                projectsPlatform.spotLight.target = openSourceContributionsMesh;
-                break;
-              case "ud_imuv":
-                _this.rotationYDest = (6 * Math.PI) / 6;
-                projectsPlatform.spotLight.target = udImuvMesh;
-                break;
-              case "galeri3":
-                _this.rotationYDest = (8 * Math.PI) / 6;
-                projectsPlatform.spotLight.target = galeri3Mesh;
-                break;
-              case "radiosity":
-                _this.rotationYDest = (10 * Math.PI) / 6;
-                projectsPlatform.spotLight.target = radiosityMesh;
-                break;
-              default:
-                break;
-            }
-            _this.rotationYDest += offset;
-            _this.rotationYDest %= 2 * Math.PI;
+          step.selectProject3D = (id) => {
+            const index = [...projectMeshColors.keys()].indexOf(id);
+            if (index < 0) return;
 
+            projectsPlatform.spotLight.target = projectMeshes.get(id);
+            step.rotationYDest = (projectAngle(index) + offset) % (2 * Math.PI);
+
+            // rotate the shortest way
             const ry = projectsPlatform.object3D.rotation.y;
-            const diff1 = Math.abs(ry + 2 * Math.PI - _this.rotationYDest);
-            const diff2 = Math.abs(ry - 2 * Math.PI - _this.rotationYDest);
-            const diff3 = Math.abs(ry - _this.rotationYDest);
+            const diff1 = Math.abs(ry + 2 * Math.PI - step.rotationYDest);
+            const diff2 = Math.abs(ry - 2 * Math.PI - step.rotationYDest);
+            const diff3 = Math.abs(ry - step.rotationYDest);
             if (diff1 < diff2 && diff1 < diff3) {
               projectsPlatform.object3D.rotation.y += 2 * Math.PI;
             } else if (diff2 < diff1 && diff2 < diff3) {
@@ -354,27 +325,15 @@ export const globalParameters = {
             }
           };
         },
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {
-          _this.moveCameraCallback();
+        tick: (step) => {
+          step.moveCameraCallback();
 
           const speed = 0.001;
-          // _this.rotationYDest 0 => 2pi
-          const amount = speed * _this.background3D.dt;
-          if (
-            Math.abs(
-              projectsPlatform.object3D.rotation.y - _this.rotationYDest
-            ) > amount
-          ) {
-            if (
-              projectsPlatform.object3D.rotation.y - _this.rotationYDest <
-              0
-            ) {
-              projectsPlatform.object3D.rotation.y += amount;
-            } else {
-              projectsPlatform.object3D.rotation.y -= amount;
-            }
+          // step.rotationYDest 0 => 2pi
+          const amount = speed * step.background3D.dt;
+          const rotation = projectsPlatform.object3D.rotation;
+          if (Math.abs(rotation.y - step.rotationYDest) > amount) {
+            rotation.y += rotation.y < step.rotationYDest ? amount : -amount;
             projectsPlatform.spotLight.target.updateMatrixWorld();
           }
         },
@@ -391,13 +350,10 @@ export const globalParameters = {
       "about",
       new Step({
         previousStepId: "projects",
-        init: function (_this) {
+        init: (step) => {
           // no 3D counterpart for this carousel
-          _this.selectProject3D = () => {};
+          step.selectProject3D = noop;
         },
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
         divId: "about",
         cameraPosition: new Vector3(
           aboutPlatform.size * 2.3 * Math.cos((4 * Math.PI) / 3),
@@ -407,246 +363,14 @@ export const globalParameters = {
         cameraTarget: aboutPlatform.position.clone(),
       }),
     ],
-    [
-      "popup_builder",
+    ...detailStepIds.map((id) => [
+      id,
       new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "popup_builder_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
+        divId: id + "_step",
+        cameraPosition: detailCameraPosition.clone(),
+        cameraTarget: detailCameraTarget.clone(),
       }),
-    ],
-    [
-      "smaio_i_plan",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "smaio_i_plan_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "ud_imuv",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "ud_imuv_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "open_source_contributions",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "open_source_contributions_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "galeri3",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "galeri3_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "radiosity",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "radiosity_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "steampong",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "steampong_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "souk",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "souk_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "covidjam",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "covidjam_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "daw",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "daw_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "guitar",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "guitar_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
-    [
-      "meteoblocks",
-      new Step({
-        init: function (_this) {},
-        onFocus: function (_this) {},
-        onLeave: function (_this) {},
-        tick: function (_this) {},
-        divId: "meteoblocks_step",
-        cameraPosition: new Vector3(
-          70.88385204449825,
-          12.509098432068043,
-          -6.149763100098089
-        ),
-        cameraTarget: new Vector3(
-          35.62221594037345,
-          -16.007222546768897,
-          6.0484699638794295
-        ),
-      }),
-    ],
+    ]),
   ]),
   initial_id: "home",
   duration_step_move: 1000,

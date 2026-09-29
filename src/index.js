@@ -62,58 +62,42 @@ const main = async () => {
     document.getElementById("off_screen")
   );
 
+  /**
+   * Runs the same move on the 3D background and on the step divs.
+   * Both must stay in sync: nothing moves while one of them is moving.
+   *
+   * @param {(controller: Background3D | StepDivController) => void} move
+   */
+  const navigate = (move) => {
+    if (background3D?.isMoving || stepDivController.isMoving) return;
+    if (background3D) move(background3D);
+    move(stepDivController);
+  };
+
+  const moveToStepId = (id) => navigate((c) => c.moveToStep(id));
+
   window.onwheel = (event) => {
-    if (background3D?.isMoving || stepDivController.isMoving || window.DEBUG_3D)
-      return; // to keep sync
+    if (window.DEBUG_3D) return;
     const direction = wheelDirection(event);
-    if (direction > 0) {
-      background3D?.moveNext();
-      stepDivController.moveNext();
-    } else if (direction < 0) {
-      background3D?.movePrevious();
-      stepDivController.movePrevious();
-    }
+    if (direction > 0) navigate((c) => c.moveNext());
+    else if (direction < 0) navigate((c) => c.movePrevious());
   };
 
-  const moveToStepId = (id) => {
-    if (background3D?.isMoving || stepDivController.isMoving) return; // to keep sync
-    background3D?.moveToStep(id);
-    stepDivController.moveToStep(id);
-  };
-
-  document.getElementById("move_to_home").onclick = () => {
-    moveToStepId("home");
-  };
-
-  document.getElementById("move_to_projects").onclick = () => {
-    moveToStepId("projects");
-  };
-
-  document.getElementById("move_to_about").onclick = () => {
-    moveToStepId("about");
-  };
+  // menu
+  const menuStepIds = ["home", "projects", "about"];
+  menuStepIds.forEach((id) => {
+    document.getElementById("move_to_" + id).onclick = () => moveToStepId(id);
+  });
 
   stepDivController.addOnMoveEndRequester(() => {
     for (let customButton of document.getElementsByClassName("custom_button")) {
       customButton.classList.remove("custom_button_selected");
     }
-    switch (stepDivController.currentStep().divId) {
-      case "home":
-        document
-          .getElementById("move_to_home")
-          .classList.add("custom_button_selected");
-        break;
-      case "projects":
-        document
-          .getElementById("move_to_projects")
-          .classList.add("custom_button_selected");
-        break;
-      case "about":
-        document
-          .getElementById("move_to_about")
-          .classList.add("custom_button_selected");
-        break;
-      default:
+    const id = stepDivController.currentStepId;
+    if (menuStepIds.includes(id)) {
+      document
+        .getElementById("move_to_" + id)
+        .classList.add("custom_button_selected");
     }
   });
 
@@ -340,32 +324,11 @@ const main = async () => {
   initializeCarousel("projects");
   initializeCarousel("about");
 
-  // link icon
-
-  document.getElementById("gmail_icon").onclick = () => {
-    location.href = "mailto:valentin.machado.cpe@gmail.com";
-  };
-  document.getElementById("github_icon").onclick = () => {
-    const a = document.createElement("a");
-    a.href = "https://github.com/valentinMachado";
+  // external links open in a new tab (mailto: stays in place)
+  document.querySelectorAll('a[href^="http"]').forEach((a) => {
     a.target = "_blank";
-    a.click();
-  };
-  document.getElementById("linkedin_icon").onclick = () => {
-    const a = document.createElement("a");
-    a.href = "https://www.linkedin.com/in/valentin-machado-6b408110b/";
-    a.target = "_blank";
-    a.click();
-  };
-  document.getElementById("instagram_icon").onclick = () => {
-    const a = document.createElement("a");
-    a.href = "https://www.instagram.com/mache7218/";
-    a.target = "_blank";
-    a.click();
-  };
-
-  // all link are blank
-  document.querySelectorAll("a").forEach((a) => (a.target = "_blank"));
+    a.rel = "noopener";
+  });
 
   if (window.DEBUG_3D) {
     const style = document.createElement("style");

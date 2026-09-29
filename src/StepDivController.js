@@ -79,43 +79,28 @@ export class StepDivController {
     return playAnimation(div, animationName, globalParameters.duration_step_move);
   }
 
-  async movePrevious() {
-    if (
-      this.isMoving ||
-      !globalParameters.steps.has(this.currentStep().previousStepId)
-    )
-      return;
-
-    this.currentStepId = this.currentStep().previousStepId;
-
-    this._initMove();
-
-    // launch animation
-    return Promise.all([
-      this.move(this.divOnScreen, "down_on_screen"),
-      this.move(this.divOffScreen, "down_off_screen"),
-    ]).then(() => this._endMove());
+  async moveNext() {
+    return this._moveTo(this.currentStep().nextStepId, "up");
   }
 
-  async moveNext() {
-    if (
-      this.isMoving ||
-      !globalParameters.steps.has(this.currentStep().nextStepId)
-    )
-      return;
-
-    this.currentStepId = this.currentStep().nextStepId;
-
-    this._initMove();
-
-    // launch animation
-    return Promise.all([
-      this.move(this.divOnScreen, "up_on_screen"),
-      this.move(this.divOffScreen, "up_off_screen"),
-    ]).then(() => this._endMove());
+  async movePrevious() {
+    return this._moveTo(this.currentStep().previousStepId, "down");
   }
 
   async moveToStep(id) {
+    // steps declared later are below the current one
+    const ids = [...globalParameters.steps.keys()];
+    const direction =
+      ids.indexOf(id) > ids.indexOf(this.currentStepId) ? "up" : "down";
+    return this._moveTo(id, direction);
+  }
+
+  /**
+   *
+   * @param {string} id step to display
+   * @param {"up"|"down"} direction
+   */
+  async _moveTo(id, direction) {
     if (
       this.currentStepId == id ||
       this.isMoving ||
@@ -123,33 +108,15 @@ export class StepDivController {
     )
       return;
 
-    const lastId = this.currentStepId;
     this.currentStepId = id;
-
-    let findLastFirst = false;
-    for (const [stepId] of globalParameters.steps) {
-      if (stepId == lastId) {
-        findLastFirst = true;
-        break;
-      }
-      if (stepId == id) {
-        break;
-      }
-    }
 
     this._initMove();
 
-    if (findLastFirst) {
-      return Promise.all([
-        this.move(this.divOnScreen, "up_on_screen"),
-        this.move(this.divOffScreen, "up_off_screen"),
-      ]).then(() => this._endMove());
-    } else {
-      return Promise.all([
-        this.move(this.divOnScreen, "down_on_screen"),
-        this.move(this.divOffScreen, "down_off_screen"),
-      ]).then(() => this._endMove());
-    }
+    await Promise.all([
+      this.move(this.divOnScreen, direction + "_on_screen"),
+      this.move(this.divOffScreen, direction + "_off_screen"),
+    ]);
+    this._endMove();
   }
 
   addOnMoveEndRequester(requester) {

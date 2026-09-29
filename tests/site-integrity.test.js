@@ -18,10 +18,6 @@ const ELEMENT_IDS_USED_BY_JS = [
   "move_to_home",
   "move_to_projects",
   "move_to_about",
-  "gmail_icon",
-  "github_icon",
-  "linkedin_icon",
-  "instagram_icon",
 ];
 
 const isLocalPath = (path) =>
@@ -168,6 +164,15 @@ describe("index.html", () => {
   it("gives every image an alt and every iframe a title", () => {
     expect([...document.querySelectorAll("img:not([alt])")]).toEqual([]);
     expect([...document.querySelectorAll("iframe:not([title])")]).toEqual([]);
+  });
+
+  it("social icons are real links", () => {
+    const links = [...document.querySelectorAll(".network_container a")];
+    expect(links.length).toBe(4);
+    for (const link of links) {
+      expect(link.getAttribute("href")).toMatch(/^(https:\/\/|mailto:)/);
+      expect(link.querySelector("img[alt]")).not.toBeNull();
+    }
   });
 
   it("back button icon used by src/index.js exists", () => {
