@@ -178,3 +178,31 @@ Le cœur du code dépend de WebGL et de l'animation CSS ; je propose de tester c
 5. **Déploiement** : on continue de commiter `dist/`.
 
 Constat de la phase 2 : sous Windows, git (`core.autocrlf`) extrait `dist/bundle.js` en CRLF alors que webpack produit du LF. Ce n'est pas bloquant, mais un `.gitattributes` fixant `eol=lf` éviterait les faux diffs (à faire en phase 3).
+
+---
+
+## Suivi des corrections (phase 3)
+
+| Point | Statut | Commit |
+|---|---|---|
+| Fins de ligne CRLF/LF | ✅ `.gitattributes` `eol=lf` | `chore: enforce LF…` |
+| C1 | ✅ travail sur `master` uniquement ; `dev` supprimée | — |
+| C2 écran de chargement bloqué | ✅ fallback sans 3D, vérifié dans Chrome avec WebGL désactivé | `fix: keep the site usable…` |
+| C3 poids initial | ✅ ~60 Mo → ~5 Mo (lazy-loading, `preload="none"`, script Vimeo retiré, 2 PNG recompressés) | `perf: cut initial page weight…` |
+| I1 molette horizontale | ✅ + tests | `fix: ignore horizontal wheel…` |
+| I2 transitions bloquées | ✅ `playAnimation` (end, cancel, timeout) + tests | `fix: never leave … locked` |
+| I3 cadencement | ✅ | `fix: correct operator precedence…` |
+| I4, I5, I6 restes de debug | ✅ | `chore: remove debug leftovers…` |
+| I7 progression `NaN` | ⏳ code mort, supprimé en phase 4 | — |
+| I8 three-inspect en prod | ✅ import dynamique : bundle 1,72 Mo → 765 Ko | `perf: keep three-inspect out…` |
+| I9 pixel ratio | ✅ plafonné à 2 | idem |
+| I9 shadow maps 4096² | ❓ en attente de décision (effet visuel possible) | — |
+| I10 `setInterval` des carrousels | ⏳ phase 4 | — |
+| I11, I17, I18 serveur de dev | ✅ 127.0.0.1, dotfiles refusés, erreurs gérées, bundle de dev dans `dist-dev/` | `fix(dev): harden…` |
+| I12, I14, I15, I16 dépendances | ✅ 24 → 2 vulnérabilités (svelte, chunk de debug uniquement) | `build(deps): …` |
+| I13 CSP | ➖ non fait (optionnel sur GitHub Pages) | — |
+| I19 historique git | ⏳ en toute fin de chantier | — |
+| I20 branches obsolètes | ✅ supprimées | — |
+| Coquilles | ✅ | `fix(content): …` |
+| `lang`, `alt`, titres d'iframes, meta description | ✅ + tests | `fix(a11y): …` |
+| Navigation clavier et tactile | ❓ en attente de décision (refonte des `div` cliquables en `button`/`a`) | — |
