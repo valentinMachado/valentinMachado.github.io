@@ -80,6 +80,7 @@ const addDetailPageHeader = (carouselId, stepId, onBack) => {
  *
  * @param {string} carouselId id of the carousel step
  * @param {(stepId: string) => void} moveToStepId
+ * @return {() => void} stops the automatic selection
  */
 export const initCarousel = (carouselId, moveToStepId) => {
   const previewOnScreen = document.getElementById(
@@ -178,7 +179,7 @@ export const initCarousel = (carouselId, moveToStepId) => {
     previewContainerIsHovered = false;
   };
 
-  setInterval(() => {
+  const autoSelect = () => {
     if (
       previewContainerIsHovered ||
       document.getElementById(carouselId).classList.contains("hidden")
@@ -187,5 +188,27 @@ export const initCarousel = (carouselId, moveToStepId) => {
       return;
     }
     if (Date.now() - lastSelectTimestamp > AUTO_SELECT_DELAY) selectNext();
-  }, 100);
+  };
+
+  // no timer while the tab is hidden; the delay restarts when it comes back
+  let autoSelectTimer = null;
+  const startAutoSelect = () => {
+    lastSelectTimestamp = Date.now();
+    autoSelectTimer = setInterval(autoSelect, 100);
+  };
+  const stopAutoSelect = () => {
+    clearInterval(autoSelectTimer);
+    autoSelectTimer = null;
+  };
+  const onVisibilityChange = () => {
+    if (document.hidden) stopAutoSelect();
+    else if (!autoSelectTimer) startAutoSelect();
+  };
+  document.addEventListener("visibilitychange", onVisibilityChange);
+  if (!document.hidden) startAutoSelect();
+
+  return () => {
+    stopAutoSelect();
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+  };
 };

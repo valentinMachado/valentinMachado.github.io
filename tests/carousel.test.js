@@ -15,6 +15,7 @@ const finishSlide = async (carouselId) => {
 };
 
 let moveToStepId;
+let stopCarousel;
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -22,10 +23,11 @@ beforeEach(() => {
   // the carousel auto-selects only while its step is displayed
   $("projects").classList.remove("hidden");
   moveToStepId = vi.fn();
-  initCarousel("projects", moveToStepId);
+  stopCarousel = initCarousel("projects", moveToStepId);
 });
 
 afterEach(() => {
+  stopCarousel();
   vi.clearAllTimers();
   vi.useRealTimers();
 });
@@ -92,6 +94,30 @@ describe("initCarousel", () => {
     $("projects").getElementsByClassName("carousel_preview_container")[0].onmousemove();
     await vi.advanceTimersByTimeAsync(10000);
     expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
+  });
+
+  it("stops its timer while the tab is hidden", async () => {
+    const setHidden = (hidden) => {
+      Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden });
+      document.dispatchEvent(new Event("visibilitychange"));
+    };
+    try {
+      expect(vi.getTimerCount()).toBe(1);
+      setHidden(true);
+      expect(vi.getTimerCount()).toBe(0);
+
+      await vi.advanceTimersByTimeAsync(4000);
+      setHidden(false);
+      expect(vi.getTimerCount()).toBe(1);
+
+      // the delay restarts from zero when the tab comes back
+      await vi.advanceTimersByTimeAsync(7000);
+      expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
+      await vi.advanceTimersByTimeAsync(1200);
+      expect(selectedItemIds("projects")).toEqual(["popup_builder_item"]);
+    } finally {
+      delete document.hidden;
+    }
   });
 
   it("does not auto-select while its step is hidden", async () => {

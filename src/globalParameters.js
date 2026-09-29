@@ -213,7 +213,7 @@ export const globalInit = (background3D) => {
     spotLight.decay = 0.35;
     spotLight.angle = 0.2;
     spotLight.penumbra = 0.27;
-    spotLight.shadow.mapSize.set(4096, 4096);
+    spotLight.shadow.mapSize.set(1024, 1024);
     spotLight.shadow.camera.far = 20;
     spotLight.shadow.camera.focus = 1;
     platform.spotLight = spotLight;
