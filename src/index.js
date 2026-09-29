@@ -1,7 +1,7 @@
 import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
 import { globalParameters } from "./globalParameters";
-import { getElementByClass, wheelDirection } from "./utils";
+import { getElementByClass, playAnimation, wheelDirection } from "./utils";
 
 window.DEBUG_3D = false;
 
@@ -196,16 +196,8 @@ const main = async () => {
         .getElementById(carouselId + "_carousel_preview_off_screen")
         .classList.remove("hidden");
 
-      const move = async (div, animationName) => {
-        return new Promise((resolve, reject) => {
-          div.style.animationName = animationName;
-          div.onanimationend = () => {
-            div.style.animationName = "";
-            resolve();
-          };
-          div.onerror = reject;
-        });
-      };
+      // duration must match .carousel_preview animation-duration in style.css
+      const move = (div, animationName) => playAnimation(div, animationName, 800);
 
       const promises = [];
       if (previousItemBeforeItemSelected) {

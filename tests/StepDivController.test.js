@@ -156,3 +156,21 @@ describe("media", () => {
     pauses.forEach((pause) => expect(pause).toHaveBeenCalled());
   });
 });
+
+describe("robustness", () => {
+  it("unlocks navigation even if animationend never fires", async () => {
+    vi.useFakeTimers();
+    try {
+      controller.moveNext();
+      expect(controller.isMoving).toBe(true);
+
+      await vi.advanceTimersByTimeAsync(2000);
+
+      expect(controller.isMoving).toBe(false);
+      expect(isVisible("projects")).toBe(true);
+      expect(offScreen().children.length).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});

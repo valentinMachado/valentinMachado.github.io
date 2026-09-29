@@ -1,5 +1,10 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { quadraticInOut, getElementByClass, wheelDirection } from "../src/utils";
+import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
+import {
+  quadraticInOut,
+  getElementByClass,
+  playAnimation,
+  wheelDirection,
+} from "../src/utils";
 
 describe("quadraticInOut", () => {
   it("maps the bounds and the midpoint", () => {
@@ -53,5 +58,45 @@ describe("wheelDirection", () => {
   it("ignores purely horizontal scrolling", () => {
     expect(wheelDirection({ deltaX: 80, deltaY: 0 })).toBe(0);
     expect(wheelDirection({ deltaX: -80, deltaY: -0 })).toBe(0);
+  });
+});
+
+describe("playAnimation", () => {
+  let element;
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+    element = document.createElement("div");
+  });
+
+  afterEach(() => vi.useRealTimers());
+
+  it("sets the animation and resolves on animationend", async () => {
+    const promise = playAnimation(element, "up_on_screen", 1000);
+    expect(element.style.animationName).toBe("up_on_screen");
+
+    element.onanimationend();
+    await promise;
+
+    expect(element.style.animationName).toBe("");
+    expect(element.onanimationend).toBeNull();
+  });
+
+  it("resolves on animationcancel", async () => {
+    const promise = playAnimation(element, "up_on_screen", 1000);
+    element.onanimationcancel();
+    await expect(promise).resolves.toBeUndefined();
+  });
+
+  it("resolves after a timeout when no animation event fires", async () => {
+    const resolved = vi.fn();
+    playAnimation(element, "up_on_screen", 1000).then(resolved);
+
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(resolved).not.toHaveBeenCalled();
+
+    await vi.advanceTimersByTimeAsync(500);
+    expect(resolved).toHaveBeenCalled();
+    expect(element.style.animationName).toBe("");
   });
 });

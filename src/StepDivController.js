@@ -1,4 +1,5 @@
 import { globalParameters } from "./globalParameters";
+import { playAnimation } from "./utils";
 
 export class StepDivController {
   constructor(divOnScreen, divOffScreen) {
@@ -69,20 +70,13 @@ export class StepDivController {
    * @param {String} animationName animationName to style
    */
   async move(div, animationName) {
-    return new Promise((resolve, reject) => {
-      // pause media
-      document.querySelectorAll("video").forEach((video) => video.pause());
-      document.querySelectorAll("audio").forEach((audio) => audio.pause());
+    // pause media
+    document.querySelectorAll("video").forEach((video) => video.pause());
+    document.querySelectorAll("audio").forEach((audio) => audio.pause());
 
-      div.style.animationName = animationName;
-      div.style.animationDuration =
-        globalParameters.duration_step_move / 1000 + "s";
-      div.onanimationend = () => {
-        div.style.animationName = "";
-        resolve();
-      };
-      div.onerror = reject;
-    });
+    div.style.animationDuration =
+      globalParameters.duration_step_move / 1000 + "s";
+    return playAnimation(div, animationName, globalParameters.duration_step_move);
   }
 
   async movePrevious() {
