@@ -20,10 +20,15 @@ const buildProduction = async (outputPath) => {
   const webpack = require("webpack");
   return new Promise((resolvePromise, reject) => {
     webpack(
-      { ...config, context: ROOT, output: { ...config.output, path: outputPath } },
+      {
+        ...config,
+        context: ROOT,
+        output: { ...config.output, path: outputPath },
+      },
       (error, stats) => {
         if (error) return reject(error);
-        if (stats.hasErrors()) return reject(new Error(stats.toString("errors-only")));
+        if (stats.hasErrors())
+          return reject(new Error(stats.toString("errors-only")));
         resolvePromise(stats);
       }
     );

@@ -26,8 +26,11 @@ const isLocalPath = (path) =>
 const localFileExists = (path) =>
   existsSync(resolve(ROOT, decodeURI(path.split(/[?#]/)[0])));
 
-const carouselItems = (carouselId) =>
-  [...document.getElementById(carouselId).getElementsByClassName("carousel_item")];
+const carouselItems = (carouselId) => [
+  ...document
+    .getElementById(carouselId)
+    .getElementsByClassName("carousel_item"),
+];
 
 const itemStepId = (item) => item.id.replace(/_item$/, "");
 
@@ -35,7 +38,9 @@ beforeAll(loadIndexHtml);
 
 describe("steps", () => {
   it("has the initial step", () => {
-    expect(globalParameters.steps.has(globalParameters.initialStepId)).toBe(true);
+    expect(globalParameters.steps.has(globalParameters.initialStepId)).toBe(
+      true
+    );
   });
 
   it.each([...globalParameters.steps.keys()])(
@@ -63,14 +68,18 @@ describe("steps", () => {
   it("main steps form a consistent next/previous chain", () => {
     const { steps } = globalParameters;
     for (const [id, step] of steps) {
-      if (step.nextStepId) expect(steps.get(step.nextStepId).previousStepId).toBe(id);
-      if (step.previousStepId) expect(steps.get(step.previousStepId).nextStepId).toBe(id);
+      if (step.nextStepId)
+        expect(steps.get(step.nextStepId).previousStepId).toBe(id);
+      if (step.previousStepId)
+        expect(steps.get(step.previousStepId).nextStepId).toBe(id);
     }
   });
 
   it("every step div is hidden at startup", () => {
     for (const [, step] of globalParameters.steps) {
-      expect(document.getElementById(step.divId).classList.contains("hidden")).toBe(true);
+      expect(
+        document.getElementById(step.divId).classList.contains("hidden")
+      ).toBe(true);
     }
   });
 });
@@ -81,8 +90,12 @@ describe.each(CAROUSEL_IDS)("carousel '%s'", (carouselId) => {
   });
 
   it("has on/off screen preview containers", () => {
-    expect(document.getElementById(`${carouselId}_carousel_preview_on_screen`)).not.toBeNull();
-    expect(document.getElementById(`${carouselId}_carousel_preview_off_screen`)).not.toBeNull();
+    expect(
+      document.getElementById(`${carouselId}_carousel_preview_on_screen`)
+    ).not.toBeNull();
+    expect(
+      document.getElementById(`${carouselId}_carousel_preview_off_screen`)
+    ).not.toBeNull();
     const preview = document
       .getElementById(`${carouselId}_carousel_preview_on_screen`)
       .querySelector("img");
@@ -94,18 +107,24 @@ describe.each(CAROUSEL_IDS)("carousel '%s'", (carouselId) => {
   });
 
   it("each item has a preview, a step and a thumbnail", () => {
-    const onScreen = document.getElementById(`${carouselId}_carousel_preview_on_screen`);
+    const onScreen = document.getElementById(
+      `${carouselId}_carousel_preview_on_screen`
+    );
     for (const item of carouselItems(carouselId)) {
       const stepId = itemStepId(item);
       const preview = document.getElementById(`${stepId}_preview_content`);
 
       expect(preview, `${stepId}_preview_content`).not.toBeNull();
       expect(onScreen.contains(preview)).toBe(true);
-      expect(preview.getElementsByClassName("custom_button").length).toBeGreaterThan(0);
+      expect(
+        preview.getElementsByClassName("custom_button").length
+      ).toBeGreaterThan(0);
       expect(globalParameters.steps.has(stepId), `step ${stepId}`).toBe(true);
 
       // path built by src/index.js for the detail page header image
-      expect(localFileExists(`assets/img/carousel/${carouselId}/${stepId}.png`)).toBe(true);
+      expect(
+        localFileExists(`assets/img/carousel/${carouselId}/${stepId}.png`)
+      ).toBe(true);
 
       const match = item.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
       expect(match, `${item.id} background-image`).not.toBeNull();
@@ -144,12 +163,16 @@ describe("index.html", () => {
 
   it("references only existing local files", () => {
     const paths = [
-      ...[...document.querySelectorAll("[src]")].map((el) => el.getAttribute("src")),
+      ...[...document.querySelectorAll("[src]")].map((el) =>
+        el.getAttribute("src")
+      ),
       ...[...document.querySelectorAll("link[href], a[href]")].map((el) =>
         el.getAttribute("href")
       ),
       ...[...document.querySelectorAll("[style]")].flatMap((el) =>
-        [...el.getAttribute("style").matchAll(/url\(["']?(.*?)["']?\)/g)].map((m) => m[1])
+        [...el.getAttribute("style").matchAll(/url\(["']?(.*?)["']?\)/g)].map(
+          (m) => m[1]
+        )
       ),
     ].filter(isLocalPath);
 
@@ -167,7 +190,9 @@ describe("index.html", () => {
   });
 
   it("clickable elements are keyboard reachable buttons", () => {
-    const clickables = document.querySelectorAll(".custom_button, .carousel_item");
+    const clickables = document.querySelectorAll(
+      ".custom_button, .carousel_item"
+    );
     expect(clickables.length).toBeGreaterThan(0);
     for (const element of clickables) {
       expect(element.tagName, element.id || element.textContent).toBe("BUTTON");

@@ -5,7 +5,9 @@ import { initCarousel } from "../src/carousel";
 const $ = (id) => document.getElementById(id);
 const isVisible = (id) => !$(id).classList.contains("hidden");
 const selectedItemIds = (carouselId) =>
-  [...$(carouselId).getElementsByClassName("carousel_item_selected")].map((item) => item.id);
+  [...$(carouselId).getElementsByClassName("carousel_item_selected")].map(
+    (item) => item.id
+  );
 
 /** jsdom does not run CSS animations: fire the end handlers by hand. */
 const finishSlide = async (carouselId) => {
@@ -50,7 +52,9 @@ describe("initCarousel", () => {
       "move_carousel_preview_left_off_screen"
     );
     expect(
-      $("projects_carousel_preview_on_screen").querySelector("img").getAttribute("src")
+      $("projects_carousel_preview_on_screen")
+        .querySelector("img")
+        .getAttribute("src")
     ).toBe("./assets/img/carousel/projects/galeri3.png");
 
     await finishSlide("projects");
@@ -73,16 +77,18 @@ describe("initCarousel", () => {
 
   it("adds a header image and a back button to each detail page", () => {
     const step = $("galeri3_step");
-    expect(step.querySelector(".root_content_preview_img").getAttribute("src")).toBe(
-      "./assets/img/carousel/projects/galeri3.png"
-    );
+    expect(
+      step.querySelector(".root_content_preview_img").getAttribute("src")
+    ).toBe("./assets/img/carousel/projects/galeri3.png");
     expect(step.querySelector(".back_button").tagName).toBe("BUTTON");
     step.querySelector(".back_button").onclick();
     expect(moveToStepId).toHaveBeenCalledWith("projects");
   });
 
   it("opens the detail page from the preview button", () => {
-    $("galeri3_preview_content").getElementsByClassName("custom_button")[0].onclick();
+    $("galeri3_preview_content")
+      .getElementsByClassName("custom_button")[0]
+      .onclick();
     expect(moveToStepId).toHaveBeenCalledWith("galeri3");
   });
 
@@ -92,14 +98,19 @@ describe("initCarousel", () => {
   });
 
   it("does not auto-select while the preview is hovered", async () => {
-    $("projects").getElementsByClassName("carousel_preview_container")[0].onmousemove();
+    $("projects")
+      .getElementsByClassName("carousel_preview_container")[0]
+      .onmousemove();
     await vi.advanceTimersByTimeAsync(10000);
     expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
   });
 
   it("stops its timer while the tab is hidden", async () => {
     const setHidden = (hidden) => {
-      Object.defineProperty(document, "hidden", { configurable: true, get: () => hidden });
+      Object.defineProperty(document, "hidden", {
+        configurable: true,
+        get: () => hidden,
+      });
       document.dispatchEvent(new Event("visibilitychange"));
     };
     try {

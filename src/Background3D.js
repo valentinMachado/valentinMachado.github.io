@@ -1,9 +1,4 @@
-import {
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
-  Color,
-} from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, Color } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { globalParameters, globalInit } from "./globalParameters";
 import { quadraticInOut } from "./utils";
@@ -64,7 +59,9 @@ export class Background3D {
       targetElement.id = "inspector";
       document.getElementById("move_to_home").appendChild(targetElement);
       // loaded on demand so this debug-only UI stays out of the production bundle
-      import(/* webpackChunkName: "three-inspect" */ "three-inspect/vanilla").then(({ createInspector }) =>
+      import(
+        /* webpackChunkName: "three-inspect" */ "three-inspect/vanilla"
+      ).then(({ createInspector }) =>
         createInspector(targetElement, {
           scene: this.scene,
           camera: this.camera,

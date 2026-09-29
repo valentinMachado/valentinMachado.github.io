@@ -17,7 +17,9 @@ const cssUrlToPath = (cssPath) => {
  * @return {HTMLElement[]}
  */
 const carouselItems = (carouselId) => [
-  ...document.getElementById(carouselId).getElementsByClassName("carousel_item"),
+  ...document
+    .getElementById(carouselId)
+    .getElementsByClassName("carousel_item"),
 ];
 
 /** carousel item id is `<stepId>_item` */
@@ -60,7 +62,8 @@ const addDetailPageHeader = (carouselId, stepId, onBack) => {
   const previewImg = document.createElement("img");
   previewImg.loading = "lazy";
   previewImg.alt = "";
-  previewImg.src = "./assets/img/carousel/" + carouselId + "/" + stepId + ".png";
+  previewImg.src =
+    "./assets/img/carousel/" + carouselId + "/" + stepId + ".png";
   previewImg.classList.add("root_content_preview_img");
   stepDiv.insertBefore(previewImg, stepDiv.firstChild);
 

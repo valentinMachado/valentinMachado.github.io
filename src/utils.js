@@ -52,7 +52,10 @@ const SWIPE_MIN_DISTANCE = 50;
  * @return {number}
  */
 export const swipeDirection = (deltaX, deltaY) => {
-  if (Math.abs(deltaY) < SWIPE_MIN_DISTANCE || Math.abs(deltaX) > Math.abs(deltaY))
+  if (
+    Math.abs(deltaY) < SWIPE_MIN_DISTANCE ||
+    Math.abs(deltaX) > Math.abs(deltaY)
+  )
     return 0;
   return deltaY < 0 ? 1 : -1;
 };

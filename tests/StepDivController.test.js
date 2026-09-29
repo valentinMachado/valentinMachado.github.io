@@ -4,7 +4,8 @@ import { StepDivController } from "../src/StepDivController";
 
 const onScreen = () => document.getElementById("on_screen");
 const offScreen = () => document.getElementById("off_screen");
-const isVisible = (id) => !document.getElementById(id).classList.contains("hidden");
+const isVisible = (id) =>
+  !document.getElementById(id).classList.contains("hidden");
 
 /** jsdom does not run CSS animations: fire the end handlers by hand. */
 const finishAnimations = () => {
@@ -141,11 +142,13 @@ describe("moveToStep", () => {
 
 describe("media", () => {
   it("pauses every video and audio when a transition starts", () => {
-    const pauses = [...document.querySelectorAll("video, audio")].map((media) => {
-      const pause = vi.fn();
-      media.pause = pause;
-      return pause;
-    });
+    const pauses = [...document.querySelectorAll("video, audio")].map(
+      (media) => {
+        const pause = vi.fn();
+        media.pause = pause;
+        return pause;
+      }
+    );
     expect(pauses.length).toBeGreaterThan(0);
 
     controller.moveNext();
