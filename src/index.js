@@ -1,7 +1,12 @@
 import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
 import { initCarousel } from "./carousel";
-import { isMobileUserAgent, wheelDirection } from "./utils";
+import {
+  isMobileUserAgent,
+  keyDirection,
+  swipeDirection,
+  wheelDirection,
+} from "./utils";
 
 window.DEBUG_3D = false;
 
@@ -57,7 +62,7 @@ const fitBackground3DToWindow = (background3D) => {
 };
 
 /**
- * Wheel and menu navigation between steps.
+ * Wheel, keyboard, touch and menu navigation between steps.
  *
  * @param {Background3D | null} background3D
  * @param {StepDivController} stepDivController
@@ -78,12 +83,46 @@ const initNavigation = (background3D, stepDivController) => {
 
   const moveToStepId = (id) => navigate((c) => c.moveToStep(id));
 
-  window.onwheel = (event) => {
-    if (window.DEBUG_3D) return;
-    const direction = wheelDirection(event);
+  /** @param {number} direction 1 = next, -1 = previous, 0 = none */
+  const moveInDirection = (direction) => {
     if (direction > 0) navigate((c) => c.moveNext());
     else if (direction < 0) navigate((c) => c.movePrevious());
   };
+
+  window.onwheel = (event) => {
+    if (window.DEBUG_3D) return;
+    moveInDirection(wheelDirection(event));
+  };
+
+  window.onkeydown = (event) => {
+    // media players and fields use the arrow keys themselves
+    if (event.target.closest?.("audio, video, input, textarea, select")) return;
+    moveInDirection(keyDirection(event));
+  };
+
+  let touchStart = null;
+  window.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStart = event.touches.length == 1 ? event.touches[0] : null;
+    },
+    { passive: true }
+  );
+  window.addEventListener(
+    "touchend",
+    (event) => {
+      if (!touchStart) return;
+      const touchEnd = event.changedTouches[0];
+      moveInDirection(
+        swipeDirection(
+          touchEnd.clientX - touchStart.clientX,
+          touchEnd.clientY - touchStart.clientY
+        )
+      );
+      touchStart = null;
+    },
+    { passive: true }
+  );
 
   // menu
   const menuStepIds = ["home", "projects", "about"];

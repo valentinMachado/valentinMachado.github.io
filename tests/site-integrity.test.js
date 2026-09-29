@@ -166,6 +166,15 @@ describe("index.html", () => {
     expect([...document.querySelectorAll("iframe:not([title])")]).toEqual([]);
   });
 
+  it("clickable elements are keyboard reachable buttons", () => {
+    const clickables = document.querySelectorAll(".custom_button, .carousel_item");
+    expect(clickables.length).toBeGreaterThan(0);
+    for (const element of clickables) {
+      expect(element.tagName, element.id || element.textContent).toBe("BUTTON");
+      expect(element.getAttribute("type")).toBe("button");
+    }
+  });
+
   it("social icons are real links", () => {
     const links = [...document.querySelectorAll(".network_container a")];
     expect(links.length).toBe(4);

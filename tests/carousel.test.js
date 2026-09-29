@@ -76,6 +76,7 @@ describe("initCarousel", () => {
     expect(step.querySelector(".root_content_preview_img").getAttribute("src")).toBe(
       "./assets/img/carousel/projects/galeri3.png"
     );
+    expect(step.querySelector(".back_button").tagName).toBe("BUTTON");
     step.querySelector(".back_button").onclick();
     expect(moveToStepId).toHaveBeenCalledWith("projects");
   });

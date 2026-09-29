@@ -64,7 +64,8 @@ const addDetailPageHeader = (carouselId, stepId, onBack) => {
   previewImg.classList.add("root_content_preview_img");
   stepDiv.insertBefore(previewImg, stepDiv.firstChild);
 
-  const backButton = document.createElement("div");
+  const backButton = document.createElement("button");
+  backButton.type = "button";
   backButton.classList.add("back_button");
   const img = document.createElement("img");
   img.src = "./assets/img/icon/back_button.png";

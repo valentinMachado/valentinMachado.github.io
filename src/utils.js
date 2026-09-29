@@ -27,6 +27,37 @@ export const getElementByClass = (parentId, className) => {
 export const wheelDirection = (event) => Math.sign(event.deltaY) || 0;
 
 /**
+ * Step navigation direction for a key: 1 = next, -1 = previous, 0 = none.
+ *
+ * @param {KeyboardEvent} event
+ * @return {number}
+ */
+export const keyDirection = (event) => {
+  if (event.altKey || event.ctrlKey || event.metaKey) return 0;
+  if (event.key == "ArrowDown" || event.key == "PageDown") return 1;
+  if (event.key == "ArrowUp" || event.key == "PageUp") return -1;
+  return 0;
+};
+
+// shorter swipes are taps or scroll attempts
+const SWIPE_MIN_DISTANCE = 50;
+
+/**
+ * Step navigation direction for a touch swipe, like the wheel: swiping up
+ * goes to the next step. 1 = next, -1 = previous, 0 = none (too short or
+ * mostly horizontal).
+ *
+ * @param {number} deltaX touchend x - touchstart x
+ * @param {number} deltaY touchend y - touchstart y
+ * @return {number}
+ */
+export const swipeDirection = (deltaX, deltaY) => {
+  if (Math.abs(deltaY) < SWIPE_MIN_DISTANCE || Math.abs(deltaX) > Math.abs(deltaY))
+    return 0;
+  return deltaY < 0 ? 1 : -1;
+};
+
+/**
  * Plays a CSS animation on an element and resolves when it is over.
  * Also resolves on cancel and after a timeout, because animationend never
  * fires if the element is hidden mid-animation (the caller would stay locked).

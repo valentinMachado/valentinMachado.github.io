@@ -5,6 +5,8 @@ import {
   playAnimation,
   wheelDirection,
   isMobileUserAgent,
+  keyDirection,
+  swipeDirection,
 } from "../src/utils";
 
 describe("quadraticInOut", () => {
@@ -122,5 +124,38 @@ describe("isMobileUserAgent", () => {
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
       )
     ).toBe(false);
+  });
+});
+
+describe("keyDirection", () => {
+  it("maps arrows and page keys", () => {
+    expect(keyDirection({ key: "ArrowDown" })).toBe(1);
+    expect(keyDirection({ key: "PageDown" })).toBe(1);
+    expect(keyDirection({ key: "ArrowUp" })).toBe(-1);
+    expect(keyDirection({ key: "PageUp" })).toBe(-1);
+  });
+
+  it("ignores other keys and shortcuts", () => {
+    expect(keyDirection({ key: "Enter" })).toBe(0);
+    expect(keyDirection({ key: "ArrowLeft" })).toBe(0);
+    expect(keyDirection({ key: "ArrowDown", altKey: true })).toBe(0);
+    expect(keyDirection({ key: "ArrowUp", ctrlKey: true })).toBe(0);
+    expect(keyDirection({ key: "PageDown", metaKey: true })).toBe(0);
+  });
+});
+
+describe("swipeDirection", () => {
+  it("goes to the next step when swiping up, like the wheel", () => {
+    expect(swipeDirection(0, -120)).toBe(1);
+    expect(swipeDirection(0, 120)).toBe(-1);
+  });
+
+  it("ignores taps and short moves", () => {
+    expect(swipeDirection(0, 0)).toBe(0);
+    expect(swipeDirection(5, -49)).toBe(0);
+  });
+
+  it("ignores mostly horizontal swipes", () => {
+    expect(swipeDirection(200, -100)).toBe(0);
   });
 });
