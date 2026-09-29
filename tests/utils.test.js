@@ -91,6 +91,22 @@ describe("playAnimation", () => {
     await expect(promise).resolves.toBeUndefined();
   });
 
+  it("ignores animation events bubbling from descendants", async () => {
+    const resolved = vi.fn();
+    playAnimation(element, "up_on_screen", 1000).then(resolved);
+    const child = document.createElement("span");
+
+    element.onanimationcancel({ target: child });
+    element.onanimationend({ target: child });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(resolved).not.toHaveBeenCalled();
+    expect(element.style.animationName).toBe("up_on_screen");
+
+    element.onanimationend({ target: element });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(resolved).toHaveBeenCalled();
+  });
+
   it("resolves after a timeout when no animation event fires", async () => {
     const resolved = vi.fn();
     playAnimation(element, "up_on_screen", 1000).then(resolved);

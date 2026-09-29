@@ -64,6 +64,8 @@ export const swipeDirection = (deltaX, deltaY) => {
  * Plays a CSS animation on an element and resolves when it is over.
  * Also resolves on cancel and after a timeout, because animationend never
  * fires if the element is hidden mid-animation (the caller would stay locked).
+ * Animation events bubble: those of descendants (e.g. the infinite bounce
+ * cancelled when a step div is moved) are ignored.
  *
  * @param {HTMLElement} element
  * @param {string} animationName css @keyframes name
@@ -73,7 +75,8 @@ export const swipeDirection = (deltaX, deltaY) => {
 export const playAnimation = (element, animationName, duration) =>
   new Promise((resolve) => {
     let timeoutId;
-    const end = () => {
+    const end = (event) => {
+      if (event && event.target !== element) return;
       clearTimeout(timeoutId);
       element.onanimationend = element.onanimationcancel = null;
       element.style.animationName = "";
