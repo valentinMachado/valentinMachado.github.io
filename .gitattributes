@@ -1,0 +1,2 @@
+# keep LF everywhere so dist/bundle.js stays byte-identical to the webpack output
+* text=auto eol=lf
