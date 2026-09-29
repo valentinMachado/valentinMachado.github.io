@@ -24,15 +24,18 @@ const main = async () => {
   if (mobileCheck())
     alert("Pour une meilleure expérience, accéder au site sur un ordinateur");
 
-  // background3D
-  const background3D = new Background3D(
-    document.getElementById("three_canvas")
-  );
-
-  await background3D.load((amountLoaded) => {
-    document.getElementById("loading_screen_loader_label").innerText =
-      "Chargement 3D: " + Math.round(amountLoaded * 100) + "%";
-  });
+  // background3D (optional: the portfolio content must stay reachable without WebGL)
+  let background3D = null;
+  try {
+    background3D = new Background3D(document.getElementById("three_canvas"));
+    await background3D.load((amountLoaded) => {
+      document.getElementById("loading_screen_loader_label").innerText =
+        "Chargement 3D: " + Math.round(amountLoaded * 100) + "%";
+    });
+  } catch (error) {
+    console.error("3D background disabled:", error);
+    background3D = null;
+  }
 
   document
     .getElementById("loading_screen_top")
@@ -48,6 +51,7 @@ const main = async () => {
   };
 
   const resize = () => {
+    if (!background3D) return;
     background3D.camera.aspect = window.innerWidth / window.innerHeight;
     background3D.camera.updateProjectionMatrix();
     background3D.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -62,20 +66,20 @@ const main = async () => {
   );
 
   window.onwheel = (event) => {
-    if (background3D.isMoving || stepDivController.isMoving || window.DEBUG_3D)
+    if (background3D?.isMoving || stepDivController.isMoving || window.DEBUG_3D)
       return; // to keep sync
     if (event.deltaY > 0) {
-      background3D.moveNext();
+      background3D?.moveNext();
       stepDivController.moveNext();
     } else {
-      background3D.movePrevious();
+      background3D?.movePrevious();
       stepDivController.movePrevious();
     }
   };
 
   const moveToStepId = (id) => {
-    if (background3D.isMoving || stepDivController.isMoving) return; // to keep sync
-    background3D.moveToStep(id);
+    if (background3D?.isMoving || stepDivController.isMoving) return; // to keep sync
+    background3D?.moveToStep(id);
     stepDivController.moveToStep(id);
   };
 
@@ -174,7 +178,7 @@ const main = async () => {
       // update 3D
       globalParameters.steps
         .get(carouselId)
-        .selectProject3D(itemSelected.id.replace("_item", ""));
+        .selectProject3D?.(itemSelected.id.replace("_item", "")); // unset when 3D is disabled
 
       itemSelected.classList.add("carousel_item_selected");
 

@@ -136,8 +136,7 @@ export class Background3D {
                 onProgress(computeTotalProgress());
               },
               (error) => {
-                console.log(error);
-                reject();
+                reject(error);
               }
             );
           })
@@ -175,8 +174,7 @@ export class Background3D {
             onProgress(computeTotalProgress());
           },
           (error) => {
-            console.log(error);
-            reject();
+            reject(error);
           }
         );
       });
@@ -215,108 +213,103 @@ export class Background3D {
       materials.set(id, result);
     }
 
-    return new Promise((resolve, reject) => {
-      Promise.all(promises).then(() => {
-        // everything is loaded
+    await Promise.all(promises);
 
-        let fbxId = 0;
-        /**
-         *
-         * @param {string} modelId
-         * @param {string[]} animIds
-         * @returns {Object3D}
-         */
-        this.createFromFBX = (modelId, animIds) => {
-          const result = models.get(modelId).clone();
+    // everything is loaded
+    let fbxId = 0;
+    /**
+     *
+     * @param {string} modelId
+     * @param {string[]} animIds
+     * @returns {Object3D}
+     */
+    this.createFromFBX = (modelId, animIds) => {
+      const result = models.get(modelId).clone();
 
-          if (animIds) {
-            resetClonedSkinnedMeshes(models.get(modelId), result);
+      if (animIds) {
+        resetClonedSkinnedMeshes(models.get(modelId), result);
 
-            result.userData.actions = new Map();
-            const animationMixer = new AnimationMixer(result);
+        result.userData.actions = new Map();
+        const animationMixer = new AnimationMixer(result);
 
-            animIds.forEach((id) => {
-              const animClip = animations.get(id).clone();
-              result.animations.push(animClip);
-              const action = animationMixer.clipAction(animClip);
-              if (animIds.length == 1) action.play();
-              result.userData.actions.set(id, action);
-            });
+        animIds.forEach((id) => {
+          const animClip = animations.get(id).clone();
+          result.animations.push(animClip);
+          const action = animationMixer.clipAction(animClip);
+          if (animIds.length == 1) action.play();
+          result.userData.actions.set(id, action);
+        });
 
-            this._animationMixers.push(animationMixer);
+        this._animationMixers.push(animationMixer);
+      }
+      result.name = modelId + "_" + fbxId;
+      fbxId++;
+      return result;
+    };
+
+    ["red", "green", "blue", "yellow", "orange", "brown"].forEach((color) =>
+      materials.set(color, new MeshStandardMaterial({ color: color }))
+    );
+    this.materials = materials;
+
+    globalInit(this);
+
+    // initialize step scene
+    for (const [, step] of globalParameters.steps) {
+      step.init(this);
+    }
+
+    // start rendering
+    {
+      const maxFps = 30;
+      let fps = maxFps;
+      let now;
+      let then = Date.now();
+
+      // looping function
+      const tick = () => {
+        // optimize fps
+        if (this.dt > 2000 / fps) {
+          // take two time more than expected to request frame
+          fps = Math.max(fps * 0.9, 1); // lower a bit fps
+          if (fps < (2 * maxFps) / 3) {
+            console.log("ca lag pas mal");
+            // baisser la quali de rendu
           }
-          result.name = modelId + "_" + fbxId;
-          fbxId++;
-          return result;
-        };
-
-        ["red", "green", "blue", "yellow", "orange", "brown"].forEach((color) =>
-          materials.set(color, new MeshStandardMaterial({ color: color }))
-        );
-        this.materials = materials;
-
-        globalInit(this);
-
-        // initialize step scene
-        for (const [, step] of globalParameters.steps) {
-          step.init(this);
+        } else if (this.dt < 1000 / (fps * 2)) {
+          // take two time less than expected to request frame
+          fps = Math.min(maxFps, fps * 1.1);
+          if (fps == maxFps) {
+            // console.log("on est large");
+            // augmenter la quali de rendu
+          }
         }
 
-        // start rendering
-        {
-          const maxFps = 30;
-          let fps = maxFps;
-          let now;
-          let then = Date.now();
+        requestAnimationFrame(tick);
+        now = Date.now();
+        this.dt = now - then;
+        if (this.dt > 1000 / fps) {
+          then = now - (this.dt % 1000) / fps;
 
-          // looping function
-          const tick = () => {
-            // optimize fps
-            if (this.dt > 2000 / fps) {
-              // take two time more than expected to request frame
-              fps = Math.max(fps * 0.9, 1); // lower a bit fps
-              if (fps < (2 * maxFps) / 3) {
-                console.log("ca lag pas mal");
-                // baisser la quali de rendu
-              }
-            } else if (this.dt < 1000 / (fps * 2)) {
-              // take two time less than expected to request frame
-              fps = Math.min(maxFps, fps * 1.1);
-              if (fps == maxFps) {
-                // console.log("on est large");
-                // augmenter la quali de rendu
-              }
-            }
+          this._animationMixers.forEach((a) => {
+            a.update(this.dt * 0.001);
+          });
 
-            requestAnimationFrame(tick);
-            now = Date.now();
-            this.dt = now - then;
-            if (this.dt > 1000 / fps) {
-              then = now - (this.dt % 1000) / fps;
+          if (this.moveCallback) {
+            this.moveCallback(this.dt);
+          } else {
+            this.currentStep.tick();
+          }
 
-              this._animationMixers.forEach((a) => {
-                a.update(this.dt * 0.001);
-              });
-
-              if (this.moveCallback) {
-                this.moveCallback(this.dt);
-              } else {
-                this.currentStep.tick();
-              }
-
-              this.renderer.render(this.scene, this.camera);
-            }
-          };
-          tick();
+          this.renderer.render(this.scene, this.camera);
         }
+      };
+      tick();
+    }
 
-        // a tiny wait allow to render well loading screen end transition
-        setTimeout(() => {
-          this.currentStep.onFocus();
-          resolve();
-        }, 50);
-      });
-    });
+    // a tiny wait allow to render well loading screen end transition
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    this.currentStep.onFocus();
   }
 
   async move() {
