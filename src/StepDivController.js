@@ -3,7 +3,7 @@ import { playAnimation } from "./utils";
 
 export class StepDivController {
   constructor(divOnScreen, divOffScreen) {
-    this.currentStepId = globalParameters.initial_id;
+    this.currentStepId = globalParameters.initialStepId;
     this._currentStepDiv().classList.remove("hidden");
 
     /**
@@ -75,8 +75,8 @@ export class StepDivController {
     document.querySelectorAll("audio").forEach((audio) => audio.pause());
 
     div.style.animationDuration =
-      globalParameters.duration_step_move / 1000 + "s";
-    return playAnimation(div, animationName, globalParameters.duration_step_move);
+      globalParameters.stepMoveDuration / 1000 + "s";
+    return playAnimation(div, animationName, globalParameters.stepMoveDuration);
   }
 
   async moveNext() {

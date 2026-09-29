@@ -10,7 +10,7 @@ import { quadraticInOut } from "./utils";
 
 export class Background3D {
   constructor(canvas) {
-    this._currentStepId = globalParameters.initial_id;
+    this._currentStepId = globalParameters.initialStepId;
 
     // scene
     this.scene = new Scene();
@@ -148,7 +148,7 @@ export class Background3D {
 
       this.moveCallback = (dt) => {
         currentTime += dt;
-        let ratio = currentTime / globalParameters.duration_step_move;
+        let ratio = currentTime / globalParameters.stepMoveDuration;
         ratio = quadraticInOut(Math.min(Math.max(0, ratio), 1));
 
         const p = position.clone().lerp(startPosition, 1 - ratio);

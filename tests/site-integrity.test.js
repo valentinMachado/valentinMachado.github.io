@@ -35,7 +35,7 @@ beforeAll(loadIndexHtml);
 
 describe("steps", () => {
   it("has the initial step", () => {
-    expect(globalParameters.steps.has(globalParameters.initial_id)).toBe(true);
+    expect(globalParameters.steps.has(globalParameters.initialStepId)).toBe(true);
   });
 
   it.each([...globalParameters.steps.keys()])(

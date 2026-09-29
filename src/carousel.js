@@ -8,7 +8,7 @@ const AUTO_SELECT_DELAY = 8000;
 
 const SELECTED_CLASS = "carousel_item_selected";
 
-const cssPath2tagPath = (cssPath) => {
+const cssUrlToPath = (cssPath) => {
   return cssPath.replace(/^url\(["']?/, "").replace(/["']?\)$/, "");
 };
 
@@ -42,7 +42,7 @@ const setPreview = (item, preview) => {
   );
   content.classList.remove("hidden");
   preview.appendChild(content);
-  preview.querySelector("img").src = cssPath2tagPath(item.style.backgroundImage);
+  preview.querySelector("img").src = cssUrlToPath(item.style.backgroundImage);
 };
 
 /**

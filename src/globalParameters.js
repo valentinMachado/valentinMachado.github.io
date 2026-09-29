@@ -190,8 +190,8 @@ const projectAngle = (index) => (2 * Math.PI * index) / projectMeshColors.size;
  * @param {import("./Background3D").Background3D} background3D
  */
 export const globalInit = (background3D) => {
-  const ambienLight = new AmbientLight("white", 0.05);
-  background3D.scene.add(ambienLight);
+  const ambientLight = new AmbientLight("white", 0.05);
+  background3D.scene.add(ambientLight);
 
   /**
    *
@@ -372,6 +372,6 @@ export const globalParameters = {
       }),
     ]),
   ]),
-  initial_id: "home",
-  duration_step_move: 1000,
+  initialStepId: "home",
+  stepMoveDuration: 1000,
 };

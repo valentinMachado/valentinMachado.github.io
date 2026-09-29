@@ -1,9 +1,8 @@
 :root {
   --duration-loading-screen-end: 2s;
   --loading-screen-dot-size: 20px;
-  --color-one: rgba(255, 255, 255, 1);
-  --color-two: rgb(255, 255, 255);
-  --color-three: rgb(14, 14, 56);
+  --color-light: rgb(255, 255, 255);
+  --color-dark: rgb(14, 14, 56);
   --size-back-button: 50px;
   --background-color-hover: rgba(255, 255, 255, 0.08);
 }
@@ -60,7 +59,7 @@ body {
   top: 50%;
   position: absolute;
   width: calc(100% - 200px);
-  color: var(--color-three);
+  color: var(--color-dark);
   padding: 0 100px;
   text-align: center;
 }
@@ -71,7 +70,7 @@ body {
   display: inline-block;
 }
 
-@keyframes lol {
+@keyframes loading_dot {
   0% {
     opacity: 0;
     transform: translateX(-300px);
@@ -90,57 +89,32 @@ body {
   }
 }
 
-@-webkit-keyframes lol {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateX(-300px);
-  }
-  33% {
-    opacity: 1;
-    -webkit-transform: translateX(0px);
-  }
-  66% {
-    opacity: 1;
-    -webkit-transform: translateX(0px);
-  }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateX(300px);
-  }
-}
-
 .loading_screen_loader_inner label:nth-child(6) {
-  -webkit-animation: lol 3s infinite ease-in-out;
-  animation: lol 3s infinite ease-in-out;
+  animation: loading_dot 3s infinite ease-in-out;
 }
 
 .loading_screen_loader_inner label:nth-child(5) {
-  -webkit-animation: lol 3s 100ms infinite ease-in-out;
-  animation: lol 3s 100ms infinite ease-in-out;
+  animation: loading_dot 3s 100ms infinite ease-in-out;
 }
 
 .loading_screen_loader_inner label:nth-child(4) {
-  -webkit-animation: lol 3s 200ms infinite ease-in-out;
-  animation: lol 3s 200ms infinite ease-in-out;
+  animation: loading_dot 3s 200ms infinite ease-in-out;
 }
 
 .loading_screen_loader_inner label:nth-child(3) {
-  -webkit-animation: lol 3s 300ms infinite ease-in-out;
-  animation: lol 3s 300ms infinite ease-in-out;
+  animation: loading_dot 3s 300ms infinite ease-in-out;
 }
 
 .loading_screen_loader_inner label:nth-child(2) {
-  -webkit-animation: lol 3s 400ms infinite ease-in-out;
-  animation: lol 3s 400ms infinite ease-in-out;
+  animation: loading_dot 3s 400ms infinite ease-in-out;
 }
 
 .loading_screen_loader_inner label:nth-child(1) {
-  -webkit-animation: lol 3s 500ms infinite ease-in-out;
-  animation: lol 3s 500ms infinite ease-in-out;
+  animation: loading_dot 3s 500ms infinite ease-in-out;
 }
 
 #loading_screen_top {
-  background-color: var(--color-one);
+  background-color: var(--color-light);
   z-index: 10;
   width: 100%;
   height: 50%;
@@ -152,7 +126,7 @@ body {
   z-index: 10;
   width: 100%;
   height: 50%;
-  background-color: var(--color-one);
+  background-color: var(--color-light);
   transform: translateY(100%);
   transition: transform calc(0.5 * var(--duration-loading-screen-end))
     ease-in-out calc(0.5 * var(--duration-loading-screen-end));
@@ -209,7 +183,7 @@ body {
 }
 
 .custom_button {
-  color: var(--color-one);
+  color: var(--color-light);
   font-size: x-large;
   width: fit-content;
   cursor: pointer;
@@ -220,7 +194,7 @@ body {
   display: block;
   width: 100%;
   height: 3px;
-  background: var(--color-one);
+  background: var(--color-light);
   transition: transform 0.2s ease-in-out;
   transform: scale(0);
 }
@@ -238,7 +212,7 @@ body {
   top: 0%;
   right: 0%;
   display: flex;
-  color: var(--color-one);
+  color: var(--color-light);
 }
 
 .top_right .custom_button {
@@ -314,7 +288,7 @@ body {
 }
 
 .carousel_preview_content {
-  color: var(--color-one);
+  color: var(--color-light);
   margin: auto;
   padding-right: 50px;
   text-align: end;
@@ -348,11 +322,11 @@ body {
 }
 
 .carousel_item_selected {
-  border-color: var(--color-one);
+  border-color: var(--color-light);
 }
 
 .carousel_item:hover {
-  border-color: var(--color-one);
+  border-color: var(--color-light);
 }
 
 .carousel_item_container {
@@ -363,7 +337,7 @@ body {
 /* step div controller */
 
 .root_step {
-  color: var(--color-two);
+  color: var(--color-light);
   font-size: larger;
   text-align: center;
   width: 100%;
@@ -389,7 +363,7 @@ body {
 }
 
 .step_content a {
-  color: var(--color-two);
+  color: var(--color-light);
 }
 .step_content iframe {
   margin-top: 20px;
