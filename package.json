@@ -2,9 +2,8 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "Portfolio",
-  "main": "src",
   "scripts": {
-    "reset": "rd -r .\\dist && rd -r .\\package-lock.json && rd -r .\\node_modules && npm i",
+    "reset": "node -e \"for (const p of ['dist', 'dist-dev', 'node_modules', 'package-lock.json']) require('fs').rmSync(p, { recursive: true, force: true })\" && npm i",
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
     "build-dev": "cross-env NODE_ENV=development webpack --config ./webpack.config.js",
     "dev": "cross-env NODE_ENV=development nodemon --watch ./src  --delay 2500ms ./bin/dev.js -e js,css",
@@ -22,21 +21,17 @@
   },
   "homepage": "https://github.com/valentinMachado/valentinMachado.github.io#readme",
   "dependencies": {
-    "child-process-promise": "^2.2.1",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.8.1",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "nodemon": "^3.0.1",
-    "style-loader": "^3.3.3",
-    "three": "^0.168.0",
-    "uuid": "^9.0.1",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "three": "^0.168.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "express": "^4.22.3",
     "jsdom": "^30.1.1",
+    "nodemon": "^3.1.14",
     "three-inspect": "^0.7.2",
-    "vitest": "^5.0.2"
-  }
+    "vitest": "^5.0.2",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "private": true
 }
