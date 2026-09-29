@@ -4,9 +4,12 @@ const result = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
+    chunkFilename: "[name].bundle.js",
     library: "portfolio",
     libraryTarget: "umd",
     umdNamedDefine: true,
+    // dist/ is committed: drop stale chunks on each build
+    clean: true,
   },
   module: {
     rules: [],

@@ -13,7 +13,6 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 import { globalParameters, globalInit } from "./globalParameters";
 import { quadraticInOut, resetClonedSkinnedMeshes } from "./utils";
-import { createInspector } from "three-inspect/vanilla";
 import { AjaxTextureLoader } from "./AjaxTextureLoader";
 
 export class Background3D {
@@ -31,7 +30,8 @@ export class Background3D {
     });
     this.renderer.setClearColor(new Color(), 0);
     this.renderer.shadowMap.enabled = true;
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    // capped: rendering above 2x costs a lot for no visible gain
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // camera
     this.camera = new PerspectiveCamera();
@@ -73,11 +73,14 @@ export class Background3D {
       const targetElement = document.createElement("div");
       targetElement.id = "inspector";
       document.getElementById("move_to_home").appendChild(targetElement);
-      const inspector = createInspector(targetElement, {
-        scene: this.scene,
-        camera: this.camera,
-        renderer: this.renderer,
-      });
+      // loaded on demand so this debug-only UI stays out of the production bundle
+      import(/* webpackChunkName: "three-inspect" */ "three-inspect/vanilla").then(({ createInspector }) =>
+        createInspector(targetElement, {
+          scene: this.scene,
+          camera: this.camera,
+          renderer: this.renderer,
+        })
+      );
     }
 
     this.moveCallback = null;
