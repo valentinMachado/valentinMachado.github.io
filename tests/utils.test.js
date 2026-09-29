@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { quadraticInOut, getElementByClass } from "../src/utils";
+import { quadraticInOut, getElementByClass, wheelDirection } from "../src/utils";
 
 describe("quadraticInOut", () => {
   it("maps the bounds and the midpoint", () => {
@@ -38,5 +38,20 @@ describe("getElementByClass", () => {
 
   it("returns undefined when nothing matches", () => {
     expect(getElementByClass("parent", "missing")).toBeUndefined();
+  });
+});
+
+describe("wheelDirection", () => {
+  it("goes to the next step when scrolling down", () => {
+    expect(wheelDirection({ deltaX: 0, deltaY: 120 })).toBe(1);
+  });
+
+  it("goes to the previous step when scrolling up", () => {
+    expect(wheelDirection({ deltaX: 0, deltaY: -3 })).toBe(-1);
+  });
+
+  it("ignores purely horizontal scrolling", () => {
+    expect(wheelDirection({ deltaX: 80, deltaY: 0 })).toBe(0);
+    expect(wheelDirection({ deltaX: -80, deltaY: -0 })).toBe(0);
   });
 });

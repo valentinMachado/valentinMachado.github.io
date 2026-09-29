@@ -76,3 +76,12 @@ export function resetClonedSkinnedMeshes(source, clone) {
     clone.bind(clone.skeleton, clone.bindMatrix);
   }
 }
+
+/**
+ * Step navigation direction for a wheel event: 1 = next, -1 = previous,
+ * 0 = none (horizontal scroll, e.g. trackpad swipe or shift + wheel).
+ *
+ * @param {WheelEvent} event
+ * @return {number}
+ */
+export const wheelDirection = (event) => Math.sign(event.deltaY) || 0;

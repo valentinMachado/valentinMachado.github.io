@@ -1,7 +1,7 @@
 import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
 import { globalParameters } from "./globalParameters";
-import { getElementByClass } from "./utils";
+import { getElementByClass, wheelDirection } from "./utils";
 
 window.DEBUG_3D = false;
 
@@ -68,10 +68,11 @@ const main = async () => {
   window.onwheel = (event) => {
     if (background3D?.isMoving || stepDivController.isMoving || window.DEBUG_3D)
       return; // to keep sync
-    if (event.deltaY > 0) {
+    const direction = wheelDirection(event);
+    if (direction > 0) {
       background3D?.moveNext();
       stepDivController.moveNext();
-    } else {
+    } else if (direction < 0) {
       background3D?.movePrevious();
       stepDivController.movePrevious();
     }
