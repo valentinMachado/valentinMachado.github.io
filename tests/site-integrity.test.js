@@ -1,12 +1,8 @@
-import { describe, it, expect, beforeAll, vi } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { ROOT, loadIndexHtml } from "./helpers";
-
-// three-inspect is a debug-only UI (svelte) that cannot run under jsdom
-vi.mock("three-inspect/vanilla", () => ({ createInspector: () => {} }));
-
-const { globalParameters } = await import("../src/globalParameters");
+import { globalParameters } from "../src/globalParameters";
 
 const CAROUSEL_IDS = ["projects", "about"];
 

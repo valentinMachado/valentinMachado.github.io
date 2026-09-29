@@ -1,22 +1,11 @@
 import {
-  MeshBasicMaterial,
   Mesh,
-  SphereGeometry,
   Vector3,
-  Raycaster,
-  PlaneGeometry,
   AmbientLight,
-  DirectionalLight,
-  Color,
   SpotLight,
-  TorusGeometry,
-  CircleGeometry,
   Object3D,
-  Quaternion,
-  Euler,
   BoxGeometry,
 } from "three";
-import { Background3D } from "./Background3D";
 
 /**
  * @callback StepCallback
@@ -37,7 +26,7 @@ export class Step {
    */
   constructor(params) {
     /**
-     * @type {Background3D}
+     * @type {import("./Background3D").Background3D}
      */
     this.background3D = null;
 
@@ -58,44 +47,9 @@ export class Step {
   }
 }
 
-const raycaster = new Raycaster();
-
-const loopAction = (object, toActionId, duration, onLoopOnce) => {
-  if (object.userData.currentActionId == toActionId) return;
-
-  let a1, a2, idCurrent;
-  for (const [id, action] of object.userData.actions) {
-    if (id == object.userData.currentActionId) {
-      a1 = action;
-    } else if (id == toActionId) {
-      a2 = action;
-      idCurrent = id;
-    }
-  }
-  object.userData.currentActionId = idCurrent;
-
-  a2.enabled = true;
-  a2.setEffectiveTimeScale(1);
-  a2.setEffectiveWeight(1);
-  a2.time = 0;
-  a2.play();
-  if (a1) {
-    a1.play();
-    a1.crossFadeTo(a2, duration / 1000, true);
-  }
-
-  if (onLoopOnce) {
-    const c = () => {
-      a2._mixer.removeEventListener("loop", c);
-      onLoopOnce();
-    };
-    a2._mixer.addEventListener("loop", c);
-  }
-};
-
 /**
  *
- * @param {Background3D} background3D
+ * @param {import("./Background3D").Background3D} background3D
  */
 const createMoveCameraCallback = (background3D, speed, maxDist) => {
   // camera move
@@ -157,40 +111,6 @@ const createMoveCameraCallback = (background3D, speed, maxDist) => {
 const offsetYPlatform = 50;
 const radiusOffsetXZPlatform = 40;
 
-const positionBuffer = new Vector3();
-const quaternionBuffer = new Quaternion();
-const scaleBuffer = new Vector3();
-
-const setWorldPosition = (object3D, position) => {
-  object3D.parent.matrixWorld.decompose(
-    positionBuffer,
-    quaternionBuffer,
-    scaleBuffer
-  );
-
-  quaternionBuffer.invert();
-  object3D.position.copy(position);
-  // in parent referential
-  object3D.position.sub(positionBuffer).applyQuaternion(quaternionBuffer);
-};
-
-/**
- *
- * @param {Object3D} object3D
- * @param {Euler} euler
- */
-const setWorldEuler = (object3D, euler) => {
-  object3D.parent.matrixWorld.decompose(
-    positionBuffer,
-    quaternionBuffer,
-    scaleBuffer
-  );
-
-  quaternionBuffer.invert();
-  const quaternionWorld = new Quaternion().setFromEuler(euler);
-  object3D.quaternion.multiplyQuaternions(quaternionBuffer, quaternionWorld);
-};
-
 /**
  * @typedef Platform
  * @property {string} name
@@ -248,7 +168,7 @@ let popupBuilderMesh,
 
 /**
  *
- * @param {Background3D} background3D
+ * @param {import("./Background3D").Background3D} background3D
  */
 export const globalInit = (background3D) => {
   const ambienLight = new AmbientLight("white", 0.05);
@@ -262,16 +182,6 @@ export const globalInit = (background3D) => {
     platform.object3D = new Object3D();
     platform.object3D.position.copy(platform.position);
     background3D.scene.add(platform.object3D);
-
-    // ground
-    // const ground = new Mesh(
-    //   new CircleGeometry(platform.size),
-    //   background3D.materials.get("parquet").clone()
-    // );
-    // ground.name = "ground";
-    // ground.receiveShadow = true;
-    // ground.rotation.x = -Math.PI / 2;
-    // platform.object3D.add(ground);
 
     // lighting
     const spotLight = new SpotLight();
@@ -740,9 +650,4 @@ export const globalParameters = {
   ]),
   initial_id: "home",
   duration_step_move: 1000,
-  fbx: {
-    models: {},
-    animations: {},
-  },
-  materials: {},
 };

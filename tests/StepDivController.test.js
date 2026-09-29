@@ -1,9 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { loadIndexHtml } from "./helpers";
-
-vi.mock("three-inspect/vanilla", () => ({ createInspector: () => {} }));
-
-const { StepDivController } = await import("../src/StepDivController");
+import { StepDivController } from "../src/StepDivController";
 
 const onScreen = () => document.getElementById("on_screen");
 const offScreen = () => document.getElementById("off_screen");

@@ -84,7 +84,7 @@ export class StepDivController {
       this.isMoving ||
       !globalParameters.steps.has(this.currentStep().previousStepId)
     )
-      return Promise.resolve;
+      return;
 
     this.currentStepId = this.currentStep().previousStepId;
 
@@ -102,7 +102,7 @@ export class StepDivController {
       this.isMoving ||
       !globalParameters.steps.has(this.currentStep().nextStepId)
     )
-      return Promise.resolve;
+      return;
 
     this.currentStepId = this.currentStep().nextStepId;
 
@@ -121,7 +121,7 @@ export class StepDivController {
       this.isMoving ||
       !globalParameters.steps.has(id)
     )
-      return Promise.resolve;
+      return;
 
     const lastId = this.currentStepId;
     this.currentStepId = id;

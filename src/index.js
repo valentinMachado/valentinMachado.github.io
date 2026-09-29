@@ -28,10 +28,7 @@ const main = async () => {
   let background3D = null;
   try {
     background3D = new Background3D(document.getElementById("three_canvas"));
-    await background3D.load((amountLoaded) => {
-      document.getElementById("loading_screen_loader_label").innerText =
-        "Chargement 3D: " + Math.round(amountLoaded * 100) + "%";
-    });
+    await background3D.load();
   } catch (error) {
     console.error("3D background disabled:", error);
     background3D = null;

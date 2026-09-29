@@ -3,17 +3,11 @@ import {
   PerspectiveCamera,
   WebGLRenderer,
   Color,
-  AnimationMixer,
-  Object3D,
   MeshStandardMaterial,
-  RepeatWrapping,
-  Vector2,
 } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 import { globalParameters, globalInit } from "./globalParameters";
-import { quadraticInOut, resetClonedSkinnedMeshes } from "./utils";
-import { AjaxTextureLoader } from "./AjaxTextureLoader";
+import { quadraticInOut } from "./utils";
 
 export class Background3D {
   constructor(canvas) {
@@ -40,9 +34,6 @@ export class Background3D {
     this.camera.position.copy(position);
     this.camera.quaternion.copy(quaternion);
     this.camera.updateProjectionMatrix();
-
-    // animation mixers
-    this._animationMixers = [];
 
     // debug
     if (window.DEBUG_3D) {
@@ -93,158 +84,8 @@ export class Background3D {
     return globalParameters.steps.get(this._currentStepId);
   }
 
-  async load(onProgress) {
-    // loading fbx models and bones
-    let progress = new Map();
-
-    const computeTotalProgress = () => {
-      let result = 0;
-      for (let [, value] of progress) {
-        result += value / progress.size;
-      }
-      return result;
-    };
-
-    const models = new Map();
+  async load() {
     const materials = new Map();
-    const animations = new Map();
-    const fbxLoader = new FBXLoader();
-    const ajaxTextureLoader = new AjaxTextureLoader();
-    const promises = [];
-
-    const loadFbxs = (paramObject, onLoad) => {
-      for (let id in paramObject) {
-        const path = paramObject[id].path;
-        progress.set(path, 0);
-        promises.push(
-          new Promise((resolve, reject) => {
-            fbxLoader.load(
-              path,
-              (object) => {
-                object.scale.set(
-                  paramObject[id].scale,
-                  paramObject[id].scale,
-                  paramObject[id].scale
-                );
-                onLoad(id, object);
-                resolve();
-              },
-              (xhr) => {
-                progress.set(path, xhr.loaded / xhr.total);
-                onProgress(computeTotalProgress());
-              },
-              (error) => {
-                reject(error);
-              }
-            );
-          })
-        );
-      }
-    };
-
-    loadFbxs(globalParameters.fbx.models, (id, object) => {
-      object.traverse((child) => {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      });
-      models.set(id, object);
-    });
-    loadFbxs(globalParameters.fbx.animations, (id, object) => {
-      const anim = object.animations[0];
-      anim.name = id;
-      animations.set(id, anim);
-    });
-
-    const loadTexture = (path, scale, onLoad) => {
-      progress.set(path, 0);
-      return new Promise((resolve, reject) => {
-        ajaxTextureLoader.load(
-          path,
-          (texture) => {
-            texture.wrapS = texture.wrapT = RepeatWrapping;
-            texture.offset.set(0, 0);
-            texture.repeat.set(scale, scale);
-            onLoad(texture);
-            resolve();
-          },
-          (xhr) => {
-            progress.set(path, xhr.loaded / xhr.total);
-            onProgress(computeTotalProgress());
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      });
-    };
-
-    for (let id in globalParameters.materials) {
-      const result = new MeshStandardMaterial();
-      promises.push(
-        loadTexture(
-          globalParameters.materials[id].color,
-          globalParameters.materials[id].scale,
-          (texture) => (result.map = texture)
-        )
-      );
-      promises.push(
-        loadTexture(
-          globalParameters.materials[id].ao,
-          globalParameters.materials[id].scale,
-          (texture) => (result.aoMap = texture)
-        )
-      );
-      promises.push(
-        loadTexture(
-          globalParameters.materials[id].normal,
-          globalParameters.materials[id].scale,
-          (texture) => (result.normalMap = texture)
-        )
-      );
-      promises.push(
-        loadTexture(
-          globalParameters.materials[id].roughness,
-          globalParameters.materials[id].scale,
-          (texture) => (result.roughnessMap = texture)
-        )
-      );
-      materials.set(id, result);
-    }
-
-    await Promise.all(promises);
-
-    // everything is loaded
-    let fbxId = 0;
-    /**
-     *
-     * @param {string} modelId
-     * @param {string[]} animIds
-     * @returns {Object3D}
-     */
-    this.createFromFBX = (modelId, animIds) => {
-      const result = models.get(modelId).clone();
-
-      if (animIds) {
-        resetClonedSkinnedMeshes(models.get(modelId), result);
-
-        result.userData.actions = new Map();
-        const animationMixer = new AnimationMixer(result);
-
-        animIds.forEach((id) => {
-          const animClip = animations.get(id).clone();
-          result.animations.push(animClip);
-          const action = animationMixer.clipAction(animClip);
-          if (animIds.length == 1) action.play();
-          result.userData.actions.set(id, action);
-        });
-
-        this._animationMixers.push(animationMixer);
-      }
-      result.name = modelId + "_" + fbxId;
-      fbxId++;
-      return result;
-    };
-
     ["red", "green", "blue", "yellow", "orange", "brown"].forEach((color) =>
       materials.set(color, new MeshStandardMaterial({ color: color }))
     );
@@ -282,10 +123,6 @@ export class Background3D {
           // keep the remainder so frames stay aligned on the 1000 / fps interval
           then = now - (this.dt % (1000 / fps));
 
-          this._animationMixers.forEach((a) => {
-            a.update(this.dt * 0.001);
-          });
-
           if (this.moveCallback) {
             this.moveCallback(this.dt);
           } else {
@@ -304,7 +141,7 @@ export class Background3D {
   }
 
   async move() {
-    if (this.isMoving) return Promise.resolve;
+    if (this.isMoving) return;
 
     this.isMoving = true;
 
@@ -354,7 +191,7 @@ export class Background3D {
       this.isMoving ||
       !globalParameters.steps.has(this.currentStep.nextStepId)
     )
-      return Promise.resolve;
+      return;
 
     this._lastStep = this.currentStep;
     this._currentStepId = this.currentStep.nextStepId;
@@ -367,7 +204,7 @@ export class Background3D {
       this.isMoving ||
       !globalParameters.steps.has(this.currentStep.previousStepId)
     )
-      return Promise.resolve;
+      return;
 
     this._lastStep = this.currentStep;
     this._currentStepId = this.currentStep.previousStepId;
@@ -381,24 +218,11 @@ export class Background3D {
       this.isMoving ||
       !globalParameters.steps.has(id)
     )
-      return Promise.resolve;
+      return;
 
     this._lastStep = this.currentStep;
     this._currentStepId = id;
 
     await this.move();
-  }
-
-  computeMouseCoord(event) {
-    const rect = this.renderer.domElement.getBoundingClientRect();
-    const mouse = new Vector2(
-      ((event.clientX - rect.left) * this.renderer.domElement.width) /
-        rect.width,
-      ((event.clientY - rect.top) * this.renderer.domElement.height) /
-        rect.height
-    );
-    mouse.x = (mouse.x / this.renderer.domElement.width) * 2 - 1;
-    mouse.y = (mouse.y / this.renderer.domElement.height) * -2 + 1; // note we flip Y
-    return mouse;
   }
 }
