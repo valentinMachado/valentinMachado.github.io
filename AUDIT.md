@@ -193,11 +193,11 @@ Constat de la phase 2 : sous Windows, git (`core.autocrlf`) extrait `dist/bundle
 | I2 transitions bloquées | ✅ `playAnimation` (end, cancel, timeout) + tests | `fix: never leave … locked` |
 | I3 cadencement | ✅ | `fix: correct operator precedence…` |
 | I4, I5, I6 restes de debug | ✅ | `chore: remove debug leftovers…` |
-| I7 progression `NaN` | ⏳ code mort, supprimé en phase 4 | — |
+| I7 progression `NaN` | ✅ code mort supprimé (phase 4) | `refactor: remove dead code` |
 | I8 three-inspect en prod | ✅ import dynamique : bundle 1,72 Mo → 765 Ko | `perf: keep three-inspect out…` |
 | I9 pixel ratio | ✅ plafonné à 2 | idem |
-| I9 shadow maps 4096² | ❓ en attente de décision (effet visuel possible) | — |
-| I10 `setInterval` des carrousels | ⏳ phase 4 | — |
+| I9 shadow maps 4096² | ✅ 1024², sans changement visible (phase 4) | `perf: smaller shadow maps…` |
+| I10 `setInterval` des carrousels | ✅ arrêtés quand l'onglet est caché (phase 4) | idem |
 | I11, I17, I18 serveur de dev | ✅ 127.0.0.1, dotfiles refusés, erreurs gérées, bundle de dev dans `dist-dev/` | `fix(dev): harden…` |
 | I12, I14, I15, I16 dépendances | ✅ 24 → 2 vulnérabilités (svelte, chunk de debug uniquement) | `build(deps): …` |
 | I13 CSP | ➖ non fait (optionnel sur GitHub Pages) | — |
@@ -205,4 +205,28 @@ Constat de la phase 2 : sous Windows, git (`core.autocrlf`) extrait `dist/bundle
 | I20 branches obsolètes | ✅ supprimées | — |
 | Coquilles | ✅ | `fix(content): …` |
 | `lang`, `alt`, titres d'iframes, meta description | ✅ + tests | `fix(a11y): …` |
-| Navigation clavier et tactile | ❓ en attente de décision (refonte des `div` cliquables en `button`/`a`) | — |
+| Navigation clavier et tactile | ✅ `button`/`a`, flèches et PageUp/PageDown, swipe vertical (phase 4) | `feat(a11y): keyboard and touch navigation` |
+
+---
+
+## Suivi du nettoyage (phase 4)
+
+| Sujet | Commit |
+|---|---|
+| Code mort : AjaxTextureLoader, chemin FBX/textures, `bounce*`, `parallelTraverse`, `resetClonedSkinnedMeshes`, `loopAction`, `setWorld*`, `raycaster`, `computeMouseCoord`, imports inutilisés (dont l'import circulaire `globalParameters → Background3D`), `blue_guy_model.fbx`, `opacity_transition`, sortie UMD, `return Promise.resolve`. Bundle 765 → 708 Ko | `refactor: remove dead code` |
+| Factorisation : 12 steps de détail générés depuis une liste, 6 meshes depuis une table id → couleur, next/previous/moveToStep, menu, liens sociaux en `<a>` | `refactor: factor duplicated…` |
+| `main()` découpée ; carrousel extrait dans `src/carousel.js` (+ tests) | `refactor: split main()…` |
+| Nommage : JS en camelCase (`initialStepId`, `stepMoveDuration`), `ambientLight`, keyframe `loading_dot`, couleurs `--color-light`/`--color-dark`, préfixes `-webkit-` retirés | `refactor: consistent naming…` |
+| Shadow maps 1024², carrousels en pause onglet caché | `perf: …` |
+| Navigation clavier et tactile | `feat(a11y): …` |
+| ESLint (flat config) + Prettier, scripts `lint`, `format`, `format:check` | `build: add ESLint…` puis `style: format…` |
+
+Tests : 89 → 103 (carrousel, `isMobileUserAgent`, `keyDirection`, `swipeDirection`, liens et boutons accessibles). Les mocks de `three-inspect` ne sont plus nécessaires.
+
+Conventions retenues : les ids et classes HTML/CSS restent en snake_case, car ils sont partagés avec les ids de steps (`galeri3_step`, `galeri3_item`…). Seul le JS passe en camelCase.
+
+Remarques pour la suite :
+- Aucun mesh n'a `castShadow`/`receiveShadow` (le sol était commenté) : les 3 shadow maps sont calculées sans effet visible. On pourrait couper `renderer.shadowMap` entièrement.
+- `globalParameters.js` contient surtout la scène et les steps ; un renommage (`steps.js`) serait plus parlant.
+- L'`alert()` « accédez au site sur un ordinateur » sur mobile est toujours là, alors que le swipe marche désormais.
+
