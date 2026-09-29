@@ -201,7 +201,7 @@ Constat de la phase 2 : sous Windows, git (`core.autocrlf`) extrait `dist/bundle
 | I11, I17, I18 serveur de dev | ✅ 127.0.0.1, dotfiles refusés, erreurs gérées, bundle de dev dans `dist-dev/` | `fix(dev): harden…` |
 | I12, I14, I15, I16 dépendances | ✅ 24 → 2 vulnérabilités (svelte, chunk de debug uniquement) | `build(deps): …` |
 | I13 CSP | ➖ non fait (optionnel sur GitHub Pages) | — |
-| I19 historique git | ⏳ en toute fin de chantier | — |
+| I19 historique git | ✅ réécrit avec `git filter-repo` : pack 213 → 71 Mo (voir ci-dessous) | — |
 | I20 branches obsolètes | ✅ supprimées | — |
 | Coquilles | ✅ | `fix(content): …` |
 | `lang`, `alt`, titres d'iframes, meta description | ✅ + tests | `fix(a11y): …` |
@@ -229,4 +229,14 @@ Remarques pour la suite :
 - Aucun mesh n'a `castShadow`/`receiveShadow` (le sol était commenté) : les 3 shadow maps sont calculées sans effet visible. On pourrait couper `renderer.shadowMap` entièrement.
 - `globalParameters.js` contient surtout la scène et les steps ; un renommage (`steps.js`) serait plus parlant.
 - L'`alert()` « accédez au site sur un ordinateur » sur mobile est toujours là, alors que le swipe marche désormais.
+
+---
+
+## Réécriture de l'historique (I19)
+
+Le 2026-09-29, `git filter-repo` a retiré de tout l'historique : `node_modules/` (commité en 2018), l'ancien dossier `src/assets/` supprimé en 2024 (builds de jeux, vidéos, skyboxes, modèles, anciennes images), `assets/fbx/` et tous les `.tga`/`.psd`. Le contenu de `master` est inchangé. Pack : 213 → 71 Mo (le plancher, soit le poids des fichiers actuels, est de 66 Mo).
+
+**Tous les hashes de commit ont changé.** Les hashes cités plus haut dans ce document (`b76448f`, `96392db`, `dee5b6f`, `684db20`…) désignent l'historique d'origine. Celui-ci est conservé hors du dépôt dans des sauvegardes miroirs (miroir GitHub, miroir local avec stash et tags, bundle `--all`).
+
+Les refs `refs/pull/*` des anciennes PR restent sur GitHub (impossibles à modifier par push) : les anciens objets y restent référencés tant que le support GitHub ne les a pas purgés, mais les nouveaux clones ne les téléchargent pas.
 
