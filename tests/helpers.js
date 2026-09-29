@@ -9,6 +9,7 @@ export const readIndexHtml = () =>
 /** Loads index.html into the jsdom document (scripts are not executed). */
 export const loadIndexHtml = () => {
   const doc = new DOMParser().parseFromString(readIndexHtml(), "text/html");
+  document.documentElement.lang = doc.documentElement.lang;
   document.head.innerHTML = doc.head.innerHTML;
   document.body.innerHTML = doc.body.innerHTML;
 };

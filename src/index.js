@@ -268,6 +268,7 @@ const main = async () => {
       );
       const previewImg = document.createElement("img");
       previewImg.loading = "lazy";
+      previewImg.alt = "";
       previewImg.src =
         "./assets/img/carousel/" +
         carouselId +
@@ -284,6 +285,7 @@ const main = async () => {
       backButton.classList.add("back_button");
       const img = document.createElement("img");
       img.src = "./assets/img/icon/back_button.png";
+      img.alt = "Retour";
       backButton.appendChild(img);
       stepDivDestination.insertBefore(
         backButton,

@@ -165,6 +165,15 @@ describe("index.html", () => {
     expect(paths.filter((path) => !localFileExists(path))).toEqual([]);
   });
 
+  it("is declared in French", () => {
+    expect(document.documentElement.lang).toBe("fr");
+  });
+
+  it("gives every image an alt and every iframe a title", () => {
+    expect([...document.querySelectorAll("img:not([alt])")]).toEqual([]);
+    expect([...document.querySelectorAll("iframe:not([title])")]).toEqual([]);
+  });
+
   it("back button icon used by src/index.js exists", () => {
     expect(localFileExists("assets/img/icon/back_button.png")).toBe(true);
   });
