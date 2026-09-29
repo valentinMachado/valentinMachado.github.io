@@ -22,7 +22,7 @@ const main = async () => {
     return check;
   };
   if (mobileCheck())
-    alert("Pour une meilleure expérience, accéder au site sur un ordinateur");
+    alert("Pour une meilleure expérience, accédez au site sur un ordinateur");
 
   // background3D (optional: the portfolio content must stay reachable without WebGL)
   let background3D = null;
