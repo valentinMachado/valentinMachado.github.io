@@ -4,6 +4,7 @@ import {
   quadraticInOut,
   getElementByClass,
   playAnimation,
+  stepHash,
   stepIdFromHash,
   wheelDirection,
   keyDirection,
@@ -200,5 +201,21 @@ describe("stepIdFromHash", () => {
     expect(stepIdFromHash("#", steps)).toBeNull();
     expect(stepIdFromHash("#nope", steps)).toBeNull();
     expect(stepIdFromHash("#%E0", steps)).toBeNull();
+  });
+});
+
+describe("stepHash", () => {
+  const steps = new Map([
+    ["home", {}],
+    ["cv", {}],
+  ]);
+
+  it("returns no hash for home, the step id otherwise", () => {
+    expect(stepHash("home")).toBe("");
+    expect(stepHash("cv")).toBe("#cv");
+  });
+
+  it("is read back by stepIdFromHash", () => {
+    expect(stepIdFromHash(stepHash("cv"), steps)).toBe("cv");
   });
 });

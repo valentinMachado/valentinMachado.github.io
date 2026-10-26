@@ -5,6 +5,7 @@ import { globalParameters } from "./globalParameters";
 import {
   canScroll,
   keyDirection,
+  stepHash,
   stepIdFromHash,
   swipeDirection,
   wheelDirection,
@@ -185,9 +186,12 @@ const initNavigation = (background3D, stepDivController) => {
         .getElementById("move_to_" + id)
         .classList.add("custom_button_selected");
     }
-    languageLink.setAttribute(
-      "href",
-      id == "home" ? languagePath : languagePath + "#" + id
+    languageLink.setAttribute("href", languagePath + stepHash(id));
+    // keeps the step on reload or in a copied link, without history entries
+    history.replaceState(
+      null,
+      "",
+      location.pathname + location.search + stepHash(id)
     );
   };
   onStepDisplayed();

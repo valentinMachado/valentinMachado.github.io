@@ -93,6 +93,15 @@ export const stepIdFromHash = (hash, steps) => {
 };
 
 /**
+ * URL hash naming a step, the inverse of stepIdFromHash: none for home, so
+ * that the home URL stays bare (`/en/`, `/en/#cv`).
+ *
+ * @param {string} id step id
+ * @return {string} "" for home, "#" + id otherwise
+ */
+export const stepHash = (id) => (id == "home" ? "" : "#" + id);
+
+/**
  * Plays a CSS animation on an element and resolves when it is over.
  * Also resolves on cancel and after a timeout, because animationend never
  * fires if the element is hidden mid-animation (the caller would stay locked).
