@@ -1,9 +1,11 @@
 :root {
   --duration-loading-screen-end: 2s;
   --loading-screen-dot-size: 20px;
+  --loading-screen-padding: 100px;
   --color-light: rgb(255, 255, 255);
   --color-dark: rgb(14, 14, 56);
   --size-back-button: 50px;
+  --size-header: 50px;
   --background-color-hover: rgba(255, 255, 255, 0.08);
 }
 
@@ -73,9 +75,9 @@ a:focus-visible {
   transform: translateY(-50%);
   top: 50%;
   position: absolute;
-  width: calc(100% - 200px);
+  width: calc(100% - 2 * var(--loading-screen-padding));
   color: var(--color-dark);
-  padding: 0 100px;
+  padding: 0 var(--loading-screen-padding);
   text-align: center;
 }
 
@@ -168,7 +170,9 @@ a:focus-visible {
   position: absolute;
   left: 50%;
   top: 50%;
-  font-size: xx-large;
+  width: 90%;
+  max-width: 40em;
+  font-size: clamp(1.1rem, 4.5vw, 1.5rem);
   text-align: left;
   transform: translate(-50%, -50%);
 }
@@ -400,6 +404,39 @@ a:focus-visible {
   }
 }
 
+/* narrow screens: smaller menu, then the menu under the name */
+@media screen and (max-width: 1024px) {
+  .top_right .custom_button {
+    font-size: large;
+    margin: 10px 8px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --size-header: 90px;
+    --loading-screen-padding: 20px;
+  }
+
+  .top_right {
+    top: 44px;
+    left: 0;
+    right: 0;
+    justify-content: space-around;
+  }
+
+  .top_right .custom_button {
+    font-size: medium;
+    margin: 6px 4px;
+  }
+
+  .step_content {
+    margin: 10px 6px;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+}
+
 /* step div controller */
 
 .root_step {
@@ -407,8 +444,8 @@ a:focus-visible {
   font-size: larger;
   text-align: center;
   width: 100%;
-  height: calc(100% - 50px);
-  margin-top: 50px;
+  height: calc(100% - var(--size-header));
+  margin-top: var(--size-header);
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
 }
