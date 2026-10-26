@@ -310,14 +310,8 @@ export const globalParameters = {
             1
           );
 
-          // by default target radiosity
+          // platform rotation bringing the first project mesh to the front
           const offset = Math.PI / 2 + Math.PI / 8;
-          step.rotationYDest = offset;
-          projectsPlatform.object3D.rotation.y = step.rotationYDest;
-          projectMeshes
-            .get("radiosity")
-            .getWorldPosition(projectsPlatform.spotLight.target.position);
-          projectsPlatform.spotLight.target.updateMatrixWorld();
 
           step.selectProject3D = (id) => {
             const index = [...projectMeshColors.keys()].indexOf(id);
@@ -337,6 +331,10 @@ export const globalParameters = {
               projectsPlatform.object3D.rotation.y -= 2 * Math.PI;
             }
           };
+
+          // radiosity is the first item of the carousel, selected at startup
+          step.selectProject3D("radiosity");
+          projectsPlatform.object3D.rotation.y = step.rotationYDest;
         },
         tick: (step) => {
           step.moveCameraCallback();
