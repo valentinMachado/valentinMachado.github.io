@@ -255,6 +255,65 @@ const tetromino = () => {
   return group;
 };
 
+/** node graph: three nodes wired by two links */
+const nodeGraph = () => {
+  const group = new Group();
+  const nodes = [
+    [-0.45, 0.35, "indianred"],
+    [0.45, 0.35, "mediumseagreen"],
+    [0, -0.4, "cornflowerblue"],
+  ];
+  nodes.forEach(([x, y, color]) =>
+    addMesh(group, new BoxGeometry(0.4, 0.25, 0.15), color, [x, y, 0])
+  );
+  [
+    [nodes[0], nodes[2]],
+    [nodes[1], nodes[2]],
+  ].forEach(([[x1, y1], [x2, y2]]) => {
+    const length = Math.hypot(x2 - x1, y2 - y1);
+    addMesh(group, new CylinderGeometry(0.03, 0.03, length, 8), "lightgray", [
+      (x1 + x2) / 2,
+      (y1 + y2) / 2,
+      0,
+    ]).rotation.z = Math.atan2(x1 - x2, y2 - y1);
+  });
+  return group;
+};
+
+/** screen showing a subtitle bar */
+const subtitledScreen = () => {
+  const group = new Group();
+  addMesh(group, new BoxGeometry(1.2, 0.75, 0.06), "dimgray", [0, 0.15, 0]);
+  addMesh(group, new BoxGeometry(1.1, 0.65, 0.02), "skyblue", [0, 0.15, 0.04]);
+  addMesh(group, new BoxGeometry(0.7, 0.08, 0.02), "white", [0, -0.05, 0.06]);
+  addMesh(
+    group,
+    new CylinderGeometry(0.05, 0.05, 0.35, 8),
+    "dimgray",
+    [0, -0.4, 0]
+  );
+  return group;
+};
+
+/** question mark: a hook of torus and a dot */
+const questionMark = () => {
+  const group = new Group();
+  addMesh(
+    group,
+    new TorusGeometry(0.28, 0.08, 12, 24, (3 * Math.PI) / 2),
+    "gold",
+    [0, 0.35, 0]
+  ).rotation.z = -Math.PI / 2;
+  addMesh(
+    group,
+    new CylinderGeometry(0.08, 0.08, 0.3, 12),
+    "gold",
+    [0, -0.08, 0]
+  );
+  addMesh(group, new SphereGeometry(0.1, 16, 12), "gold", [0, -0.5, 0]);
+  return group;
+};
+
 /** model factory of each carousel item */
 export const carouselModels = {
   popup_builder: house,
@@ -269,4 +328,7 @@ export const carouselModels = {
   souk: diamond,
   covidjam: crowd,
   meteoblocks: tetromino,
+  nodalab: nodeGraph,
+  subtitle_game: subtitledScreen,
+  guess_it: questionMark,
 };

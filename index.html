@@ -137,6 +137,21 @@
                   Plus d'informations
                 </button>
               </div>
+              <div
+                id="nodalab_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>NodaLab</h2>
+                <p>
+                  application web d'apprentissage de la théorie musicale par
+                  graphes de nœuds<br />
+                  (2025 - aujourd'hui)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  Plus d'informations
+                </button>
+              </div>
             </div>
             <div
               id="projects_carousel_preview_off_screen"
@@ -201,6 +216,15 @@
               class="carousel_item"
               style="
                 background-image: url(./assets/img/carousel/projects/galeri3.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="nodalab_item"
+              title="nodalab"
+              class="carousel_item"
+              style="
+                background-image: url(./assets/img/carousel/projects/nodalab.png);
               "
             ></button>
           </div>
@@ -577,6 +601,40 @@
           >
         </div>
       </div>
+      <div id="nodalab_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://nodalab.app/">NodaLab</a></b> est une application
+          web d'apprentissage de la théorie musicale, que je conçois et
+          développe seul depuis 2025 en vue de la commercialiser.
+          <br />
+          <br />
+          On y construit un graphe de nœuds : une gamme alimente ses accords, un
+          accord alimente un manche de guitare, un rythme alimente une piste,
+          une piste alimente un lecteur. Le même graphe s'affiche de deux façons
+          :
+          <br />
+          - un <b>éditeur</b>, canevas zoomable de nœuds déplaçables reliés par
+          des connexions typées (la couleur d'un port dit ce qu'il accepte) ;
+          <br />
+          - une <b>page</b>, mise en page de widgets interactifs destinée à
+          l'apprenant.
+          <br />
+          <br />
+          Tout est audible : les accords s'arpègent, les gammes défilent, les
+          rythmes jouent et le manche s'allume en même temps que le son (Web
+          Audio avec Tone.js, import MIDI, échantillons d'instruments). Des
+          pages d'explication, traduites dans la langue du lecteur, s'ouvrent
+          dans l'éditeur lui-même pour être démontées et recopiées.
+          <br />
+          <br />
+          Côté serveur : Node.js, Express et SQLite, comptes utilisateurs avec
+          connexion Google et GitHub, messagerie, contenus multilingues. Le
+          projet est couvert par des tests unitaires et de bout en bout.
+          <br />
+          <br />
+          <a href="https://nodalab.app/">Essayer la démo</a> (sans compte).
+        </div>
+      </div>
       <div id="radiosity_step" class="root_step hidden">
         <div class="step_content">
           Mon projet de fin d'études, réalisé lors d'un stage chez
@@ -715,6 +773,35 @@
                   Plus d'informations
                 </button>
               </div>
+              <div
+                id="subtitle_game_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Subtitle Game</h2>
+                <p>
+                  un jeu multijoueur où l'on sous-titre des extraits de films
+                  <br />(2025 - 2026)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  Plus d'informations
+                </button>
+              </div>
+              <div
+                id="guess_it_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Guess It</h2>
+                <p>
+                  un générateur de quiz alimenté par une dizaine d'API
+                  publiques<br />
+                  (2026)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  Plus d'informations
+                </button>
+              </div>
             </div>
             <div
               id="about_carousel_preview_off_screen"
@@ -774,6 +861,24 @@
               title="meteoblocks"
               style="
                 background-image: url(./assets/img/carousel/about/meteoblocks.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="subtitle_game_item"
+              class="carousel_item"
+              title="subtitle game"
+              style="
+                background-image: url(./assets/img/carousel/about/subtitle_game.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="guess_it_item"
+              class="carousel_item"
+              title="guess it"
+              style="
+                background-image: url(./assets/img/carousel/about/guess_it.png);
               "
             ></button>
           </div>
@@ -964,6 +1069,78 @@
           <i class="center" style="text-align: center; font-size: small"
             >commence à 8:42</i
           >
+        </div>
+      </div>
+      <div id="subtitle_game_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a href="https://subtitle-game.mache.lol/login.html"
+              >Subtitle Game</a
+            ></b
+          >
+          est un jeu multijoueur de sous-titrage. Les joueurs regardent un
+          extrait de film en langue étrangère et écrivent leurs propres
+          sous-titres, le plus souvent absurdes, depuis leur téléphone.
+          <br />
+          <br />
+          Ils les projettent ensuite à tour de rôle sur un écran partagé, où la
+          vidéo est synchronisée en temps réel pour tout le monde (Socket.IO).
+          Les meilleures versions sont sauvegardées, montées bout à bout sur une
+          timeline, puis exportées en un film aux sous-titres incrustés.
+          <br />
+          <br />
+          Toute la vidéo passe par ffmpeg : découpe de nouveaux extraits dans
+          une bibliothèque de films, conversion des sous-titres SRT en WebVTT,
+          incrustation et concaténation pour le rendu final.
+          <br />
+          <br />
+          Le serveur Node.js (Express, Socket.IO, sessions JWT) se déploie sur
+          Linux ou se distribue en exécutable Windows autonome ; le client est
+          en JavaScript natif, sans framework. Un tutoriel interactif accueille
+          les nouveaux joueurs.
+          <br />
+          <br />
+          Le code est accessible
+          <a href="https://github.com/valentinMachado/subtitle_game">ici</a>.
+        </div>
+      </div>
+      <div id="guess_it_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://guess-it.mache.lol/">Guess It</a></b> génère des
+          séries de quiz : deviner un film à partir d'une image ou d'un résumé
+          caviardé, une chanson à partir d'un extrait audio, un pays à partir de
+          son drapeau ou d'une carte qui se dézoome, un peintre à partir d'un
+          tableau… Une quinzaine de types de contenus, filtrables par décennie,
+          genre, pays ou popularité.
+          <br />
+          <br />
+          Le quiz est rendu en vidéo directement dans le navigateur : chaque
+          image est dessinée sur un canvas puis encodée en MP4 (WebCodecs), et
+          la lecture commence pendant l'encodage. La vidéo se regarde en plein
+          écran ou se télécharge.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="Un quiz Guess It en cours : deviner un film à partir d'une photo"
+            src="./assets/img/content/guess_it.png"
+          />
+          <br />
+          <br />
+          Les données viennent d'une dizaine d'API publiques (TMDb, Wikidata,
+          Wikipedia, iTunes, PokeAPI, Open Trivia DB…) et des dumps de
+          Wikipedia. Un processus de rafraîchissement les interroge à travers
+          des files de requêtes à débit limité et remplit un cache SQLite ; le
+          serveur Express ne fait que lire ce cache, sans aucun appel réseau.
+          <br />
+          <br />
+          Un « quiz du jour » mêle chaque jour les anniversaires (sorties,
+          naissances) et les tendances du moment, identique pour tous les
+          joueurs jusqu'à minuit.
+          <br />
+          <br />
+          <a href="https://guess-it.mache.lol/">Jouer</a>
         </div>
       </div>
       <div id="cv" class="root_step hidden">

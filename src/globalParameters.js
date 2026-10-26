@@ -181,6 +181,7 @@ projectsPlatform.itemIds = [
   "ud_imuv",
   "galeri3",
   "radiosity",
+  "nodalab",
 ];
 aboutPlatform.itemIds = [
   "guitar",
@@ -189,6 +190,8 @@ aboutPlatform.itemIds = [
   "souk",
   "covidjam",
   "meteoblocks",
+  "subtitle_game",
+  "guess_it",
 ];
 
 /** angle of an item model around its platform */
@@ -349,12 +352,15 @@ const detailStepIds = [
   "open_source_contributions",
   "galeri3",
   "radiosity",
+  "nodalab",
   "steampong",
   "souk",
   "covidjam",
   "daw",
   "guitar",
   "meteoblocks",
+  "subtitle_game",
+  "guess_it",
 ];
 
 export const globalParameters = {
