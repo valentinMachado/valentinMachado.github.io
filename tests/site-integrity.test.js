@@ -199,6 +199,19 @@ describe("index.html", () => {
     expect([...document.querySelectorAll("iframe:not([title])")]).toEqual([]);
   });
 
+  it("plays the demos as silent looping videos with a title", () => {
+    const videos = [...document.querySelectorAll("video[data-autoplay]")];
+    expect(videos.length).toBeGreaterThan(0);
+    for (const video of videos) {
+      expect(video.muted || video.hasAttribute("muted")).toBe(true);
+      expect(video.hasAttribute("loop")).toBe(true);
+      expect(video.hasAttribute("playsinline")).toBe(true);
+      expect(video.getAttribute("preload")).toBe("none");
+      expect(video.getAttribute("title")).toBeTruthy();
+      expect(video.querySelectorAll("source").length).toBe(2);
+    }
+  });
+
   it("clickable elements are keyboard reachable buttons", () => {
     const clickables = document.querySelectorAll(
       ".custom_button, .carousel_item"

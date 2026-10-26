@@ -493,7 +493,8 @@ a:focus-visible {
   max-width: 100%;
 }
 
-.step_content img {
+.step_content img,
+.step_content video[data-autoplay] {
   height: auto;
 }
 

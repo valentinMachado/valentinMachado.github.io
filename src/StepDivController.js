@@ -61,7 +61,18 @@ export class StepDivController {
     stepDivMovingOffScreen.classList.add("hidden");
     this.divOnScreen.appendChild(stepDivMovingOffScreen);
 
+    this._playAutoplayVideos();
     this._onMoveEndRequesters.forEach((r) => r());
+  }
+
+  /**
+   * move() pauses every video, so the looping demos of the step now
+   * displayed are restarted by hand
+   */
+  _playAutoplayVideos() {
+    this._currentStepDiv()
+      .querySelectorAll("video[data-autoplay]")
+      .forEach((video) => video.play()?.catch(() => {}));
   }
 
   /**

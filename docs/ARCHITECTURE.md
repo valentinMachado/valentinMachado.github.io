@@ -19,12 +19,12 @@ flowchart LR
 
 Une **step** est un écran du site. Elles sont toutes déclarées dans `globalParameters.steps` (`src/globalParameters.js`), une `Map` id → `Step` :
 
-| Champ | Rôle |
-|---|---|
-| `divId` | id de la `div.root_step` correspondante dans `index.html` |
-| `cameraPosition`, `cameraTarget` | point de vue de la caméra 3D pour cette step |
-| `nextStepId`, `previousStepId` | voisines pour la molette, le clavier et le swipe (absentes sur les pages de détail) |
-| `init`, `onFocus`, `onLeave`, `tick` | callbacks 3D optionnels, qui reçoivent la step en argument |
+| Champ                                | Rôle                                                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------------- |
+| `divId`                              | id de la `div.root_step` correspondante dans `index.html`                           |
+| `cameraPosition`, `cameraTarget`     | point de vue de la caméra 3D pour cette step                                        |
+| `nextStepId`, `previousStepId`       | voisines pour la molette, le clavier et le swipe (absentes sur les pages de détail) |
+| `init`, `onFocus`, `onLeave`, `tick` | callbacks 3D optionnels, qui reçoivent la step en argument                          |
 
 Il y a quatre steps principales chaînées (`home` → `projects` → `about` → `cv`) et une step par page de détail (`galeri3`, `souk`…). Les pages de détail partagent le même point de vue caméra et n'ont pas de voisines : on y entre depuis un carrousel et on en sort par le bouton retour ou le menu.
 
@@ -32,16 +32,16 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 
 ## Modules
 
-| Fichier | Rôle |
-|---|---|
-| `src/index.js` | Point d'entrée (`window.onload`). Crée le fond 3D (optionnel), masque l'écran de chargement, branche la navigation (molette, clavier, swipe, menu), initialise les deux carrousels. |
-| `src/globalParameters.js` | Déclaration des steps et construction de la scène (`globalInit`) : 4 plateformes, leurs spots, et sur les deux plateformes des carrousels un modèle 3D par item ; la plateforme tourne pour mettre le modèle sélectionné face à la caméra, sous le spot. `globalTick` anime le décor à chaque frame, quelle que soit la step. |
-| `src/carouselModels.js` | Modèles low-poly des items des carrousels (maison, globe, diamant…), construits à partir de géométries three.js simples, un par id d'item. |
-| `src/spaceDecor.js` | Décor de fond qui rend visibles les déplacements de la caméra : poussière d'étoiles scintillante (shader, invisible tout près de la caméra) et polyèdres filaires qui flottent derrière les plateformes, à l'écart des points de vue des steps. |
-| `src/Background3D.js` | Renderer three.js, boucle de rendu à 30 fps max (le fps baisse si les frames sont lentes), interpolation de la caméra entre deux steps. Mode debug : `OrbitControls` + inspecteur. |
-| `src/StepDivController.js` | Transitions HTML entre deux steps (voir ci-dessous). Met en pause les vidéos et sons au changement de step. |
-| `src/carousel.js` | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), vignette sélectionnée centrée dans la bande quand elle défile (écrans de 1024 px et moins), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
-| `src/utils.js` | Fonctions pures, testées : easing, `wheelDirection`, `keyDirection`, `swipeDirection`, `playAnimation`. |
+| Fichier                    | Rôle                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.js`             | Point d'entrée (`window.onload`). Crée le fond 3D (optionnel), masque l'écran de chargement, branche la navigation (molette, clavier, swipe, menu), initialise les deux carrousels.                                                                                                                                                                                                     |
+| `src/globalParameters.js`  | Déclaration des steps et construction de la scène (`globalInit`) : 4 plateformes, leurs spots, et sur les deux plateformes des carrousels un modèle 3D par item ; la plateforme tourne pour mettre le modèle sélectionné face à la caméra, sous le spot. `globalTick` anime le décor à chaque frame, quelle que soit la step.                                                           |
+| `src/carouselModels.js`    | Modèles low-poly des items des carrousels (maison, globe, diamant…), construits à partir de géométries three.js simples, un par id d'item.                                                                                                                                                                                                                                              |
+| `src/spaceDecor.js`        | Décor de fond qui rend visibles les déplacements de la caméra : poussière d'étoiles scintillante (shader, invisible tout près de la caméra) et polyèdres filaires qui flottent derrière les plateformes, à l'écart des points de vue des steps.                                                                                                                                         |
+| `src/Background3D.js`      | Renderer three.js, boucle de rendu à 30 fps max (le fps baisse si les frames sont lentes), interpolation de la caméra entre deux steps. Mode debug : `OrbitControls` + inspecteur.                                                                                                                                                                                                      |
+| `src/StepDivController.js` | Transitions HTML entre deux steps (voir ci-dessous). Met en pause les vidéos et sons au changement de step.                                                                                                                                                                                                                                                                             |
+| `src/carousel.js`          | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), vignette sélectionnée centrée dans la bande quand elle défile (écrans de 1024 px et moins), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
+| `src/utils.js`             | Fonctions pures, testées : easing, `wheelDirection`, `keyDirection`, `swipeDirection`, `playAnimation`.                                                                                                                                                                                                                                                                                 |
 
 ## Navigation
 
@@ -104,7 +104,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
 
 5. **Image** : `assets/img/carousel/projects/mon_projet.png` (vignette, aperçu et en-tête de la page de détail), **au format 16:9** comme toutes les images des carrousels : les vignettes sont en `background-size: cover` et rogneraient un autre ratio. Pour le carrousel « créations personnelles », remplacer `projects` par `about` partout.
 
-Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests). Chaque morceau audio et chaque vidéo Vimeo a une légende visible sous le lecteur (`<p class="media_caption">` ou `<figcaption>`), reprenant son `title`.
+Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests). Les démonstrations animées sont des `<video data-autoplay muted loop playsinline preload="none" title="…">` (pas d'`autoplay` : Chrome précharge alors les vidéos des steps masquées) avec deux `<source>` (WebM puis MP4) dans `assets/video/`, convertis des GIF par ffmpeg (`-an`, `libvpx-vp9 -crf 36` / `libx264 -crf 24`, même dimensions). `StepDivController` met toutes les vidéos en pause au départ d'une transition puis relance celles de la step affichée (`video[data-autoplay]`). Chaque morceau audio et chaque vidéo Vimeo a une légende visible sous le lecteur (`<p class="media_caption">` ou `<figcaption>`), reprenant son `title`.
 
 Chaque item a aussi un modèle 3D sur la plateforme de son carrousel : ajouter l'id dans `itemIds` de la plateforme (`projectsPlatform` ou `aboutPlatform`, `src/globalParameters.js` ; l'ordre est celui des modèles autour de la plateforme) et sa fabrique dans `carouselModels` (`src/carouselModels.js`).
 
@@ -127,12 +127,12 @@ Ne pas commiter avec `DEBUG_3D = true`.
 
 `npm test` (Vitest + jsdom) :
 
-| Fichier | Couvre |
-|---|---|
-| `tests/site-integrity.test.js` | cohérence steps ↔ HTML ↔ assets, fichiers référencés existants, accessibilité (`lang`, `alt`, `title`, boutons) |
-| `tests/StepDivController.test.js` | transitions, verrou `isMoving`, cas limites |
-| `tests/carousel.test.js` | sélection, sens du glissement, pages de détail, sélection automatique et pause |
-| `tests/utils.test.js` | fonctions pures |
-| `tests/build.test.js` | le build de production est identique à `dist/bundle.js` |
+| Fichier                           | Couvre                                                                                                          |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `tests/site-integrity.test.js`    | cohérence steps ↔ HTML ↔ assets, fichiers référencés existants, accessibilité (`lang`, `alt`, `title`, boutons) |
+| `tests/StepDivController.test.js` | transitions, verrou `isMoving`, cas limites                                                                     |
+| `tests/carousel.test.js`          | sélection, sens du glissement, pages de détail, sélection automatique et pause                                  |
+| `tests/utils.test.js`             | fonctions pures                                                                                                 |
+| `tests/build.test.js`             | le build de production est identique à `dist/bundle.js`                                                         |
 
 jsdom ne joue pas les animations CSS : les tests déclenchent la fin à la main avec `element.onanimationend()`. WebGL n'est pas disponible sous jsdom, donc `Background3D` n'est pas testé unitairement : on le vérifie dans un navigateur.
