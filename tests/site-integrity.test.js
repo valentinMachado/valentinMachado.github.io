@@ -195,6 +195,8 @@ describe("index.html", () => {
     );
     expect(clickables.length).toBeGreaterThan(0);
     for (const element of clickables) {
+      // a link to another page is reachable as it is
+      if (element.tagName === "A" && element.hasAttribute("href")) continue;
       expect(element.tagName, element.id || element.textContent).toBe("BUTTON");
       expect(element.getAttribute("type")).toBe("button");
     }

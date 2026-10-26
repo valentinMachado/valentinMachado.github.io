@@ -202,6 +202,7 @@ a:focus-visible {
   font-size: x-large;
   width: fit-content;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .custom_button::after {
