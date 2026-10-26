@@ -218,6 +218,10 @@ const initItemModels = (platform) => {
   });
 };
 
+// narrow screens (as in style.css): the carousel preview takes the whole width,
+// so the selected model is brought to the middle of the screen instead of the side
+const narrowScreen = window.matchMedia?.("(max-width: 700px)");
+
 /**
  * Let a carousel step rotate its platform to bring the selected item model to
  * the front
@@ -225,15 +229,21 @@ const initItemModels = (platform) => {
  * @param {Step} step
  * @param {Platform} platform
  * @param {number} offset platform rotation bringing the first item model to the front
+ * @param {number} narrowOffset same on narrow screens, the model between the
+ * camera and the platform center
  * @param {string} firstId item selected at startup
  */
-const initCarousel3D = (step, platform, offset, firstId) => {
+const initCarousel3D = (step, platform, offset, narrowOffset, firstId) => {
+  let selectedId = firstId;
   step.selectProject3D = (id) => {
     const index = platform.itemIds.indexOf(id);
     if (index < 0) return;
 
+    selectedId = id;
     platform.spotLight.target = platform.itemModels.get(id);
-    step.rotationYDest = (itemAngle(platform, index) + offset) % (2 * Math.PI);
+    const currentOffset = narrowScreen?.matches ? narrowOffset : offset;
+    step.rotationYDest =
+      (itemAngle(platform, index) + currentOffset) % (2 * Math.PI);
 
     // rotate the shortest way
     const ry = platform.object3D.rotation.y;
@@ -249,6 +259,9 @@ const initCarousel3D = (step, platform, offset, firstId) => {
 
   step.selectProject3D(firstId);
   platform.object3D.rotation.y = step.rotationYDest;
+  narrowScreen?.addEventListener("change", () =>
+    step.selectProject3D(selectedId)
+  );
 };
 
 /**
@@ -331,6 +344,8 @@ export const globalTick = (background3D) => spaceDecor.tick(background3D.dt);
 
 // platform rotation bringing the first projects model to the front
 const projectsOffset = Math.PI / 2 + Math.PI / 8;
+// same, with the model between the camera and the platform center
+const projectsNarrowOffset = Math.PI / 3;
 
 // all detail pages share the same camera view
 const detailCameraPosition = new Vector3(
@@ -391,7 +406,13 @@ export const globalParameters = {
           );
 
           // radiosity is the first item of the carousel, selected at startup
-          initCarousel3D(step, projectsPlatform, projectsOffset, "radiosity");
+          initCarousel3D(
+            step,
+            projectsPlatform,
+            projectsOffset,
+            projectsNarrowOffset,
+            "radiosity"
+          );
         },
         tick: (step) => {
           step.moveCameraCallback();
@@ -418,6 +439,7 @@ export const globalParameters = {
             step,
             aboutPlatform,
             projectsOffset - (2 * Math.PI) / 3,
+            projectsNarrowOffset - (2 * Math.PI) / 3,
             "guitar"
           );
         },
