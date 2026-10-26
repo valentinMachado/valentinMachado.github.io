@@ -68,7 +68,9 @@ Les carrousels utilisent le même principe à plus petite échelle : `<carousel>
 
 Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les tests d'intégrité (`tests/site-integrity.test.js`) vérifient leur cohérence.
 
-1. **`src/globalParameters.js`** : ajouter `"mon_projet"` à `detailStepIds` (l'ordre fixe le sens des transitions).
+**Même ordre partout** : les items de `index.html` (réalisations pro du plus récent au plus ancien ; créations perso, les projets de développement avant la musique), `itemIds` de la plateforme et `detailStepIds` (vérifié par les tests pour ce dernier). Le premier item est sélectionné au démarrage : son id est aussi passé à `initCarousel3D` dans la step du carrousel, et son image est le `src` initial de `<carousel>_carousel_preview_on_screen`.
+
+1. **`src/globalParameters.js`** : ajouter `"mon_projet"` à `detailStepIds`, à la place de son item (l'ordre fixe le sens des transitions).
 2. **`index.html`, carrousel** : un item dans `.carousel_item_container` :
 
    ```html

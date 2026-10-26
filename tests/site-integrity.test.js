@@ -76,6 +76,15 @@ describe("steps", () => {
     }
   });
 
+  it("declares the detail steps in the order of the carousel items", () => {
+    // the declaration order sets the direction of the transitions
+    const itemIds = CAROUSEL_IDS.flatMap((id) =>
+      carouselItems(id).map(itemStepId)
+    );
+    const stepIds = [...globalParameters.steps.keys()];
+    expect(stepIds.filter((id) => itemIds.includes(id))).toEqual(itemIds);
+  });
+
   it("every step div is hidden at startup", () => {
     for (const [, step] of globalParameters.steps) {
       expect(

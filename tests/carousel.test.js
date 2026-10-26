@@ -36,8 +36,8 @@ afterEach(() => {
 
 describe("initCarousel", () => {
   it("selects the first item and shows its preview", () => {
-    expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
-    expect(isVisible("radiosity_preview_content")).toBe(true);
+    expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
+    expect(isVisible("nodalab_preview_content")).toBe(true);
     expect(isVisible("galeri3_preview_content")).toBe(false);
   });
 
@@ -79,12 +79,12 @@ describe("initCarousel", () => {
 
   it("ignores clicks during a slide", async () => {
     $("galeri3_item").onclick();
-    $("ud_imuv_item").onclick();
+    $("nodalab_item").onclick();
     expect(selectedItemIds("projects")).toEqual(["galeri3_item"]);
     await finishSlide("projects");
 
-    $("ud_imuv_item").onclick();
-    expect(selectedItemIds("projects")).toEqual(["ud_imuv_item"]);
+    $("nodalab_item").onclick();
+    expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
     // item before the current one: the old preview leaves to the right
     expect($("projects_carousel_preview_off_screen").style.animationName).toBe(
       "move_carousel_preview_right_off_screen"
@@ -110,7 +110,7 @@ describe("initCarousel", () => {
 
   it("selects the next item automatically after 8 s", async () => {
     await vi.advanceTimersByTimeAsync(8200);
-    expect(selectedItemIds("projects")).toEqual(["popup_builder_item"]);
+    expect(selectedItemIds("projects")).toEqual(["galeri3_item"]);
   });
 
   it("does not auto-select while the preview is hovered", async () => {
@@ -118,7 +118,7 @@ describe("initCarousel", () => {
       .getElementsByClassName("carousel_preview_container")[0]
       .onmousemove();
     await vi.advanceTimersByTimeAsync(10000);
-    expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
+    expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
   });
 
   it("stops its timer while the tab is hidden", async () => {
@@ -140,9 +140,9 @@ describe("initCarousel", () => {
 
       // the delay restarts from zero when the tab comes back
       await vi.advanceTimersByTimeAsync(7000);
-      expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
+      expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
       await vi.advanceTimersByTimeAsync(1200);
-      expect(selectedItemIds("projects")).toEqual(["popup_builder_item"]);
+      expect(selectedItemIds("projects")).toEqual(["galeri3_item"]);
     } finally {
       delete document.hidden;
     }
@@ -151,6 +151,6 @@ describe("initCarousel", () => {
   it("does not auto-select while its step is hidden", async () => {
     $("projects").classList.add("hidden");
     await vi.advanceTimersByTimeAsync(10000);
-    expect(selectedItemIds("projects")).toEqual(["radiosity_item"]);
+    expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
   });
 });

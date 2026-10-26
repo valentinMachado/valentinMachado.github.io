@@ -175,23 +175,23 @@ const cvPlatform = {
 
 // carousel items, in the order of their 3D models around the platform
 projectsPlatform.itemIds = [
-  "popup_builder",
-  "smaio_i_plan",
-  "open_source_contributions",
-  "ud_imuv",
-  "galeri3",
-  "radiosity",
   "nodalab",
+  "galeri3",
+  "ud_imuv",
+  "open_source_contributions",
+  "smaio_i_plan",
+  "popup_builder",
+  "radiosity",
 ];
 aboutPlatform.itemIds = [
-  "guitar",
-  "daw",
-  "steampong",
-  "souk",
-  "covidjam",
-  "meteoblocks",
-  "subtitle_game",
   "guess_it",
+  "subtitle_game",
+  "meteoblocks",
+  "covidjam",
+  "souk",
+  "steampong",
+  "daw",
+  "guitar",
 ];
 
 /** angle of an item model around its platform */
@@ -361,21 +361,21 @@ const detailCameraTarget = new Vector3(
 
 // declaration order matters: it sets the direction of the transition between two steps
 const detailStepIds = [
-  "popup_builder",
-  "smaio_i_plan",
+  "nodalab",
+  "galeri3",
   "ud_imuv",
   "open_source_contributions",
-  "galeri3",
+  "smaio_i_plan",
+  "popup_builder",
   "radiosity",
-  "nodalab",
-  "steampong",
-  "souk",
+  "guess_it",
+  "subtitle_game",
+  "meteoblocks",
   "covidjam",
+  "souk",
+  "steampong",
   "daw",
   "guitar",
-  "meteoblocks",
-  "subtitle_game",
-  "guess_it",
 ];
 
 export const globalParameters = {
@@ -405,13 +405,13 @@ export const globalParameters = {
             1
           );
 
-          // radiosity is the first item of the carousel, selected at startup
+          // nodalab is the first item of the carousel, selected at startup
           initCarousel3D(
             step,
             projectsPlatform,
             projectsOffset,
             projectsNarrowOffset,
-            "radiosity"
+            "nodalab"
           );
         },
         tick: (step) => {
@@ -440,7 +440,7 @@ export const globalParameters = {
             aboutPlatform,
             projectsOffset - (2 * Math.PI) / 3,
             projectsNarrowOffset - (2 * Math.PI) / 3,
-            "guitar"
+            "guess_it"
           );
         },
         tick: (step) => tickCarousel3D(step, aboutPlatform),
