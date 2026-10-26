@@ -1,9 +1,11 @@
 import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
 import { initCarousel } from "./carousel";
+import { globalParameters } from "./globalParameters";
 import {
   canScroll,
   keyDirection,
+  stepIdFromHash,
   swipeDirection,
   wheelDirection,
 } from "./utils";
@@ -169,7 +171,11 @@ const initNavigation = (background3D, stepDivController) => {
     document.getElementById("move_to_" + id).onclick = () => moveToStepId(id);
   });
 
-  stepDivController.addOnMoveEndRequester(() => {
+  // the language link opens the other page on the current step (/en/#cv)
+  const languageLink = document.getElementById("language_link");
+  const languagePath = languageLink.getAttribute("href").split("#")[0];
+
+  const onStepDisplayed = () => {
     for (let customButton of document.getElementsByClassName("custom_button")) {
       customButton.classList.remove("custom_button_selected");
     }
@@ -179,7 +185,13 @@ const initNavigation = (background3D, stepDivController) => {
         .getElementById("move_to_" + id)
         .classList.add("custom_button_selected");
     }
-  });
+    languageLink.setAttribute(
+      "href",
+      id == "home" ? languagePath : languagePath + "#" + id
+    );
+  };
+  onStepDisplayed();
+  stepDivController.addOnMoveEndRequester(onStepDisplayed);
 
   return moveToStepId;
 };
@@ -202,6 +214,13 @@ const enableDebugMode = () => {
 };
 
 const main = async () => {
+  // set before the 3D background and the step divs read it
+  const hashStepId = stepIdFromHash(
+    window.location.hash,
+    globalParameters.steps
+  );
+  if (hashStepId) globalParameters.initialStepId = hashStepId;
+
   const background3D = await createBackground3D();
   hideLoadingScreen();
   fitBackground3DToWindow(background3D);

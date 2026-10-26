@@ -76,8 +76,7 @@ const addDetailPageHeader = (carouselId, stepId, onBack) => {
   const previewImg = document.createElement("img");
   previewImg.loading = "lazy";
   previewImg.alt = "";
-  previewImg.src =
-    "./assets/img/carousel/" + carouselId + "/" + stepId + ".png";
+  previewImg.src = "/assets/img/carousel/" + carouselId + "/" + stepId + ".png";
   previewImg.classList.add("root_content_preview_img");
   stepDiv.insertBefore(previewImg, stepDiv.firstChild);
 
@@ -85,8 +84,9 @@ const addDetailPageHeader = (carouselId, stepId, onBack) => {
   backButton.type = "button";
   backButton.classList.add("back_button");
   const img = document.createElement("img");
-  img.src = "./assets/img/icon/back_button.png";
-  img.alt = "Retour";
+  img.src = "/assets/img/icon/back_button.png";
+  // visible text stays in the page, which is written in each language
+  img.alt = document.getElementById("on_screen").dataset.backLabel;
   backButton.appendChild(img);
   backButton.onclick = onBack;
   stepDiv.insertBefore(backButton, stepDiv.firstChild);

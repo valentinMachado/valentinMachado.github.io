@@ -76,6 +76,23 @@ export const canScroll = (element, direction) => {
 };
 
 /**
+ * Step named by a URL hash (`#cv`), so that a link can open the site on it.
+ *
+ * @param {string} hash `location.hash`
+ * @param {Map<string, unknown>} steps
+ * @return {string | null} null when the hash names no step
+ */
+export const stepIdFromHash = (hash, steps) => {
+  let id;
+  try {
+    id = decodeURIComponent(hash.replace(/^#/, ""));
+  } catch {
+    return null; // malformed escape, e.g. "#%E0"
+  }
+  return steps.has(id) ? id : null;
+};
+
+/**
  * Plays a CSS animation on an element and resolves when it is over.
  * Also resolves on cancel and after a timeout, because animationend never
  * fires if the element is hidden mid-animation (the caller would stay locked).

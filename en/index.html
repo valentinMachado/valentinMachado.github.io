@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Valentin Machado — 3D Web Software Engineer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Valentin Machado, 3D web software engineer: WebGL editors, multiplayer games, geospatial data, open source, game jams and music."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="fr_FR" />
+    <meta property="og:url" content="https://valentinmachado.github.io/en/" />
+    <meta
+      property="og:title"
+      content="Valentin Machado — 3D Web Software Engineer"
+    />
+    <meta
+      property="og:description"
+      content="3D web applications, multiplayer games, geospatial data: professional work and personal projects."
+    />
+    <meta
+      property="og:image"
+      content="https://valentinmachado.github.io/assets/img/carousel/projects/ud_imuv.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://valentinmachado.github.io/en/" />
+    <link
+      rel="alternate"
+      hreflang="fr"
+      href="https://valentinmachado.github.io/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://valentinmachado.github.io/en/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://valentinmachado.github.io/"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- html -->
+
+    <!-- loading html -->
+    <div id="loading_screen_loader">
+      <label id="loading_screen_loader_label">Loading resources</label>
+      <div class="loading_screen_loader_inner">
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+        <label>●</label>
+      </div>
+    </div>
+
+    <div id="loading_screen_top" class="full_screen"></div>
+    <div id="loading_screen_bottom" class="full_screen"></div>
+
+    <!-- main app -->
+    <canvas id="three_canvas" class="full_screen"></canvas>
+    <div id="on_screen" class="full_screen" data-back-label="Back">
+      <div id="home" class="root_step hidden">
+        <div class="disclaimer">
+          Software engineer specialised in 3D web applications. Business
+          editors, multiplayer games, geospatial data: I build complete
+          products, from WebGL rendering to the server.
+        </div>
+      </div>
+      <div id="projects" class="root_step hidden">
+        <div class="carousel">
+          <div class="carousel_preview_container">
+            <div
+              id="projects_carousel_preview_on_screen"
+              class="carousel_preview"
+            >
+              <img src="/assets/img/carousel/projects/nodalab.png" alt="" />
+              <div
+                id="nodalab_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>NodaLab</h2>
+                <p>
+                  a web application for learning music theory with node
+                  graphs<br />
+                  (2025 - present)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="galeri3_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Galeri3</h2>
+                <p>
+                  a WebGL application for collaborating on geospatial 3D data
+                  <br />(January 2021 - December 2023)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="ud_imuv_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>UD-IMUV</h2>
+                <p>
+                  a multiplayer WebGL serious game for interacting with
+                  geospatial data<br />
+                  (January 2021 - December 2023)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="open_source_contributions_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Open source contributions</h2>
+                <p>
+                  contributions to open source geospatial projects
+                  <br />(January 2021 - December 2023)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="smaio_i_plan_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>SMAIO i-PLAN</h2>
+                <p>
+                  a WebGL 3D spine editor<br />
+                  (September 2016 - April 2018)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="popup_builder_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Popup Builder</h2>
+                <p>
+                  a WebGL 3D editor for kit houses<br />
+                  (September 2016 - April 2018)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="radiosity_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Master's thesis project</h2>
+                <p>
+                  global illumination algorithms in WebGL<br />
+                  (March 2016 - August 2016)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+            </div>
+            <div
+              id="projects_carousel_preview_off_screen"
+              class="carousel_preview hidden"
+            >
+              <img src="/assets/img/carousel/projects/galeri3.png" alt="" />
+            </div>
+          </div>
+          <div class="carousel_item_container">
+            <button
+              type="button"
+              id="nodalab_item"
+              title="NodaLab"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/nodalab.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="galeri3_item"
+              title="Galeri3"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/galeri3.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="ud_imuv_item"
+              title="UD-IMUV"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/ud_imuv.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="open_source_contributions_item"
+              title="Open source contributions"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/open_source_contributions.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="smaio_i_plan_item"
+              title="SMAIO i-PLAN"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/smaio_i_plan.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="popup_builder_item"
+              title="Popup Builder"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/popup_builder.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="radiosity_item"
+              title="Master's thesis project"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/projects/radiosity.png);
+              "
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div id="nodalab_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://nodalab.app/">NodaLab</a></b> is a web application
+          for learning music theory, which I have been designing and developing
+          on my own since 2025, with a view to selling it.
+          <br />
+          <br />
+          You build a graph of nodes: a scale feeds its chords, a chord feeds a
+          guitar fretboard, a rhythm feeds a track, a track feeds a player. The
+          same graph is shown in two ways:
+          <br />
+          - an <b>editor</b>, a zoomable canvas of draggable nodes linked by
+          typed connections (the colour of a port tells what it accepts);
+          <br />
+          - a <b>page</b>, a layout of interactive widgets meant for the
+          learner.
+          <br />
+          <br />
+          Everything can be heard: chords are arpeggiated, scales run up and
+          down, rhythms play and the fretboard lights up in time with the sound
+          (Web Audio with Tone.js, MIDI import, instrument samples). Explanation
+          pages, translated into the reader's language, open in the editor
+          itself so that they can be taken apart and copied.
+          <br />
+          <br />
+          On the server side: Node.js, Express and SQLite, user accounts with
+          Google and GitHub sign-in, messaging, multilingual content. The
+          project is covered by unit and end-to-end tests.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="Screenshot of the NodaLab demo: the editor's node graph on the left, the explanation page on the right"
+            src="/assets/img/content/nodalab.png"
+          />
+          <br />
+          <br />
+          <a href="https://nodalab.app/">Try the demo</a> (no account needed).
+        </div>
+      </div>
+      <div id="galeri3_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a
+              href="https://imu.universite-lyon.fr/studios/galeri3/galeri3-281920.kjsp"
+              >Galeri3</a
+            ></b
+          >
+          is a studio of the
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU in Lyon</a>
+          devoted to the
+          <a href="https://fr.wikipedia.org/wiki/Ar%C3%AAtes_de_poisson"
+            >arêtes de poisson</a
+          >
+          ("fish bones"), a network of underground tunnels of unknown origin
+          beneath the Croix-Rousse hill, which it studies across several
+          disciplines.
+          <br />
+          <br />
+          For this studio, I developed a web application, based on
+          <a href="https://github.com/VCityTeam/UD-Viz">ud-viz</a>, where its
+          members collaborate on geolocated 3D data:
+          <br />
+          - conversations attached to a place, to discuss right on the data;
+          <br />
+          - user management, with an administrator role that grants access
+          rights;
+          <br />
+          - 3D data import, stored on the server.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Galeri3 demo"
+            aria-label="Galeri3 demo"
+          >
+            <source src="/assets/video/galeri3.webm" type="video/webm" />
+            <source src="/assets/video/galeri3.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          The code is open source:
+          <a href="https://github.com/VCityTeam/GALERI3"
+            >GALERI3 repository on GitHub</a
+          >.
+          <br />
+          <br />
+          <video
+            class="center"
+            width="560"
+            height="315"
+            controls
+            preload="none"
+          >
+            <source
+              src="https://video.bm-lyon.fr/mp4/03_04_24_aretes_poisson.mp4#t=2280"
+              type="video/mp4"
+            />
+            Your browser cannot play this video.
+          </video>
+          <i class="center" style="text-align: center; font-size: small"
+            >in French; the video starts at the presentation of the programme
+            (38 min)</i
+          >
+        </div>
+      </div>
+      <div id="ud_imuv_step" class="root_step hidden">
+        <div class="step_content">
+          For the
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU in Lyon</a
+          >, I developed UD-IMUV, a <b>multiplayer web game</b> that serves as a
+          virtual meeting place for the laboratories and partners of the IMU
+          community. It stays open at all times to the city's stakeholders,
+          professionals and citizens alike, who take an interest in urban
+          planning.
+          <br />
+          <br />
+          The game runs on the engine I wrote in
+          <a href="https://github.com/VCityTeam/UD-Viz">ud-viz</a>. Each player
+          controls an avatar on a floating island above Lyon.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Avatar on the floating island of UD-IMUV"
+            aria-label="Avatar on the floating island of UD-IMUV"
+          >
+            <source src="/assets/video/ud_imuv_2.webm" type="video/webm" />
+            <source src="/assets/video/ud_imuv_2.mp4" type="video/mp4" />
+          </video>
+          <br />
+          It features:
+          <br />
+          - a conference room, with a dynamic model for exploring urban data;
+          <br />
+          - collaborative studios, which players create to study the city;
+          <br />
+          - a chat to talk with the other players;
+          <br />
+          - an exhibition room devoted to urban planning.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Interactive activities in UD-IMUV"
+            aria-label="Interactive activities in UD-IMUV"
+          >
+            <source src="/assets/video/ud_imuv.webm" type="video/webm" />
+            <source src="/assets/video/ud_imuv.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          The code is open source:
+          <a href="https://github.com/VCityTeam/UD-Imuv"
+            >UD-Imuv repository on GitHub</a
+          >.
+          <br />
+          The project was the subject of a scientific paper:
+          <a
+            href="https://www.researchgate.net/publication/381085596_IMUV_A_Digital_Twin_for_Mediation_to_Discover_and_Exchange_on_Territories"
+            ><i
+              >IMUV: A Digital Twin for Mediation to Discover and Exchange on
+              Territories</i
+            ></a
+          >.
+          <br />
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/7NU3nX-nCk0?si=9M9o-maXPVm8_tXn"
+            title="UD-IMUV (YouTube video, in French)"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div id="open_source_contributions_step" class="root_step hidden">
+        <div class="step_content">
+          During my three years at the
+          <a href="https://imu.universite-lyon.fr/imu-fr/">LabEx IMU in Lyon</a
+          >, I worked with the
+          <a href="https://projet.liris.cnrs.fr/vcity/">VCity</a> team of
+          <a href="https://liris.cnrs.fr/">LIRIS</a> and contributed to the open
+          source projects it uses:
+          <br />
+          <br />
+          - <b><a href="https://www.itowns-project.org/">iTowns</a></b
+          >: a framework for visualising geospatial 3D data, based on
+          <a href="https://threejs.org/">three.js</a> and developed by
+          <a href="https://www.ign.fr/">IGN</a>, the French mapping agency. I
+          submitted several pull requests, notably on the styling of
+          <a href="https://github.com/CesiumGS/3d-tiles">3D Tiles</a>.
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Demo of 3D Tiles styling in iTowns"
+            aria-label="Demo of 3D Tiles styling in iTowns"
+          >
+            <source src="/assets/video/itowns.webm" type="video/webm" />
+            <source src="/assets/video/itowns.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          - <b><a href="https://github.com/VCityTeam/UD-Viz">ud-viz</a></b
+          >: a collection of JavaScript packages, client and server, built on
+          iTowns. I designed its architecture, oversaw the repository and
+          developed several modules, including a game engine for creating
+          geospatial scenes, multiplayer or not, and interactive point cloud
+          visualisation.
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="ud-viz demo"
+            aria-label="ud-viz demo"
+          >
+            <source src="/assets/video/ud_viz.webm" type="video/webm" />
+            <source src="/assets/video/ud_viz.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div id="smaio_i_plan_step" class="root_step hidden">
+        <div class="step_content">
+          A project carried out at
+          <a href="https://www.wanadev.com/">Wanadev</a> for SMAIO, a company
+          specialised in spine surgery.
+          <br />
+          <br />
+          As the only developer on this module, I built the spine editor of the
+          i-PLAN software, intended for surgeons, in
+          <a href="https://www.babylonjs.com/">Babylon.js</a>. The editor
+          reconstructs the patient's spine in 3D from a point cloud, then lets
+          the surgeon modify it.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Demo of the SMAIO i-PLAN spine editor"
+            aria-label="Demo of the SMAIO i-PLAN spine editor"
+          >
+            <source src="/assets/video/smaio.webm" type="video/webm" />
+            <source src="/assets/video/smaio.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          Surgeons use it to prepare the operation: they view the spine and
+          adjust the vertebrae before operating. A project where code has a
+          direct effect on patients' health.
+          <br />
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/3_H3A_Gvpuw?si=Ld5X-flTOlRg5o4M"
+            title="SMAIO i-PLAN (YouTube video)"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share;
+            "
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div id="popup_builder_step" class="root_step hidden">
+        <div class="step_content">
+          A project carried out at
+          <a href="https://www.wanadev.com/">Wanadev</a>, a web and 3D
+          application development agency, for the startup Popup House.
+          <br />
+          <br />
+          As the only developer on the project, I designed and developed the
+          Popup Builder, a <a href="https://threejs.org/">three.js</a>
+          application for drawing kit houses in 2D and 3D. Users customise their
+          house (floor plan, finishes, furniture); the application works out the
+          materials needed and generates the files sent to the factory for
+          manufacturing.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="Popup Builder demo"
+            aria-label="Popup Builder demo"
+          >
+            <source src="/assets/video/popup_builder.webm" type="video/webm" />
+            <source src="/assets/video/popup_builder.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          I carried the project from start to finish:
+          <br />
+          - the interactive 3D rendering and the editing tools in WebGL;
+          <br />
+          - the organisation of the development, from splitting it into stages
+          to the deliveries;
+          <br />
+          - the discussions with the client, whose needs and feedback I worked
+          into each version.
+          <br />
+          <br />
+          Popup House has since closed down, but videos of the application are
+          still online:
+          <br />
+          <div class="vimeo_video_container">
+            <iframe
+              loading="lazy"
+              src="https://player.vimeo.com/video/416834411?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="
+                autoplay;
+                fullscreen;
+                picture-in-picture;
+                clipboard-write;
+                encrypted-media;
+              "
+              class="vimeo_video"
+              title="Viewing a standard model"
+            ></iframe>
+            <p class="media_caption">Viewing a standard model</p>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              loading="lazy"
+              src="https://player.vimeo.com/video/512577940?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="
+                autoplay;
+                fullscreen;
+                picture-in-picture;
+                clipboard-write;
+                encrypted-media;
+              "
+              class="vimeo_video"
+              title="Editing a model"
+            ></iframe>
+            <p class="media_caption">Editing a model</p>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              loading="lazy"
+              src="https://player.vimeo.com/video/416838226?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="
+                autoplay;
+                fullscreen;
+                picture-in-picture;
+                clipboard-write;
+                encrypted-media;
+              "
+              class="vimeo_video"
+              title="Importing a floor plan"
+            ></iframe>
+            <p class="media_caption">Importing a floor plan</p>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              loading="lazy"
+              src="https://player.vimeo.com/video/416837784?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="
+                autoplay;
+                fullscreen;
+                picture-in-picture;
+                clipboard-write;
+                encrypted-media;
+              "
+              class="vimeo_video"
+              title="Changing the finishes and furniture"
+            ></iframe>
+            <p class="media_caption">Changing the finishes and furniture</p>
+          </div>
+          <div class="vimeo_video_container">
+            <iframe
+              loading="lazy"
+              src="https://player.vimeo.com/video/416838696?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+              frameborder="0"
+              allow="
+                autoplay;
+                fullscreen;
+                picture-in-picture;
+                clipboard-write;
+                encrypted-media;
+              "
+              class="vimeo_video"
+              title="Annotating a drawing"
+            ></iframe>
+            <p class="media_caption">Annotating a drawing</p>
+          </div>
+        </div>
+      </div>
+      <div id="radiosity_step" class="root_step hidden">
+        <div class="step_content">
+          My master's thesis project, during an internship at
+          <a href="https://www.wanadev.com/">Wanadev</a>, focused on two
+          <a href="https://en.wikipedia.org/wiki/Global_illumination"
+            >global illumination</a
+          >
+          techniques:
+          <b
+            ><a
+              href="https://en.wikipedia.org/wiki/Radiosity_(computer_graphics)"
+              >radiosity</a
+            ></b
+          >
+          and
+          <b
+            ><a href="https://en.wikipedia.org/wiki/Ambient_occlusion"
+              >ambient occlusion</a
+            ></b
+          >. I implemented them in
+          <a href="https://www.babylonjs.com/">Babylon.js</a> and optimised them
+          to run in a browser.
+          <br />
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            title="Presentation of the master's thesis project (Google Slides, in French)"
+            src="https://docs.google.com/presentation/d/e/2PACX-1vRNKJ1EwAJN6O_BlGXze7UwaI_KYoP5U16oDp_BYg_glP9LsrUFa_Ds51PYQ3CaZWoIM18DdSTWqpYw/embed?start=false&loop=false&delayms=10000"
+            frameborder="0"
+            width="560"
+            height="315"
+            allowfullscreen="true"
+          ></iframe>
+          <br />
+          <br />
+          I also developed a web application that computes the ambient occlusion
+          of a 3D model and displays the result.
+          <br />
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            title="Ambient occlusion computation (YouTube video)"
+            src="https://www.youtube.com/embed/CIm7KY8lIXo"
+          ></iframe>
+        </div>
+      </div>
+      <div id="about" class="root_step hidden">
+        <div class="carousel">
+          <div class="carousel_preview_container">
+            <div id="about_carousel_preview_on_screen" class="carousel_preview">
+              <img src="/assets/img/carousel/about/guess_it.png" alt="" />
+              <div
+                id="guess_it_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Guess It</h2>
+                <p>
+                  a quiz generator fed by a dozen public APIs<br />
+                  (2026)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="subtitle_game_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Subtitle Game</h2>
+                <p>
+                  a multiplayer game where you subtitle film clips
+                  <br />(2025 - 2026)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="meteoblocks_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Meteoblocks</h2>
+                <p>
+                  a Tetris where the blocks are elements that react to changes
+                  in the weather<br />
+                  (June 2025, best gameplay award)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="covidjam_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Covidjam</h2>
+                <p>
+                  a multiplayer video game where you play a crowd of
+                  protesters<br />
+                  (2020)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="souk_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Souk</h2>
+                <p>
+                  a multiplayer video game of observation and stealth
+                  <br />(2018)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="steampong_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Steam Pong</h2>
+                <p>
+                  a strategy video game where two players face off<br />
+                  (2014)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="daw_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Computer music</h2>
+                <p>I compose with FL Studio and Ableton Live</p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
+                id="guitar_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Guitar</h2>
+                <p>classical, electric and gypsy jazz guitar</p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+            </div>
+            <div
+              id="about_carousel_preview_off_screen"
+              class="carousel_preview hidden"
+            >
+              <img src="/assets/img/carousel/about/subtitle_game.png" alt="" />
+            </div>
+          </div>
+          <div class="carousel_item_container">
+            <button
+              type="button"
+              id="guess_it_item"
+              class="carousel_item"
+              title="Guess It"
+              style="
+                background-image: url(/assets/img/carousel/about/guess_it.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="subtitle_game_item"
+              class="carousel_item"
+              title="Subtitle Game"
+              style="
+                background-image: url(/assets/img/carousel/about/subtitle_game.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="meteoblocks_item"
+              class="carousel_item"
+              title="Meteoblocks"
+              style="
+                background-image: url(/assets/img/carousel/about/meteoblocks.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="covidjam_item"
+              class="carousel_item"
+              title="Covidjam"
+              style="
+                background-image: url(/assets/img/carousel/about/covidjam.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="souk_item"
+              class="carousel_item"
+              title="Souk"
+              style="background-image: url(/assets/img/carousel/about/souk.png)"
+            ></button>
+            <button
+              type="button"
+              id="steampong_item"
+              class="carousel_item"
+              title="Steam Pong"
+              style="
+                background-image: url(/assets/img/carousel/about/steampong.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="daw_item"
+              title="Computer music"
+              class="carousel_item"
+              style="background-image: url(/assets/img/carousel/about/daw.png)"
+            ></button>
+            <button
+              type="button"
+              id="guitar_item"
+              title="Guitar"
+              class="carousel_item"
+              style="
+                background-image: url(/assets/img/carousel/about/guitar.png);
+              "
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div id="guess_it_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://guess-it.mache.lol/">Guess It</a></b> generates
+          series of quizzes: guess a film from a still or a redacted plot
+          summary, a song from an audio clip, a country from its flag or from a
+          map that slowly zooms out, a painter from a painting… About fifteen
+          kinds of content, which can be filtered by decade, genre, country or
+          popularity.
+          <br />
+          <br />
+          The quiz is rendered as a video right in the browser: each frame is
+          drawn on a canvas then encoded to MP4 (WebCodecs), and playback starts
+          while encoding is still under way. The video can be watched full
+          screen or downloaded.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="A Guess It quiz in progress: guessing a film from a still"
+            src="/assets/img/content/guess_it.png"
+          />
+          <br />
+          <br />
+          The data comes from a dozen public APIs (TMDb, Wikidata, Wikipedia,
+          iTunes, PokeAPI, Open Trivia DB…) and from Wikipedia dumps. A refresh
+          process queries them through rate-limited request queues and fills an
+          SQLite cache; the Express server only reads this cache, without any
+          network call.
+          <br />
+          <br />
+          A "quiz of the day" mixes anniversaries (releases, births) and current
+          trends, the same for every player until midnight.
+          <br />
+          <br />
+          <a href="https://guess-it.mache.lol/">Play</a>
+        </div>
+      </div>
+      <div id="subtitle_game_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a href="https://subtitle-game.mache.lol/login.html"
+              >Subtitle Game</a
+            ></b
+          >
+          is a multiplayer subtitling game. Players watch a foreign-language
+          film clip and write their own subtitles, usually absurd ones, on their
+          phones.
+          <br />
+          <br />
+          They then take turns projecting them on a shared screen, where the
+          video is synchronised in real time for everyone (Socket.IO). The best
+          versions are saved, edited together on a timeline, then exported as a
+          film with burned-in subtitles.
+          <br />
+          <br />
+          All the video goes through ffmpeg: cutting new clips from a film
+          library, converting SRT subtitles to WebVTT, burning them in and
+          concatenating the clips for the final render.
+          <br />
+          <br />
+          The Node.js server (Express, Socket.IO, JWT sessions) can be deployed
+          on Linux or shipped as a standalone Windows executable; the client is
+          written in plain JavaScript, without a framework. An interactive
+          tutorial welcomes new players.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="Screenshot of Subtitle Game: the film clip and the subtitles to write"
+            src="/assets/img/content/subtitle_game.png"
+          />
+          <br />
+          <br />
+          The code is available on
+          <a href="https://github.com/valentinMachado/subtitle_game">GitHub</a>.
+        </div>
+      </div>
+      <div id="meteoblocks_step" class="root_step hidden">
+        <div class="step_content">
+          Meteoblocks is a game developed in one week during
+          <a href="https://itch.io/jam/the-artists-tavern-game-jam-summer25/"
+            >The Artists Tavern Game Jam - Summer'25</a
+          >, where it won the best gameplay award. There were three of us: an
+          artist, a developer and me, on music.
+          <br />
+          <br />
+          It is a
+          <a href="https://en.wikipedia.org/wiki/Tetris">Tetris</a> where each
+          block is made of an element that reacts to the weather: you have to
+          consider its nature before placing it, because the weather changes
+          during the game. Completing lines unlocks bonuses.
+          <br />
+          <br />
+          I composed four tracks, one for each kind of weather.
+          <br />
+          <br />
+          <a href="https://julien-coutouly.itch.io/meteoblocks">Play</a>
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            title="Meteoblocks (YouTube video)"
+            src="https://www.youtube.com/embed/cVyGd0HJTdY"
+          ></iframe>
+          <br />
+          Game jam award ceremony:
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            title="Game jam award ceremony (YouTube video)"
+            src="https://www.youtube.com/embed/mqJLGoG8nFE?start=522"
+          ></iframe>
+          <i class="center" style="text-align: center; font-size: small"
+            >starts at 8:42</i
+          >
+        </div>
+      </div>
+      <div id="covidjam_step" class="root_step hidden">
+        <div class="step_content">
+          Covidjam is a multiplayer game developed in 48 hours with Unity,
+          during the second COVID lockdown in France, at a remote game jam among
+          friends. There were three developers and two artists; I worked on
+          every part of the code, and we designed the gameplay together.
+          <br />
+          <br />
+          Each player roams the streets of a city to rally protesters: the
+          bigger their crowd grows, the more residents they win over to their
+          cause.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="A game of Covidjam"
+            aria-label="A game of Covidjam"
+          >
+            <source src="/assets/video/covidjam.webm" type="video/webm" />
+            <source src="/assets/video/covidjam.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div id="souk_step" class="root_step hidden">
+        <div class="step_content">
+          Souk is a multiplayer game developed in 48 hours with Godot, at a game
+          jam among friends. There were three developers, two artists and a
+          musician; I worked on every part of the code, and we designed the
+          gameplay together.
+          <br />
+          <br />
+          Players blend into the crowd of
+          <a href="https://en.wikipedia.org/wiki/Non-player_character">NPCs</a>
+          in a bustling souk. They must quietly pick up the diamonds scattered
+          around the market without being spotted, and unmask then eliminate
+          their opponents before those collect enough of them.
+          <br />
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="A game of Souk"
+            aria-label="A game of Souk"
+          >
+            <source src="/assets/video/souk.webm" type="video/webm" />
+            <source src="/assets/video/souk.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div id="steampong_step" class="root_step hidden">
+        <div class="step_content">
+          Steam Pong is a multiplayer game developed in 48 hours during the
+          <a href="https://globalgamejam.org/">Global Game Jam</a> 2014, by a
+          team of three: an artist, a developer and me, on sound.
+          <br />
+          <br />
+          Two players face off in the spirit of
+          <a href="https://en.wikipedia.org/wiki/Pong">Pong</a> by sending units
+          at each other: each unit that crosses the opponent's line scores
+          points. To stop one, you have to send a unit of the right colour
+          against it, following a rock-paper-scissors logic.
+          <br />
+          <video
+            class="center"
+            data-autoplay
+            muted
+            loop
+            playsinline
+            preload="none"
+            title="A game of Steam Pong"
+            aria-label="A game of Steam Pong"
+          >
+            <source src="/assets/video/steampong.webm" type="video/webm" />
+            <source src="/assets/video/steampong.mp4" type="video/mp4" />
+          </video>
+          <br />
+          I composed two industrial electronic tracks and created the sound
+          effects. The game received positive feedback from the Global Game Jam
+          jury.
+          <br />
+          <br />
+          <iframe
+            loading="lazy"
+            class="center"
+            width="560"
+            height="315"
+            title="Steam Pong (YouTube video)"
+            src="https://www.youtube.com/embed/EGPmbF13RTw"
+          ></iframe>
+        </div>
+      </div>
+      <div id="daw_step" class="root_step hidden">
+        <div class="step_content">
+          I started making computer music in the early 2010s with
+          <a href="https://www.image-line.com/fl-studio/">FL Studio</a>, mostly
+          electronic music. It taught me the sound processing chain
+          (compression, equalisation, phaser, reverb) and sharpened my ear.
+          <br />
+          <br />
+          Today, I compose with
+          <a href="https://www.ableton.com/en/">Ableton Live</a> in a variety of
+          styles, from gypsy jazz to boom bap.
+          <br />
+          <br />
+          <figure class="media_figure">
+            <audio class="center" controls preload="none" title="Manouche">
+              <source src="/assets/audio/manouche.mp3" type="audio/mp3" />
+              Your browser cannot play this audio file.
+            </audio>
+            <figcaption class="media_caption">Manouche</figcaption>
+          </figure>
+          <br />
+          <br />
+          <figure class="media_figure">
+            <audio class="center" controls preload="none" title="Boom bap">
+              <source src="/assets/audio/boom_bap.mp3" type="audio/mp3" />
+              Your browser cannot play this audio file.
+            </audio>
+            <figcaption class="media_caption">Boom bap</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div id="guitar_step" class="root_step hidden">
+        <div class="step_content">
+          In 2006, I founded a band with three other musicians and played in it
+          for several years: writing instrumental pieces and songs, organising
+          concerts (booking and setting up), playing on stage and recording in
+          the studio. Along the way I worked alongside stage professionals,
+          musicians and technicians alike.
+          <br />
+          <br />
+          Today, I play classical, electric and gypsy jazz guitar, and I explore
+          other repertoires. I share my playing on
+          <a href="https://www.instagram.com/mache7218/">Instagram</a>.
+          <br />
+          <br />
+          <figure class="media_figure">
+            <audio class="center" controls preload="none" title="Waltz">
+              <source src="/assets/audio/valse.mp3" type="audio/mp3" />
+              Your browser cannot play this audio file.
+            </audio>
+            <figcaption class="media_caption">Waltz</figcaption>
+          </figure>
+          <br />
+          <br />
+          <figure class="media_figure">
+            <audio class="center" controls preload="none" title="Dark ballad">
+              <source src="/assets/audio/dark_balad.mp3" type="audio/mp3" />
+              Your browser cannot play this audio file.
+            </audio>
+            <figcaption class="media_caption">Dark ballad</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div id="cv" class="root_step hidden">
+        <div class="cv_scroll">
+          <a
+            class="cv_download"
+            href="/assets/pdf/CV_Valentin_Machado.pdf"
+            download
+            >Télécharger le PDF</a
+          >
+          <div class="cv_sheet">
+            <aside class="side">
+              <header>
+                <h1>Valentin<br />Machado</h1>
+                <p class="role">Ingénieur logiciel<br />Web 3D</p>
+              </header>
+
+              <section>
+                <h2>Contact</h2>
+                <ul class="plain">
+                  <li>Lyon · Permis B</li>
+                  <li>
+                    <a href="mailto:valentin.machado.cpe@gmail.com"
+                      >valentin.machado.cpe@gmail.com</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://valentinmachado.github.io"
+                      >valentinmachado.github.io</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://github.com/valentinMachado"
+                      >github.com/valentinMachado</a
+                    >
+                  </li>
+                </ul>
+              </section>
+
+              <section>
+                <h2>Web 3D</h2>
+                <ul class="tags">
+                  <li>three.js</li>
+                  <li>Babylon.js</li>
+                  <li>WebGL</li>
+                  <li>iTowns</li>
+                  <li>3D Tiles</li>
+                  <li>nuages de points</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2>Web &amp; back-end</h2>
+                <ul class="tags">
+                  <li>JavaScript</li>
+                  <li>Node.js</li>
+                  <li>Express</li>
+                  <li>Socket.IO</li>
+                  <li>SQLite</li>
+                  <li>Webpack</li>
+                  <li>Web Audio</li>
+                  <li>d3</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2>Autres</h2>
+                <ul class="tags">
+                  <li>C++</li>
+                  <li>Java</li>
+                  <li>Nim</li>
+                  <li>Git</li>
+                  <li>Docker</li>
+                  <li>Linux</li>
+                  <li>ffmpeg</li>
+                  <li>Unity</li>
+                  <li>Godot</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2>Langues</h2>
+                <ul class="plain">
+                  <li>Français — langue maternelle</li>
+                  <li>Anglais — B2 (Cambridge English)</li>
+                </ul>
+              </section>
+
+              <section>
+                <h2>Centres d'intérêt</h2>
+                <p>
+                  Musique (guitare, basse, composition, MAO sous Ableton), sound
+                  design, cinéma, dessin, squash, randonnée.
+                </p>
+              </section>
+            </aside>
+
+            <div class="content">
+              <p class="pitch">
+                Ingénieur logiciel avec <strong>8 ans d'expérience</strong> en
+                applications web 3D : éditeurs 3D métier, jeux multijoueurs,
+                visualisation de données géospatiales. Je conçois et livre des
+                produits complets, du rendu WebGL jusqu'au serveur.
+              </p>
+
+              <section>
+                <h2>Expérience</h2>
+
+                <article class="job">
+                  <div class="job_head">
+                    <h3>NodaLab — Fondateur, développeur</h3>
+                    <a class="url" href="https://nodalab.app/">nodalab.app</a>
+                    <span class="dates">2025 – aujourd'hui</span>
+                  </div>
+                  <p class="lead">
+                    Application web d'apprentissage de la théorie musicale,
+                    conçue et développée seul en vue d'une commercialisation.
+                  </p>
+                  <ul>
+                    <li>
+                      Éditeur de graphes de nœuds (accords, rythmes, manche de
+                      guitare, lecteur) rendu aussi en page interactive pour
+                      l'apprenant.
+                    </li>
+                    <li>
+                      Audio dans le navigateur synchronisé à l'affichage
+                      (Tone.js, MIDI, échantillons).
+                    </li>
+                    <li>
+                      Back-end Node.js / Express / SQLite : comptes, OAuth
+                      Google et GitHub, messagerie, contenus multilingues ;
+                      tests unitaires et de bout en bout.
+                    </li>
+                  </ul>
+                </article>
+
+                <article class="job">
+                  <div class="job_head">
+                    <h3>Université de Lyon — Ingénieur d'études</h3>
+                    <span class="dates">janv. 2021 – déc. 2023</span>
+                  </div>
+                  <p class="lead">
+                    LabEx IMU : applications web 3D sur des données urbaines,
+                    avec l'équipe VCity du LIRIS.
+                  </p>
+                  <ul>
+                    <li>
+                      Architecte de <b>ud-viz</b> (open source) : moteur de jeu
+                      géospatial multijoueur, visualisation de nuages de points.
+                    </li>
+                    <li>
+                      <b>UD-IMUV</b> : jeu sérieux multijoueur autour de la
+                      ville de Lyon (article scientifique publié).
+                    </li>
+                    <li>
+                      <b>Galeri3</b> : application collaborative de discussions
+                      géolocalisées et d'import de données 3D.
+                    </li>
+                    <li>
+                      Contributions à <b>iTowns</b> (IGN) : style des 3D Tiles.
+                    </li>
+                  </ul>
+                </article>
+
+                <article class="job">
+                  <div class="job_head">
+                    <h3>Freelance — Ingénieur logiciel</h3>
+                    <span class="dates">avr. 2018 – janv. 2021</span>
+                  </div>
+                  <ul>
+                    <li>Petits projets WebGL pour des clients sur Fiverr.</li>
+                  </ul>
+                </article>
+
+                <article class="job">
+                  <div class="job_head">
+                    <h3>Wanadev — Ingénieur, chef de projet</h3>
+                    <span class="dates">mars 2016 – avr. 2018</span>
+                  </div>
+                  <ul>
+                    <li>
+                      <b>Popup Builder</b> (three.js) : conception 2D/3D de
+                      maisons en kit, génération des fichiers de fabrication
+                      pour l'usine.
+                    </li>
+                    <li>
+                      <b>SMAIO i-PLAN</b> (Babylon.js) : éditeur de colonne
+                      vertébrale à partir d'un nuage de points, pour la
+                      chirurgie.
+                    </li>
+                    <li>
+                      Gestion de projet et relation client ; projet de fin
+                      d'études sur l'illumination globale en WebGL.
+                    </li>
+                  </ul>
+                </article>
+              </section>
+
+              <section>
+                <h2>Projets personnels</h2>
+                <article class="job">
+                  <div class="job_head">
+                    <h3>Subtitle Game</h3>
+                    <a
+                      class="url"
+                      href="https://subtitle-game.mache.lol/login.html"
+                      >subtitle-game.mache.lol</a
+                    >
+                    <span class="dates">2025 – 2026</span>
+                  </div>
+                  <p>
+                    Jeu multijoueur où l'on sous-titre des extraits de films :
+                    vidéo synchronisée en temps réel (Socket.IO), montage et
+                    export du film final avec ffmpeg.
+                  </p>
+                </article>
+                <article class="job">
+                  <div class="job_head">
+                    <h3>Guess It</h3>
+                    <a class="url" href="https://guess-it.mache.lol/"
+                      >guess-it.mache.lol</a
+                    >
+                    <span class="dates">2026</span>
+                  </div>
+                  <p>
+                    Générateur de quiz (films, musique, pays, peinture…)
+                    alimenté par une dizaine d'API publiques (TMDb, Wikidata,
+                    Wikipedia…), avec cache SQLite et files de requêtes à débit
+                    limité.
+                  </p>
+                </article>
+              </section>
+
+              <section>
+                <h2>Parcours</h2>
+                <div class="timeline">
+                  <div>
+                    <span class="dates">2024 – 2026</span>
+                    <p>
+                      Parenthèse dans la musique et le son : préparation au BTS
+                      Métiers de l'audiovisuel (option son), puis année de
+                      préparation à l'ENM de Villeurbanne.
+                    </p>
+                  </div>
+                  <div>
+                    <span class="dates">2012 – 2016</span>
+                    <p>
+                      <b>CPE Lyon</b> — cursus ingénieur, spécialité
+                      informatique, dont un échange à
+                      <b>Queen's University</b> (Kingston, Canada) en
+                      intelligence artificielle et algorithmique.
+                    </p>
+                  </div>
+                  <div>
+                    <span class="dates">2009 – 2012</span>
+                    <p>CPGE MPSI puis MP, lycée Alphonse Daudet, Nîmes.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="off_screen" class="full_screen hidden"></div>
+    <div class="top_left">
+      <button
+        type="button"
+        id="move_to_home"
+        class="custom_button custom_button_selected"
+      >
+        Valentin MACHADO
+      </button>
+      <div class="network_container">
+        <a
+          class="link_icon"
+          href="mailto:valentin.machado.cpe@gmail.com"
+          title="Email"
+        >
+          <img src="/assets/img/icon/gmail.png" alt="Email" />
+        </a>
+        <a
+          class="link_icon"
+          href="https://github.com/valentinMachado"
+          title="GitHub"
+        >
+          <img src="/assets/img/icon/github.png" alt="GitHub" />
+        </a>
+        <a
+          class="link_icon"
+          href="https://www.linkedin.com/in/valentin-machado-6b408110b/"
+          title="LinkedIn"
+        >
+          <img src="/assets/img/icon/linkedin.png" alt="LinkedIn" />
+        </a>
+        <a
+          class="link_icon"
+          href="https://www.instagram.com/mache7218/"
+          title="Instagram"
+        >
+          <img src="/assets/img/icon/instagram.png" alt="Instagram" />
+        </a>
+      </div>
+    </div>
+    <div class="top_right">
+      <button type="button" id="move_to_projects" class="custom_button">
+        Professional work
+      </button>
+      <button type="button" id="move_to_about" class="custom_button">
+        Personal projects
+      </button>
+      <button type="button" id="move_to_cv" class="custom_button">CV</button>
+      <a
+        id="language_link"
+        class="custom_button"
+        href="/"
+        hreflang="fr"
+        lang="fr"
+        title="Version française"
+        >FR</a
+      >
+    </div>
+
+    <!-- js -->
+    <script src="/dist/bundle.js"></script>
+  </body>
+</html>

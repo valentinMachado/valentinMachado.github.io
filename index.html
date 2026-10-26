@@ -10,6 +10,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content="https://valentinmachado.github.io/" />
     <meta
       property="og:title"
@@ -24,13 +25,29 @@
       content="https://valentinmachado.github.io/assets/img/carousel/projects/ud_imuv.png"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://valentinmachado.github.io/" />
+    <link
+      rel="alternate"
+      hreflang="fr"
+      href="https://valentinmachado.github.io/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://valentinmachado.github.io/en/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://valentinmachado.github.io/"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <!-- html -->
@@ -53,7 +70,7 @@
 
     <!-- main app -->
     <canvas id="three_canvas" class="full_screen"></canvas>
-    <div id="on_screen" class="full_screen">
+    <div id="on_screen" class="full_screen" data-back-label="Retour">
       <div id="home" class="root_step hidden">
         <div class="disclaimer">
           Ingénieur logiciel spécialisé dans les applications web 3D. Éditeurs
@@ -68,7 +85,7 @@
               id="projects_carousel_preview_on_screen"
               class="carousel_preview"
             >
-              <img src="./assets/img/carousel/projects/nodalab.png" alt="" />
+              <img src="/assets/img/carousel/projects/nodalab.png" alt="" />
               <div
                 id="nodalab_preview_content"
                 class="carousel_preview_content hidden"
@@ -174,7 +191,7 @@
               id="projects_carousel_preview_off_screen"
               class="carousel_preview hidden"
             >
-              <img src="./assets/img/carousel/projects/galeri3.png" alt="" />
+              <img src="/assets/img/carousel/projects/galeri3.png" alt="" />
             </div>
           </div>
           <div class="carousel_item_container">
@@ -184,7 +201,7 @@
               title="NodaLab"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/nodalab.png);
+                background-image: url(/assets/img/carousel/projects/nodalab.png);
               "
             ></button>
             <button
@@ -193,7 +210,7 @@
               title="Galeri3"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/galeri3.png);
+                background-image: url(/assets/img/carousel/projects/galeri3.png);
               "
             ></button>
             <button
@@ -202,7 +219,7 @@
               title="UD-IMUV"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/ud_imuv.png);
+                background-image: url(/assets/img/carousel/projects/ud_imuv.png);
               "
             ></button>
             <button
@@ -211,7 +228,7 @@
               title="Contributions open source"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/open_source_contributions.png);
+                background-image: url(/assets/img/carousel/projects/open_source_contributions.png);
               "
             ></button>
             <button
@@ -220,7 +237,7 @@
               title="SMAIO i-PLAN"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/smaio_i_plan.png);
+                background-image: url(/assets/img/carousel/projects/smaio_i_plan.png);
               "
             ></button>
             <button
@@ -229,7 +246,7 @@
               title="Popup Builder"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/popup_builder.png);
+                background-image: url(/assets/img/carousel/projects/popup_builder.png);
               "
             ></button>
             <button
@@ -238,7 +255,7 @@
               title="Projet de fin d'études"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/projects/radiosity.png);
+                background-image: url(/assets/img/carousel/projects/radiosity.png);
               "
             ></button>
           </div>
@@ -279,7 +296,7 @@
             loading="lazy"
             class="center"
             alt="Capture de la démo de NodaLab : le graphe de nœuds de l'éditeur à gauche, la page d'explication à droite"
-            src="./assets/img/content/nodalab.png"
+            src="/assets/img/content/nodalab.png"
           />
           <br />
           <br />
@@ -326,8 +343,8 @@
             title="Démonstration de Galeri3"
             aria-label="Démonstration de Galeri3"
           >
-            <source src="./assets/video/galeri3.webm" type="video/webm" />
-            <source src="./assets/video/galeri3.mp4" type="video/mp4" />
+            <source src="/assets/video/galeri3.webm" type="video/webm" />
+            <source src="/assets/video/galeri3.mp4" type="video/mp4" />
           </video>
           <br />
           <br />
@@ -381,8 +398,8 @@
             title="Avatar sur l'île volante d'UD-IMUV"
             aria-label="Avatar sur l'île volante d'UD-IMUV"
           >
-            <source src="./assets/video/ud_imuv_2.webm" type="video/webm" />
-            <source src="./assets/video/ud_imuv_2.mp4" type="video/mp4" />
+            <source src="/assets/video/ud_imuv_2.webm" type="video/webm" />
+            <source src="/assets/video/ud_imuv_2.mp4" type="video/mp4" />
           </video>
           <br />
           On y trouve :
@@ -408,8 +425,8 @@
             title="Activités interactives dans UD-IMUV"
             aria-label="Activités interactives dans UD-IMUV"
           >
-            <source src="./assets/video/ud_imuv.webm" type="video/webm" />
-            <source src="./assets/video/ud_imuv.mp4" type="video/mp4" />
+            <source src="/assets/video/ud_imuv.webm" type="video/webm" />
+            <source src="/assets/video/ud_imuv.mp4" type="video/mp4" />
           </video>
           <br />
           <br />
@@ -477,8 +494,8 @@
             title="Démonstration du style des 3D Tiles dans iTowns"
             aria-label="Démonstration du style des 3D Tiles dans iTowns"
           >
-            <source src="./assets/video/itowns.webm" type="video/webm" />
-            <source src="./assets/video/itowns.mp4" type="video/mp4" />
+            <source src="/assets/video/itowns.webm" type="video/webm" />
+            <source src="/assets/video/itowns.mp4" type="video/mp4" />
           </video>
           <br />
           <br />
@@ -498,8 +515,8 @@
             title="Démonstration d'ud-viz"
             aria-label="Démonstration d'ud-viz"
           >
-            <source src="./assets/video/ud_viz.webm" type="video/webm" />
-            <source src="./assets/video/ud_viz.mp4" type="video/mp4" />
+            <source src="/assets/video/ud_viz.webm" type="video/webm" />
+            <source src="/assets/video/ud_viz.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -527,8 +544,8 @@
             title="Démonstration de l'éditeur de colonne vertébrale SMAIO i-PLAN"
             aria-label="Démonstration de l'éditeur de colonne vertébrale SMAIO i-PLAN"
           >
-            <source src="./assets/video/smaio.webm" type="video/webm" />
-            <source src="./assets/video/smaio.mp4" type="video/mp4" />
+            <source src="/assets/video/smaio.webm" type="video/webm" />
+            <source src="/assets/video/smaio.mp4" type="video/mp4" />
           </video>
           <br />
           <br />
@@ -584,8 +601,8 @@
             title="Démonstration de Popup Builder"
             aria-label="Démonstration de Popup Builder"
           >
-            <source src="./assets/video/popup_builder.webm" type="video/webm" />
-            <source src="./assets/video/popup_builder.mp4" type="video/mp4" />
+            <source src="/assets/video/popup_builder.webm" type="video/webm" />
+            <source src="/assets/video/popup_builder.mp4" type="video/mp4" />
           </video>
           <br />
           <br />
@@ -743,7 +760,7 @@
         <div class="carousel">
           <div class="carousel_preview_container">
             <div id="about_carousel_preview_on_screen" class="carousel_preview">
-              <img src="./assets/img/carousel/about/guess_it.png" alt="" />
+              <img src="/assets/img/carousel/about/guess_it.png" alt="" />
               <div
                 id="guess_it_preview_content"
                 class="carousel_preview_content hidden"
@@ -858,7 +875,7 @@
               id="about_carousel_preview_off_screen"
               class="carousel_preview hidden"
             >
-              <img src="./assets/img/carousel/about/subtitle_game.png" alt="" />
+              <img src="/assets/img/carousel/about/subtitle_game.png" alt="" />
             </div>
           </div>
           <div class="carousel_item_container">
@@ -868,7 +885,7 @@
               class="carousel_item"
               title="Guess It"
               style="
-                background-image: url(./assets/img/carousel/about/guess_it.png);
+                background-image: url(/assets/img/carousel/about/guess_it.png);
               "
             ></button>
             <button
@@ -877,7 +894,7 @@
               class="carousel_item"
               title="Subtitle Game"
               style="
-                background-image: url(./assets/img/carousel/about/subtitle_game.png);
+                background-image: url(/assets/img/carousel/about/subtitle_game.png);
               "
             ></button>
             <button
@@ -886,7 +903,7 @@
               class="carousel_item"
               title="Meteoblocks"
               style="
-                background-image: url(./assets/img/carousel/about/meteoblocks.png);
+                background-image: url(/assets/img/carousel/about/meteoblocks.png);
               "
             ></button>
             <button
@@ -895,7 +912,7 @@
               class="carousel_item"
               title="Covidjam"
               style="
-                background-image: url(./assets/img/carousel/about/covidjam.png);
+                background-image: url(/assets/img/carousel/about/covidjam.png);
               "
             ></button>
             <button
@@ -903,9 +920,7 @@
               id="souk_item"
               class="carousel_item"
               title="Souk"
-              style="
-                background-image: url(./assets/img/carousel/about/souk.png);
-              "
+              style="background-image: url(/assets/img/carousel/about/souk.png)"
             ></button>
             <button
               type="button"
@@ -913,7 +928,7 @@
               class="carousel_item"
               title="Steam Pong"
               style="
-                background-image: url(./assets/img/carousel/about/steampong.png);
+                background-image: url(/assets/img/carousel/about/steampong.png);
               "
             ></button>
             <button
@@ -921,7 +936,7 @@
               id="daw_item"
               title="Musique assistée par ordinateur"
               class="carousel_item"
-              style="background-image: url(./assets/img/carousel/about/daw.png)"
+              style="background-image: url(/assets/img/carousel/about/daw.png)"
             ></button>
             <button
               type="button"
@@ -929,7 +944,7 @@
               title="Guitare"
               class="carousel_item"
               style="
-                background-image: url(./assets/img/carousel/about/guitar.png);
+                background-image: url(/assets/img/carousel/about/guitar.png);
               "
             ></button>
           </div>
@@ -955,7 +970,7 @@
             loading="lazy"
             class="center"
             alt="Un quiz Guess It en cours : deviner un film à partir d'une photo"
-            src="./assets/img/content/guess_it.png"
+            src="/assets/img/content/guess_it.png"
           />
           <br />
           <br />
@@ -1007,7 +1022,7 @@
             loading="lazy"
             class="center"
             alt="Capture de Subtitle Game : l'extrait de film et les sous-titres à écrire"
-            src="./assets/img/content/subtitle_game.png"
+            src="/assets/img/content/subtitle_game.png"
           />
           <br />
           <br />
@@ -1083,8 +1098,8 @@
             title="Partie de Covidjam"
             aria-label="Partie de Covidjam"
           >
-            <source src="./assets/video/covidjam.webm" type="video/webm" />
-            <source src="./assets/video/covidjam.mp4" type="video/mp4" />
+            <source src="/assets/video/covidjam.webm" type="video/webm" />
+            <source src="/assets/video/covidjam.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -1113,8 +1128,8 @@
             title="Partie de Souk"
             aria-label="Partie de Souk"
           >
-            <source src="./assets/video/souk.webm" type="video/webm" />
-            <source src="./assets/video/souk.mp4" type="video/mp4" />
+            <source src="/assets/video/souk.webm" type="video/webm" />
+            <source src="/assets/video/souk.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -1141,8 +1156,8 @@
             title="Partie de Steam Pong"
             aria-label="Partie de Steam Pong"
           >
-            <source src="./assets/video/steampong.webm" type="video/webm" />
-            <source src="./assets/video/steampong.mp4" type="video/mp4" />
+            <source src="/assets/video/steampong.webm" type="video/webm" />
+            <source src="/assets/video/steampong.mp4" type="video/mp4" />
           </video>
           <br />
           J'ai composé deux musiques électroniques industrielles et créé les
@@ -1177,7 +1192,7 @@
           <br />
           <figure class="media_figure">
             <audio class="center" controls preload="none" title="Manouche">
-              <source src="./assets/audio/manouche.mp3" type="audio/mp3" />
+              <source src="/assets/audio/manouche.mp3" type="audio/mp3" />
               Votre navigateur ne peut pas lire ce fichier audio.
             </audio>
             <figcaption class="media_caption">Manouche</figcaption>
@@ -1186,7 +1201,7 @@
           <br />
           <figure class="media_figure">
             <audio class="center" controls preload="none" title="Boom bap">
-              <source src="./assets/audio/boom_bap.mp3" type="audio/mp3" />
+              <source src="/assets/audio/boom_bap.mp3" type="audio/mp3" />
               Votre navigateur ne peut pas lire ce fichier audio.
             </audio>
             <figcaption class="media_caption">Boom bap</figcaption>
@@ -1209,7 +1224,7 @@
           <br />
           <figure class="media_figure">
             <audio class="center" controls preload="none" title="Valse">
-              <source src="./assets/audio/valse.mp3" type="audio/mp3" />
+              <source src="/assets/audio/valse.mp3" type="audio/mp3" />
               Votre navigateur ne peut pas lire ce fichier audio.
             </audio>
             <figcaption class="media_caption">Valse</figcaption>
@@ -1218,7 +1233,7 @@
           <br />
           <figure class="media_figure">
             <audio class="center" controls preload="none" title="Dark ballad">
-              <source src="./assets/audio/dark_balad.mp3" type="audio/mp3" />
+              <source src="/assets/audio/dark_balad.mp3" type="audio/mp3" />
               Votre navigateur ne peut pas lire ce fichier audio.
             </audio>
             <figcaption class="media_caption">Dark ballad</figcaption>
@@ -1229,7 +1244,7 @@
         <div class="cv_scroll">
           <a
             class="cv_download"
-            href="./assets/pdf/CV_Valentin_Machado.pdf"
+            href="/assets/pdf/CV_Valentin_Machado.pdf"
             download
             >Télécharger le PDF</a
           >
@@ -1502,28 +1517,28 @@
           href="mailto:valentin.machado.cpe@gmail.com"
           title="E-mail"
         >
-          <img src="assets/img/icon/gmail.png" alt="E-mail" />
+          <img src="/assets/img/icon/gmail.png" alt="E-mail" />
         </a>
         <a
           class="link_icon"
           href="https://github.com/valentinMachado"
           title="GitHub"
         >
-          <img src="assets/img/icon/github.png" alt="GitHub" />
+          <img src="/assets/img/icon/github.png" alt="GitHub" />
         </a>
         <a
           class="link_icon"
           href="https://www.linkedin.com/in/valentin-machado-6b408110b/"
           title="LinkedIn"
         >
-          <img src="assets/img/icon/linkedin.png" alt="LinkedIn" />
+          <img src="/assets/img/icon/linkedin.png" alt="LinkedIn" />
         </a>
         <a
           class="link_icon"
           href="https://www.instagram.com/mache7218/"
           title="Instagram"
         >
-          <img src="assets/img/icon/instagram.png" alt="Instagram" />
+          <img src="/assets/img/icon/instagram.png" alt="Instagram" />
         </a>
       </div>
     </div>
@@ -1535,9 +1550,18 @@
         Créations personnelles
       </button>
       <button type="button" id="move_to_cv" class="custom_button">CV</button>
+      <a
+        id="language_link"
+        class="custom_button"
+        href="/en/"
+        hreflang="en"
+        lang="en"
+        title="English version"
+        >EN</a
+      >
     </div>
 
     <!-- js -->
-    <script src="./dist/bundle.js"></script>
+    <script src="/dist/bundle.js"></script>
   </body>
 </html>

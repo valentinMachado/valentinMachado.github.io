@@ -55,7 +55,7 @@ describe("initCarousel", () => {
       $("projects_carousel_preview_on_screen")
         .querySelector("img")
         .getAttribute("src")
-    ).toBe("./assets/img/carousel/projects/galeri3.png");
+    ).toBe("/assets/img/carousel/projects/galeri3.png");
 
     await finishSlide("projects");
     expect(isVisible("projects_carousel_preview_off_screen")).toBe(false);
@@ -95,8 +95,10 @@ describe("initCarousel", () => {
     const step = $("galeri3_step");
     expect(
       step.querySelector(".root_content_preview_img").getAttribute("src")
-    ).toBe("./assets/img/carousel/projects/galeri3.png");
+    ).toBe("/assets/img/carousel/projects/galeri3.png");
     expect(step.querySelector(".back_button").tagName).toBe("BUTTON");
+    // label read from the page, so that each language has its own
+    expect(step.querySelector(".back_button img").alt).toBe("Retour");
     step.querySelector(".back_button").onclick();
     expect(moveToStepId).toHaveBeenCalledWith("projects");
   });

@@ -4,6 +4,7 @@ import {
   quadraticInOut,
   getElementByClass,
   playAnimation,
+  stepIdFromHash,
   wheelDirection,
   keyDirection,
   swipeDirection,
@@ -181,5 +182,23 @@ describe("canScroll", () => {
     const fits = { scrollTop: 0, clientHeight: 100, scrollHeight: 100 };
     expect(canScroll(fits, 1)).toBe(false);
     expect(canScroll(fits, -1)).toBe(false);
+  });
+});
+
+describe("stepIdFromHash", () => {
+  const steps = new Map([
+    ["home", {}],
+    ["cv", {}],
+  ]);
+
+  it("returns the step named by the hash", () => {
+    expect(stepIdFromHash("#cv", steps)).toBe("cv");
+  });
+
+  it("returns null for no hash, an unknown step or a malformed hash", () => {
+    expect(stepIdFromHash("", steps)).toBeNull();
+    expect(stepIdFromHash("#", steps)).toBeNull();
+    expect(stepIdFromHash("#nope", steps)).toBeNull();
+    expect(stepIdFromHash("#%E0", steps)).toBeNull();
   });
 });
