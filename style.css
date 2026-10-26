@@ -476,3 +476,285 @@ a:focus-visible {
   position: relative;
   display: inline-flex;
 }
+
+/* cv */
+
+#cv {
+  --cv-navy: var(--color-dark);
+  --cv-accent: rgb(92, 120, 255);
+  --cv-text: rgb(28, 28, 40);
+  --cv-muted: rgb(100, 100, 118);
+  --cv-rule: rgb(225, 225, 235);
+  text-align: left;
+  font-size: initial;
+}
+
+.cv_scroll {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 0 16px 32px;
+  box-sizing: border-box;
+}
+
+.cv_download {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 12px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: var(--color-light);
+  background: var(--cv-accent);
+  text-decoration: none;
+}
+
+.cv_download:hover {
+  filter: brightness(1.15);
+}
+
+/* A4 sheet, also what is printed to the PDF */
+.cv_sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 66mm 1fr;
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  user-select: text;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 9.2pt;
+  line-height: 1.38;
+  color: var(--cv-text);
+}
+
+.cv_sheet * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.cv_sheet a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cv_sheet .side {
+  background: var(--cv-navy);
+  color: rgb(225, 225, 240);
+  padding: 12mm 6mm 10mm 8mm;
+  display: flex;
+  flex-direction: column;
+  gap: 6.5mm;
+}
+
+.cv_sheet h1 {
+  font-size: 23pt;
+  line-height: 1.05;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+.cv_sheet .role {
+  margin-top: 3mm;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5pt;
+  color: var(--cv-accent);
+  filter: brightness(1.35);
+}
+
+.cv_sheet .side h2 {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: white;
+  margin-bottom: 2.2mm;
+  padding-bottom: 1.2mm;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cv_sheet ul.plain {
+  list-style: none;
+  display: grid;
+  gap: 1mm;
+  font-size: 8.3pt;
+  overflow-wrap: anywhere;
+}
+
+.cv_sheet ul.tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.3mm;
+}
+
+.cv_sheet ul.tags li {
+  font-size: 8pt;
+  padding: 0.6mm 2mm;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cv_sheet .side p {
+  font-size: 8.6pt;
+}
+
+.cv_sheet .content {
+  padding: 12mm 10mm 8mm 9mm;
+  display: flex;
+  flex-direction: column;
+  gap: 4.5mm;
+}
+
+.cv_sheet .pitch {
+  font-size: 10pt;
+  line-height: 1.45;
+  padding-left: 3.5mm;
+  border-left: 3px solid var(--cv-accent);
+}
+
+.cv_sheet .content h2 {
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--cv-navy);
+  margin-bottom: 2.5mm;
+  padding-bottom: 1.2mm;
+  border-bottom: 1px solid var(--cv-rule);
+}
+
+.cv_sheet .job + .job {
+  margin-top: 2.6mm;
+}
+
+.cv_sheet .job_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 3mm;
+}
+
+.cv_sheet h3 {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--cv-navy);
+}
+
+.cv_sheet .url {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 7.6pt;
+  color: var(--cv-accent);
+  margin-right: auto;
+}
+
+.cv_sheet .dates {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 7.6pt;
+  color: var(--cv-muted);
+  white-space: nowrap;
+}
+
+.cv_sheet .lead {
+  color: var(--cv-muted);
+  margin-top: 0.5mm;
+}
+
+.cv_sheet .job ul {
+  margin-top: 1mm;
+  padding-left: 4mm;
+}
+
+.cv_sheet .job li::marker {
+  color: var(--cv-accent);
+}
+
+.cv_sheet .job > p:not(.lead) {
+  margin-top: 0.5mm;
+}
+
+.cv_sheet .timeline {
+  display: grid;
+  gap: 2.2mm;
+}
+
+.cv_sheet .timeline > div {
+  display: grid;
+  grid-template-columns: 22mm 1fr;
+  gap: 3mm;
+}
+
+.cv_sheet .timeline .dates {
+  padding-top: 0.4mm;
+}
+
+/* narrow screens: one column, no A4 format */
+@media screen and (max-width: 820px) {
+  .cv_sheet {
+    width: 100%;
+    min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .cv_sheet .side,
+  .cv_sheet .content {
+    padding: 24px 20px;
+  }
+
+  .cv_sheet .job_head {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .cv_sheet .timeline > div {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+/* printing the site prints the cv alone, on one A4 page */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: none;
+  }
+
+  body > *:not(#on_screen),
+  #on_screen > .root_step:not(#cv),
+  .cv_download {
+    display: none !important;
+  }
+
+  #on_screen,
+  #cv.root_step.hidden {
+    display: block !important;
+  }
+
+  #cv,
+  #on_screen,
+  .cv_scroll {
+    position: static;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    animation: none;
+  }
+
+  .cv_sheet {
+    box-shadow: none;
+    height: 297mm;
+    overflow: hidden;
+  }
+
+  .cv_sheet,
+  .cv_sheet * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

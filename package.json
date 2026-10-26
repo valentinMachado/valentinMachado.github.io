@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "format": "prettier --write src tests bin cv index.html style.css \"*.config.{js,mjs}\"",
+    "format": "prettier --write src tests bin index.html style.css \"*.config.{js,mjs}\"",
     "format:check": "prettier --check src tests bin index.html style.css \"*.config.{js,mjs}\""
   },
   "repository": {

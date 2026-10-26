@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import {
+  canScroll,
   quadraticInOut,
   getElementByClass,
   playAnimation,
@@ -173,5 +174,36 @@ describe("swipeDirection", () => {
 
   it("ignores mostly horizontal swipes", () => {
     expect(swipeDirection(200, -100)).toBe(0);
+  });
+});
+
+describe("canScroll", () => {
+  const scroller = (scrollTop) => ({
+    scrollTop,
+    clientHeight: 100,
+    scrollHeight: 300,
+  });
+
+  it("scrolls down until the bottom", () => {
+    expect(canScroll(scroller(0), 1)).toBe(true);
+    expect(canScroll(scroller(198), 1)).toBe(true);
+    expect(canScroll(scroller(200), 1)).toBe(false);
+  });
+
+  it("scrolls up until the top", () => {
+    expect(canScroll(scroller(200), -1)).toBe(true);
+    expect(canScroll(scroller(1), -1)).toBe(true);
+    expect(canScroll(scroller(0), -1)).toBe(false);
+  });
+
+  it("does not scroll without a scroller or a direction", () => {
+    expect(canScroll(null, 1)).toBe(false);
+    expect(canScroll(scroller(50), 0)).toBe(false);
+  });
+
+  it("does not scroll content that fits", () => {
+    const fits = { scrollTop: 0, clientHeight: 100, scrollHeight: 100 };
+    expect(canScroll(fits, 1)).toBe(false);
+    expect(canScroll(fits, -1)).toBe(false);
   });
 });

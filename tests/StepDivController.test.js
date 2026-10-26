@@ -76,10 +76,11 @@ describe("moveNext", () => {
   it("does nothing on the last step", async () => {
     await navigate(controller, (c) => c.moveNext());
     await navigate(controller, (c) => c.moveNext());
-    expect(controller.currentStepId).toBe("about");
+    await navigate(controller, (c) => c.moveNext());
+    expect(controller.currentStepId).toBe("cv");
 
     controller.moveNext();
-    expect(controller.currentStepId).toBe("about");
+    expect(controller.currentStepId).toBe("cv");
     expect(controller.isMoving).toBe(false);
   });
 });

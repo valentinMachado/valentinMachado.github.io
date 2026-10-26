@@ -2,6 +2,7 @@ import { Background3D } from "./Background3D";
 import { StepDivController } from "./StepDivController";
 import { initCarousel } from "./carousel";
 import {
+  canScroll,
   isMobileUserAgent,
   keyDirection,
   swipeDirection,
@@ -9,6 +10,11 @@ import {
 } from "./utils";
 
 window.DEBUG_3D = false;
+
+// step contents taller than the screen
+const SCROLLER_SELECTOR = ".step_content, .cv_scroll";
+// ms without wheel events that end a gesture
+const WHEEL_GESTURE_GAP = 300;
 
 const warnMobileUsers = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -89,22 +95,56 @@ const initNavigation = (background3D, stepDivController) => {
     else if (direction < 0) navigate((c) => c.movePrevious());
   };
 
+  /** @param {EventTarget} target */
+  const scrollerOf = (target) => target.closest?.(SCROLLER_SELECTOR) || null;
+
+  // a wheel gesture (with its inertia) that scrolled a scroller to its edge
+  // does not also change step: that takes a new gesture
+  let lastScrollingWheelTime = -Infinity;
   window.onwheel = (event) => {
     if (window.DEBUG_3D) return;
-    moveInDirection(wheelDirection(event));
+    const direction = wheelDirection(event);
+    const scroller = scrollerOf(event.target);
+    const now = performance.now();
+    // the scroller under the pointer scrolls by itself
+    if (
+      canScroll(scroller, direction) ||
+      (scroller && now - lastScrollingWheelTime < WHEEL_GESTURE_GAP)
+    ) {
+      lastScrollingWheelTime = now;
+      return;
+    }
+    moveInDirection(direction);
   };
 
   window.onkeydown = (event) => {
     // media players and fields use the arrow keys themselves
     if (event.target.closest?.("audio, video, input, textarea, select")) return;
-    moveInDirection(keyDirection(event));
+    const direction = keyDirection(event);
+    const scroller = document
+      .getElementById(stepDivController.currentStep().divId)
+      .querySelector(SCROLLER_SELECTOR);
+    if (canScroll(scroller, direction)) {
+      scroller.scrollBy({
+        top: direction * scroller.clientHeight * 0.8,
+        behavior: "smooth",
+      });
+      event.preventDefault();
+      return;
+    }
+    moveInDirection(direction);
   };
 
+  // scroll position when the touch began: the swipe has scrolled it by touchend
   let touchStart = null;
+  let touchScroller = null;
+  let touchScrollTop = 0;
   window.addEventListener(
     "touchstart",
     (event) => {
       touchStart = event.touches.length == 1 ? event.touches[0] : null;
+      touchScroller = scrollerOf(event.target);
+      touchScrollTop = touchScroller?.scrollTop || 0;
     },
     { passive: true }
   );
@@ -113,19 +153,25 @@ const initNavigation = (background3D, stepDivController) => {
     (event) => {
       if (!touchStart) return;
       const touchEnd = event.changedTouches[0];
-      moveInDirection(
-        swipeDirection(
-          touchEnd.clientX - touchStart.clientX,
-          touchEnd.clientY - touchStart.clientY
-        )
+      const direction = swipeDirection(
+        touchEnd.clientX - touchStart.clientX,
+        touchEnd.clientY - touchStart.clientY
       );
       touchStart = null;
+      if (touchScroller) {
+        const scrolledTop = touchScroller.scrollTop;
+        touchScroller.scrollTop = touchScrollTop;
+        const couldScroll = canScroll(touchScroller, direction);
+        touchScroller.scrollTop = scrolledTop;
+        if (couldScroll) return;
+      }
+      moveInDirection(direction);
     },
     { passive: true }
   );
 
   // menu
-  const menuStepIds = ["home", "projects", "about"];
+  const menuStepIds = ["home", "projects", "about", "cv"];
   menuStepIds.forEach((id) => {
     document.getElementById("move_to_" + id).onclick = () => moveToStepId(id);
   });

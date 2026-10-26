@@ -167,6 +167,18 @@ const aboutPlatform = {
   ),
 };
 
+/**
+ * @type {Platform}
+ */
+const cvPlatform = {
+  size: 10,
+  position: new Vector3(
+    radiusOffsetXZPlatform * Math.cos(2 * Math.PI),
+    -offsetYPlatform,
+    radiusOffsetXZPlatform * Math.sin(2 * Math.PI)
+  ),
+};
+
 // projects carousel items, in the order of their 3D meshes around the platform
 const projectMeshColors = new Map([
   ["popup_builder", "red"],
@@ -240,6 +252,7 @@ export const globalInit = (background3D) => {
   });
 
   initPlatformScene(aboutPlatform);
+  initPlatformScene(cvPlatform);
 };
 
 // all detail pages share the same camera view
@@ -350,6 +363,7 @@ export const globalParameters = {
       "about",
       new Step({
         previousStepId: "projects",
+        nextStepId: "cv",
         init: (step) => {
           // no 3D counterpart for this carousel
           step.selectProject3D = noop;
@@ -361,6 +375,19 @@ export const globalParameters = {
           aboutPlatform.size * 2.3 * Math.sin((4 * Math.PI) / 3)
         ),
         cameraTarget: aboutPlatform.position.clone(),
+      }),
+    ],
+    [
+      "cv",
+      new Step({
+        previousStepId: "about",
+        divId: "cv",
+        cameraPosition: new Vector3(
+          cvPlatform.size * 2.3 * Math.cos(2 * Math.PI),
+          cvPlatform.position.y + 4,
+          cvPlatform.size * 2.3 * Math.sin(2 * Math.PI)
+        ),
+        cameraTarget: cvPlatform.position.clone(),
       }),
     ],
     ...detailStepIds.map((id) => [

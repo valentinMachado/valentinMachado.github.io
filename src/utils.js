@@ -61,6 +61,21 @@ export const swipeDirection = (deltaX, deltaY) => {
 };
 
 /**
+ * Whether a scrollable element can still scroll in a direction: while it can,
+ * the wheel, a swipe or a key scrolls it instead of changing step.
+ *
+ * @param {HTMLElement | null} element
+ * @param {number} direction 1 = down, -1 = up
+ * @return {boolean}
+ */
+export const canScroll = (element, direction) => {
+  if (!element || direction == 0) return false;
+  if (direction > 0)
+    return element.scrollTop + element.clientHeight < element.scrollHeight - 1;
+  return element.scrollTop > 0;
+};
+
+/**
  * Plays a CSS animation on an element and resolves when it is over.
  * Also resolves on cancel and after a timeout, because animationend never
  * fires if the element is hidden mid-animation (the caller would stay locked).

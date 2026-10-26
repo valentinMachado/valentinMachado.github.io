@@ -18,6 +18,7 @@ const ELEMENT_IDS_USED_BY_JS = [
   "move_to_home",
   "move_to_projects",
   "move_to_about",
+  "move_to_cv",
 ];
 
 const isLocalPath = (path) =>
@@ -195,8 +196,6 @@ describe("index.html", () => {
     );
     expect(clickables.length).toBeGreaterThan(0);
     for (const element of clickables) {
-      // a link to another page is reachable as it is
-      if (element.tagName === "A" && element.hasAttribute("href")) continue;
       expect(element.tagName, element.id || element.textContent).toBe("BUTTON");
       expect(element.getAttribute("type")).toBe("button");
     }
@@ -209,6 +208,12 @@ describe("index.html", () => {
       expect(link.getAttribute("href")).toMatch(/^(https:\/\/|mailto:)/);
       expect(link.querySelector("img[alt]")).not.toBeNull();
     }
+  });
+
+  it("the cv offers its PDF for download", () => {
+    const link = document.querySelector("#cv .cv_download");
+    expect(link.hasAttribute("download")).toBe(true);
+    expect(localFileExists(link.getAttribute("href"))).toBe(true);
   });
 
   it("back button icon used by src/index.js exists", () => {
