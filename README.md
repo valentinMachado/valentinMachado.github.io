@@ -34,6 +34,7 @@ Le port et l'hôte du serveur de dev se changent dans un fichier `.env` (voir `.
 ```
 index.html          tout le contenu du site (sections, carrousels, pages de détail)
 style.css           styles et animations CSS des transitions
+cv/                 page CV (HTML imprimable A4) et son PDF téléchargeable
 src/                code JS, bundlé par webpack
   index.js          point d'entrée : branche la navigation, les carrousels, le fond 3D
   globalParameters.js  déclaration des steps (sections) et de la scène 3D
