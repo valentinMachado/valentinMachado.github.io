@@ -27,7 +27,7 @@ Portfolio statique (GitHub Pages) : `index.html` (français) et `en/index.html` 
 - `npm install -D x` prend la dernière majeure : fixer la majeure actuelle (express 4, cross-env 7, webpack-cli 5).
 - jsdom ne joue pas les animations CSS : les tests appellent `el.onanimationend()` à la main. WebGL n'existe pas sous jsdom : `Background3D` n'est testé qu'au navigateur.
 - Ne pas commiter `window.DEBUG_3D = true`.
-- `assets/pdf/CV_Valentin_Machado.pdf` est l'impression de la step `cv` de `index.html` : le régénérer après chaque modification du CV (commande dans DEPLOY.md ; la page doit être servie, pas ouverte en `file:///`).
+- `assets/pdf/CV_Valentin_Machado.pdf` (et `CV_Valentin_Machado_EN.pdf`) est l'impression de la step `cv` de `index.html` (et de `en/index.html`) : régénérer le PDF de la langue modifiée après chaque modification du CV (commandes dans DEPLOY.md ; la page doit être servie, pas ouverte en `file:///`). Le CV anglais est en anglais britannique, comme toute la page (`og:locale` `en_GB`).
 
 ## Vérification navigateur
 

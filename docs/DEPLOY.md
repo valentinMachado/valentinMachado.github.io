@@ -33,12 +33,16 @@ Un commit qui ne touche que `index.html`, `en/index.html`, `style.css` ou `asset
 
 ## Le CV
 
-Le CV est la step `cv` de `index.html`. `assets/pdf/CV_Valentin_Machado.pdf` en est l'impression : la feuille d'impression de `style.css` n'imprime que la feuille A4 du CV. Le régénérer après chaque modification (il doit tenir sur une page), depuis Git Bash, `npm run dev` tournant dans un autre terminal :
+Le CV est la step `cv` de chaque page : `assets/pdf/CV_Valentin_Machado.pdf` est l'impression de `index.html`, `assets/pdf/CV_Valentin_Machado_EN.pdf` celle de `en/index.html`. La feuille d'impression de `style.css` n'imprime que la feuille A4 du CV. Régénérer le PDF de la langue modifiée après chaque modification (il doit tenir sur une page), depuis Git Bash, `npm run dev` tournant dans un autre terminal :
 
 ```sh
 "/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu \
   --no-pdf-header-footer --virtual-time-budget=5000 \
   --print-to-pdf="$(pwd -W)/assets/pdf/CV_Valentin_Machado.pdf" "http://127.0.0.1:8000/"
+
+"/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu \
+  --no-pdf-header-footer --virtual-time-budget=5000 \
+  --print-to-pdf="$(pwd -W)/assets/pdf/CV_Valentin_Machado_EN.pdf" "http://127.0.0.1:8000/en/"
 ```
 
 La page doit être servie en HTTP : ses chemins sont absolus (`/style.css`), et ouverte en `file:///` elle chercherait la feuille de style à la racine du disque.
