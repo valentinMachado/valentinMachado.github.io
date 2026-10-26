@@ -306,7 +306,7 @@ a:focus-visible {
 .carousel_preview_content {
   color: var(--color-light);
   margin: auto;
-  padding-right: 50px;
+  padding-right: 4vw;
   text-align: end;
 }
 
@@ -318,7 +318,7 @@ a:focus-visible {
 .carousel_preview img {
   min-width: 40%;
   max-width: 50%;
-  margin: auto 50px auto 50px;
+  margin: auto 4vw;
   max-height: calc(100% - 100px);
   /* images have different ratios: fit them in the box instead of stretching */
   object-fit: contain;
@@ -351,6 +351,53 @@ a:focus-visible {
 .carousel_item_container {
   display: flex;
   height: 20%;
+  /* offsetLeft of the items, to scroll the selected one into view */
+  position: relative;
+}
+
+/* narrow screens: image above the text */
+@media screen and (max-width: 700px) {
+  .carousel_preview {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .carousel_preview img {
+    min-width: 0;
+    max-width: 90%;
+    max-height: 50%;
+    margin: 0 auto 3vh;
+  }
+
+  .carousel_preview_content {
+    margin: 0 auto;
+    padding: 0 5vw;
+    text-align: center;
+  }
+
+  .carousel_preview_content .custom_button {
+    float: none;
+  }
+
+  .carousel_preview_container h2 {
+    font-size: x-large;
+  }
+}
+
+/* thumbnails too narrow to fit in a row: a scrolling strip */
+@media screen and (max-width: 1024px) {
+  .carousel_item_container {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  /* carousel images are 16:9 */
+  .carousel_item {
+    flex: 0 0 auto;
+    width: auto;
+    aspect-ratio: 16 / 9;
+    margin: 15px 8px;
+  }
 }
 
 /* step div controller */

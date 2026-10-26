@@ -40,7 +40,7 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 | `src/spaceDecor.js` | Décor de fond qui rend visibles les déplacements de la caméra : poussière d'étoiles scintillante (shader, invisible tout près de la caméra) et polyèdres filaires qui flottent derrière les plateformes, à l'écart des points de vue des steps. |
 | `src/Background3D.js` | Renderer three.js, boucle de rendu à 30 fps max (le fps baisse si les frames sont lentes), interpolation de la caméra entre deux steps. Mode debug : `OrbitControls` + inspecteur. |
 | `src/StepDivController.js` | Transitions HTML entre deux steps (voir ci-dessous). Met en pause les vidéos et sons au changement de step. |
-| `src/carousel.js` | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
+| `src/carousel.js` | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), vignette sélectionnée centrée dans la bande quand elle défile (écrans de 1024 px et moins), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
 | `src/utils.js` | Fonctions pures, testées : easing, `wheelDirection`, `keyDirection`, `swipeDirection`, `isMobileUserAgent`, `playAnimation`. |
 
 ## Navigation
@@ -100,7 +100,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
    </div>
    ```
 
-5. **Image** : `assets/img/carousel/projects/mon_projet.png` (vignette, aperçu et en-tête de la page de détail). Pour le carrousel « créations personnelles », remplacer `projects` par `about` partout.
+5. **Image** : `assets/img/carousel/projects/mon_projet.png` (vignette, aperçu et en-tête de la page de détail), **au format 16:9** comme toutes les images des carrousels : les vignettes sont en `background-size: cover` et rogneraient un autre ratio. Pour le carrousel « créations personnelles », remplacer `projects` par `about` partout.
 
 Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests).
 

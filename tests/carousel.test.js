@@ -61,6 +61,22 @@ describe("initCarousel", () => {
     expect(isVisible("projects_carousel_preview_off_screen")).toBe(false);
   });
 
+  it("centers the selected item in the thumbnail strip", () => {
+    const container = $("galeri3_item").parentElement;
+    // jsdom has no layout and no Element.scrollTo
+    container.scrollTo = vi.fn();
+    Object.defineProperty(container, "clientWidth", { value: 300 });
+    Object.defineProperty($("galeri3_item"), "offsetLeft", { value: 900 });
+    Object.defineProperty($("galeri3_item"), "offsetWidth", { value: 100 });
+
+    $("galeri3_item").onclick();
+
+    expect(container.scrollTo).toHaveBeenCalledWith({
+      left: 800,
+      behavior: "smooth",
+    });
+  });
+
   it("ignores clicks during a slide", async () => {
     $("galeri3_item").onclick();
     $("ud_imuv_item").onclick();

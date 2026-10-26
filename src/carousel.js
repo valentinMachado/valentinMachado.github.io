@@ -26,6 +26,20 @@ const carouselItems = (carouselId) => [
 const itemStepId = (item) => item.id.replace("_item", "");
 
 /**
+ * Centers an item in its container when the items overflow it (narrow
+ * screens, where the container scrolls horizontally).
+ *
+ * @param {HTMLElement} item
+ */
+const scrollItemIntoView = (item) => {
+  const container = item.parentElement;
+  container.scrollTo?.({
+    left: item.offsetLeft - (container.clientWidth - item.offsetWidth) / 2,
+    behavior: "smooth",
+  });
+};
+
+/**
  * Shows the preview content (`<stepId>_preview_content`) and image of an item
  * in a preview container.
  *
@@ -110,6 +124,7 @@ export const initCarousel = (carouselId, moveToStepId) => {
 
     previousItem.classList.remove(SELECTED_CLASS);
     itemSelected.classList.add(SELECTED_CLASS);
+    scrollItemIntoView(itemSelected);
 
     // update 3D (unset when 3D is disabled)
     globalParameters.steps
