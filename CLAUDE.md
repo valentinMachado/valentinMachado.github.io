@@ -6,7 +6,7 @@ Portfolio statique (GitHub Pages) : `index.html` + `style.css` à la racine, JS 
 
 - `npm test` : Vitest + jsdom (inclut la comparaison du build avec `dist/bundle.js`)
 - `npm run build` : bundle de prod dans `dist/`
-- `npm run lint`, `npm run format` (Prettier sur src, tests, bin, cv, index.html, style.css)
+- `npm run lint`, `npm run format` (Prettier sur src, tests, bin, index.html, style.css)
 - `npm run dev` : serveur sur http://127.0.0.1:8000/, bundle de dev dans `dist-dev/`
 
 ## Règles
@@ -26,7 +26,7 @@ Portfolio statique (GitHub Pages) : `index.html` + `style.css` à la racine, JS 
 - `npm install -D x` prend la dernière majeure : fixer la majeure actuelle (express 4, cross-env 7, webpack-cli 5).
 - jsdom ne joue pas les animations CSS : les tests appellent `el.onanimationend()` à la main. WebGL n'existe pas sous jsdom : `Background3D` n'est testé qu'au navigateur.
 - Ne pas commiter `window.DEBUG_3D = true`.
-- `cv/CV_Valentin_Machado.pdf` est généré depuis `cv/index.html` : le régénérer après chaque modification du CV (commande dans DEPLOY.md).
+- `assets/pdf/CV_Valentin_Machado.pdf` est l'impression de la step `cv` de `index.html` : le régénérer après chaque modification du CV (commande dans DEPLOY.md).
 
 ## Vérification navigateur
 

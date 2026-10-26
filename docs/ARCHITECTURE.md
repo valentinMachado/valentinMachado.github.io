@@ -26,7 +26,7 @@ Une **step** est un écran du site. Elles sont toutes déclarées dans `globalPa
 | `nextStepId`, `previousStepId` | voisines pour la molette, le clavier et le swipe (absentes sur les pages de détail) |
 | `init`, `onFocus`, `onLeave`, `tick` | callbacks 3D optionnels, qui reçoivent la step en argument |
 
-Il y a trois steps principales chaînées (`home` → `projects` → `about`) et une step par page de détail (`galeri3`, `souk`…). Les pages de détail partagent le même point de vue caméra et n'ont pas de voisines : on y entre depuis un carrousel et on en sort par le bouton retour ou le menu.
+Il y a quatre steps principales chaînées (`home` → `projects` → `about` → `cv`) et une step par page de détail (`galeri3`, `souk`…). Les pages de détail partagent le même point de vue caméra et n'ont pas de voisines : on y entre depuis un carrousel et on en sort par le bouton retour ou le menu.
 
 **L'ordre de déclaration dans la `Map` compte** : aller vers une step déclarée plus loin fait glisser l'écran vers le haut, vers une step déclarée avant, vers le bas.
 
@@ -46,6 +46,8 @@ Il y a trois steps principales chaînées (`home` → `projects` → `about`) et
 1. Une entrée (molette, flèches ou PageUp/PageDown, swipe vertical, bouton) donne une direction ou un id de step.
 2. `navigate()` (`src/index.js`) applique le même déplacement au `Background3D` et au `StepDivController`. **Rien ne bouge tant que l'un des deux est en mouvement** (`isMoving`) : c'est ce qui les garde synchronisés.
 3. À la fin de la transition HTML, le bouton du menu correspondant est souligné.
+
+Un contenu plus haut que l'écran (`.step_content` des pages de détail, `.cv_scroll` du CV) défile d'abord : tant qu'il peut défiler dans la direction demandée (`canScroll`, `src/utils.js`), la molette, le swipe et les flèches le font défiler au lieu de changer de step. Un geste de molette qui l'a amené en butée ne change pas non plus de step, inertie comprise : il faut un nouveau geste, après 300 ms sans molette.
 
 ### Transitions HTML
 

@@ -29,14 +29,16 @@ Puis vérifier :
    md5sum dist/bundle.js
    ```
 
-Un commit qui ne touche que `index.html`, `style.css`, `cv/` ou `assets/` n'a pas besoin de build.
+Un commit qui ne touche que `index.html`, `style.css` ou `assets/` n'a pas besoin de build.
 
 ## Le CV
 
-`cv/index.html` est la source ; `cv/CV_Valentin_Machado.pdf` en est l'impression, à régénérer après chaque modification (le PDF doit tenir sur une page) :
+Le CV est la step `cv` de `index.html`. `assets/pdf/CV_Valentin_Machado.pdf` en est l'impression : la feuille d'impression de `style.css` n'imprime que la feuille A4 du CV. Le régénérer après chaque modification (il doit tenir sur une page), depuis Git Bash :
 
 ```sh
-"/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu   --no-pdf-header-footer --virtual-time-budget=5000   --print-to-pdf="$PWD/cv/CV_Valentin_Machado.pdf" "file:///$PWD/cv/index.html"
+"/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu \
+  --no-pdf-header-footer --virtual-time-budget=5000 \
+  --print-to-pdf="$(pwd -W)/assets/pdf/CV_Valentin_Machado.pdf" "file:///$(pwd -W)/index.html"
 ```
 
 ## Pièges
