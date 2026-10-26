@@ -1,5 +1,6 @@
 import { Vector3, AmbientLight, SpotLight, Object3D } from "three";
 import { carouselModels } from "./carouselModels";
+import { createSpaceDecor } from "./spaceDecor";
 
 /**
  * @callback StepCallback
@@ -267,6 +268,9 @@ const tickCarousel3D = (step, platform) => {
   platform.spotLight.target.updateMatrixWorld();
 };
 
+/** @type {ReturnType<typeof createSpaceDecor>} */
+let spaceDecor = null;
+
 /**
  *
  * @param {import("./Background3D").Background3D} background3D
@@ -308,7 +312,19 @@ export const globalInit = (background3D) => {
   initPlatformScene(aboutPlatform);
   initItemModels(aboutPlatform);
   initPlatformScene(cvPlatform);
+
+  spaceDecor = createSpaceDecor(
+    [...globalParameters.steps.values()].map((step) => step.cameraPosition)
+  );
+  background3D.scene.add(spaceDecor.object3D);
 };
+
+/**
+ * Called each frame, whatever the step
+ *
+ * @param {import("./Background3D").Background3D} background3D
+ */
+export const globalTick = (background3D) => spaceDecor.tick(background3D.dt);
 
 // platform rotation bringing the first projects model to the front
 const projectsOffset = Math.PI / 2 + Math.PI / 8;

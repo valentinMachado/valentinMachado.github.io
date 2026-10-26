@@ -1,6 +1,6 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, Color } from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { globalParameters, globalInit } from "./globalParameters";
+import { globalParameters, globalInit, globalTick } from "./globalParameters";
 import { quadraticInOut } from "./utils";
 
 export class Background3D {
@@ -118,6 +118,7 @@ export class Background3D {
           } else {
             this.currentStep.tick();
           }
+          globalTick(this);
 
           this.renderer.render(this.scene, this.camera);
         }
