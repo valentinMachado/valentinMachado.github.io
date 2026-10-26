@@ -3,7 +3,6 @@ import { StepDivController } from "./StepDivController";
 import { initCarousel } from "./carousel";
 import {
   canScroll,
-  isMobileUserAgent,
   keyDirection,
   swipeDirection,
   wheelDirection,
@@ -15,12 +14,6 @@ window.DEBUG_3D = false;
 const SCROLLER_SELECTOR = ".step_content, .cv_scroll";
 // ms without wheel events that end a gesture
 const WHEEL_GESTURE_GAP = 300;
-
-const warnMobileUsers = () => {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  if (isMobileUserAgent(userAgent))
-    alert("Pour une meilleure expérience, accédez au site sur un ordinateur");
-};
 
 /**
  * The 3D background is optional: the portfolio content must stay reachable
@@ -209,8 +202,6 @@ const enableDebugMode = () => {
 };
 
 const main = async () => {
-  warnMobileUsers();
-
   const background3D = await createBackground3D();
   hideLoadingScreen();
   fitBackground3DToWindow(background3D);

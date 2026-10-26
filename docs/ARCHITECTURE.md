@@ -41,7 +41,7 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 | `src/Background3D.js` | Renderer three.js, boucle de rendu à 30 fps max (le fps baisse si les frames sont lentes), interpolation de la caméra entre deux steps. Mode debug : `OrbitControls` + inspecteur. |
 | `src/StepDivController.js` | Transitions HTML entre deux steps (voir ci-dessous). Met en pause les vidéos et sons au changement de step. |
 | `src/carousel.js` | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), vignette sélectionnée centrée dans la bande quand elle défile (écrans de 1024 px et moins), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
-| `src/utils.js` | Fonctions pures, testées : easing, `wheelDirection`, `keyDirection`, `swipeDirection`, `isMobileUserAgent`, `playAnimation`. |
+| `src/utils.js` | Fonctions pures, testées : easing, `wheelDirection`, `keyDirection`, `swipeDirection`, `playAnimation`. |
 
 ## Navigation
 
