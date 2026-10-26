@@ -2,7 +2,16 @@
 
 ## Vue d'ensemble
 
-Tout le contenu est écrit en dur dans `index.html`. Le JavaScript ne génère presque rien : il affiche une section à la fois, anime les transitions et pilote le fond 3D. Si WebGL est indisponible, le fond 3D est désactivé et le reste du site fonctionne normalement.
+Tout le contenu est écrit en dur dans `index.html` (et dans sa version anglaise, voir plus bas). Le JavaScript ne génère presque rien : il affiche une section à la fois, anime les transitions et pilote le fond 3D. Si WebGL est indisponible, le fond 3D est désactivé et le reste du site fonctionne normalement.
+
+## Deux langues, deux pages
+
+Le site existe en français (`index.html`, servi sous `/`) et en anglais (`en/index.html`, servi sous `/en/`). Les deux pages sont écrites à la main et ont **exactement la même structure** : seuls les textes, les attributs textuels (`title`, `alt`, `aria-label`…) et les liens externes (Wikipédia, Ableton) diffèrent. `tests/parity.test.js` le vérifie : mêmes ids, mêmes éléments et classes dans le même ordre (les balises de texte sans classe, `a`, `b`, `i`, `br`…, peuvent bouger), mêmes `src` et mêmes styles en ligne. **Toute modification de structure se fait donc dans les deux pages.**
+
+- **Chemins absolus** (`/style.css`, `/dist/bundle.js`, `/assets/…`) dans les deux pages et dans le JS, pour qu'ils soient valables depuis `/` comme depuis `/en/`. Les tests refusent un chemin local relatif. Conséquence : la page ne s'ouvre pas en `file:///`, il faut la servir (`npm run dev`).
+- **Le JS n'écrit aucun texte visible en dur** : il le lit dans la page. Seule chaîne aujourd'hui, le libellé du bouton retour des pages de détail, dans `data-back-label` de `#on_screen` (« Retour » / « Back »), lu par `src/carousel.js`. Une future chaîne suit la même règle (attribut `data-*` ou élément de la page), pas de dictionnaire dans le JS.
+- **Référencement** : chaque `<head>` déclare son `canonical`, les trois `hreflang` (`fr`, `en`, et `x-default` vers la page française) et son `og:locale` avec l'autre langue en `og:locale:alternate`. Vérifié par `tests/site-integrity.test.js`.
+- **Lien de langue** : `#language_link` (un `<a>`, il change de page), à droite du menu. `src/index.js` tient son `href` à jour à chaque step affichée (`/en/#cv`), et au chargement, un `location.hash` qui désigne une step connue (`stepIdFromHash`, `src/utils.js`) ouvre le site sur elle au lieu de `home`. Pas de redirection selon la langue du navigateur.
 
 ```mermaid
 flowchart LR
@@ -34,7 +43,7 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 
 | Fichier                    | Rôle                                                                                                                                                                                                                                                                                                                                                                                    |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/index.js`             | Point d'entrée (`window.onload`). Crée le fond 3D (optionnel), masque l'écran de chargement, branche la navigation (molette, clavier, swipe, menu), initialise les deux carrousels.                                                                                                                                                                                                     |
+| `src/index.js`             | Point d'entrée (`window.onload`). Lit la step initiale dans le hash de l'URL, crée le fond 3D (optionnel), masque l'écran de chargement, branche la navigation (molette, clavier, swipe, menu, lien de langue), initialise les deux carrousels.                                                                                                                                         |
 | `src/globalParameters.js`  | Déclaration des steps et construction de la scène (`globalInit`) : 4 plateformes, leurs spots, et sur les deux plateformes des carrousels un modèle 3D par item ; la plateforme tourne pour mettre le modèle sélectionné face à la caméra, sous le spot. `globalTick` anime le décor à chaque frame, quelle que soit la step.                                                           |
 | `src/carouselModels.js`    | Modèles low-poly des items des carrousels (maison, globe, diamant…), construits à partir de géométries three.js simples, un par id d'item.                                                                                                                                                                                                                                              |
 | `src/spaceDecor.js`        | Décor de fond qui rend visibles les déplacements de la caméra : poussière d'étoiles scintillante (shader, invisible tout près de la caméra) et polyèdres filaires qui flottent derrière les plateformes, à l'écart des points de vue des steps.                                                                                                                                         |
@@ -47,7 +56,7 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 
 1. Une entrée (molette, flèches ou PageUp/PageDown, swipe vertical, bouton) donne une direction ou un id de step.
 2. `navigate()` (`src/index.js`) applique le même déplacement au `Background3D` et au `StepDivController`. **Rien ne bouge tant que l'un des deux est en mouvement** (`isMoving`) : c'est ce qui les garde synchronisés.
-3. À la fin de la transition HTML, le bouton du menu correspondant est souligné.
+3. À la fin de la transition HTML, le bouton du menu correspondant est souligné et le lien de langue pointe sur la même step dans l'autre page.
 
 Un contenu plus haut que l'écran (`.step_content` des pages de détail, `.cv_scroll` du CV) défile d'abord : tant qu'il peut défiler dans la direction demandée (`canScroll`, `src/utils.js`), la molette, le swipe et les flèches le font défiler au lieu de changer de step. Un geste de molette qui l'a amené en butée ne change pas non plus de step, inertie comprise : il faut un nouveau geste, après 300 ms sans molette.
 
@@ -66,7 +75,7 @@ Les carrousels utilisent le même principe à plus petite échelle : `<carousel>
 
 ## Ajouter un projet à un carrousel
 
-Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les tests d'intégrité (`tests/site-integrity.test.js`) vérifient leur cohérence.
+Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**, les étapes 2 à 4 **dans les deux pages** (`index.html` et `en/index.html`, textes traduits). Les tests d'intégrité (`tests/site-integrity.test.js`) vérifient leur cohérence.
 
 **Même ordre partout** : les items de `index.html` (réalisations pro du plus récent au plus ancien ; créations perso, les projets de développement avant la musique), `itemIds` de la plateforme et `detailStepIds` (vérifié par les tests pour ce dernier). Le premier item est sélectionné au démarrage : son id est aussi passé à `initCarousel3D` dans la step du carrousel, et son image est le `src` initial de `<carousel>_carousel_preview_on_screen`.
 
@@ -79,7 +88,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
      id="mon_projet_item"
      title="mon projet"
      class="carousel_item"
-     style="background-image: url(./assets/img/carousel/projects/mon_projet.png)"
+     style="background-image: url(/assets/img/carousel/projects/mon_projet.png)"
    ></button>
    ```
 
@@ -91,6 +100,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
      <p>description courte<br />(dates)</p>
      <br />
      <button type="button" class="custom_button">Plus d'informations</button>
+     <!-- en/index.html : More details -->
    </div>
    ```
 
@@ -127,12 +137,13 @@ Ne pas commiter avec `DEBUG_3D = true`.
 
 `npm test` (Vitest + jsdom) :
 
-| Fichier                           | Couvre                                                                                                          |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `tests/site-integrity.test.js`    | cohérence steps ↔ HTML ↔ assets, fichiers référencés existants, accessibilité (`lang`, `alt`, `title`, boutons) |
-| `tests/StepDivController.test.js` | transitions, verrou `isMoving`, cas limites                                                                     |
-| `tests/carousel.test.js`          | sélection, sens du glissement, pages de détail, sélection automatique et pause                                  |
-| `tests/utils.test.js`             | fonctions pures                                                                                                 |
-| `tests/build.test.js`             | le build de production est identique à `dist/bundle.js`                                                         |
+| Fichier                           | Couvre                                                                                                                                                                                                   |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tests/site-integrity.test.js`    | sur chacune des deux pages : cohérence steps ↔ HTML ↔ assets, fichiers référencés existants et chemins absolus, accessibilité (`lang`, `alt`, `title`, boutons), `hreflang`, `og:locale`, lien de langue |
+| `tests/parity.test.js`            | `en/index.html` a la même structure que `index.html` (ids, éléments, `src`, styles)                                                                                                                      |
+| `tests/StepDivController.test.js` | transitions, verrou `isMoving`, cas limites                                                                                                                                                              |
+| `tests/carousel.test.js`          | sélection, sens du glissement, pages de détail, sélection automatique et pause                                                                                                                           |
+| `tests/utils.test.js`             | fonctions pures                                                                                                                                                                                          |
+| `tests/build.test.js`             | le build de production est identique à `dist/bundle.js`                                                                                                                                                  |
 
 jsdom ne joue pas les animations CSS : les tests déclenchent la fin à la main avec `element.onanimationend()`. WebGL n'est pas disponible sous jsdom, donc `Background3D` n'est pas testé unitairement : on le vérifie dans un navigateur.

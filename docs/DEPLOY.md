@@ -29,17 +29,19 @@ Puis vérifier :
    md5sum dist/bundle.js
    ```
 
-Un commit qui ne touche que `index.html`, `style.css` ou `assets/` n'a pas besoin de build.
+Un commit qui ne touche que `index.html`, `en/index.html`, `style.css` ou `assets/` n'a pas besoin de build.
 
 ## Le CV
 
-Le CV est la step `cv` de `index.html`. `assets/pdf/CV_Valentin_Machado.pdf` en est l'impression : la feuille d'impression de `style.css` n'imprime que la feuille A4 du CV. Le régénérer après chaque modification (il doit tenir sur une page), depuis Git Bash :
+Le CV est la step `cv` de `index.html`. `assets/pdf/CV_Valentin_Machado.pdf` en est l'impression : la feuille d'impression de `style.css` n'imprime que la feuille A4 du CV. Le régénérer après chaque modification (il doit tenir sur une page), depuis Git Bash, `npm run dev` tournant dans un autre terminal :
 
 ```sh
 "/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --disable-gpu \
   --no-pdf-header-footer --virtual-time-budget=5000 \
-  --print-to-pdf="$(pwd -W)/assets/pdf/CV_Valentin_Machado.pdf" "file:///$(pwd -W)/index.html"
+  --print-to-pdf="$(pwd -W)/assets/pdf/CV_Valentin_Machado.pdf" "http://127.0.0.1:8000/"
 ```
+
+La page doit être servie en HTTP : ses chemins sont absolus (`/style.css`), et ouverte en `file:///` elle chercherait la feuille de style à la racine du disque.
 
 ## Pièges
 

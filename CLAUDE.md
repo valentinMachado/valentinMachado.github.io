@@ -1,12 +1,12 @@
 # CLAUDE.md
 
-Portfolio statique (GitHub Pages) : `index.html` + `style.css` à la racine, JS three.js bundlé par webpack dans `dist/`. Fonctionnement : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Mise en ligne : [docs/DEPLOY.md](docs/DEPLOY.md).
+Portfolio statique (GitHub Pages) : `index.html` (français) et `en/index.html` (anglais, même structure) + `style.css` à la racine, JS three.js bundlé par webpack dans `dist/`. Fonctionnement : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Mise en ligne : [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Commandes
 
 - `npm test` : Vitest + jsdom (inclut la comparaison du build avec `dist/bundle.js`)
 - `npm run build` : bundle de prod dans `dist/`
-- `npm run lint`, `npm run format` (Prettier sur src, tests, bin, index.html, style.css)
+- `npm run lint`, `npm run format` (Prettier sur src, tests, bin, index.html, en/index.html, style.css)
 - `npm run dev` : serveur sur http://127.0.0.1:8000/, bundle de dev dans `dist-dev/`
 
 ## Règles
@@ -19,15 +19,16 @@ Portfolio statique (GitHub Pages) : `index.html` + `style.css` à la racine, JS 
 
 ## Pièges
 
-- Un même id de projet (ex. `galeri3`) relie 5 endroits : `detailStepIds`, `<id>_step`, `<id>_item`, `<id>_preview_content`, `assets/img/carousel/<carousel>/<id>.png`. Voir « Ajouter un projet » dans ARCHITECTURE.md.
+- Un même id de projet (ex. `galeri3`) relie 5 endroits : `detailStepIds`, `<id>_step`, `<id>_item`, `<id>_preview_content` (ces trois-là dans les deux pages), `assets/img/carousel/<carousel>/<id>.png`. Voir « Ajouter un projet » dans ARCHITECTURE.md.
+- Deux pages écrites à la main, `index.html` et `en/index.html` : tout changement de structure ou de média se fait dans les deux (`tests/parity.test.js`), tout texte se traduit. Chemins locaux absolus (`/assets/…`) ; aucun texte visible en dur dans le JS (lu dans la page, ex. `data-back-label`). Voir « Deux langues, deux pages » dans ARCHITECTURE.md.
 - L'ordre de `globalParameters.steps` fixe le sens des transitions.
 - Les ids et classes HTML/CSS sont en snake_case (partagés avec les ids de steps) ; le JS est en camelCase.
 - `.gitattributes` impose LF : le bundle doit rester identique à l'octet.
 - `npm install -D x` prend la dernière majeure : fixer la majeure actuelle (express 4, cross-env 7, webpack-cli 5).
 - jsdom ne joue pas les animations CSS : les tests appellent `el.onanimationend()` à la main. WebGL n'existe pas sous jsdom : `Background3D` n'est testé qu'au navigateur.
 - Ne pas commiter `window.DEBUG_3D = true`.
-- `assets/pdf/CV_Valentin_Machado.pdf` est l'impression de la step `cv` de `index.html` : le régénérer après chaque modification du CV (commande dans DEPLOY.md).
+- `assets/pdf/CV_Valentin_Machado.pdf` est l'impression de la step `cv` de `index.html` : le régénérer après chaque modification du CV (commande dans DEPLOY.md ; la page doit être servie, pas ouverte en `file:///`).
 
 ## Vérification navigateur
 
-puppeteer-core n'est pas une dépendance du projet : l'installer hors du dépôt (avec express 4 pour servir la racine en statique). Chrome : `C:/Program Files/Google/Chrome/Application/chrome.exe`, options `--use-angle=swiftshader --enable-unsafe-swiftshader`. Scénario : chargement, molette, carrousel, page de détail, retour, menu, clavier, swipe, console sans erreur ; `--disable-3d-apis` pour le fallback sans WebGL.
+puppeteer-core n'est pas une dépendance du projet : l'installer hors du dépôt (avec express 4 pour servir la racine en statique). Chrome : `C:/Program Files/Google/Chrome/Application/chrome.exe`, options `--use-angle=swiftshader --enable-unsafe-swiftshader`. Scénario, sur `/` et sur `/en/` : chargement, molette, carrousel, page de détail, retour, menu, clavier, swipe, lien de langue (garde la step), ouverture sur `#cv`, console sans erreur ; `--disable-3d-apis` pour le fallback sans WebGL. Les rideaux de l'écran de chargement couvrent la page ~2 s après le chargement.

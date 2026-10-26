@@ -2,7 +2,7 @@
 
 Site personnel servi par GitHub Pages : **<https://valentinmachado.github.io/>**
 
-Une page statique (`index.html` + `style.css`) avec un fond 3D en [three.js](https://threejs.org/). On navigue entre les sections (accueil, réalisations professionnelles, créations personnelles, CV) à la molette, au clavier, par swipe ou via le menu. Chaque section de réalisations est un carrousel qui mène à une page de détail par projet.
+Une page statique en français (`index.html`) et sa version anglaise (`en/index.html`, servie sous `/en/`), qui partagent `style.css` et un fond 3D en [three.js](https://threejs.org/). On navigue entre les sections (accueil, réalisations professionnelles, créations personnelles, CV) à la molette, au clavier, par swipe ou via le menu. Chaque section de réalisations est un carrousel qui mène à une page de détail par projet.
 
 ## Prérequis
 
@@ -33,6 +33,7 @@ Le port et l'hôte du serveur de dev se changent dans un fichier `.env` (voir `.
 
 ```
 index.html          tout le contenu du site (sections, carrousels, pages de détail)
+en/index.html       la même page en anglais, structure identique (test de parité)
 style.css           styles et animations CSS des transitions
 src/                code JS, bundlé par webpack
   index.js          point d'entrée : branche la navigation, les carrousels, le fond 3D
@@ -42,7 +43,7 @@ src/                code JS, bundlé par webpack
   carousel.js       carrousels et en-têtes des pages de détail
   utils.js          fonctions pures (easing, direction molette/clavier/swipe…)
 dist/               bundle de production, commité (servi tel quel par GitHub Pages)
-assets/             images, GIF, audio, PDF du CV
+assets/             images, vidéos, audio, PDF du CV
 tests/              tests Vitest
 bin/dev.js          serveur de dev (express)
 ```
