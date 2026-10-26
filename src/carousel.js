@@ -151,6 +151,16 @@ export const initCarousel = (carouselId, moveToStepId) => {
     select(items[(current + 1) % items.length]);
   };
 
+  // the preview img keeps showing its old image until the new one is loaded
+  // and decoded, and hidden steps do not load their background images:
+  // load every item image now so that a sliding preview is already up to date
+  const preloadedImages = carouselItems(carouselId).map((item) => {
+    const image = new Image();
+    image.src = cssUrlToPath(item.style.backgroundImage);
+    image.decode?.().catch(() => {});
+    return image;
+  });
+
   // items: the first one is selected at startup
   carouselItems(carouselId).forEach((item, index) => {
     if (index == 0) {
@@ -212,6 +222,7 @@ export const initCarousel = (carouselId, moveToStepId) => {
   if (!document.hidden) startAutoSelect();
 
   return () => {
+    preloadedImages.length = 0;
     stopAutoSelect();
     document.removeEventListener("visibilitychange", onVisibilityChange);
   };
