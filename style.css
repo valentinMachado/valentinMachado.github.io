@@ -404,18 +404,10 @@ a:focus-visible {
   }
 }
 
-/* narrow screens: smaller menu, then the menu under the name */
+/* narrow screens: the menu under the name, then smaller */
 @media screen and (max-width: 1024px) {
-  .top_right .custom_button {
-    font-size: large;
-    margin: 10px 8px;
-  }
-}
-
-@media screen and (max-width: 700px) {
   :root {
     --size-header: 90px;
-    --loading-screen-padding: 20px;
   }
 
   .top_right {
@@ -423,6 +415,28 @@ a:focus-visible {
     left: 0;
     right: 0;
     justify-content: space-around;
+  }
+
+  .top_right .custom_button {
+    font-size: large;
+    margin: 6px 8px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --loading-screen-padding: 20px;
+  }
+
+  /* name and icons on a single line, above the menu */
+  #move_to_home {
+    font-size: medium;
+    white-space: nowrap;
+    margin: 12px 6px 10px 10px;
+  }
+
+  .link_icon {
+    width: 26px;
   }
 
   .top_right .custom_button {
