@@ -320,6 +320,8 @@ a:focus-visible {
   max-width: 50%;
   margin: auto 50px auto 50px;
   max-height: calc(100% - 100px);
+  /* images have different ratios: fit them in the box instead of stretching */
+  object-fit: contain;
 }
 
 .carousel_item {
@@ -384,6 +386,23 @@ a:focus-visible {
 }
 .step_content iframe {
   margin-top: 20px;
+}
+
+/* media never wider than the screen, and keep their ratio when shrunk */
+.step_content img,
+.step_content video,
+.step_content iframe {
+  max-width: 100%;
+}
+
+.step_content img {
+  height: auto;
+}
+
+.step_content iframe[width],
+.step_content video[width] {
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
 
 .root_content_preview_img {
