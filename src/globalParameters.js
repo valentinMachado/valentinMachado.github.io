@@ -1,12 +1,5 @@
-import {
-  Mesh,
-  Vector3,
-  AmbientLight,
-  SpotLight,
-  Object3D,
-  BoxGeometry,
-  MeshStandardMaterial,
-} from "three";
+import { Vector3, AmbientLight, SpotLight, Object3D } from "three";
+import { carouselModels } from "./carouselModels";
 
 /**
  * @callback StepCallback
@@ -179,23 +172,100 @@ const cvPlatform = {
   ),
 };
 
-// projects carousel items, in the order of their 3D meshes around the platform
-const projectMeshColors = new Map([
-  ["popup_builder", "red"],
-  ["smaio_i_plan", "green"],
-  ["open_source_contributions", "blue"],
-  ["ud_imuv", "yellow"],
-  ["galeri3", "orange"],
-  ["radiosity", "brown"],
-]);
+// carousel items, in the order of their 3D models around the platform
+projectsPlatform.itemIds = [
+  "popup_builder",
+  "smaio_i_plan",
+  "open_source_contributions",
+  "ud_imuv",
+  "galeri3",
+  "radiosity",
+];
+aboutPlatform.itemIds = [
+  "guitar",
+  "daw",
+  "steampong",
+  "souk",
+  "covidjam",
+  "meteoblocks",
+];
+
+/** angle of an item model around its platform */
+const itemAngle = (platform, index) =>
+  (2 * Math.PI * index) / platform.itemIds.length;
 
 /**
- * @type {Map<string, Mesh>}
+ * Spread the item models evenly around the platform
+ *
+ * @param {Platform} platform
  */
-const projectMeshes = new Map();
+const initItemModels = (platform) => {
+  platform.itemModels = new Map();
+  platform.itemIds.forEach((id, index) => {
+    const model = carouselModels[id]();
+    const angle = itemAngle(platform, index);
+    model.position.set(
+      0.8 * platform.size * Math.cos(angle),
+      0,
+      0.8 * platform.size * Math.sin(angle)
+    );
+    platform.itemModels.set(id, model);
+    platform.object3D.add(model);
+  });
+};
 
-/** angle of a project mesh around the projects platform */
-const projectAngle = (index) => (2 * Math.PI * index) / projectMeshColors.size;
+/**
+ * Let a carousel step rotate its platform to bring the selected item model to
+ * the front
+ *
+ * @param {Step} step
+ * @param {Platform} platform
+ * @param {number} offset platform rotation bringing the first item model to the front
+ * @param {string} firstId item selected at startup
+ */
+const initCarousel3D = (step, platform, offset, firstId) => {
+  step.selectProject3D = (id) => {
+    const index = platform.itemIds.indexOf(id);
+    if (index < 0) return;
+
+    platform.spotLight.target = platform.itemModels.get(id);
+    step.rotationYDest = (itemAngle(platform, index) + offset) % (2 * Math.PI);
+
+    // rotate the shortest way
+    const ry = platform.object3D.rotation.y;
+    const diff1 = Math.abs(ry + 2 * Math.PI - step.rotationYDest);
+    const diff2 = Math.abs(ry - 2 * Math.PI - step.rotationYDest);
+    const diff3 = Math.abs(ry - step.rotationYDest);
+    if (diff1 < diff2 && diff1 < diff3) {
+      platform.object3D.rotation.y += 2 * Math.PI;
+    } else if (diff2 < diff1 && diff2 < diff3) {
+      platform.object3D.rotation.y -= 2 * Math.PI;
+    }
+  };
+
+  step.selectProject3D(firstId);
+  platform.object3D.rotation.y = step.rotationYDest;
+};
+
+/**
+ * @param {Step} step
+ * @param {Platform} platform
+ */
+const tickCarousel3D = (step, platform) => {
+  const dt = step.background3D.dt;
+
+  // the models spin slowly to show all their sides
+  platform.itemModels.forEach((model) => (model.rotation.y += 0.0005 * dt));
+
+  const speed = 0.001;
+  // step.rotationYDest 0 => 2pi
+  const amount = speed * dt;
+  const rotation = platform.object3D.rotation;
+  if (Math.abs(rotation.y - step.rotationYDest) > amount) {
+    rotation.y += rotation.y < step.rotationYDest ? amount : -amount;
+  }
+  platform.spotLight.target.updateMatrixWorld();
+};
 
 /**
  *
@@ -221,7 +291,7 @@ export const globalInit = (background3D) => {
       .add(platform.position);
     spotLight.target.position.copy(platform.position);
     spotLight.castShadow = true;
-    spotLight.power = 5;
+    spotLight.power = 10;
     spotLight.decay = 0.35;
     spotLight.angle = 0.2;
     spotLight.penumbra = 0.27;
@@ -234,26 +304,14 @@ export const globalInit = (background3D) => {
 
   initPlatformScene(homePlatform);
   initPlatformScene(projectsPlatform);
-
-  // projects meshes, evenly spread around the platform
-  [...projectMeshColors].forEach(([id, color], index) => {
-    const mesh = new Mesh(
-      new BoxGeometry(),
-      new MeshStandardMaterial({ color: color })
-    );
-    const angle = projectAngle(index);
-    mesh.position.set(
-      0.8 * projectsPlatform.size * Math.cos(angle),
-      0,
-      0.8 * projectsPlatform.size * Math.sin(angle)
-    );
-    projectMeshes.set(id, mesh);
-    projectsPlatform.object3D.add(mesh);
-  });
-
+  initItemModels(projectsPlatform);
   initPlatformScene(aboutPlatform);
+  initItemModels(aboutPlatform);
   initPlatformScene(cvPlatform);
 };
+
+// platform rotation bringing the first projects model to the front
+const projectsOffset = Math.PI / 2 + Math.PI / 8;
 
 // all detail pages share the same camera view
 const detailCameraPosition = new Vector3(
@@ -310,43 +368,12 @@ export const globalParameters = {
             1
           );
 
-          // platform rotation bringing the first project mesh to the front
-          const offset = Math.PI / 2 + Math.PI / 8;
-
-          step.selectProject3D = (id) => {
-            const index = [...projectMeshColors.keys()].indexOf(id);
-            if (index < 0) return;
-
-            projectsPlatform.spotLight.target = projectMeshes.get(id);
-            step.rotationYDest = (projectAngle(index) + offset) % (2 * Math.PI);
-
-            // rotate the shortest way
-            const ry = projectsPlatform.object3D.rotation.y;
-            const diff1 = Math.abs(ry + 2 * Math.PI - step.rotationYDest);
-            const diff2 = Math.abs(ry - 2 * Math.PI - step.rotationYDest);
-            const diff3 = Math.abs(ry - step.rotationYDest);
-            if (diff1 < diff2 && diff1 < diff3) {
-              projectsPlatform.object3D.rotation.y += 2 * Math.PI;
-            } else if (diff2 < diff1 && diff2 < diff3) {
-              projectsPlatform.object3D.rotation.y -= 2 * Math.PI;
-            }
-          };
-
           // radiosity is the first item of the carousel, selected at startup
-          step.selectProject3D("radiosity");
-          projectsPlatform.object3D.rotation.y = step.rotationYDest;
+          initCarousel3D(step, projectsPlatform, projectsOffset, "radiosity");
         },
         tick: (step) => {
           step.moveCameraCallback();
-
-          const speed = 0.001;
-          // step.rotationYDest 0 => 2pi
-          const amount = speed * step.background3D.dt;
-          const rotation = projectsPlatform.object3D.rotation;
-          if (Math.abs(rotation.y - step.rotationYDest) > amount) {
-            rotation.y += rotation.y < step.rotationYDest ? amount : -amount;
-            projectsPlatform.spotLight.target.updateMatrixWorld();
-          }
+          tickCarousel3D(step, projectsPlatform);
         },
         divId: "projects",
         cameraPosition: new Vector3(
@@ -363,9 +390,16 @@ export const globalParameters = {
         previousStepId: "projects",
         nextStepId: "cv",
         init: (step) => {
-          // no 3D counterpart for this carousel
-          step.selectProject3D = noop;
+          // same view of the selected model as the projects platform, which
+          // sits 2pi/3 further around the scene
+          initCarousel3D(
+            step,
+            aboutPlatform,
+            projectsOffset - (2 * Math.PI) / 3,
+            "guitar"
+          );
         },
+        tick: (step) => tickCarousel3D(step, aboutPlatform),
         divId: "about",
         cameraPosition: new Vector3(
           aboutPlatform.size * 2.3 * Math.cos((4 * Math.PI) / 3),
