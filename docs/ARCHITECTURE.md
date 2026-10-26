@@ -35,7 +35,9 @@ Il y a quatre steps principales chaînées (`home` → `projects` → `about` �
 | Fichier | Rôle |
 |---|---|
 | `src/index.js` | Point d'entrée (`window.onload`). Crée le fond 3D (optionnel), masque l'écran de chargement, branche la navigation (molette, clavier, swipe, menu), initialise les deux carrousels. |
-| `src/globalParameters.js` | Déclaration des steps et construction de la scène (`globalInit`) : 3 plateformes, leurs spots, et les 6 cubes des projets pro qui tournent pour mettre le projet sélectionné face à la caméra. |
+| `src/globalParameters.js` | Déclaration des steps et construction de la scène (`globalInit`) : 4 plateformes, leurs spots, et sur les deux plateformes des carrousels un modèle 3D par item ; la plateforme tourne pour mettre le modèle sélectionné face à la caméra, sous le spot. `globalTick` anime le décor à chaque frame, quelle que soit la step. |
+| `src/carouselModels.js` | Modèles low-poly des items des carrousels (maison, globe, diamant…), construits à partir de géométries three.js simples, un par id d'item. |
+| `src/spaceDecor.js` | Décor de fond qui rend visibles les déplacements de la caméra : poussière d'étoiles scintillante (shader, invisible tout près de la caméra) et polyèdres filaires qui flottent derrière les plateformes, à l'écart des points de vue des steps. |
 | `src/Background3D.js` | Renderer three.js, boucle de rendu à 30 fps max (le fps baisse si les frames sont lentes), interpolation de la caméra entre deux steps. Mode debug : `OrbitControls` + inspecteur. |
 | `src/StepDivController.js` | Transitions HTML entre deux steps (voir ci-dessous). Met en pause les vidéos et sons au changement de step. |
 | `src/carousel.js` | Carrousels : sélection d'un item avec glissement de l'aperçu, sélection automatique toutes les 8 s (en pause au survol, quand la section est cachée ou quand l'onglet est en arrière-plan), bouton « Plus d'informations », en-tête (image + bouton retour) ajouté à chaque page de détail. |
@@ -102,7 +104,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
 
 Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests).
 
-Dans le carrousel des projets pro, chaque projet a aussi un cube 3D : ajouter l'id et une couleur dans `projectMeshColors` (`src/globalParameters.js`). Sans cela, la sélection du projet n'a simplement pas d'effet 3D.
+Chaque item a aussi un modèle 3D sur la plateforme de son carrousel : ajouter l'id dans `itemIds` de la plateforme (`projectsPlatform` ou `aboutPlatform`, `src/globalParameters.js` ; l'ordre est celui des modèles autour de la plateforme) et sa fabrique dans `carouselModels` (`src/carouselModels.js`).
 
 ## Fallback sans WebGL
 
