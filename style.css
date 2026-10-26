@@ -592,6 +592,7 @@ a:focus-visible {
 .vimeo_video_container {
   position: relative;
   display: inline-flex;
+  flex-direction: column;
 }
 
 /* cv */
@@ -874,4 +875,16 @@ a:focus-visible {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+}
+
+/* captions under audio and video players */
+.media_figure {
+  margin: 0;
+}
+
+.media_caption {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: medium;
+  font-style: italic;
 }

@@ -104,7 +104,7 @@ Un même identifiant (ici `mon_projet`, en snake_case) relie **5 endroits**. Les
 
 5. **Image** : `assets/img/carousel/projects/mon_projet.png` (vignette, aperçu et en-tête de la page de détail), **au format 16:9** comme toutes les images des carrousels : les vignettes sont en `background-size: cover` et rogneraient un autre ratio. Pour le carrousel « créations personnelles », remplacer `projects` par `about` partout.
 
-Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests).
+Pour les médias de la page de détail : `loading="lazy"` sur les `<img>` et `<iframe>`, `preload="none"` sur `<audio>`/`<video>`, un `alt` sur chaque image et un `title` sur chaque iframe (vérifiés par les tests). Chaque morceau audio et chaque vidéo Vimeo a une légende visible sous le lecteur (`<p class="media_caption">` ou `<figcaption>`), reprenant son `title`.
 
 Chaque item a aussi un modèle 3D sur la plateforme de son carrousel : ajouter l'id dans `itemIds` de la plateforme (`projectsPlatform` ou `aboutPlatform`, `src/globalParameters.js` ; l'ordre est celui des modèles autour de la plateforme) et sa fabrique dans `carouselModels` (`src/carouselModels.js`).
 
