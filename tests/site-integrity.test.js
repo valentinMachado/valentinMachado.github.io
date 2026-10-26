@@ -38,7 +38,7 @@ const carouselItems = (carouselId) => [
 
 const itemStepId = (item) => item.id.replace(/_item$/, "");
 
-const OG_LOCALES = { fr: "fr_FR", en: "en_US" };
+const OG_LOCALES = { fr: "fr_FR", en: "en_GB" };
 
 describe.each(PAGES)("$path", ({ path, lang, url }) => {
   beforeAll(() => loadPage(path));
