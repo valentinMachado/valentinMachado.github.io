@@ -2,6 +2,8 @@
 
 Portfolio statique (GitHub Pages) : `index.html` (français) et `en/index.html` (anglais, même structure) + `style.css` à la racine, JS three.js bundlé par webpack dans `dist/`. Fonctionnement : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Mise en ligne : [docs/DEPLOY.md](docs/DEPLOY.md).
 
+Ce dépôt sert aussi aux démarches administratives de Valentin (demandes du type « fais ma prochaine démarche logement ») : tout se passe dans `management/demarches/`, non versionné, papiers dans `E:\documents`. @management/demarches/README.md
+
 ## Commandes
 
 - `npm test` : Vitest + jsdom (inclut la comparaison du build avec `dist/bundle.js`)
