@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { loadIndexHtml } from "./helpers";
 import { StepDivController } from "../src/StepDivController";
+import { globalParameters } from "../src/globalParameters";
 
 const onScreen = () => document.getElementById("on_screen");
 const offScreen = () => document.getElementById("off_screen");
@@ -155,6 +156,27 @@ describe("media", () => {
     controller.moveNext();
 
     pauses.forEach((pause) => expect(pause).toHaveBeenCalled());
+  });
+
+  it("plays the demos of the step the site opens on", () => {
+    const initialStepId = globalParameters.initialStepId;
+    globalParameters.initialStepId = "nodalab";
+    try {
+      const plays = [
+        ...document.querySelectorAll("#nodalab_step video[data-autoplay]"),
+      ].map((video) => {
+        const play = vi.fn();
+        video.play = play;
+        return play;
+      });
+      expect(plays.length).toBeGreaterThan(0);
+
+      new StepDivController(onScreen(), offScreen());
+
+      plays.forEach((play) => expect(play).toHaveBeenCalled());
+    } finally {
+      globalParameters.initialStepId = initialStepId;
+    }
   });
 });
 

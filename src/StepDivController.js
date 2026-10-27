@@ -5,6 +5,8 @@ export class StepDivController {
   constructor(divOnScreen, divOffScreen) {
     this.currentStepId = globalParameters.initialStepId;
     this._currentStepDiv().classList.remove("hidden");
+    // a URL hash can open the site on a step holding looping demos
+    this._playAutoplayVideos();
 
     /**
      * @type {HTMLElement}
