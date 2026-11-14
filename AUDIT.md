@@ -240,3 +240,14 @@ Le 2026-09-29, `git filter-repo` a retiré de tout l'historique : `node_modules/
 
 Les refs `refs/pull/*` des anciennes PR restent sur GitHub (impossibles à modifier par push) : les anciens objets y restent référencés tant que le support GitHub ne les a pas purgés, mais les nouveaux clones ne les téléchargent pas.
 
+
+---
+
+## Suivi (2026-11-14)
+
+| Sujet | Commit |
+|---|---|
+| `npm audit fix` sans `--force` : 15 → 4 vulnérabilités modérées, toutes dans l'outillage de dev (nodemon, chunk de debug three-inspect), qui demandent un changement de majeure. `npm audit --omit=dev` : 0. Bundle inchangé | `build(deps): apply non-breaking security fixes` |
+| Ombres coupées (`shadowMap`, `castShadow` et réglages des spots) : aucun mesh ne les recevait (remarque de la phase 4) | `perf: stop computing shadow maps nothing receives` |
+
+L'`alert()` sur mobile citée dans les remarques de la phase 4 a disparu entre-temps. Restent ouverts : I13 (CSP, optionnelle) et le renommage de `globalParameters.js`.
