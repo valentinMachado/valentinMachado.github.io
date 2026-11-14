@@ -17,7 +17,6 @@ export class Background3D {
       alpha: true,
     });
     this.renderer.setClearColor(new Color(), 0);
-    this.renderer.shadowMap.enabled = true;
     // capped: rendering above 2x costs a lot for no visible gain
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
