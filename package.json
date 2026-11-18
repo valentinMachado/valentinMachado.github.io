@@ -7,8 +7,8 @@
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
     "build-dev": "cross-env NODE_ENV=development webpack --config ./webpack.config.js",
     "dev": "cross-env NODE_ENV=development nodemon --watch ./src  --delay 2500ms ./bin/dev.js -e js,css",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "node bin/vitest.js run",
+    "test:watch": "node bin/vitest.js",
     "lint": "eslint .",
     "format": "prettier --write src tests bin index.html en/index.html style.css \"*.config.{js,mjs}\"",
     "format:check": "prettier --check src tests bin index.html en/index.html style.css \"*.config.{js,mjs}\""
