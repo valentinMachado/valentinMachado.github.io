@@ -186,6 +186,7 @@ projectsPlatform.itemIds = [
 aboutPlatform.itemIds = [
   "guess_it",
   "subtitle_game",
+  "subotage",
   "meteoblocks",
   "covidjam",
   "souk",
@@ -366,6 +367,7 @@ const detailStepIds = [
   "radiosity",
   "guess_it",
   "subtitle_game",
+  "subotage",
   "meteoblocks",
   "covidjam",
   "souk",

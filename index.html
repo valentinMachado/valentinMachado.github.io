@@ -300,6 +300,10 @@
           projet est couvert par des tests unitaires et de bout en bout.
           <br />
           <br />
+          Je le développe avec des agents IA (Claude Code), encadrés par des
+          instructions de projet, des conventions documentées et des tests.
+          <br />
+          <br />
           <img
             loading="lazy"
             class="center"
@@ -842,6 +846,20 @@
                 </button>
               </div>
               <div
+                id="subotage_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Subotage</h2>
+                <p>
+                  une application mobile où l'on réécrit les sous-titres<br />
+                  d'extraits de films (2026, en développement)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  Plus d'informations
+                </button>
+              </div>
+              <div
                 id="meteoblocks_preview_content"
                 class="carousel_preview_content hidden"
               >
@@ -946,6 +964,15 @@
               title="Subtitle Game"
               style="
                 background-image: url(/assets/img/carousel/about/subtitle_game.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="subotage_item"
+              class="carousel_item"
+              title="Subotage"
+              style="
+                background-image: url(/assets/img/carousel/about/subotage.png);
               "
             ></button>
             <button
@@ -1079,6 +1106,36 @@
           <br />
           Le code est accessible sur
           <a href="https://github.com/valentinMachado/subtitle_game">GitHub</a>.
+        </div>
+      </div>
+      <div id="subotage_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://subotage.app/">Subotage</a></b> est une
+          application mobile (Android et iOS) que je développe depuis novembre
+          2026, dans la suite de Subtitle Game : on coupe une scène d'un film
+          dans une langue qu'on ne parle pas, on réécrit ses sous-titres, puis
+          on la partage. Les autres la regardent, votent et la remixent. On peut
+          aussi jouer à plusieurs dans une conversation, ou enchaîner les scènes
+          en une histoire.
+          <br />
+          <br />
+          Les sous-titres sont des données, jamais des pixels : un remix n'est
+          que la copie d'un petit document JSON, mille versions d'un extrait
+          partagent un seul fichier vidéo, et la modération, la recherche et la
+          traduction travaillent sur du texte. L'export en vidéo aux sous-titres
+          incrustés se fait sur le téléphone, pour épargner le serveur.
+          <br />
+          <br />
+          Un seul code TypeScript réunit l'application Expo / React Native, un
+          client web d'administration et de modération, et un serveur Node.js /
+          PostgreSQL avec un worker d'encodage vidéo (ffmpeg), qui partagent un
+          même paquet pour toutes leurs règles communes. La bibliothèque ne
+          contient que des films du domaine public ou sous licence Creative
+          Commons.
+          <br />
+          <br />
+          Sortie prochaine sur Android et iOS :
+          <a href="https://subotage.app/">subotage.app</a>.
         </div>
       </div>
       <div id="meteoblocks_step" class="root_step hidden">

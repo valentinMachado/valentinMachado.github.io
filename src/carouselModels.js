@@ -295,6 +295,16 @@ const subtitledScreen = () => {
   return group;
 };
 
+/** phone held upright, a subtitle bar across its screen */
+const subtitledPhone = () => {
+  const group = new Group();
+  addMesh(group, new BoxGeometry(0.55, 1.1, 0.08), "black");
+  addMesh(group, new BoxGeometry(0.47, 0.95, 0.02), "slateblue", [0, 0, 0.05]);
+  addMesh(group, new BoxGeometry(0.36, 0.07, 0.02), "white", [0, -0.25, 0.07]);
+  addMesh(group, new BoxGeometry(0.26, 0.07, 0.02), "white", [0, -0.35, 0.07]);
+  return group;
+};
+
 /** question mark: a hook of torus and a dot */
 const questionMark = () => {
   const group = new Group();
@@ -331,4 +341,5 @@ export const carouselModels = {
   nodalab: nodeGraph,
   subtitle_game: subtitledScreen,
   guess_it: questionMark,
+  subotage: subtitledPhone,
 };
