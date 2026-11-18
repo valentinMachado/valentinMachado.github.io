@@ -112,7 +112,7 @@ describe("initCarousel", () => {
 
   it("selects the next item automatically after 8 s", async () => {
     await vi.advanceTimersByTimeAsync(8200);
-    expect(selectedItemIds("projects")).toEqual(["galeri3_item"]);
+    expect(selectedItemIds("projects")).toEqual(["subotage_item"]);
   });
 
   it("does not auto-select while the preview is hovered", async () => {
@@ -144,7 +144,7 @@ describe("initCarousel", () => {
       await vi.advanceTimersByTimeAsync(7000);
       expect(selectedItemIds("projects")).toEqual(["nodalab_item"]);
       await vi.advanceTimersByTimeAsync(1200);
-      expect(selectedItemIds("projects")).toEqual(["galeri3_item"]);
+      expect(selectedItemIds("projects")).toEqual(["subotage_item"]);
     } finally {
       delete document.hidden;
     }

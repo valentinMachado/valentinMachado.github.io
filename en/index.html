@@ -102,6 +102,20 @@
                 </button>
               </div>
               <div
+                id="subotage_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Subotage</h2>
+                <p>
+                  a mobile app where you rewrite the subtitles of film<br />
+                  clips (2026 - present)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
+              <div
                 id="galeri3_preview_content"
                 class="carousel_preview_content hidden"
               >
@@ -202,6 +216,15 @@
               class="carousel_item"
               style="
                 background-image: url(/assets/img/carousel/projects/nodalab.png);
+              "
+            ></button>
+            <button
+              type="button"
+              id="subotage_item"
+              class="carousel_item"
+              title="Subotage"
+              style="
+                background-image: url(/assets/img/carousel/projects/subotage.png);
               "
             ></button>
             <button
@@ -354,6 +377,35 @@
           <br />
           <br />
           <a href="https://nodalab.app/">Try the demo</a> (no account needed).
+        </div>
+      </div>
+      <div id="subotage_step" class="root_step hidden">
+        <div class="step_content">
+          <b><a href="https://subotage.app/">Subotage</a></b> is a mobile
+          application (Android and iOS) which I have been developing on my own
+          since November 2026 with a view to selling it, following on from
+          Subtitle Game: you cut a scene from a film in a language you don't
+          speak, rewrite its subtitles, then share it. Others watch it, vote and
+          remix it. You can also play together in a conversation, or string
+          scenes together into a story.
+          <br />
+          <br />
+          Subtitles are data, never pixels: a remix is only a copy of a small
+          JSON document, a thousand versions of a clip share a single video
+          file, and moderation, search and translation all work on text.
+          Exporting a video with burnt-in subtitles happens on the phone, to
+          spare the server.
+          <br />
+          <br />
+          A single TypeScript code base brings together the Expo / React Native
+          app, an admin and moderation web client, and a Node.js / PostgreSQL
+          server with a video encoding worker (ffmpeg), all sharing one package
+          for the rules they have in common. The library only holds films in the
+          public domain or under a Creative Commons licence.
+          <br />
+          <br />
+          Coming soon to Android and iOS:
+          <a href="https://subotage.app/">subotage.app</a>.
         </div>
       </div>
       <div id="galeri3_step" class="root_step hidden">
@@ -843,20 +895,6 @@
                 </button>
               </div>
               <div
-                id="subotage_preview_content"
-                class="carousel_preview_content hidden"
-              >
-                <h2>Subotage</h2>
-                <p>
-                  a mobile app where you rewrite the subtitles of film<br />
-                  clips (2026, in development)
-                </p>
-                <br />
-                <button type="button" class="custom_button">
-                  More details
-                </button>
-              </div>
-              <div
                 id="meteoblocks_preview_content"
                 class="carousel_preview_content hidden"
               >
@@ -961,15 +999,6 @@
               title="Subtitle Game"
               style="
                 background-image: url(/assets/img/carousel/about/subtitle_game.png);
-              "
-            ></button>
-            <button
-              type="button"
-              id="subotage_item"
-              class="carousel_item"
-              title="Subotage"
-              style="
-                background-image: url(/assets/img/carousel/about/subotage.png);
               "
             ></button>
             <button
@@ -1102,34 +1131,6 @@
           <br />
           The code is available on
           <a href="https://github.com/valentinMachado/subtitle_game">GitHub</a>.
-        </div>
-      </div>
-      <div id="subotage_step" class="root_step hidden">
-        <div class="step_content">
-          <b><a href="https://subotage.app/">Subotage</a></b> is a mobile
-          application (Android and iOS) which I have been developing since
-          November 2026, following on from Subtitle Game: you cut a scene from a
-          film in a language you don't speak, rewrite its subtitles, then share
-          it. Others watch it, vote and remix it. You can also play together in
-          a conversation, or string scenes together into a story.
-          <br />
-          <br />
-          Subtitles are data, never pixels: a remix is only a copy of a small
-          JSON document, a thousand versions of a clip share a single video
-          file, and moderation, search and translation all work on text.
-          Exporting a video with burnt-in subtitles happens on the phone, to
-          spare the server.
-          <br />
-          <br />
-          A single TypeScript code base brings together the Expo / React Native
-          app, an admin and moderation web client, and a Node.js / PostgreSQL
-          server with a video encoding worker (ffmpeg), all sharing one package
-          for the rules they have in common. The library only holds films in the
-          public domain or under a Creative Commons licence.
-          <br />
-          <br />
-          Coming soon to Android and iOS:
-          <a href="https://subotage.app/">subotage.app</a>.
         </div>
       </div>
       <div id="meteoblocks_step" class="root_step hidden">

@@ -176,6 +176,7 @@ const cvPlatform = {
 // carousel items, in the order of their 3D models around the platform
 projectsPlatform.itemIds = [
   "nodalab",
+  "subotage",
   "galeri3",
   "ud_imuv",
   "open_source_contributions",
@@ -186,7 +187,6 @@ projectsPlatform.itemIds = [
 aboutPlatform.itemIds = [
   "guess_it",
   "subtitle_game",
-  "subotage",
   "meteoblocks",
   "covidjam",
   "souk",
@@ -359,6 +359,7 @@ const detailCameraTarget = new Vector3(
 // declaration order matters: it sets the direction of the transition between two steps
 const detailStepIds = [
   "nodalab",
+  "subotage",
   "galeri3",
   "ud_imuv",
   "open_source_contributions",
@@ -367,7 +368,6 @@ const detailStepIds = [
   "radiosity",
   "guess_it",
   "subtitle_game",
-  "subotage",
   "meteoblocks",
   "covidjam",
   "souk",
