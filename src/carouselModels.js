@@ -324,6 +324,39 @@ const questionMark = () => {
   return group;
 };
 
+/** zoetrope: a slotted drum of slats on a base, turning on its axle */
+const zoetrope = () => {
+  const group = new Group();
+  addMesh(
+    group,
+    new CylinderGeometry(0.5, 0.5, 0.06, 24),
+    "saddlebrown",
+    [0, -0.2, 0]
+  );
+  const slats = 12;
+  for (let i = 0; i < slats; i++) {
+    const angle = (i / slats) * 2 * Math.PI;
+    addMesh(group, new BoxGeometry(0.2, 0.4, 0.03), "darkred", [
+      0.47 * Math.cos(angle),
+      0.03,
+      0.47 * Math.sin(angle),
+    ]).rotation.y = Math.PI / 2 - angle;
+  }
+  addMesh(
+    group,
+    new CylinderGeometry(0.04, 0.04, 0.5, 8),
+    "dimgray",
+    [0, -0.45, 0]
+  );
+  addMesh(
+    group,
+    new CylinderGeometry(0.25, 0.3, 0.06, 16),
+    "dimgray",
+    [0, -0.7, 0]
+  );
+  return group;
+};
+
 /** model factory of each carousel item */
 export const carouselModels = {
   popup_builder: house,
@@ -341,5 +374,6 @@ export const carouselModels = {
   nodalab: nodeGraph,
   subtitle_game: subtitledScreen,
   guess_it: questionMark,
+  zoetrope: zoetrope,
   subotage: subtitledPhone,
 };

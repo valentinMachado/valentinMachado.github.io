@@ -865,7 +865,21 @@
         <div class="carousel">
           <div class="carousel_preview_container">
             <div id="about_carousel_preview_on_screen" class="carousel_preview">
-              <img src="/assets/img/carousel/about/guess_it.png" alt="" />
+              <img src="/assets/img/carousel/about/zoetrope.png" alt="" />
+              <div
+                id="zoetrope_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>Zoetrope</h2>
+                <p>
+                  a local tool that animates an image with generative AI<br />
+                  (2026)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  More details
+                </button>
+              </div>
               <div
                 id="guess_it_preview_content"
                 class="carousel_preview_content hidden"
@@ -985,6 +999,15 @@
           <div class="carousel_item_container">
             <button
               type="button"
+              id="zoetrope_item"
+              class="carousel_item"
+              title="Zoetrope"
+              style="
+                background-image: url(/assets/img/carousel/about/zoetrope.png);
+              "
+            ></button>
+            <button
+              type="button"
               id="guess_it_item"
               class="carousel_item"
               title="Guess It"
@@ -1052,6 +1075,51 @@
               "
             ></button>
           </div>
+        </div>
+      </div>
+      <div id="zoetrope_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a href="https://github.com/valentinMachado/zoetrope"
+              >Zoetrope</a
+            ></b
+          >
+          is a personal animation tool: a still image (photo, watercolour,
+          drawing) and a description of the motion go in, a video comes out.
+          Everything runs locally, on an 8 GB GTX 1080, with open generative AI
+          models.
+          <br />
+          <br />
+          A film is built like a storyboard: a series of keyframes, and between
+          two of them a shot animated by Wan 2.2 from its first and last frame.
+          Each shot is anchored at both ends, so the style does not drift from
+          one shot to the next. Missing keyframes are created with Flux 2 Klein,
+          from a text or from other images; Qwen3 reviews the prompts and
+          suggests a corrected version. The chosen shots are edited together
+          with ffmpeg.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="A Zoetrope project page: the storyboard, from a comic page to a drawn character, and the first shot's prompt"
+            src="/assets/img/content/zoetrope.png"
+          />
+          <br />
+          <br />
+          On this graphics card, a 2.5 s shot takes about twenty minutes, so the
+          work is asynchronous. A FastAPI API and an SQLite queue feed a worker
+          that keeps the model loaded between renders; the web interface tells
+          you when a render ends. Every choice of model and setting was measured
+          before being kept, up to a trial of training a style LoRA locally.
+          <br />
+          <br />
+          I did not take the project further: my machine is not powerful enough
+          to make it an everyday creative tool.
+          <br />
+          <br />
+          Built with AI agents (Claude Code). The code is available on
+          <a href="https://github.com/valentinMachado/zoetrope">GitHub</a>.
         </div>
       </div>
       <div id="guess_it_step" class="root_step hidden">
