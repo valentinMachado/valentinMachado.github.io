@@ -75,7 +75,8 @@
         <div class="disclaimer">
           Ingénieur logiciel spécialisé dans les applications web 3D. Éditeurs
           métier, jeux multijoueurs, données géospatiales : je conçois des
-          produits complets, du rendu WebGL jusqu'au serveur.
+          produits complets, du rendu WebGL jusqu'à leur déploiement sur mes
+          serveurs Linux.
         </div>
       </div>
       <div id="projects" class="root_step hidden">
@@ -378,6 +379,11 @@
           ></iframe>
           <br />
           <br />
+          Je l'héberge moi-même sur une VM Linux (Oracle Cloud) : serveur
+          Node.js sous PM2 derrière nginx en HTTPS, sauvegarde quotidienne de la
+          base et archives rapatriées hors de la machine.
+          <br />
+          <br />
           <a href="https://nodalab.app/">Essayer la démo</a> (sans compte).
         </div>
       </div>
@@ -405,6 +411,11 @@
           même paquet pour toutes leurs règles communes. La bibliothèque ne
           contient que des films du domaine public ou sous licence Creative
           Commons.
+          <br />
+          <br />
+          Le serveur se déploie sur une VM Linux (Oracle Cloud) par un script
+          d'installation et de mise à jour : API et worker en services systemd,
+          PostgreSQL et sa sauvegarde, HTTPS par un proxy inverse.
           <br />
           <br />
           Sortie prochaine sur Android et iOS :
@@ -1161,6 +1172,11 @@
           Un « quiz du jour » mêle les anniversaires (sorties, naissances) et
           les tendances du moment, identique pour tous les joueurs jusqu'à
           minuit.
+          <br />
+          <br />
+          Le site tourne sur une VM Linux, installée et mise à jour par un
+          script de déploiement relançable sans risque (code, base, swap,
+          processus PM2).
           <br />
           <br />
           <a href="https://guess-it.mache.lol/">Jouer</a>

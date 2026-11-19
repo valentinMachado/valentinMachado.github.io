@@ -75,7 +75,8 @@
         <div class="disclaimer">
           Software engineer specialised in 3D web applications. Business
           editors, multiplayer games, geospatial data: I build complete
-          products, from WebGL rendering to the server.
+          products, from WebGL rendering to their deployment on my own Linux
+          servers.
         </div>
       </div>
       <div id="projects" class="root_step hidden">
@@ -376,6 +377,11 @@
           ></iframe>
           <br />
           <br />
+          I host it myself on a Linux VM (Oracle Cloud): a Node.js server under
+          PM2 behind nginx over HTTPS, a daily database backup and archives
+          pulled off the machine.
+          <br />
+          <br />
           <a href="https://nodalab.app/">Try the demo</a> (no account needed).
         </div>
       </div>
@@ -402,6 +408,11 @@
           server with a video encoding worker (ffmpeg), all sharing one package
           for the rules they have in common. The library only holds films in the
           public domain or under a Creative Commons licence.
+          <br />
+          <br />
+          The server is deployed to a Linux VM (Oracle Cloud) by an install and
+          update script: the API and the worker as systemd services, PostgreSQL
+          and its backup, HTTPS through a reverse proxy.
           <br />
           <br />
           Coming soon to Android and iOS:
@@ -1155,6 +1166,10 @@
           <br />
           A "quiz of the day" mixes anniversaries (releases, births) and current
           trends, the same for every player until midnight.
+          <br />
+          <br />
+          The site runs on a Linux VM, installed and updated by a deployment
+          script that is safe to rerun (code, database, swap, PM2 processes).
           <br />
           <br />
           <a href="https://guess-it.mache.lol/">Play</a>
