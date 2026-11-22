@@ -878,7 +878,22 @@
         <div class="carousel">
           <div class="carousel_preview_container">
             <div id="about_carousel_preview_on_screen" class="carousel_preview">
-              <img src="/assets/img/carousel/about/zoetrope.png" alt="" />
+              <img src="/assets/img/carousel/about/timeline.png" alt="" />
+              <div
+                id="timeline_preview_content"
+                class="carousel_preview_content hidden"
+              >
+                <h2>timeline</h2>
+                <p>
+                  une extension qui dessine les dates d'une page en frise
+                  illustrée<br />
+                  (2026, en cours)
+                </p>
+                <br />
+                <button type="button" class="custom_button">
+                  Plus d'informations
+                </button>
+              </div>
               <div
                 id="zoetrope_preview_content"
                 class="carousel_preview_content hidden"
@@ -1013,6 +1028,15 @@
           <div class="carousel_item_container">
             <button
               type="button"
+              id="timeline_item"
+              class="carousel_item"
+              title="timeline"
+              style="
+                background-image: url(/assets/img/carousel/about/timeline.png);
+              "
+            ></button>
+            <button
+              type="button"
               id="zoetrope_item"
               class="carousel_item"
               title="Zoetrope"
@@ -1089,6 +1113,44 @@
               "
             ></button>
           </div>
+        </div>
+      </div>
+      <div id="timeline_step" class="root_step hidden">
+        <div class="step_content">
+          <b
+            ><a href="https://github.com/valentinMachado/timeline"
+              >timeline</a
+            ></b
+          >
+          est une extension de navigateur (Chrome et Firefox) qui lit les dates
+          de la page consultée, Wikipédia d'abord, et les dessine en frise
+          chronologique illustrée : chaque événement porte l'image de son
+          article et y ramène.
+          <br />
+          <br />
+          Sur un article Wikipédia en français ou en anglais, un bandeau
+          au-dessus du texte affiche la frise de l'article, qu'on zoome à la
+          molette (ou à deux doigts) et qu'on parcourt en la faisant glisser.
+          <br />
+          <br />
+          <img
+            loading="lazy"
+            class="center"
+            alt="La frise de l'article Wikipédia « Révolution française » : des cartes illustrées de 1789 à 1799, posées sur une échelle de temps"
+            src="/assets/img/content/timeline.png"
+          />
+          <br />
+          <br />
+          Le + d'une carte, ou le bouton qui apparaît sous un texte sélectionné,
+          ajoute l'événement à sa propre frise, organisée en calques : des
+          étiquettes, une description, l'image de l'article ou une photo
+          personnelle. Elle s'ouvre depuis le bouton de l'extension et s'exporte
+          dans un fichier pour la retrouver sur un autre appareil.
+          <br />
+          <br />
+          Projet en cours, en JavaScript sans framework (Manifest V3). Développé
+          avec des agents IA (Claude Code). Le code est accessible sur
+          <a href="https://github.com/valentinMachado/timeline">GitHub</a>.
         </div>
       </div>
       <div id="zoetrope_step" class="root_step hidden">

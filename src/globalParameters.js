@@ -185,6 +185,7 @@ projectsPlatform.itemIds = [
   "radiosity",
 ];
 aboutPlatform.itemIds = [
+  "timeline",
   "zoetrope",
   "guess_it",
   "subtitle_game",
@@ -367,6 +368,7 @@ const detailStepIds = [
   "smaio_i_plan",
   "popup_builder",
   "radiosity",
+  "timeline",
   "zoetrope",
   "guess_it",
   "subtitle_game",
@@ -440,7 +442,7 @@ export const globalParameters = {
             aboutPlatform,
             projectsOffset - (2 * Math.PI) / 3,
             projectsNarrowOffset - (2 * Math.PI) / 3,
-            "zoetrope"
+            "timeline"
           );
         },
         tick: (step) => tickCarousel3D(step, aboutPlatform),

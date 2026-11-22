@@ -357,6 +357,42 @@ const zoetrope = () => {
   return group;
 };
 
+/** timeline: an axis with ticks, and illustrated cards on stems above it */
+const timeline = () => {
+  const group = new Group();
+  addMesh(group, new BoxGeometry(1.2, 0.05, 0.05), "royalblue", [0, -0.5, 0]);
+  for (let i = 0; i < 5; i++) {
+    addMesh(group, new BoxGeometry(0.02, 0.1, 0.02), "dimgray", [
+      -0.5 + i * 0.25,
+      -0.57,
+      0,
+    ]);
+  }
+  const cards = [
+    [-0.4, 0.45],
+    [0, 0.05],
+    [0.4, 0.3],
+  ];
+  for (const [x, y] of cards) {
+    addMesh(group, new BoxGeometry(0.02, y + 0.5, 0.02), "royalblue", [
+      x,
+      (y - 0.5) / 2,
+      0,
+    ]);
+    addMesh(group, new BoxGeometry(0.36, 0.22, 0.03), "whitesmoke", [
+      x + 0.17,
+      y + 0.11,
+      0,
+    ]);
+    addMesh(group, new BoxGeometry(0.12, 0.12, 0.02), "darkorange", [
+      x + 0.08,
+      y + 0.11,
+      0.02,
+    ]);
+  }
+  return group;
+};
+
 /** model factory of each carousel item */
 export const carouselModels = {
   popup_builder: house,
@@ -374,6 +410,7 @@ export const carouselModels = {
   nodalab: nodeGraph,
   subtitle_game: subtitledScreen,
   guess_it: questionMark,
+  timeline: timeline,
   zoetrope: zoetrope,
   subotage: subtitledPhone,
 };
