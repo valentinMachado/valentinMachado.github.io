@@ -16,6 +16,7 @@ body {
 
 body {
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
   margin: 0%;
   overflow: hidden;
   font-family: monospace;
@@ -586,14 +587,6 @@ a:focus-visible {
   100% {
     transform: translateY(0);
   }
-}
-
-/* embeded el */
-
-.vimeo_video_container {
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
 }
 
 /* cv */
